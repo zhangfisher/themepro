@@ -6,7 +6,7 @@ class ThemeproController extends HTMLElement {
   }
 
   render() {
-    this.shadowRoot!.innerHTML = `
+    this.shadowRoot.innerHTML = `
       <style>
         .controller {
             display: flex;
@@ -20,13 +20,21 @@ class ThemeproController extends HTMLElement {
       </style>
       <div class="controller">
         <div class="item">
-            <label>
-                <input type="checkbox" checked=${ThemePro.dark} >
-            Dark
-            </label>
+            <label><input id="dark" type="checkbox" value=${ThemePro.dark} checked=${ThemePro.dark}>Dark</label>
         </div>
       </div>
     `;
+    this._onDark()
+  }
+  _onDark() {
+    // 添加对id=dark的事件处理
+    const darkModeCheckbox = this.shadowRoot.getElementById("dark");
+    if (darkModeCheckbox) {
+      darkModeCheckbox.addEventListener("change", (e) => {
+        const isDarkMode = e.target.checked;
+        ThemePro.dark = isDarkMode; 
+      });
+    }
   }
 }
 

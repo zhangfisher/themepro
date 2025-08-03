@@ -4,7 +4,7 @@
     --auto-theme-color: var(--tp-color-primary-500);
     /* 字体颜色 */
     --auto-color: var(--tp-color-gray-700);
-    
+
     /* 边框颜色 */
     --auto-border-color: var(--tp-color-neutral-300);
     /* 背景颜色 */
@@ -61,6 +61,8 @@
     --auto-line-height: calc(var(--tp-input-height-large) - var(--tp-input-border-width) * 4);
     --auto-icon-size: calc(1.5 * var(--tp-font-size-large));
 }
+
+
 :host([size='x-large']) {
      --auto-font-size: var(--tp-font-size-large);
      --auto-spacing: var(--tp-spacing-large);

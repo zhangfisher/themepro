@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <title>Themepro</title>
-    <link rel="stylesheet" type="text/css" href="../themes/light.css" />
-    <link rel="stylesheet" type="text/css" href="../themes/dark.css" />
+    <link rel="stylesheet" type="text/css" href="/src/themes/light.css" />
+    <link rel="stylesheet" type="text/css" href="/src/themes/dark.css" />
     <style>
       .color {
         margin-bottom: 0.2rem;
@@ -30,8 +30,11 @@
         margin: auto;
       }
     </style>
+    <script type="module" src="/src/index.ts"></script>
+    <script type="module" src="/controller.js"></script>
   </head>
   <body>
+    <themepro-controller></themepro-controller>
     <div class="color-container" style="padding: 1rem; box-sizing: border-box">
       <div class="colors">
         <div class="color" style="background: var(--t-color-gray-50)">
