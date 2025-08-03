@@ -17,14 +17,39 @@ class ThemeproController extends HTMLElement {
         .controller>.item{
             margin-right: 4px;
         }
+        select{
+          padding: 4px 8px;
+        }
       </style>
       <div class="controller">
         <div class="item">
-            <label><input id="dark" type="checkbox" value=${ThemePro.dark} checked=${ThemePro.dark}>Dark</label>
+            <label><input id="dark" type="checkbox" ${ThemePro.dark ? 'checked' : ''}>Dark</label>            
+        </div>
+        <div>
+            <label>
+              Size:
+                <select id="size" value="${ThemePro.size}">
+                    <option value="x-small" ${ThemePro.size==="x-small" ? 'selected' : ''}>x-small</option>
+                    <option value="small" ${ThemePro.size==="small" ? 'selected' : ''}>small</option>
+                    <option value="medium" ${ThemePro.size==="medium" ? 'selected' : ''} >medium</option>
+                    <option value="large" ${ThemePro.size==="large" ? 'selected' : ''}>large</option>
+                    <option value="x-large" ${ThemePro.size==="x-large" ? 'selected' : ''}>x-large</option>
+                </select>            
+            </label>
         </div>
       </div>
     `;
     this._onDark()
+    this._onSize()
+  }
+  _onSize(){
+    const sizeSelect = this.shadowRoot.getElementById("size");
+    if (sizeSelect) {
+      sizeSelect.addEventListener("change", (e) => {
+        const size = e.target.value;
+        ThemePro.size = size; 
+      });
+    }
   }
   _onDark() {
     // 添加对id=dark的事件处理

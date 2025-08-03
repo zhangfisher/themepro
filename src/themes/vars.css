@@ -1,74 +1,108 @@
-:host {
+:root([size='small']) {
+    color: red;
+}
 
+:root,
+.themed,
+:host {
     /* 主题色 */
-    --auto-theme-color: var(--tp-color-primary-500);
+    --auto-theme-color: var(--t-color-primary-500);
     /* 字体颜色 */
-    --auto-color: var(--tp-color-gray-700);
+    --auto-color: var(--t-color-gray-700);
 
     /* 边框颜色 */
-    --auto-border-color: var(--tp-color-neutral-300);
+    --auto-border-color: var(--t-color-neutral-300);
     /* 背景颜色 */
-    --auto-bg-color: var(--tp-color-neutral-0);
+    --auto-bg-color: var(--t-color-neutral-0);
     /* 工作区背景颜色*/
-    --auto-workspace-color: var(--tp-color-neutral-50);
+    --auto-workspace-color: var(--t-color-neutral-50);
     /* 输入框颜色*/
-    --auto-input-bgcolor:var(--auto-bg-color);    
+    --auto-input-bgcolor: var(--auto-bg-color);
     /* 亮色 */
-    --auto-gray-color: var(--tp-color-gray-500);
-        
-    --auto-font-size: var(--tp-font-size-medium);
-    --auto-font-weight: var(--tp-font-weight-normal);
-    --auto-spacing: var(--tp-spacing-medium);
-    --auto-letter-spacing: var(--tp-letter-spacing-medium); 
-    --auto-line-height: var(--tp-line-height-medium);
+    --auto-gray-color: var(--t-color-gray-500);
 
+    /* 排版/字体 */
+    --auto-font: var(--auto-font-weight) var(--auto-font-size)/1.5 var(--auto-font-family);
+    --auto-font-family: Lantinghei SC,
+        Microsoft Yahei,
+        Hiragino Sans GB,
+        Microsoft Sans Serif,
+        WenQuanYi Micro Hei,
+        sans-serif;
+    --auto-font-size: var(--t-font-size-medium);
+    --auto-font-weight: var(--t-font-weight-medium);
+    --auto-spacing: var(--t-spacing-medium);
+    --auto-letter-spacing: var(--t-letter-spacing-medium);
+    --auto-line-height: var(--t-line-height-medium);
 
+    --auto-font-title: calc(var(--auto-font-weight) + 300) var(--auto-font-size)/1.5 var(--auto-font-family);
 
+    /* 边框/间距 */
     --auto-border: 1px solid var(--auto-border-color);
-    --auto-border-radius: var(--tp-border-radius-medium);
-    --auto-shadow: var(--tp-shadow-medium);
-    
-    --auto-icon-size: calc(1.5 * var(--tp-font-size-medium));
+    --auto-border-radius: var(--t-border-radius-medium);
+    --auto-shadow: var(--t-shadow-medium);
+
+    --auto-icon-size: calc(1.5 * var(--t-font-size-medium));
 }
 
-:host([size='x-small']) {
-    --auto-font-size: var(--tp-font-size-small);
-    --auto-spacing: var(--tp-spacing-small);
+:host([size='x-small']),
+.themed[size='x-small'] {
+    /* 排版/字体 */
+    --auto-font-size: var(--t-font-size-x-small);
+    --auto-font-weight: var(--t-font-weight-x-small);
+    --auto-spacing: var(--t-spacing-x-small);
+    --auto-letter-spacing: var(--t-letter-spacing-x-small);
+    --auto-line-height: var(--t-line-height-x-small);
     /* 用于内边距和外边距 */
-    --auto-border-radius: var(--tp-border-radius-small);
-    --auto-shadow: var(--tp-shadow-small);
-    --auto-line-height: calc(var(--tp-input-height-small) - var(--tp-input-border-width) * 4);
-    --auto-icon-size: calc(1.5 * var(--tp-font-size-small));
+    --auto-border-radius: var(--t-border-radius-x-small);
+    --auto-shadow: var(--t-shadow-x-small);
+    --auto-line-height: calc(var(--t-input-height-x-small) - var(--t-input-border-width) * 4);
+    --auto-icon-size: calc(1.5 * var(--t-font-size-x-small));
 }
 
-:host([size='small']) {
-    --auto-font-size: var(--tp-font-size-small);
-    --auto-spacing: var(--tp-spacing-small);
+:host([size='small']),
+.themed[size='small'] {
+    /* 排版/字体 */
+    --auto-font-size: var(--t-font-size-small);
+    --auto-font-weight: var(--t-font-weight-small);
+    --auto-spacing: var(--t-spacing-small);
+    --auto-letter-spacing: var(--t-letter-spacing-small);
+    --auto-line-height: var(--t-line-height-small);
     /* 用于内边距和外边距 */
-    --auto-border-radius: var(--tp-border-radius-small);
-    --auto-shadow: var(--tp-shadow-small);
-    --auto-line-height: calc(var(--tp-input-height-small) - var(--tp-input-border-width) * 4);
-    --auto-icon-size: calc(1.5 * var(--tp-font-size-small));
+    --auto-border-radius: var(--t-border-radius-small);
+    --auto-shadow: var(--t-shadow-small);
+    --auto-line-height: calc(var(--t-input-height-small) - var(--t-input-border-width) * 4);
+    --auto-icon-size: calc(1.5 * var(--t-font-size-small));
 }
 
 
-:host([size='large']) {
-    --auto-font-size: var(--tp-font-size-large);
-    --auto-spacing: var(--tp-spacing-large);
+:host([size='large']),
+.themed[size='large'] {
+    /* 排版/字体 */
+    --auto-font-size: var(--t-font-size-large);
+    --auto-font-weight: var(--t-font-weight-large);
+    --auto-spacing: var(--t-spacing-large);
+    --auto-letter-spacing: var(--t-letter-spacing-large);
+    --auto-line-height: var(--t-line-height-large);
     /* 用于内边距和外边距 */
-    --auto-border-radius: var(--tp-border-radius-large);
-    --auto-shadow: var(--tp-shadow-large);
-    --auto-line-height: calc(var(--tp-input-height-large) - var(--tp-input-border-width) * 4);
-    --auto-icon-size: calc(1.5 * var(--tp-font-size-large));
+    --auto-border-radius: var(--t-border-radius-large);
+    --auto-shadow: var(--t-shadow-large);
+    --auto-line-height: calc(var(--t-input-height-large) - var(--t-input-border-width) * 4);
+    --auto-icon-size: calc(1.5 * var(--t-font-size-large));
 }
 
 
-:host([size='x-large']) {
-     --auto-font-size: var(--tp-font-size-large);
-     --auto-spacing: var(--tp-spacing-large);
-     /* 用于内边距和外边距 */
-     --auto-border-radius: var(--tp-border-radius-large);
-     --auto-shadow: var(--tp-shadow-large);
-     --auto-line-height: calc(var(--tp-input-height-large) - var(--tp-input-border-width) * 4);
-     --auto-icon-size: calc(1.5 * var(--tp-font-size-large));
- }
+:host([size='x-large']),
+.themed[size='x-large'] {
+    /* 排版/字体 */
+    --auto-font-size: var(--t-font-size-x-large);
+    --auto-font-weight: var(--t-font-weight-x-large);
+    --auto-spacing: var(--t-spacing-x-large);
+    --auto-letter-spacing: var(--t-letter-spacing-x-large);
+    --auto-line-height: var(--t-line-height-x-large);
+    /* 用于内边距和外边距 */
+    --auto-border-radius: var(--t-border-radius-x-large);
+    --auto-shadow: var(--t-shadow-large);
+    --auto-line-height: calc(var(--t-input-height-x-large) - var(--t-input-border-width) * 4);
+    --auto-icon-size: calc(1.5 * var(--t-font-size-large));
+}

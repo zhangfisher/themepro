@@ -2,9 +2,12 @@
 <html lang="en">
   <head>
     <title>Themepro-Font</title>
-    <link rel="stylesheet" type="text/css" href="../themes/light.css" />
-    <link rel="stylesheet" type="text/css" href="../themes/dark.css" />
-    <script src="../components/card.js"></script>
+    <link rel="stylesheet" type="text/css" href="/src/themes/light.css" />
+    <link rel="stylesheet" type="text/css" href="/src/themes/dark.css" />
+    <link rel="stylesheet" type="text/css" href="/src/themes/vars.css" />
+    <script type="module" src="/src/index.ts"></script>
+    <script type="module" src="/controller.js"></script>
+    <script src="card.js"></script>
     <style>
       .font-container {
         display: flex;
@@ -30,13 +33,28 @@
         cursor: pointer;
         border: 1px solid #ccc;
       }
+      .article {
+        font-size: var(--auto-font-size);
+      }
     </style>
   </head>
-  <body>
+  <body class="themed">
     <div>
+      <themepro-controller></themepro-controller>
+      <div class="article" style="padding: 1rem; border: 1px solid #aaa">
+        <span style="font-weight: var(--auto-font-weight)">道德经:</span>
+        道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
+        有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门
+      </div>
+
       <my-card title="老子-道德经">
         道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
         有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门
+
+        <my-card title="老子-道德经">
+        道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
+        有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门
+      </my-card>
       </my-card>
     </div>
     <div class="font-container">

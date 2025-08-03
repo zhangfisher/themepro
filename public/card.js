@@ -28,13 +28,13 @@ class CardComponent extends HTMLElement {
           margin: 8px;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .card-title {
-          font-size: 18px;
+        .card-title {          
+          font:var(--auto-font-title);
           margin-bottom: 8px;
           color: #333;
         }
         .card-content {
-          font-size: 14px;
+          font: var(--auto-font);
           color: #666;
         }
       </style>

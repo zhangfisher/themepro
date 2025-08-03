@@ -1,3 +1,6 @@
+import { injectStylesheet } from "./utils/injectStylesheet";
+import { rootStyle } from "./styles";
+
 export type ThemeproOptions = {
   container: string;
 };
@@ -21,14 +24,6 @@ export class Themepro {
       this._onDomContentLoaded.bind(this)
     );
   }
-  _onDomContentLoaded() {
-    this.container = document.querySelector(
-      this.options.container || "body"
-    ) as HTMLElement;
-    this._dark = this.container.classList.contains("dark") || false;
-    this._size =
-      (this.container.getAttribute("size") as ThemeProSize) || "medium";
-  }
   get dark() {
     return this._dark;
   }
@@ -46,6 +41,21 @@ export class Themepro {
   set size(value: ThemeProSize) {
     this.container.setAttribute("size", value);
     this._size = value;
+  }
+
+  _onDomContentLoaded() {
+    this.container = document.querySelector(
+      this.options.container || "body"
+    ) as HTMLElement;
+    this._injectThemedStyles()
+    this._dark = this.container.classList.contains("dark") || false;
+    this._size =
+      (this.container.getAttribute("size") as ThemeProSize) || "medium";
+    
+  }
+
+  _injectThemedStyles(){
+    injectStylesheet(rootStyle,{id:'themepro'})
   }
 
   setPrimaryColor(color: string) {}
