@@ -1,0 +1,17 @@
+{
+  "name": "themepro",
+  "module": "src/index.ts",
+  "type": "module",
+  "version": "0.0.1",
+  "private": false,
+  "scripts": {
+    "dev": "vite"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "vite": "^7.0.6"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}

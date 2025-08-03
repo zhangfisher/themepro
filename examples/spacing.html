@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Themepro-Font</title>
+    <link rel="stylesheet" type="text/css" href="../themes/light.css" />
+    <link rel="stylesheet" type="text/css" href="../themes/dark.css" />
+    <style>
+      .font-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.2rem;
+        margin: auto;
+      }
+      .items {
+        flex-grow: 1;
+        flex-basis: 0;
+      }
+      .item,
+      .font-size,
+      .font-weight {
+        margin-bottom: 0.2rem;
+        font-size: 1rem;
+        padding: 0.5rem;
+        text-align: center;
+        color: #222;
+        cursor: pointer;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div>
+    </div>
+    <div class="font-container">
+      <div class="items font-sizes">
+        <div class="font-size" style="font-size: var(--t-font-size-x-small)">
+          最小=x-small
+        </div>
+        <div class="font-size" style="font-size: var(--t-font-size-small)">
+          小=small
+        </div>
+        <div class="font-size" style="font-size: var(--t-font-size-medium)">
+          中=medium
+        </div>
+        <div class="font-size" style="font-size: var(--t-font-size-large)">
+          大=large
+        </div>
+        <div class="font-size" style="font-size: var(--t-font-size-x-large)">
+          x-large
+        </div>
+        <div class="font-size" style="font-size: var(--t-font-size-2x-large)">
+          2x-large
+        </div>
+        <div class="font-size" style="font-size: var(--t-font-size-3x-large)">
+          3x-large
+        </div>
+        <div class="font-size" style="font-size: var(--t-font-size-4x-large)">
+          4x-large
+        </div>
+      </div>
+      <div class="items font-weights">
+        <div
+          class="font-weight"
+          style="font-weight: var(--t-font-weight-light)"
+        >
+          light
+        </div>
+        <div
+          class="font-weight"
+          style="font-weight: var(--t-font-weight-normal)"
+        >
+          normal
+        </div>
+        <div
+          class="font-weight"
+          style="font-weight: var(--t-font-weight-semibold)"
+        >
+          semibold
+        </div>
+        <div class="font-weight" style="font-weight: var(--t-font-weight-bold)">
+          bold
+        </div>
+
+        <div
+          class="font-weight"
+          style="font-weight: var(--t-font-weight-boldest)"
+        >
+          boldest
+        </div>
+      </div>
+      <div class="items">
+        line-height
+        <div
+          class="line-height item"
+          style="line-height: var(--t-line-height-x-small)"
+        >
+          x-small
+        </div>
+        <div
+          class="line-height item"
+          style="line-height: var(--t-line-height-small)"
+        >
+          small
+        </div>
+        <div
+          class="line-height item"
+          style="line-height: var(--t-line-height-medium)"
+        >
+          medium
+        </div>
+        <div
+          class="line-height item"
+          style="line-height: var(--t-line-height-large)"
+        >
+          large
+        </div>
+        <div
+          class="line-height item"
+          style="line-height: var(--t-line-height-x-large)"
+        >
+          x-large
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

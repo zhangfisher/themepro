@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Themepro</title>
+    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="./src/themes/light.css" />
+    <link rel="stylesheet" href="./src/themes/dark.css" />
+    <script type="module" src="/src/index.ts"></script>
+  </head>
+  <body class="dark">
+    <sl-tab-group>
+      <sl-tab slot="nav" panel="colors">颜色</sl-tab>
+      <sl-tab slot="nav" panel="font">字体</sl-tab>
+      <sl-tab slot="nav" panel="advanced">Advanced</sl-tab>
+      <sl-tab slot="nav" panel="disabled" disabled>Disabled</sl-tab>
+      <sl-tab-panel name="colors">This is the general tab panel.</sl-tab-panel>
+      <sl-tab-panel name="font">This is the custom tab panel.</sl-tab-panel>
+      <sl-tab-panel name="advanced"
+        >This is the advanced tab panel.</sl-tab-panel
+      >
+      <sl-tab-panel name="disabled">This is a disabled tab panel.</sl-tab-panel>
+    </sl-tab-group>
+  </body>
+</html>

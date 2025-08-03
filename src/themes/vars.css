@@ -1,0 +1,72 @@
+:host {
+
+    /* 主题色 */
+    --auto-theme-color: var(--tp-color-primary-500);
+    /* 字体颜色 */
+    --auto-color: var(--tp-color-gray-700);
+    
+    /* 边框颜色 */
+    --auto-border-color: var(--tp-color-neutral-300);
+    /* 背景颜色 */
+    --auto-bg-color: var(--tp-color-neutral-0);
+    /* 工作区背景颜色*/
+    --auto-workspace-color: var(--tp-color-neutral-50);
+    /* 输入框颜色*/
+    --auto-input-bgcolor:var(--auto-bg-color);    
+    /* 亮色 */
+    --auto-gray-color: var(--tp-color-gray-500);
+        
+    --auto-font-size: var(--tp-font-size-medium);
+    --auto-font-weight: var(--tp-font-weight-normal);
+    --auto-spacing: var(--tp-spacing-medium);
+    --auto-letter-spacing: var(--tp-letter-spacing-medium); 
+    --auto-line-height: var(--tp-line-height-medium);
+
+
+
+    --auto-border: 1px solid var(--auto-border-color);
+    --auto-border-radius: var(--tp-border-radius-medium);
+    --auto-shadow: var(--tp-shadow-medium);
+    
+    --auto-icon-size: calc(1.5 * var(--tp-font-size-medium));
+}
+
+:host([size='x-small']) {
+    --auto-font-size: var(--tp-font-size-small);
+    --auto-spacing: var(--tp-spacing-small);
+    /* 用于内边距和外边距 */
+    --auto-border-radius: var(--tp-border-radius-small);
+    --auto-shadow: var(--tp-shadow-small);
+    --auto-line-height: calc(var(--tp-input-height-small) - var(--tp-input-border-width) * 4);
+    --auto-icon-size: calc(1.5 * var(--tp-font-size-small));
+}
+
+:host([size='small']) {
+    --auto-font-size: var(--tp-font-size-small);
+    --auto-spacing: var(--tp-spacing-small);
+    /* 用于内边距和外边距 */
+    --auto-border-radius: var(--tp-border-radius-small);
+    --auto-shadow: var(--tp-shadow-small);
+    --auto-line-height: calc(var(--tp-input-height-small) - var(--tp-input-border-width) * 4);
+    --auto-icon-size: calc(1.5 * var(--tp-font-size-small));
+}
+
+
+:host([size='large']) {
+    --auto-font-size: var(--tp-font-size-large);
+    --auto-spacing: var(--tp-spacing-large);
+    /* 用于内边距和外边距 */
+    --auto-border-radius: var(--tp-border-radius-large);
+    --auto-shadow: var(--tp-shadow-large);
+    --auto-line-height: calc(var(--tp-input-height-large) - var(--tp-input-border-width) * 4);
+    --auto-icon-size: calc(1.5 * var(--tp-font-size-large));
+}
+:host([size='x-large']) {
+     --auto-font-size: var(--tp-font-size-large);
+     --auto-spacing: var(--tp-spacing-large);
+     /* 用于内边距和外边距 */
+     --auto-border-radius: var(--tp-border-radius-large);
+     --auto-shadow: var(--tp-shadow-large);
+     --auto-line-height: calc(var(--tp-input-height-large) - var(--tp-input-border-width) * 4);
+     --auto-icon-size: calc(1.5 * var(--tp-font-size-large));
+ }
