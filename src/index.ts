@@ -1,21 +1,27 @@
-import { injectStylesheet } from "./utils/injectStylesheet";
-import { rootStyle } from "./styles";
+ 
 
 export type ThemeproOptions = {
-  container: string;
-};
+    theme?: 'dark' | 'light' | 'blue'
+    dark?: boolean;
+    size?: "x-small" | "small" | "medium" | "large" | "x-large";
+    primaryColor?: string;  
+    borderRadius?: string;
+}
 
-export type ThemeProSize = "x-small" | "small" | "medium" | "large" | "x-large";
+export type ThemeSize = "x-small" | "small" | "medium" | "large" | "x-large";
+export type ThemeType = "light" | "dark" | "blue" 
+
 export class Themepro {
   _dark: boolean = false;
-  _size: ThemeProSize = "medium";
+  _theme: string = 'light';
+  _size: ThemeSize = "medium";
   _primaryColor: string = "var(--color_primary)";
-  options: Required<ThemeproOptions>;
+  _borderRadius: string = "none";
+  options: ThemeproOptions;
   container!: HTMLElement;
   constructor(options?: ThemeproOptions) {
     this.options = Object.assign(
       {
-        container: "body",
       },
       options
     );
@@ -38,26 +44,38 @@ export class Themepro {
   get size() {
     return this._size;
   }
-  set size(value: ThemeProSize) {
+  set size(value: ThemeSize) {
     this.container.setAttribute("size", value);
     this._size = value;
   }
+  get borderRadius(): string {
+    return this._borderRadius
+  }
+  set borderRadius(value: string) {
+    this.container.setAttribute("size", value);
+    this._borderRadius = value;
+  }
+
+  get theme(): string {
+    return this._theme
+  }
+  set theme(value: string) {
+    if(value==='light'){
+        this.container.removeAttribute("theme"); 
+    }else{
+        this.container.setAttribute("theme", value);
+    }    
+    this._theme = value;
+  }
 
   _onDomContentLoaded() {
-    this.container = document.querySelector(
-      this.options.container || "body"
-    ) as HTMLElement;
-    this._injectThemedStyles()
+    this.container = document.documentElement 
     this._dark = this.container.classList.contains("dark") || false;
     this._size =
-      (this.container.getAttribute("size") as ThemeProSize) || "medium";
+      (this.container.getAttribute("size") as ThemeSize) || "medium";
     
   }
-
-  _injectThemedStyles(){
-    injectStylesheet(rootStyle,{id:'themepro'})
-  }
-
+ 
   setPrimaryColor(color: string) {}
 }
 

@@ -20,28 +20,39 @@ class CardComponent extends HTMLElement {
     const title = this.getAttribute('title') || ''; 
 
     this.shadowRoot.innerHTML = `
-      <style>
-        .card {
-          border: 1px solid #ddd;
-          border-radius: 8px;
-          padding: 16px;
-          margin: 8px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .card-title {          
-          font:var(--auto-font-title);
-          margin-bottom: 8px;
-          color: #333;
-        }
-        .card-content {
-          font: var(--auto-font);
-          color: #666;
-        }
-      </style>
-      <div class="card">
-        <h3 class="card-title">${title}</h3>
-        <p class="card-content"><slot ></slot></p>
-        <slot name="footer"></slot>
+    <style>
+    .t-card {
+        display: flex;
+        flex-direction: column;
+        background: var(--auto-bg-color);
+        color: var(--auto-font-color);
+        border-radius: var(--t-border-radius-medium);
+        border: var(--auto-border);
+        padding: 0;
+        box-shadow: var(--auto-shadow);
+        box-sizing: border-box;
+    }
+    .t-card-header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border-bottom: var(--auto-border);
+        padding: calc(0.8 * var(--auto-spacing));
+        border-radius: var(--t-border-radius-medium) var(--t-border-radius-medium) 0 0;
+        flex-shrink: 0;
+        font: var(--auto-title-font);
+        color: var(--auto-title-color);
+        background: var(--auto-title-bgcolor);
+    }
+    .t-card-body {
+        flex: 1 1 auto;
+        padding: var(--auto-spacing);
+        border-radius: 0 0 var(--t-border-radius-medium) var(--t-border-radius-medium);
+    }
+    </style>
+      <div class="t-card">
+        <div class="t-card-header">${title}</div>
+        <div class="t-card-body"><slot ></slot></div>
       </div>
     `;
   }

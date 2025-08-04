@@ -1,0 +1,107 @@
+:root,
+:host {
+  /* 主色调 */
+  --auto-primary-color: var(--t-color-primary-500);
+  /* 字体颜色 */
+  --auto-color: var(--t-color-neutral-1000);
+  /* 边框颜色 */
+  --auto-border-color: var(--t-color-neutral-300);
+  /* 背景颜色，用于面板/对话框/组件的背景 */
+  --auto-bg-color: var(--t-color-neutral-0);
+  /* 工作区背景颜色：用于工作区的背景颜色*/
+  --auto-workspace-color: var(--t-color-neutral-50);
+  /* 输入框颜色*/
+  --auto-input-bgcolor: var(--auto-bg-color);
+  /* 亮色: 相对于背景的亮色*/
+  --auto-light-color: color-mix(in hsl, var(--auto-bg-color), white 10%);
+  /* 暗色: 相对于背景的暗色背景*/
+  --auto-dark-color: color-mix(in hsl, var(--auto-bg-color), black 10%);
+  /* 排版/字体 */
+  --auto-font: var(--auto-font-weight) var(--auto-font-size)/1.5 var(--auto-font-family);
+  --auto-font-family: Lantinghei SC,
+        Microsoft Yahei,
+        Hiragino Sans GB,
+        Microsoft Sans Serif,
+        WenQuanYi Micro Hei,
+        sans-serif;
+  --auto-font-size: var(--t-font-size-medium);
+  --auto-font-weight: var(--t-font-weight-medium);
+  --auto-letter-spacing: var(--t-letter-spacing-medium);
+  --auto-line-height: var(--t-line-height-medium);
+  /* 标题，用于导航/标题栏/标签页标题 */
+  --auto-title-font: calc(var(--auto-font-weight) + 300) calc(var(--auto-font-size) * 1.1)/1.5 var(--auto-font-family);
+  --auto-title-color: color-mix(in hsl, var(--auto-primary-color), white 10%);
+  --auto-title-bgcolor: var(--t-color-neutral-50);
+  /* 边框/间距 */
+  --auto-spacing: var(--t-spacing-medium);
+  --auto-border: 1px solid var(--auto-border-color);
+  --auto-border-radius: var(--t-border-radius-medium);
+  --auto-shadow: var(--t-shadow-medium);
+  --auto-icon-size: calc(1.5 * var(--t-font-size-medium));
+  /* 输入框 */
+  --auto-input-height: var(--t-input-height-medium);
+}
+:host([size='x-small']),
+[size='x-small'] {
+  /* 排版/字体 */
+  --auto-font-size: var(--t-font-size-x-small);
+  --auto-font-weight: var(--t-font-weight-x-small);
+  --auto-spacing: var(--t-spacing-x-small);
+  --auto-letter-spacing: var(--t-letter-spacing-x-small);
+  --auto-line-height: var(--t-line-height-x-small);
+  /* 用于内边距和外边距 */
+  --auto-border-radius: var(--t-border-radius-x-small);
+  --auto-shadow: var(--t-shadow-x-small);
+  --auto-line-height: calc(var(--t-input-height-x-small) - var(--t-input-border-width) * 4);
+  --auto-icon-size: calc(1.5 * var(--t-font-size-x-small));
+  /* 输入框 */
+  --auto-input-height: var(--t-input-height-x-small);
+}
+:host([size='small']),
+[size='small'] {
+  /* 排版/字体 */
+  --auto-font-size: var(--t-font-size-small);
+  --auto-font-weight: var(--t-font-weight-small);
+  --auto-spacing: var(--t-spacing-small);
+  --auto-letter-spacing: var(--t-letter-spacing-small);
+  --auto-line-height: var(--t-line-height-small);
+  /* 用于内边距和外边距 */
+  --auto-border-radius: var(--t-border-radius-small);
+  --auto-shadow: var(--t-shadow-small);
+  --auto-line-height: calc(var(--t-input-height-small) - var(--t-input-border-width) * 4);
+  --auto-icon-size: calc(1.5 * var(--t-font-size-small));
+  /* 输入框 */
+  --auto-input-height: var(--t-input-height-small);
+}
+:host([size='large']),
+[size='large'] {
+  /* 排版/字体 */
+  --auto-font-size: var(--t-font-size-large);
+  --auto-font-weight: var(--t-font-weight-large);
+  --auto-spacing: var(--t-spacing-large);
+  --auto-letter-spacing: var(--t-letter-spacing-large);
+  --auto-line-height: var(--t-line-height-large);
+  /* 用于内边距和外边距 */
+  --auto-border-radius: var(--t-border-radius-large);
+  --auto-shadow: var(--t-shadow-large);
+  --auto-line-height: calc(var(--t-input-height-large) - var(--t-input-border-width) * 4);
+  --auto-icon-size: calc(1.5 * var(--t-font-size-large));
+  /* 输入框 */
+  --auto-input-height: var(--t-input-height-large);
+}
+:host([size='x-large']),
+[size='x-large'] {
+  /* 排版/字体 */
+  --auto-font-size: var(--t-font-size-x-large);
+  --auto-font-weight: var(--t-font-weight-x-large);
+  --auto-spacing: var(--t-spacing-x-large);
+  --auto-letter-spacing: var(--t-letter-spacing-x-large);
+  --auto-line-height: var(--t-line-height-x-large);
+  /* 用于内边距和外边距 */
+  --auto-border-radius: var(--t-border-radius-x-large);
+  --auto-shadow: var(--t-shadow-large);
+  --auto-line-height: calc(var(--t-input-height-x-large) - var(--t-input-border-width) * 4);
+  --auto-icon-size: calc(1.5 * var(--t-font-size-large));
+  /* 输入框 */
+  --auto-input-height: var(--t-input-height-x-large);
+}

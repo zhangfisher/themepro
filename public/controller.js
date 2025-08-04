@@ -23,7 +23,14 @@ class ThemeproController extends HTMLElement {
       </style>
       <div class="controller">
         <div class="item">
-            <label><input id="dark" type="checkbox" ${ThemePro.dark ? 'checked' : ''}>Dark</label>            
+            <label>
+              Theme:
+                <select id="theme">
+                    <option value="light" ${ThemePro.theme==="light" ? 'light' : ''}>Light</option>
+                    <option value="dark" ${ThemePro.theme==="dark" ? 'dark' : ''}>Dark</option>
+                    <option value="blue" ${ThemePro.theme==="blue" ? 'blue' : ''} >Blue</option>
+                </select>            
+            </label>
         </div>
         <div>
             <label>
@@ -39,7 +46,7 @@ class ThemeproController extends HTMLElement {
         </div>
       </div>
     `;
-    this._onDark()
+    this._onTheme()
     this._onSize()
   }
   _onSize(){
@@ -48,6 +55,15 @@ class ThemeproController extends HTMLElement {
       sizeSelect.addEventListener("change", (e) => {
         const size = e.target.value;
         ThemePro.size = size; 
+      });
+    }
+  }
+  
+  _onTheme(){
+    const themeSelect = this.shadowRoot.getElementById("theme");
+    if (themeSelect) {
+      themeSelect.addEventListener("change", (e) => {
+        ThemePro.theme = e.target.value;
       });
     }
   }

@@ -1,0 +1,55 @@
+.t-border {
+  border: var(--auto-border);
+}
+.t-radius {
+  border-radius: var(--auto-border-radius);
+}
+.t-title {
+  font: var(--auto-title-font);
+  font-weight: 500;
+}
+.t-title.colorized {
+  color: var(--auto-title-color);
+}
+.t-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--auto-bg-color);
+  color: var(--auto-font-color);
+  border-radius: var(--t-border-radius-medium);
+  border: var(--auto-border);
+  padding: 0;
+  box-shadow: var(--auto-shadow);
+  box-sizing: border-box;
+}
+.t-card > .t-card-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-bottom: var(--auto-border);
+  padding: calc(0.8 * var(--auto-spacing));
+  border-radius: var(--t-border-radius-medium) var(--t-border-radius-medium) 0 0;
+  flex-shrink: 0;
+  font: var(--auto-title-font);
+  color: var(--auto-title-color);
+  background: var(--auto-title-bgcolor);
+}
+.t-card > .t-card-header > .t-card-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.t-card > .t-card-body {
+  flex: 1 1 auto;
+  padding: var(--auto-spacing);
+  border-radius: 0 0 var(--t-border-radius-medium) var(--t-border-radius-medium);
+}
+.t-card > .t-card-footer {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  text-align: right;
+}
+.t-card > .t-card-footer > *[type='button'] {
+  margin-left: auto;
+  margin-right: 0;
+}
