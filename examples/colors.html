@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Themepro</title>    
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/src/themes/light.css" />
+    <link rel="stylesheet" type="text/css" href="/src/themes/dark.css" />
+    <link rel="stylesheet" type="text/css" href="/src/themes/blue.css" />    
+    <link rel="stylesheet" type="text/css" href="/src/styles/index.less" /> 
+    <script type="module" src="/src/index.ts"></script>
+    <script type="module" src="/controller.js"></script>
+    <script type="module" src="../src/index.ts"></script>
+    <script src="../src/components/card"></script>
+    <style>
+      .color {
+        margin-bottom: 0.2rem;
+        font-size: 1rem;
+        padding: 0.5rem;
+        text-align: center;
+        color: #eee;
+        cursor: pointer;
+      }
+      .color:hover {
+        outline: 2px solid #ccc;
+      }
+      .colors {
+        box-sizing: border-box;
+        width: calc(16.66% - 0.2rem);
+      }
+      .color-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.2rem;
+        margin: auto;
+      } 
+    </style>
+    <script type="module" src="/src/index.ts"></script>
+    <script type="module" src="/controller.js"></script>
+  </head>
+  <body>
+    <themepro-controller></themepro-controller>
+
+    <div style="margin:1rem;padding:2rem;background:var(--auto-dark-color);border: 1px solid var(--auto-light-color)">
+                <div  class="t-title colorized" style="border-bottom:var(--auto-border); padding: 0.5em;">道德经</div>
+                <div style=" padding: 0.5em;background:var(--auto-workspace-color) ">
+        道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
+        有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门
+      </div>
+    </div>
+
+    <div class="theme-example" style="margin:1em;border:var(--auto-border); ">
+      <div  class="t-title colorized" style="border-bottom:var(--auto-border); padding: 0.5em;">道德经</div>
+      <div style=" padding: 0.5em;background:var(--auto-workspace-color) ">
+        道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
+        有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门
+      </div>
+    </div>
+    <div class="color-container" style="padding: 1rem; box-sizing: border-box">
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-gray-50)">
+          gray-50
+        </div>
+        <div class="color" style="background: var(--t-color-gray-100)">
+          gray-100
+        </div>
+        <div class="color" style="background: var(--t-color-gray-200)">
+          gray-200
+        </div>
+        <div class="color" style="background: var(--t-color-gray-300)">
+          gray-300
+        </div>
+        <div class="color" style="background: var(--t-color-gray-400)">
+          gray-400
+        </div>
+        <div class="color" style="background: var(--t-color-gray-500)">
+          gray-500
+        </div>
+        <div class="color" style="background: var(--t-color-gray-600)">
+          gray-600
+        </div>
+        <div class="color" style="background: var(--t-color-gray-700)">
+          gray-700
+        </div>
+        <div class="color" style="background: var(--t-color-gray-800)">
+          gray-800
+        </div>
+        <div class="color" style="background: var(--t-color-gray-900)">
+          gray-900
+        </div>
+        <div class="color" style="background: var(--t-color-gray-950)">
+          gray-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-red-50)">
+          red-50
+        </div>
+        <div class="color" style="background: var(--t-color-red-100)">
+          red-100
+        </div>
+        <div class="color" style="background: var(--t-color-red-200)">
+          red-200
+        </div>
+        <div class="color" style="background: var(--t-color-red-300)">
+          red-300
+        </div>
+        <div class="color" style="background: var(--t-color-red-400)">
+          red-400
+        </div>
+        <div class="color" style="background: var(--t-color-red-500)">
+          red-500
+        </div>
+        <div class="color" style="background: var(--t-color-red-600)">
+          red-600
+        </div>
+        <div class="color" style="background: var(--t-color-red-700)">
+          red-700
+        </div>
+        <div class="color" style="background: var(--t-color-red-800)">
+          red-800
+        </div>
+        <div class="color" style="background: var(--t-color-red-900)">
+          red-900
+        </div>
+        <div class="color" style="background: var(--t-color-red-950)">
+          red-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-orange-50)">
+          orange-50
+        </div>
+        <div class="color" style="background: var(--t-color-orange-100)">
+          orange-100
+        </div>
+        <div class="color" style="background: var(--t-color-orange-200)">
+          orange-200
+        </div>
+        <div class="color" style="background: var(--t-color-orange-300)">
+          orange-300
+        </div>
+        <div class="color" style="background: var(--t-color-orange-400)">
+          orange-400
+        </div>
+        <div class="color" style="background: var(--t-color-orange-500)">
+          orange-500
+        </div>
+        <div class="color" style="background: var(--t-color-orange-600)">
+          orange-600
+        </div>
+        <div class="color" style="background: var(--t-color-orange-700)">
+          orange-700
+        </div>
+        <div class="color" style="background: var(--t-color-orange-800)">
+          orange-800
+        </div>
+        <div class="color" style="background: var(--t-color-orange-900)">
+          orange-900
+        </div>
+        <div class="color" style="background: var(--t-color-orange-950)">
+          orange-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-amber-50)">
+          amber-50
+        </div>
+        <div class="color" style="background: var(--t-color-amber-100)">
+          amber-100
+        </div>
+        <div class="color" style="background: var(--t-color-amber-200)">
+          amber-200
+        </div>
+        <div class="color" style="background: var(--t-color-amber-300)">
+          amber-300
+        </div>
+        <div class="color" style="background: var(--t-color-amber-400)">
+          amber-400
+        </div>
+        <div class="color" style="background: var(--t-color-amber-500)">
+          amber-500
+        </div>
+        <div class="color" style="background: var(--t-color-amber-600)">
+          amber-600
+        </div>
+        <div class="color" style="background: var(--t-color-amber-700)">
+          amber-700
+        </div>
+        <div class="color" style="background: var(--t-color-amber-800)">
+          amber-800
+        </div>
+        <div class="color" style="background: var(--t-color-amber-900)">
+          amber-900
+        </div>
+        <div class="color" style="background: var(--t-color-amber-950)">
+          amber-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-yellow-50)">
+          yellow-50
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-100)">
+          yellow-100
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-200)">
+          yellow-200
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-300)">
+          yellow-300
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-400)">
+          yellow-400
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-500)">
+          yellow-500
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-600)">
+          yellow-600
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-700)">
+          yellow-700
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-800)">
+          yellow-800
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-900)">
+          yellow-900
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-950)">
+          yellow-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-lime-50)">
+          lime-50
+        </div>
+        <div class="color" style="background: var(--t-color-lime-100)">
+          lime-100
+        </div>
+        <div class="color" style="background: var(--t-color-lime-200)">
+          lime-200
+        </div>
+        <div class="color" style="background: var(--t-color-lime-300)">
+          lime-300
+        </div>
+        <div class="color" style="background: var(--t-color-lime-400)">
+          lime-400
+        </div>
+        <div class="color" style="background: var(--t-color-lime-500)">
+          lime-500
+        </div>
+        <div class="color" style="background: var(--t-color-lime-600)">
+          lime-600
+        </div>
+        <div class="color" style="background: var(--t-color-lime-700)">
+          lime-700
+        </div>
+        <div class="color" style="background: var(--t-color-lime-800)">
+          lime-800
+        </div>
+        <div class="color" style="background: var(--t-color-lime-900)">
+          lime-900
+        </div>
+        <div class="color" style="background: var(--t-color-lime-950)">
+          lime-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-green-50)">
+          green-50
+        </div>
+        <div class="color" style="background: var(--t-color-green-100)">
+          green-100
+        </div>
+        <div class="color" style="background: var(--t-color-green-200)">
+          green-200
+        </div>
+        <div class="color" style="background: var(--t-color-green-300)">
+          green-300
+        </div>
+        <div class="color" style="background: var(--t-color-green-400)">
+          green-400
+        </div>
+        <div class="color" style="background: var(--t-color-green-500)">
+          green-500
+        </div>
+        <div class="color" style="background: var(--t-color-green-600)">
+          green-600
+        </div>
+        <div class="color" style="background: var(--t-color-green-700)">
+          green-700
+        </div>
+        <div class="color" style="background: var(--t-color-green-800)">
+          green-800
+        </div>
+        <div class="color" style="background: var(--t-color-green-900)">
+          green-900
+        </div>
+        <div class="color" style="background: var(--t-color-green-950)">
+          green-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-emerald-50)">
+          emerald-50
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-100)">
+          emerald-100
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-200)">
+          emerald-200
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-300)">
+          emerald-300
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-400)">
+          emerald-400
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-500)">
+          emerald-500
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-600)">
+          emerald-600
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-700)">
+          emerald-700
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-800)">
+          emerald-800
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-900)">
+          emerald-900
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-950)">
+          emerald-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-teal-50)">
+          teal-50
+        </div>
+        <div class="color" style="background: var(--t-color-teal-100)">
+          teal-100
+        </div>
+        <div class="color" style="background: var(--t-color-teal-200)">
+          teal-200
+        </div>
+        <div class="color" style="background: var(--t-color-teal-300)">
+          teal-300
+        </div>
+        <div class="color" style="background: var(--t-color-teal-400)">
+          teal-400
+        </div>
+        <div class="color" style="background: var(--t-color-teal-500)">
+          teal-500
+        </div>
+        <div class="color" style="background: var(--t-color-teal-600)">
+          teal-600
+        </div>
+        <div class="color" style="background: var(--t-color-teal-700)">
+          teal-700
+        </div>
+        <div class="color" style="background: var(--t-color-teal-800)">
+          teal-800
+        </div>
+        <div class="color" style="background: var(--t-color-teal-900)">
+          teal-900
+        </div>
+        <div class="color" style="background: var(--t-color-teal-950)">
+          teal-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-cyan-50)">
+          cyan-50
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-100)">
+          cyan-100
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-200)">
+          cyan-200
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-300)">
+          cyan-300
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-400)">
+          cyan-400
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-500)">
+          cyan-500
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-600)">
+          cyan-600
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-700)">
+          cyan-700
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-800)">
+          cyan-800
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-900)">
+          cyan-900
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-950)">
+          cyan-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-sky-50)">
+          sky-50
+        </div>
+        <div class="color" style="background: var(--t-color-sky-100)">
+          sky-100
+        </div>
+        <div class="color" style="background: var(--t-color-sky-200)">
+          sky-200
+        </div>
+        <div class="color" style="background: var(--t-color-sky-300)">
+          sky-300
+        </div>
+        <div class="color" style="background: var(--t-color-sky-400)">
+          sky-400
+        </div>
+        <div class="color" style="background: var(--t-color-sky-500)">
+          sky-500
+        </div>
+        <div class="color" style="background: var(--t-color-sky-600)">
+          sky-600
+        </div>
+        <div class="color" style="background: var(--t-color-sky-700)">
+          sky-700
+        </div>
+        <div class="color" style="background: var(--t-color-sky-800)">
+          sky-800
+        </div>
+        <div class="color" style="background: var(--t-color-sky-900)">
+          sky-900
+        </div>
+        <div class="color" style="background: var(--t-color-sky-950)">
+          sky-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-blue-50)">
+          blue-50
+        </div>
+        <div class="color" style="background: var(--t-color-blue-100)">
+          blue-100
+        </div>
+        <div class="color" style="background: var(--t-color-blue-200)">
+          blue-200
+        </div>
+        <div class="color" style="background: var(--t-color-blue-300)">
+          blue-300
+        </div>
+        <div class="color" style="background: var(--t-color-blue-400)">
+          blue-400
+        </div>
+        <div class="color" style="background: var(--t-color-blue-500)">
+          blue-500
+        </div>
+        <div class="color" style="background: var(--t-color-blue-600)">
+          blue-600
+        </div>
+        <div class="color" style="background: var(--t-color-blue-700)">
+          blue-700
+        </div>
+        <div class="color" style="background: var(--t-color-blue-800)">
+          blue-800
+        </div>
+        <div class="color" style="background: var(--t-color-blue-900)">
+          blue-900
+        </div>
+        <div class="color" style="background: var(--t-color-blue-950)">
+          blue-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-indigo-50)">
+          indigo-50
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-100)">
+          indigo-100
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-200)">
+          indigo-200
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-300)">
+          indigo-300
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-400)">
+          indigo-400
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-500)">
+          indigo-500
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-600)">
+          indigo-600
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-700)">
+          indigo-700
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-800)">
+          indigo-800
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-900)">
+          indigo-900
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-950)">
+          indigo-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-violet-50)">
+          violet-50
+        </div>
+        <div class="color" style="background: var(--t-color-violet-100)">
+          violet-100
+        </div>
+        <div class="color" style="background: var(--t-color-violet-200)">
+          violet-200
+        </div>
+        <div class="color" style="background: var(--t-color-violet-300)">
+          violet-300
+        </div>
+        <div class="color" style="background: var(--t-color-violet-400)">
+          violet-400
+        </div>
+        <div class="color" style="background: var(--t-color-violet-500)">
+          violet-500
+        </div>
+        <div class="color" style="background: var(--t-color-violet-600)">
+          violet-600
+        </div>
+        <div class="color" style="background: var(--t-color-violet-700)">
+          violet-700
+        </div>
+        <div class="color" style="background: var(--t-color-violet-800)">
+          violet-800
+        </div>
+        <div class="color" style="background: var(--t-color-violet-900)">
+          violet-900
+        </div>
+        <div class="color" style="background: var(--t-color-violet-950)">
+          violet-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-purple-50)">
+          purple-50
+        </div>
+        <div class="color" style="background: var(--t-color-purple-100)">
+          purple-100
+        </div>
+        <div class="color" style="background: var(--t-color-purple-200)">
+          purple-200
+        </div>
+        <div class="color" style="background: var(--t-color-purple-300)">
+          purple-300
+        </div>
+        <div class="color" style="background: var(--t-color-purple-400)">
+          purple-400
+        </div>
+        <div class="color" style="background: var(--t-color-purple-500)">
+          purple-500
+        </div>
+        <div class="color" style="background: var(--t-color-purple-600)">
+          purple-600
+        </div>
+        <div class="color" style="background: var(--t-color-purple-700)">
+          purple-700
+        </div>
+        <div class="color" style="background: var(--t-color-purple-800)">
+          purple-800
+        </div>
+        <div class="color" style="background: var(--t-color-purple-900)">
+          purple-900
+        </div>
+        <div class="color" style="background: var(--t-color-purple-950)">
+          purple-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-fuchsia-50)">
+          fuchsia-50
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-100)">
+          fuchsia-100
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-200)">
+          fuchsia-200
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-300)">
+          fuchsia-300
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-400)">
+          fuchsia-400
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-500)">
+          fuchsia-500
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-600)">
+          fuchsia-600
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-700)">
+          fuchsia-700
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-800)">
+          fuchsia-800
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-900)">
+          fuchsia-900
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-950)">
+          fuchsia-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-pink-50)">
+          pink-50
+        </div>
+        <div class="color" style="background: var(--t-color-pink-100)">
+          pink-100
+        </div>
+        <div class="color" style="background: var(--t-color-pink-200)">
+          pink-200
+        </div>
+        <div class="color" style="background: var(--t-color-pink-300)">
+          pink-300
+        </div>
+        <div class="color" style="background: var(--t-color-pink-400)">
+          pink-400
+        </div>
+        <div class="color" style="background: var(--t-color-pink-500)">
+          pink-500
+        </div>
+        <div class="color" style="background: var(--t-color-pink-600)">
+          pink-600
+        </div>
+        <div class="color" style="background: var(--t-color-pink-700)">
+          pink-700
+        </div>
+        <div class="color" style="background: var(--t-color-pink-800)">
+          pink-800
+        </div>
+        <div class="color" style="background: var(--t-color-pink-900)">
+          pink-900
+        </div>
+        <div class="color" style="background: var(--t-color-pink-950)">
+          pink-950
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-rose-50)">
+          rose-50
+        </div>
+        <div class="color" style="background: var(--t-color-rose-100)">
+          rose-100
+        </div>
+        <div class="color" style="background: var(--t-color-rose-200)">
+          rose-200
+        </div>
+        <div class="color" style="background: var(--t-color-rose-300)">
+          rose-300
+        </div>
+        <div class="color" style="background: var(--t-color-rose-400)">
+          rose-400
+        </div>
+        <div class="color" style="background: var(--t-color-rose-500)">
+          rose-500
+        </div>
+        <div class="color" style="background: var(--t-color-rose-600)">
+          rose-600
+        </div>
+        <div class="color" style="background: var(--t-color-rose-700)">
+          rose-700
+        </div>
+        <div class="color" style="background: var(--t-color-rose-800)">
+          rose-800
+        </div>
+        <div class="color" style="background: var(--t-color-rose-900)">
+          rose-900
+        </div>
+        <div class="color" style="background: var(--t-color-rose-950)">
+          rose-950
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

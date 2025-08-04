@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Themepro-Font</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/src/themes/light.css" />
+    <link rel="stylesheet" type="text/css" href="/src/themes/dark.css" />
+    <link rel="stylesheet" type="text/css" href="/src/themes/blue.css" />    
+    <link rel="stylesheet" type="text/css" href="/src/styles/index.less" /> 
+    <script type="module" src="/src/index.ts"></script>
+    <script type="module" src="/controller.js"></script>
+    <script type="module" src="../src/index.ts"></script>
+    <script src="../src/components/card"></script>
+    <style>
+      .font-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.2rem;
+        margin: auto;
+      }
+      .items {
+        flex-grow: 1;
+        flex-basis: 0;
+      }
+      .item,
+      .font-size,
+      .font-weight {
+        border: var(--auto-border);
+        border-radius: var(--auto-border-radius);
+        margin-bottom: 0.2rem;
+        font-size: 1rem;
+        padding: 0.5rem;
+        text-align: center;
+        color: var(--auto-font-color);
+        cursor: pointer; 
+      }
+      .article {
+        font-size: var(--auto-font-size);
+      }
+    </style>
+  </head>
+  <body >
+    <div style="margin:1rem;">
+      <themepro-controller></themepro-controller>
+      <div class="t-card" >
+        <div class="t-card-header">道德经:</div>
+        <div class="t-card-body">
+        道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
+        有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门
+        </div>
+      </div>
+        <div style="display:flex;gap:1rem;align-items: center;justify-content: center">
+      <my-card title="老子-道德经" style="margin: 0.5rem">
+        道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
+        有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门
+      </my-card>
+      <my-card title="老子-道德经" style="margin: 0.5rem">
+        道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
+        有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门
+      </my-card>
+        </div>
+      
+    </div>
+    <div class="font-container">
+      <div class="items font-sizes">
+        <div class="font-size" style="font-size: var(--t-font-size-x-small)">
+          最小=x-small
+        </div>
+        <div class="font-size" style="font-size: var(--t-font-size-small)">
+          小=small
+        </div>
+        <div class="font-size" style="font-size: var(--t-font-size-medium)">
+          中=medium
+        </div>
+        <div class="font-size" style="font-size: var(--t-font-size-large)">
+          大=large
+        </div>
+        <div class="font-size" style="font-size: var(--t-font-size-x-large)">
+          x-large
+        </div>
+        <div class="font-size" style="font-size: var(--t-font-size-2x-large)">
+          2x-large
+        </div>
+        <div class="font-size" style="font-size: var(--t-font-size-3x-large)">
+          3x-large
+        </div>
+        <div class="font-size" style="font-size: var(--t-font-size-4x-large)">
+          4x-large
+        </div>
+      </div>
+      <div class="items font-weights">
+        <div
+          class="font-weight"
+          style="font-weight: var(--t-font-weight-light)"
+        >
+          light
+        </div>
+        <div
+          class="font-weight"
+          style="font-weight: var(--t-font-weight-normal)"
+        >
+          normal
+        </div>
+        <div
+          class="font-weight"
+          style="font-weight: var(--t-font-weight-semibold)"
+        >
+          semibold
+        </div>
+        <div class="font-weight" style="font-weight: var(--t-font-weight-bold)">
+          bold
+        </div>
+
+        <div
+          class="font-weight"
+          style="font-weight: var(--t-font-weight-boldest)"
+        >
+          boldest
+        </div>
+      </div>
+      <div class="items">
+        line-height
+        <div
+          class="line-height item"
+          style="line-height: var(--t-line-height-x-small)"
+        >
+          x-small
+        </div>
+        <div
+          class="line-height item"
+          style="line-height: var(--t-line-height-small)"
+        >
+          small
+        </div>
+        <div
+          class="line-height item"
+          style="line-height: var(--t-line-height-medium)"
+        >
+          medium
+        </div>
+        <div
+          class="line-height item"
+          style="line-height: var(--t-line-height-large)"
+        >
+          large
+        </div>
+        <div
+          class="line-height item"
+          style="line-height: var(--t-line-height-x-large)"
+        >
+          x-large
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

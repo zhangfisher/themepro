@@ -77,6 +77,34 @@ export class Themepro {
   }
  
   setPrimaryColor(color: string) {}
+
+  /**
+   * 在head创建一个主题样式
+   * 
+   * 
+   * @param name
+   * @param color
+   * 
+   * <style id=`theme-${name}`
+   * 
+   * :host,
+   * [theme=dark] {
+   *     --t-color-neutral-50: #001c49;
+        --t-color-neutral-100: #002766;
+        --t-color-neutral-200: #003a8c;
+        --t-color-neutral-300: #0050b3;
+        --t-color-neutral-400: #096dd9;
+        --t-color-neutral-500: #1890ff;
+        --t-color-neutral-600: #40a9ff;
+        --t-color-neutral-700: #69c0ff;
+        --t-color-neutral-800: #91d5ff;
+        --t-color-neutral-900: #bae7ff;
+        --t-color-neutral-950: #e6f7ff;
+    }
+   */
+  createTheme(name:string,color:string){
+
+  }
 }
 
 export const themePro = new Themepro();
