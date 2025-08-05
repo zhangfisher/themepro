@@ -29,6 +29,7 @@ class ThemeproController extends HTMLElement {
                     <option value="light" ${ThemePro.theme==="light" ? 'light' : ''}>Light</option>
                     <option value="dark" ${ThemePro.theme==="dark" ? 'dark' : ''}>Dark</option>
                     <option value="blue" ${ThemePro.theme==="blue" ? 'blue' : ''} >Blue</option>
+                    <option value="red" ${ThemePro.theme==="red" ? 'red' : ''} >Red</option>
                 </select>            
             </label>
         </div>

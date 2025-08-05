@@ -18,7 +18,7 @@
  */
 import color from "color"
 
-export function generateGradientColors (base:string,options?:{range?:[number,number],dark?:boolean}):string[]{
+export function generateGradientColors (base:string,options?:{range?:[number,number],dark?:boolean}):{colors:string[],dark:boolean}{
     const range = options?.range ?? [5,95]
     
   // 创建颜色对象
@@ -91,7 +91,7 @@ export function generateGradientColors (base:string,options?:{range?:[number,num
     colors.push(adjustedColor.hex());
   }
   
-  return colors;
+  return {colors,dark:isDarkColor}
 }
 
  

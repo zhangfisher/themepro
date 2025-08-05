@@ -24,7 +24,7 @@ class CardComponent extends HTMLElement {
     .t-card {
         display: flex;
         flex-direction: column;
-        background: var(--auto-bg-color);
+        background: var(--auto-bgcolor);
         color: var(--auto-font-color);
         border-radius: var(--t-border-radius-medium);
         border: var(--auto-border);

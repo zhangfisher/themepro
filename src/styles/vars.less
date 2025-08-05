@@ -7,16 +7,16 @@
     /* 边框颜色 */
     --auto-border-color: var(--t-color-neutral-200);
     /* 背景颜色，用于面板/对话框/组件的背景 */
-    --auto-bg-color: var(--t-color-neutral-0);
+    --auto-bgcolor: var(--t-color-neutral-0);
     /* 工作区背景颜色：用于工作区的背景颜色*/
-    --auto-workspace-color: var(--t-color-neutral-50);
+    --auto-panel-color: var(--t-color-neutral-50);
     /* 输入框颜色*/
-    --auto-input-bgcolor: var(--auto-bg-color);
+    --auto-input-bgcolor: var(--auto-bgcolor);
 
     /* 亮色: 相对于背景的亮色*/
-    --auto-light-color: color-mix(in hsl, var(--auto-bg-color), white 10%);
+    --auto-light-color: color-mix(in hsl, var(--auto-bgcolor), white 10%);
     /* 暗色: 相对于背景的暗色背景*/
-    --auto-dark-color: color-mix(in hsl, var(--auto-bg-color), black 10%);
+    --auto-dark-color: color-mix(in hsl, var(--auto-bgcolor), black 10%);
 
     /* 排版/字体 */
     --auto-font: var(--auto-font-weight) var(--auto-font-size)/1.5 var(--auto-font-family);
@@ -34,7 +34,7 @@
     /* 标题，用于导航/标题栏/标签页标题 */
     --auto-title-font: calc(var(--auto-font-weight) + 300) calc(var(--auto-font-size) * 1.1)/1.5 var(--auto-font-family);
     --auto-title-color: color-mix(in hsl, var(--auto-primary-color), white 10%);
-    --auto-title-bgcolor: var(--auto-border-color);
+    --auto-title-bgcolor: var(--t-color-neutral-50);
 
     /* 边框/间距 */
     --auto-spacing: var(--t-spacing-medium);
@@ -48,7 +48,7 @@
 }
 
 [theme=dark] {
-    --auto-workspace-color: var(--t-color-neutral-0);
+    --auto-panel-color: var(--t-color-neutral-0);
 }
 
 :host([size='x-small']),
