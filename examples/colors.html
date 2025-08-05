@@ -5,12 +5,8 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/src/themes/light.css" />
     <link rel="stylesheet" type="text/css" href="/src/themes/dark.css" />
-    <link rel="stylesheet" type="text/css" href="/src/themes/blue.css" />    
+    <link rel="stylesheet" type="text/css" href="/src/themes/blue.css" />   
     <link rel="stylesheet" type="text/css" href="/src/styles/index.less" /> 
-    <script type="module" src="/src/index.ts"></script>
-    <script type="module" src="/controller.js"></script>
-    <script type="module" src="../src/index.ts"></script>
-    <script src="../src/components/card"></script>
     <style>
       .color {
         margin-bottom: 0.2rem;
@@ -36,6 +32,13 @@
         gap: 0.2rem;
         margin: auto;
       } 
+      .neutral-colors{
+        display:flex;padding:0.5em; flex-direction:row;margin:0.5em;gap:0.5em;
+      }
+      .neutral-colors .color {
+        color: #aaa;
+      }
+
     </style>
     <script type="module" src="/src/index.ts"></script>
     <script type="module" src="/controller.js"></script>
@@ -57,6 +60,21 @@
         道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
         有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门
       </div>
+    </div>
+    <div class="neutral-colors"> 
+        <div class="color" style="background:var(--t-color-neutral-0)">neutral-0</div>
+        <div class="color" style="background:var(--t-color-neutral-50)">neutral-50</div>
+        <div class="color" style="background:var(--t-color-neutral-100)">neutral-100</div>
+        <div class="color" style="background:var(--t-color-neutral-200)">neutral-200</div>
+        <div class="color" style="background:var(--t-color-neutral-300)">neutral-300</div>
+        <div class="color" style="background:var(--t-color-neutral-400)">neutral-400</div>
+        <div class="color" style="background:var(--t-color-neutral-500)">neutral-500</div>
+        <div class="color" style="background:var(--t-color-neutral-600)">neutral-600</div>
+        <div class="color" style="background:var(--t-color-neutral-700)">neutral-700</div>
+        <div class="color" style="background:var(--t-color-neutral-800)">neutral-800</div>
+        <div class="color" style="background:var(--t-color-neutral-900)">neutral-900</div>
+        <div class="color" style="background:var(--t-color-neutral-950)">neutral-950</div>
+        <div class="color" style="background:var(--t-color-neutral-1000)">neutral-1000</div>
     </div>
     <div class="color-container" style="padding: 1rem; box-sizing: border-box">
       <div class="colors">
