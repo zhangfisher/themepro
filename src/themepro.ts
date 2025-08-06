@@ -4,44 +4,28 @@ import { createTheme, type ThemeOptions } from "./utils/createTheme";
 
 export type ThemeproOptions = {
     theme?: 'dark' | 'light' | 'blue'
-    dark?: boolean;
     size?: "x-small" | "small" | "medium" | "large" | "x-large";
     primaryColor?: string;  
-    borderRadius?: string;
+    radius?: string;
 }
 
 export type ThemeSize = "x-small" | "small" | "medium" | "large" | "x-large";
 export type ThemeType = "light" | "dark" | "blue" 
+export type ThemeRadius = 'none' | ThemeSize
 
 export class Themepro {
-  _dark: boolean = false;
   _theme: string = 'light';
   _size: ThemeSize = "medium";
-  _primaryColor: string = "var(--color_primary)";
-  _borderRadius: string = "none";
+  _primaryColor: string = "var(--t-color-primary)";
+  _radius: string = "none";
   options: ThemeproOptions;
   container!: HTMLElement;
   constructor(options?: ThemeproOptions) {
-    this.options = Object.assign(
-      {
-      },
-      options
-    );
+    this.options = Object.assign({},options);
     document.addEventListener(
       "DOMContentLoaded",
       this._onDomContentLoaded.bind(this)
     );
-  }
-  get dark() {
-    return this._dark;
-  }
-  set dark(value: boolean) {
-    if (value) {
-      this.container.classList.add("dark");
-    } else {
-      this.container.classList.remove("dark");
-    }
-    this._dark = value;
   }
   get size() {
     return this._size;
@@ -50,12 +34,12 @@ export class Themepro {
     this.container.setAttribute("size", value);
     this._size = value;
   }
-  get borderRadius(): string {
-    return this._borderRadius
+  get radius(): string {
+    return this._radius
   }
-  set borderRadius(value: string) {
-    this.container.setAttribute("size", value);
-    this._borderRadius = value;
+  set radius(value: string) {
+    this.container.setAttribute("radius", value);
+    this._radius = value;
   }
 
   get theme(): string {
@@ -72,10 +56,9 @@ export class Themepro {
 
   _onDomContentLoaded() {
     this.container = document.documentElement 
-    this._dark = this.container.classList.contains("dark") || false;
-    this._size =
-      (this.container.getAttribute("size") as ThemeSize) || "medium";
-    
+    this._size = (this.container.getAttribute("size") as ThemeSize) || "medium";
+    this._theme = (this.container.getAttribute("theme")) || "light";
+    this._radius = (this.container.getAttribute("radius") as ThemeRadius) || "medium";     
   }
  
   setPrimaryColor(color: string) {} 

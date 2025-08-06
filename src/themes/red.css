@@ -1,5 +1,5 @@
 :host,
-[theme=blue] {
+[theme=red] {
     color-scheme: dark;
 
     --t-color-gray-0: hsl(240 5.1% 15%);
@@ -266,17 +266,17 @@
     --t-color-danger-9: var(--t-color-red-9);
     --t-color-danger-10: var(--t-color-red-10);
 
-    --t-color-theme-0: #001c49;
-    --t-color-theme-1: #002766;
-    --t-color-theme-2: #003a8c;
-    --t-color-theme-3: #0050b3;
-    --t-color-theme-4: #096dd9;
-    --t-color-theme-5: #1890ff;
-    --t-color-theme-6: #40a9ff;
-    --t-color-theme-7: #69c0ff;
-    --t-color-theme-8: #91d5ff;
-    --t-color-theme-9: #bae7ff;
-    --t-color-theme-10: #e6f7ff;
+    --t-color-theme-0: #5c0011;
+    --t-color-theme-1: #820014;
+    --t-color-theme-2: #a8071a;
+    --t-color-theme-3: #cf1322;
+    --t-color-theme-4: #f5222d;
+    --t-color-theme-5: #ff4d4f;
+    --t-color-theme-6: #ff7875;
+    --t-color-theme-7: #ffa39e;
+    --t-color-theme-8: #ffccc7;
+    --t-color-theme-9: #fff1f0;
+    --t-color-theme-10: #fcf3f2;
 
     --t-theme-color: var(--t-color-theme-10);
     --t-theme-bgcolor: var(--t-color-theme-1);

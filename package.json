@@ -5,7 +5,8 @@
   "version": "0.0.1",
   "private": false,
   "scripts": {
-    "dev": "vite"
+    "dev": "vite -c vite.dev.config.ts",
+    "build": "vite build"
   },
   "devDependencies": {
     "@types/bun": "latest",
@@ -14,8 +15,5 @@
   },
   "peerDependencies": {
     "typescript": "^5"
-  },
-  "dependencies": {
-    "color": "^5.0.0"
   }
 }

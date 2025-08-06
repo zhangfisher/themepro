@@ -84,14 +84,32 @@ body,
 button,
 input,
 select,
+option,
 textarea {
     font: var(--auto-font);
+    color: var(--auto-color);
+    background: var(--auto-bgcolor-2);
 }
 
 button::-moz-focus-inner,
 input::-moz-focus-inner {
     padding: 0;
     border: 0;
+}
+
+/* 所有主流浏览器 */
+::selection {
+    background-color: var(--t-color-theme-3);
+    color: var(--t-theme-color);
+    /* WebKit/Blink Browsers */
+
+}
+
+/* Firefox 专用 */
+::-moz-selection {
+    background-color: var(--t-color-theme-3);
+    color: var(--t-theme-color);
+    /* WebKit/Blink Browsers */
 }
 
 /* 去掉各Table cell 的边距并让其边重合 */

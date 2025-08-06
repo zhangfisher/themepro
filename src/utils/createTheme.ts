@@ -14,29 +14,31 @@ export type ThemeOptions = {
     range?:[number,number]
     dark?:boolean        // 是否为深色系主题
 }
+
 export function createTheme(name:string,baseColor:string, options?:{prefix?:string, range?:[number,number]}){
     
     const { prefix } = Object.assign({        
-        prefix:"--t-color-neutral-",
+        prefix:"--t-color-theme-",
         range:[10,90]
     },options)
 
     const {colors,dark} = generateGradientColors(baseColor,options);
 
-    const vars = {
-        [`${prefix}0`]:colors[0],
-        [`${prefix}50`]:colors[0],
-        [`${prefix}950`]:colors[10],
-        [`${prefix}1000`]:colors[10],
-    }
+    const vars:Record<string,string> = colors.reduce((all, cur,i) => {        // @ts-ignore
+        all[`--t-color-theme-${i}`] = cur;
+        return all
+    },{})
 
-    for(let i=1;i<colors.length-1;i++){        
-        vars[`${prefix}${i}00`] = colors[i]
-    }
+    vars[`--t-theme-color`] = `var(--t-color-theme-10)`
+    vars[`--t-theme-bgcolor`] = `var(--t-color-theme-0)`
+    vars[`--t-theme-bgcolor-1`] = `var(--t-color-theme-1)`
+    vars[`--t-theme-bgcolor-2`] = `var(--t-color-theme-2)`
+    
 
     injectStylesheet(`:host,[theme=${name}]{
         ${Object.entries(vars).map(([key,value])=>`${key}:${value}`).join(';\n')}}`,{
-            id: `theme-${name || getId()}`
+            id: `theme-${name || getId()}`,
+            mode: "replace",
     })
 
 }

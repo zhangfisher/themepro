@@ -2,7 +2,7 @@ import { getId } from "./getId";
 
 export interface InjectStylesheetOptions {
   location?: "head" | "body";
-  id: string;
+  id?: string;
   // 默认仅当指定id的样式不存在时注入
   mode?: "replace" | "append" | 'default'
   // 当指定时，将在该元素下注入样式

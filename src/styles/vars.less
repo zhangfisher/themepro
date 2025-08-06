@@ -1,17 +1,17 @@
+:host([radius='none']),
+[radius='none'] {
+    --auto-border-radius: 0px;
+}
+
 :root,
 :host {
     /* 主色调 */
-    --auto-primary-color: var(--t-color-primary-500);
+    --auto-primary-color: var(--t-color-primary-5);
     /* 字体颜色 */
-    --auto-color: var(--t-color-neutral-1000);
+    --auto-color: var(--t-theme-color);
     /* 边框颜色 */
-    --auto-border-color: var(--t-color-neutral-200);
-    /* 背景颜色，用于面板/对话框/组件的背景 */
-    --auto-bgcolor: var(--t-color-neutral-0);
-    /* 工作区背景颜色：用于工作区的背景颜色*/
-    --auto-panel-color: var(--t-color-neutral-50);
-    /* 输入框颜色*/
-    --auto-input-bgcolor: var(--auto-bgcolor);
+    --auto-border-color: var(--t-color-theme-2);
+
 
     /* 亮色: 相对于背景的亮色*/
     --auto-light-color: color-mix(in hsl, var(--auto-bgcolor), white 10%);
@@ -32,24 +32,36 @@
     --auto-line-height: var(--t-line-height-medium);
 
     /* 标题，用于导航/标题栏/标签页标题 */
-    --auto-title-font: calc(var(--auto-font-weight) + 300) calc(var(--auto-font-size) * 1.1)/1.5 var(--auto-font-family);
-    --auto-title-color: color-mix(in hsl, var(--auto-primary-color), white 10%);
-    --auto-title-bgcolor: var(--t-color-neutral-50);
+    --auto-title-font: calc(var(--auto-font-weight) + 200) calc(var(--auto-font-size) * 1.1)/1.5 var(--auto-font-family);
+    --auto-title-color: var(--t-color-primary-6);
 
     /* 边框/间距 */
     --auto-spacing: var(--t-spacing-medium);
+    --auto-padding: var(--t-spacing-medium);
+    --auto-margin: var(--t-spacing-medium);
     --auto-border: 1px solid var(--auto-border-color);
     --auto-border-radius: var(--t-border-radius-medium);
     --auto-shadow: var(--t-shadow-medium);
 
     --auto-icon-size: calc(1.5 * var(--t-font-size-medium));
+
     /* 输入框 */
     --auto-input-height: var(--t-input-height-medium);
+    --auto-input-bgcolor: var(--auto-bgcolor);
+
+    /* 背景颜色，用于面板/对话框/组件的背景 */
+    --auto-bgcolor: var(--t-theme-bgcolor);
+    /* 面板背景颜色：用于面板/区块/Drawer等背景颜色*/
+    --auto-panel-bgcolor: var(--t-theme-bgcolor-1);
+    /** 标题背景颜色：用于标题/标题栏的背景颜色*/
+    --auto-title-bgcolor: var(--t-theme-bgcolor-2);
 }
 
-[theme=dark] {
-    --auto-panel-color: var(--t-color-neutral-0);
+:host([radius='x-small']),
+[radius='x-small'] {
+    --auto-border-radius: var(--t-border-radius-x-small);
 }
+
 
 :host([size='x-small']),
 [size='x-small'] {
@@ -57,6 +69,8 @@
     --auto-font-size: var(--t-font-size-x-small);
     --auto-font-weight: var(--t-font-weight-x-small);
     --auto-spacing: var(--t-spacing-x-small);
+    --auto-padding: var(--t-spacing-x-small);
+    --auto-margin: var(--t-spacing-x-small);
     --auto-letter-spacing: var(--t-letter-spacing-x-small);
     --auto-line-height: var(--t-line-height-x-small);
     /* 用于内边距和外边距 */
@@ -68,12 +82,19 @@
     --auto-input-height: var(--t-input-height-x-small);
 }
 
+:host([radius='small']),
+[radius='small'] {
+    --auto-border-radius: var(--t-border-radius-small);
+}
+
 :host([size='small']),
 [size='small'] {
     /* 排版/字体 */
     --auto-font-size: var(--t-font-size-small);
     --auto-font-weight: var(--t-font-weight-small);
     --auto-spacing: var(--t-spacing-small);
+    --auto-padding: var(--t-spacing-small);
+    --auto-margin: var(--t-spacing-small);
     --auto-letter-spacing: var(--t-letter-spacing-small);
     --auto-line-height: var(--t-line-height-small);
     /* 用于内边距和外边距 */
@@ -85,6 +106,10 @@
     --auto-input-height: var(--t-input-height-small);
 }
 
+:host([radius='large']),
+[radius='large'] {
+    --auto-border-radius: var(--t-border-radius-large);
+}
 
 :host([size='large']),
 [size='large'] {
@@ -92,6 +117,8 @@
     --auto-font-size: var(--t-font-size-large);
     --auto-font-weight: var(--t-font-weight-large);
     --auto-spacing: var(--t-spacing-large);
+    --auto-padding: var(--t-spacing-large);
+    --auto-margin: var(--t-spacing-large);
     --auto-letter-spacing: var(--t-letter-spacing-large);
     --auto-line-height: var(--t-line-height-large);
     /* 用于内边距和外边距 */
@@ -103,6 +130,10 @@
     --auto-input-height: var(--t-input-height-large);
 }
 
+:host([radius='x-large']),
+[radius='x-large'] {
+    --auto-border-radius: var(--t-border-radius-x-large);
+}
 
 :host([size='x-large']),
 [size='x-large'] {
@@ -110,6 +141,8 @@
     --auto-font-size: var(--t-font-size-x-large);
     --auto-font-weight: var(--t-font-weight-x-large);
     --auto-spacing: var(--t-spacing-x-large);
+    --auto-padding: var(--t-spacing-x-large);
+    --auto-margin: var(--t-spacing-x-large);
     --auto-letter-spacing: var(--t-letter-spacing-x-large);
     --auto-line-height: var(--t-line-height-x-large);
     /* 用于内边距和外边距 */

@@ -13,6 +13,7 @@ class ThemeproController extends HTMLElement {
             align-items: center;
             padding: 16px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            gap:0.5em;
         }
         .controller>.item{
             margin-right: 4px;
@@ -30,10 +31,11 @@ class ThemeproController extends HTMLElement {
                     <option value="dark" ${ThemePro.theme==="dark" ? 'dark' : ''}>Dark</option>
                     <option value="blue" ${ThemePro.theme==="blue" ? 'blue' : ''} >Blue</option>
                     <option value="red" ${ThemePro.theme==="red" ? 'red' : ''} >Red</option>
+                    <option value="custom" ${ThemePro.theme==="custom" ? 'custom' : ''} >Custom</option>
                 </select>            
             </label>
         </div>
-        <div>
+        <div class="item">
             <label>
               Size:
                 <select id="size" value="${ThemePro.size}">
@@ -45,10 +47,38 @@ class ThemeproController extends HTMLElement {
                 </select>            
             </label>
         </div>
+        <div class="item">
+            <label>
+              Radius:
+                <select id="radius" value="${ThemePro.radius}">
+                    <option value="x-small" ${ThemePro.radius==="x-small" ? 'selected' : ''}>x-small</option>
+                    <option value="small" ${ThemePro.radius==="small" ? 'selected' : ''}>small</option>
+                    <option value="medium" ${ThemePro.radius==="medium" ? 'selected' : ''} >medium</option>
+                    <option value="large" ${ThemePro.radius==="large" ? 'selected' : ''}>large</option>
+                    <option value="x-large" ${ThemePro.radius==="x-large" ? 'selected' : ''}>x-large</option>
+                </select>            
+            </label>
+        </div>
+        <div class="item">
+            <label> 
+                <input type="color" id="customcolor" value="${ThemePro.primaryColor}" />
+                <button id="createtheme" >CreateTheme</button>
+            </label>
+        </div>
       </div>
     `;
     this._onTheme()
     this._onSize()
+    this._onRadius()
+    this._createTheme()
+  }
+  _createTheme(){
+    const colorSelect = this.shadowRoot.getElementById("customcolor");
+    const btn = this.shadowRoot.getElementById("createtheme");
+    btn.addEventListener("click", e => {
+      ThemePro.createTheme('custom',colorSelect.value);
+      ThemePro.theme = 'custom'
+    })
   }
   _onSize(){
     const sizeSelect = this.shadowRoot.getElementById("size");
@@ -59,7 +89,14 @@ class ThemeproController extends HTMLElement {
       });
     }
   }
-  
+  _onRadius(){
+    const radiusSelect = this.shadowRoot.getElementById("radius");
+    if (radiusSelect) {
+      radiusSelect.addEventListener("change", (e) => {
+        ThemePro.radius = e.target.value;
+      });
+    }
+  }
   _onTheme(){
     const themeSelect = this.shadowRoot.getElementById("theme");
     if (themeSelect) {

@@ -21,11 +21,11 @@
     display: flex;
     flex-direction: column;
     background: var(--auto-bgcolor);
-    color: var(--auto-font-color);
-    border-radius: var(--t-border-radius-medium);
+    color: var(--auto-color);
+    border-radius: var(--auto-border-radius);
+    box-shadow: var(--auto-shadow);
     border: var(--auto-border);
     padding: 0;
-    box-shadow: var(--auto-shadow);
     box-sizing: border-box;
 
     &>.t-card-header {
@@ -34,7 +34,7 @@
         align-items: center;
         border-bottom: var(--auto-border);
         padding: calc(0.8 * var(--auto-spacing));
-        border-radius: var(--t-border-radius-medium) var(--t-border-radius-medium) 0 0;
+        border-radius: var(--auto-border-radius) var(--auto-border-radius) 0 0;
         flex-shrink: 0;
         font: var(--auto-title-font);
         color: var(--auto-title-color);
@@ -52,7 +52,7 @@
     &>.t-card-body {
         flex: 1 1 auto;
         padding: var(--auto-spacing);
-        border-radius: 0 0 var(--t-border-radius-medium) var(--t-border-radius-medium);
+        border-radius: 0 0 var(--auto-border-radius) var(--auto-border-radius);
     }
 
     &>.t-card-footer {

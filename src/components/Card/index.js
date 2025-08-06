@@ -18,15 +18,14 @@ class CardComponent extends HTMLElement {
 
   render() {
     const title = this.getAttribute('title') || ''; 
-
     this.shadowRoot.innerHTML = `
     <style>
     .t-card {
         display: flex;
         flex-direction: column;
-        background: var(--auto-bgcolor);
+        background: var(--auto-panel-bgcolor);
         color: var(--auto-font-color);
-        border-radius: var(--t-border-radius-medium);
+        border-radius: var(--auto-border-radius);
         border: var(--auto-border);
         padding: 0;
         box-shadow: var(--auto-shadow);
@@ -38,7 +37,7 @@ class CardComponent extends HTMLElement {
         align-items: center;
         border-bottom: var(--auto-border);
         padding: calc(0.6 * var(--auto-spacing));
-        border-radius: var(--t-border-radius-medium) var(--t-border-radius-medium) 0 0;
+        border-radius: var(--auto-border-radius) var(--auto-border-radius) 0 0;
         flex-shrink: 0;
         font: var(--auto-title-font);
         color: var(--auto-title-color);
@@ -47,7 +46,7 @@ class CardComponent extends HTMLElement {
     .t-card-body {
         flex: 1 1 auto;
         padding: var(--auto-spacing);
-        border-radius: 0 0 var(--t-border-radius-medium) var(--t-border-radius-medium);
+        border-radius: 0 0 var(--auto-border-radius) var(--auto-border-radius);        
     }
     </style>
       <div class="t-card">

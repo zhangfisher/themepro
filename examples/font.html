@@ -7,7 +7,12 @@
     <link rel="stylesheet" type="text/css" href="/src/themes/light.css" />
     <link rel="stylesheet" type="text/css" href="/src/themes/dark.css" />
     <link rel="stylesheet" type="text/css" href="/src/themes/blue.css" />    
+    <link rel="stylesheet" type="text/css" href="/src/themes/red.css" />    
     <link rel="stylesheet" type="text/css" href="/src/styles/index.less" /> 
+    <script src="https://unpkg.com/lucide@latest"></script>
+ <script>
+    lucide.createIcons();
+  </script>
     <script type="module" src="/src/index.ts"></script>
     <script type="module" src="/controller.js"></script> 
     <script src="../src/components/card"></script>
@@ -45,8 +50,13 @@
   <body >
     <div style="margin:1rem;">
       <themepro-controller></themepro-controller>
+       <i data-lucide="volume-2" class="my-class"></i>
+  <i data-lucide="x"></i>
+  <i data-lucide="menu"></i>
       <my-card title="老子-道德经" style="margin: 0.5rem">
-        道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
+        <i data-lucide="volume-2" class="my-class"></i>
+  <i data-lucide="x"></i>
+  <i data-lucide="menu"></i> 道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
         有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门
       </my-card>
       <my-card title="老子-道德经" style="margin: 0.5rem">

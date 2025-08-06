@@ -9,7 +9,12 @@ export default defineConfig({
       entry: "src/index.ts",
     },
     rollupOptions: {
-       
+      input: {
+        main: resolve(__dirname, 'index.html'),
+        font: resolve(__dirname, 'examples/font.html'),
+        colors: resolve(__dirname, 'examples/colors.html'),
+        input: resolve(__dirname, 'examples/input.html'),
+      },
     },
   },
   resolve: {
