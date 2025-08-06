@@ -43,16 +43,17 @@ export function generateGradientColors (base:string,options?:GenerateGradientCol
   const colors: string[] = Array.from({length:2*count+1})
   colors[count] = base;
 
+    
+    let lightnessRange = isDarkColor ? baseHsl[2] - range[0]: range[1] - baseHsl[2] 
+    let step = lightnessRange / count  
 
-  // 偏移范围从-0.5到0.5
-    let step =((isDarkColor ? 100 : 0)- baseHsl[2])*((50-range[0])/count/100)
     let lightness = baseHsl[2] 
     for (let i = count-1; i >= 0; i--) {        
         lightness = lightness + (isDarkColor ? -1 : 1) * step
         colors[i] = hslToRgb([baseHsl[0], baseHsl[1], lightness])
     }
-    step = baseHsl[2]*((range[1]-50)/count/100)
-    lightness = baseHsl[2] 
+    lightnessRange = isDarkColor ? range[1] - baseHsl[2] : baseHsl[2] - range[0] 
+    step = lightnessRange / count  
     for (let i = count+1; i < count*2+1; i++) {
         lightness = lightness - (isDarkColor ? -1 : 1) * step
         colors[i] = hslToRgb([baseHsl[0], baseHsl[1], lightness])
