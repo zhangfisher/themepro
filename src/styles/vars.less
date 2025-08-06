@@ -11,6 +11,7 @@
     --auto-color: var(--t-theme-color);
     /* 边框颜色 */
     --auto-border-color: var(--t-color-theme-2);
+    --auto-border-active-color: var(--t-color-primary-6);
 
 
     /* 亮色: 相对于背景的亮色*/
@@ -40,6 +41,7 @@
     --auto-padding: var(--t-spacing-medium);
     --auto-margin: var(--t-spacing-medium);
     --auto-border: 1px solid var(--auto-border-color);
+    --auto-active-border: 1px solid var(--auto-border-active-color);
     --auto-border-radius: var(--t-border-radius-medium);
     --auto-shadow: var(--t-shadow-medium);
 
@@ -47,7 +49,7 @@
 
     /* 输入框 */
     --auto-input-height: var(--t-input-height-medium);
-    --auto-input-bgcolor: var(--auto-bgcolor);
+    --auto-input-padding: calc(0.5 * var(--auto-padding));
 
     /* 背景颜色，用于面板/对话框/组件的背景 */
     --auto-bgcolor: var(--t-theme-bgcolor);
@@ -55,6 +57,7 @@
     --auto-panel-bgcolor: var(--t-theme-bgcolor-1);
     /** 标题背景颜色：用于标题/标题栏的背景颜色*/
     --auto-title-bgcolor: var(--t-theme-bgcolor-2);
+    --auto-input-bgcolor: var(--t-theme-bgcolor);
 }
 
 :host([radius='x-small']),

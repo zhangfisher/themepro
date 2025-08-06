@@ -46,6 +46,21 @@
         color: #aaa;
       }
 
+      input{
+        width: 100%;
+        display:block;
+        background:var(--auto-input-bgcolor);
+        border:var(--auto-border);
+        padding: var(--auto-input-padding);
+        border-radius: var(--auto-border-radius);
+      } 
+      input:hover{
+        border:var(--auto-active-border);
+      }
+      input:focus{
+        outline:none; 
+      }
+
     </style>
     <script type="module" src="/src/index.ts"></script>
     <script type="module" src="/controller.js"></script>
@@ -63,8 +78,10 @@
         </div>
         </div>        
       <my-card title="老子-道德经" style="margin: 0.5rem">
-        道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
+        <p>道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
         有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门
+        <p>
+        <input type="text"></input>
       </my-card>  
       </div>
     <div class="neutral-colors"> 
@@ -72,6 +89,7 @@
         <div class="color" style="background:var(--t-theme-bgcolor)">theme-bgcolor</div>
         <div class="color" style="background:var(--t-theme-bgcolor-1)">theme-bgcolor-1</div>
         <div class="color" style="background:var(--t-theme-bgcolor-2)">theme-bgcolor-2</div>
+        <div class="color" style="background:var(--t-theme-bgcolor-3)">theme-bgcolor-3</div>
     </div>
     <div class="neutral-colors">       
         <div class="color" style="background:var(--t-color-theme-0)">theme-0</div>

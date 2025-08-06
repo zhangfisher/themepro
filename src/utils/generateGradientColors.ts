@@ -44,7 +44,7 @@ export function generateGradientColors (base:string,options?:GenerateGradientCol
   colors[count] = base;
 
     
-    let lightnessRange = isDarkColor ? baseHsl[2] - range[0]: range[1] - baseHsl[2] 
+    let lightnessRange = Math.abs(baseHsl[2] - range[0])
     let step = lightnessRange / count  
 
     let lightness = baseHsl[2] 
@@ -52,13 +52,13 @@ export function generateGradientColors (base:string,options?:GenerateGradientCol
         lightness = lightness + (isDarkColor ? -1 : 1) * step
         colors[i] = hslToRgb([baseHsl[0], baseHsl[1], lightness])
     }
-    lightnessRange = isDarkColor ? range[1] - baseHsl[2] : baseHsl[2] - range[0] 
+    lightness = baseHsl[2] 
+    lightnessRange = Math.abs(baseHsl[2] - range[1])
     step = lightnessRange / count  
     for (let i = count+1; i < count*2+1; i++) {
-        lightness = lightness - (isDarkColor ? -1 : 1) * step
+        lightness = lightness  + (isDarkColor ? 1 : -1) * step
         colors[i] = hslToRgb([baseHsl[0], baseHsl[1], lightness])
-    }
-  
+    } 
   return {colors,dark:isDarkColor}
 }
 

@@ -11,15 +11,17 @@ import { injectStylesheet } from "./injectStylesheet"
  */
 export type ThemeOptions = {
     prefix?:string
+    //指定主题梯度颜色的范围，取值0-100
     range?:[number,number]
     dark?:boolean        // 是否为深色系主题
+
 }
 
 export function createTheme(name:string,baseColor:string, options?:{prefix?:string, range?:[number,number]}){
     
     const { prefix } = Object.assign({        
         prefix:"--t-color-theme-",
-        range:[10,90]
+        range:[10,100]
     },options)
 
     const {colors,dark} = generateGradientColors(baseColor,options);
@@ -33,6 +35,7 @@ export function createTheme(name:string,baseColor:string, options?:{prefix?:stri
     vars[`--t-theme-bgcolor`] = `var(--t-color-theme-0)`
     vars[`--t-theme-bgcolor-1`] = `var(--t-color-theme-1)`
     vars[`--t-theme-bgcolor-2`] = `var(--t-color-theme-2)`
+    vars[`--t-theme-bgcolor-3`] = `var(--t-color-theme-3)`
     
 
     injectStylesheet(`:host,[theme=${name}]{

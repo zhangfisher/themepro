@@ -282,7 +282,7 @@
     --t-theme-bgcolor: hsl(240, 5.9%, 11%);
     --t-theme-bgcolor-1: var(--t-color-gray-0);
     --t-theme-bgcolor-2: var(--t-color-gray-1);
-
+    --t-theme-bgcolor-3: var(--t-color-gray-2);
 
     --t-border-radius-x-small: 0.2rem;
     --t-border-radius-small: 0.3rem;
