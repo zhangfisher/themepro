@@ -13,7 +13,8 @@
     "@types/bun": "latest",
     "less": "^4.4.0",
     "typescript": "^5.9.2",
-    "vite": "^7.0.6"
+    "vite": "^7.0.6",
+    "vitepress": "^1.6.4"
   },
   "peerDependencies": {
     "typescript": "^5"
