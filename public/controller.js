@@ -26,7 +26,7 @@ class ThemeproController extends HTMLElement {
         <div class="item">
             <label>
               Theme:
-                <select id="theme">
+                <select id="theme" class="auto-input">
                     <option value="light" ${ThemePro.theme === "light" ? "light" : ""}>Light</option>
                     <option value="dark" ${ThemePro.theme === "dark" ? "dark" : ""}>Dark</option>
                     <option value="blue" ${ThemePro.theme === "blue" ? "blue" : ""} >Blue</option>
@@ -38,7 +38,7 @@ class ThemeproController extends HTMLElement {
         <div class="item">
             <label>
               Size:
-                <select id="size" value="${ThemePro.size}">
+                <select id="size" value="${ThemePro.size}" class="auto-input">
                     <option value="x-small" ${ThemePro.size === "x-small" ? "selected" : ""}>x-small</option>
                     <option value="small" ${ThemePro.size === "small" ? "selected" : ""}>small</option>
                     <option value="medium" ${ThemePro.size === "medium" ? "selected" : ""} >medium</option>
@@ -50,7 +50,7 @@ class ThemeproController extends HTMLElement {
         <div class="item">
             <label>
               Radius:
-                <select id="radius" value="${ThemePro.radius}">
+                <select id="radius" value="${ThemePro.radius}" class="auto-input">
                     <option value="x-small" ${ThemePro.radius === "x-small" ? "selected" : ""}>x-small</option>
                     <option value="small" ${ThemePro.radius === "small" ? "selected" : ""}>small</option>
                     <option value="medium" ${ThemePro.radius === "medium" ? "selected" : ""} >medium</option>
@@ -62,13 +62,13 @@ class ThemeproController extends HTMLElement {
         <div class="item">
             <label> 
                 ThemeColor:
-                <input type="color" id="customcolor" value="${ThemePro.primaryColor}" />
+                <input type="color" id="customcolor" value="${ThemePro.primaryColor}" class="auto-input" />
             </label>
         </div>
         <div class="item">
             <label> 
                 PrimaryColor:
-                <input type="color" id="primarycolor" value="${ThemePro.primaryColor}" />
+                <input type="color" id="primarycolor" value="${ThemePro.primaryColor}" class="auto-input" />
             </label>
         </div>
       </div>

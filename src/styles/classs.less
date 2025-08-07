@@ -173,13 +173,13 @@
 }
 
 
-.auto-button,
-.auto-button button {
-    display: flex;
+.auto-btn,
+.auto-btn button {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: var(--auto-input-padding);
+    padding: calc(0.8 * var(--auto-input-padding)) calc(2 * var(--auto-input-padding));
     border-radius: var(--auto-border-radius);
     font: var(--auto-font);
     text-transform: uppercase;
@@ -189,6 +189,7 @@
     box-shadow: var(--auto-shadow);
     border: var(--auto-border);
     box-sizing: border-box;
+    line-height: 1;
 
     &:hover {
         border: var(--auto-active-border);
@@ -199,13 +200,52 @@
         background: var(--t-color-theme-2);
     }
 
+    &.x-small {
+        font-size: var(--t-font-size-x-small);
+        padding: calc(0.8 * var(--t-spacing-x-small)) calc(2 * var(--t-spacing-x-small));
+    }
+
+    &.small {
+        font-size: var(--t-font-size-small);
+        padding: calc(0.8 * var(--t-spacing-small)) calc(2 * var(--t-spacing-small));
+    }
+
+    &.medium {
+        font-size: var(--t-font-size-medium);
+        padding: calc(0.5* var(--t-spacing-medium)) calc(1 * var(--t-spacing-medium));
+    }
+
+    &.large {
+        font-size: var(--t-font-size-large);
+        padding: calc(0.5* var(--t-spacing-large)) calc(1 * var(--t-spacing-large));
+    }
+
+    &.x-large {
+        font-size: var(--t-font-size-x-large);
+        padding: calc(0.5* var(--t-spacing-x-large)) calc(1 * var(--t-spacing-x-large));
+    }
+
+    &.compact {
+        padding: calc(0.3 * var(--auto-input-padding)) calc(0.5 * var(--auto-input-padding));
+    }
+
+    &.circle {
+        border-radius: 50%;
+        aspect-ratio: 1;
+        padding: var(--auto-input-padding);
+    }
+
+    &.pill {
+        border-radius: 9999px;
+    }
+
     &.primary {
         background-color: var(--auto-primary-color);
-        color: var(--t-color-theme-0);
+        color: color-mix(in srgb, var(--auto-primary-color) 0%, white 100%);
+        border: 1px solid var(--auto-primary-color);
 
         &:hover {
-            border: 1px solid var(--auto-primary-color);
-            color: var(--t-color-primary-4);
+            background-color: var(--t-color-primary-4);
         }
 
         &:active {
@@ -215,10 +255,10 @@
 
     &.success {
         background-color: var(--t-color-success-5);
-        color: var(--t-color-theme-0);
+        color: color-mix(in srgb, var(--t-color-success-5) 0%, white 100%);
+        border: 1px solid var(--t-color-success-5);
 
         &:hover {
-            border: 1px solid var(--auto-success-color);
             background-color: var(--t-color-success-4);
         }
 
@@ -229,10 +269,10 @@
 
     &.warning {
         background-color: var(--t-color-warning-5);
-        color: var(--t-color-theme-0);
+        color: color-mix(in srgb, var(--t-color-warning-5) 0%, white 100%);
+        border: 1px solid var(--t-color-warning-5);
 
         &:hover {
-            border: 1px solid var(--auto-warning-color);
             background-color: var(--t-color-warning-4);
         }
 
@@ -244,10 +284,10 @@
     &.error,
     &.danger {
         background-color: var(--t-color-danger-5);
-        color: var(--t-color-theme-0);
+        color: color-mix(in srgb, var(--t-color-danger-5) 0%, white 100%);
+        border: 1px solid var(--t-color-danger-5);
 
         &:hover {
-            border: 1px solid var(--auto-danger-color);
             background-color: var(--t-color-danger-4);
         }
 
@@ -257,12 +297,12 @@
     }
 
     &.info {
-        background-color: var(--t-color-info-5);
-        color: var(--t-color-theme-0);
+        background-color: var(--t-color-info-4);
+        color: color-mix(in srgb, var(--t-color-info-4) 0%, white 100%);
+        border: 1px solid var(--t-color-info-4);
 
         &:hover {
-            border: 1px solid var(--auto-info-color);
-            background-color: var(--t-color-info-4);
+            background-color: var(--t-color-info-3);
         }
 
         &:active {
