@@ -14,7 +14,7 @@ export function toRGB(hexColor: string): [number, number, number] {
     }
 
     // 去掉末尾的 alpha（8 位 → 6 位）
-    if (str.length === 8) {
+    if (str.length > 6) {
         str = str.slice(0, 6);
     }
 

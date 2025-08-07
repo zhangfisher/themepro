@@ -266,6 +266,25 @@
     --t-color-danger-9: var(--t-color-red-9);
     --t-color-danger-10: var(--t-color-red-10);
 
+    --t-color-info-0: var(--t-color-gray-0);
+    --t-color-info-1: var(--t-color-gray-1);
+    --t-color-info-2: var(--t-color-gray-2);
+    --t-color-info-3: var(--t-color-gray-3);
+    --t-color-info-4: var(--t-color-gray-4);
+    --t-color-info-5: var(--t-color-gray-5);
+    --t-color-info-6: var(--t-color-gray-6);
+    --t-color-info-7: var(--t-color-gray-7);
+    --t-color-info-8: var(--t-color-gray-8);
+    --t-color-info-9: var(--t-color-gray-9);
+    --t-color-info-10: var(--t-color-gray-10);
+
+    --t-primary-color: var(--t-color-primary-5);
+    --t-success-color: var(--t-color-success-5);
+    --t-warning-color: var(--t-color-warning-5);
+    --t-danger-color: var(--t-color-danger-5);
+    --t-info-color: var(--t-color-info-5);
+
+
     --t-color-theme-0: var(--t-color-gray-0);
     --t-color-theme-1: var(--t-color-gray-1);
     --t-color-theme-2: var(--t-color-gray-2);
@@ -282,7 +301,8 @@
     --t-theme-bgcolor: hsl(0, 0%, 100%);
     --t-theme-bgcolor-1: hsl(0, 0%, 100%);
     --t-theme-bgcolor-2: var(--t-color-gray-1);
-    --t-theme-bgcolor-3: hsl(0, 0%, 100%);
+    --t-theme-bgcolor-3: var(--t-color-gray-2);
+    --t-theme-bgcolor-4: hsl(0, 0%, 100%);
 
     --t-border-radius-x-small: 0.2rem;
     --t-border-radius-small: 0.3rem;
@@ -337,85 +357,5 @@
     --t-line-height-large: 2;
     --t-line-height-x-large: 2.5;
 
-    --t-z-index-drawer: 700;
-    --t-z-index-dialog: 800;
-    --t-z-index-dropdown: 900;
-    --t-z-index-toast: 950;
-    --t-z-index-tooltip: 1000;
 
-    /* Input */
-    --t-input-height-x-small: 1.5rem;
-    --t-input-height-small: 1.875rem;
-    --t-input-height-medium: 2.5rem;
-    --t-input-height-large: 3.125rem;
-    --t-input-height-x-large: 4.125rem;
-
-    --t-input-bgcolor: var(--t-color-theme-0);
-    --t-input-bgcolor-hover: var(--t-input-bgcolor);
-    --t-input-bgcolor-focus: var(--t-input-bgcolor);
-    --t-input-bgcolor-disabled: var(--t-color-theme-1);
-    --t-input-border-color: var(--t-color-theme-4);
-    --t-input-border-color-hover: var(--t-color-theme-5);
-    --t-input-border-color-focus: var(--t-color-primary-6);
-    --t-input-border-color-disabled: var(--t-color-theme-4);
-    --t-input-border-width: 1px;
-    --t-input-required-content: "*";
-    --t-input-required-content-offset: -2px;
-    --t-input-required-content-color: var(--t-input-label-color);
-
-    --t-input-border-radius-x-small: var(--t-border-radius-x-small);
-    --t-input-border-radius-small: var(--t-border-radius-small);
-    --t-input-border-radius-medium: var(--t-border-radius-medium);
-    --t-input-border-radius-large: var(--t-border-radius-large);
-    --t-input-border-radius-x-large: var(--t-border-radius-x-large);
-
-    --t-input-font-family: var(--t-font-sans);
-    --t-input-font-weight: var(--t-font-weight-normal);
-    --t-input-font-size-x-small: var(--t-font-size-x-small);
-    --t-input-font-size-small: var(--t-font-size-small);
-    --t-input-font-size-medium: var(--t-font-size-medium);
-    --t-input-font-size-large: var(--t-font-size-large);
-    --t-input-font-size-x-large: var(--t-font-size-x-large);
-    --t-input-letter-spacing: var(--t-letter-spacing-normal);
-
-    --t-input-color: var(--t-color-theme-7);
-    --t-input-color-hover: var(--t-color-theme-7);
-    --t-input-color-focus: var(--t-color-theme-7);
-    --t-input-color-disabled: var(--t-color-theme-9);
-    --t-input-icon-color: var(--t-color-theme-5);
-    --t-input-icon-color-hover: var(--t-color-theme-6);
-    --t-input-icon-color-focus: var(--t-color-theme-6);
-    --t-input-placeholder-color: var(--t-color-theme-5);
-    --t-input-placeholder-color-disabled: var(--t-color-theme-6);
-    --t-input-spacing-x-small: var(--t-spacing-x-small);
-    --t-input-spacing-small: var(--t-spacing-small);
-    --t-input-spacing-medium: var(--t-spacing-medium);
-    --t-input-spacing-large: var(--t-spacing-large);
-    --t-input-spacing-x-large: var(--t-spacing-x-large);
-
-    --t-input-focus-ring-color: hsl(198.6 88.7% 48.4% / 40%);
-    --t-input-focus-ring-offset: 0;
-
-    --t-input-filled-bgcolor: var(--t-color-theme-1);
-    --t-input-filled-bgcolor-hover: var(--t-color-theme-1);
-    --t-input-filled-bgcolor-focus: var(--t-color-theme-1);
-    --t-input-filled-bgcolor-disabled: var(--t-color-theme-1);
-    --t-input-filled-color: var(--t-color-theme-8);
-    --t-input-filled-color-hover: var(--t-color-theme-8);
-    --t-input-filled-color-focus: var(--t-color-theme-7);
-    --t-input-filled-color-disabled: var(--t-color-theme-8);
-
-    --t-input-label-font-size-x-small: var(--t-font-size-x-small);
-    --t-input-label-font-size-small: var(--t-font-size-small);
-    --t-input-label-font-size-medium: var(--t-font-size-medium);
-    --t-input-label-font-size-large: var(--t-font-size-large);
-    --t-input-label-font-size-x-large: var(--t-font-size-x-large);
-    --t-input-label-color: inherit;
-
-    --t-input-help-text-font-size-x-small: var(--t-font-size-x-small);
-    --t-input-help-text-font-size-small: var(--t-font-size-small);
-    --t-input-help-text-font-size-medium: var(--t-font-size-medium);
-    --t-input-help-text-font-size-large: var(--t-font-size-large);
-    --t-input-help-text-font-size-x-large: var(--t-font-size-x-large);
-    --t-input-help-text-color: var(--t-color-theme-6);
 }

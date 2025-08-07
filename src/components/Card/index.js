@@ -1,26 +1,26 @@
 // Card.js - Web Components 卡片组件实现
 class CardComponent extends HTMLElement {
-  constructor() {
-    super();
-    this.attachShadow({ mode: 'open' });
-    this.render();
-  }
+	constructor() {
+		super();
+		this.attachShadow({ mode: "open" });
+		this.render();
+	}
 
-  static get observedAttributes() {
-    return ['title', 'content'];
-  }
+	static get observedAttributes() {
+		return ["title", "content"];
+	}
 
-  attributeChangedCallback(name, oldValue, newValue) {
-    if (oldValue !== newValue) {
-      this.render();
-    }
-  }
+	attributeChangedCallback(_, oldValue, newValue) {
+		if (oldValue !== newValue) {
+			this.render();
+		}
+	}
 
-  render() {
-    const title = this.getAttribute('title') || ''; 
-    this.shadowRoot.innerHTML = `
+	render() {
+		const title = this.getAttribute("title") || "";
+		this.shadowRoot.innerHTML = `
     <style>
-    .t-card {
+    .auto-card {
         display: flex;
         flex-direction: column;
         background: var(--auto-panel-bgcolor);
@@ -31,7 +31,7 @@ class CardComponent extends HTMLElement {
         box-shadow: var(--auto-shadow);
         box-sizing: border-box;
     }
-    .t-card-header {
+    .auto-card-header {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -43,18 +43,18 @@ class CardComponent extends HTMLElement {
         color: var(--auto-title-color);
         background: var(--auto-title-bgcolor);
     }
-    .t-card-body {
+    .auto-card-body {
         flex: 1 1 auto;
         padding: var(--auto-spacing);
         border-radius: 0 0 var(--auto-border-radius) var(--auto-border-radius);        
     }
     </style>
-      <div class="t-card">
-        <div class="t-card-header">${title}</div>
-        <div class="t-card-body"><slot ></slot></div>
+      <div class="auto-card">
+        <div class="auto-card-header">${title}</div>
+        <div class="auto-card-body"><slot ></slot></div>
       </div>
     `;
-  }
+	}
 }
 
-customElements.define('my-card', CardComponent); 
+customElements.define("my-card", CardComponent);

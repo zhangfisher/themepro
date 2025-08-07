@@ -21,12 +21,15 @@ import { rgbToHsl } from "./rgbToHsl";
 import { hslToRgb } from "./hslToRgb";
 
 
-type  GenerateGradientColorsOptions = {
+export type GenerateGradientOptions = {
+    /**
+     * 根据亮度范围
+     */
     range?:[number,number]
     dark?:boolean,
     count?:number, // 生成颜色数，默认是5,所以生成的颜色是11，包含基础颜色在内，最暗和最亮颜色位于两边
 }
-export function generateGradientColors (base:string,options?:GenerateGradientColorsOptions):{colors:string[],dark:boolean}{
+export function generateGradientColors (base:string,options?:GenerateGradientOptions):{colors:string[],dark:boolean}{
     const { range,dark,count } = Object.assign({
         range:[5,98],
         count:5
@@ -49,7 +52,9 @@ export function generateGradientColors (base:string,options?:GenerateGradientCol
 
     let lightness = baseHsl[2] 
     for (let i = count-1; i >= 0; i--) {        
-        lightness = lightness + (isDarkColor ? -1 : 1) * step
+        lightness = lightness + (isDarkColor ? -1 : 1) * step        
+        if(lightness<0) lightness = 0
+        if(lightness>100) lightness = 100
         colors[i] = hslToRgb([baseHsl[0], baseHsl[1], lightness])
     }
     lightness = baseHsl[2] 
@@ -57,6 +62,8 @@ export function generateGradientColors (base:string,options?:GenerateGradientCol
     step = lightnessRange / count  
     for (let i = count+1; i < count*2+1; i++) {
         lightness = lightness  + (isDarkColor ? 1 : -1) * step
+        if(lightness<0) lightness = 0
+        if(lightness>100) lightness = 100
         colors[i] = hslToRgb([baseHsl[0], baseHsl[1], lightness])
     } 
   return {colors,dark:isDarkColor}
