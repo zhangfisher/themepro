@@ -73,13 +73,13 @@
     }
 }
 
-
 .auto-input {
     background: var(--auto-input-bgcolor);
     border: var(--auto-border);
     padding: var(--auto-input-padding);
     border-radius: var(--auto-border-radius);
     accent-color: var(--auto-primary-color);
+    font: var(--auto-font);
 
     &:hover {
         border: var(--auto-active-border);
@@ -123,6 +123,8 @@
         box-shadow: none;
         flex-grow: 1;
         min-width: 0;
+        font: var(--auto-font);
+        background: transparent;
 
         &:focus {
             outline: none;

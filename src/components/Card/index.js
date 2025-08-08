@@ -24,7 +24,7 @@ class CardComponent extends HTMLElement {
         display: flex;
         flex-direction: column;
         background: var(--auto-panel-bgcolor);
-        color: var(--auto-font-color);
+        color: var(--auto-color);
         border-radius: var(--auto-border-radius);
         border: var(--auto-border);
         padding: 0;
