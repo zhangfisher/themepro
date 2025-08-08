@@ -6,11 +6,15 @@
   "private": false,
   "scripts": {
     "dev": "vite -c vite.dev.config.ts",
-    "build": "vite build"
+    "build": "vite build",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.1.3",
     "@types/bun": "latest",
+    "biome": "^0.3.3",
     "less": "^4.4.0",
     "typescript": "^5.9.2",
     "vite": "^7.0.6",

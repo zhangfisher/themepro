@@ -70,7 +70,25 @@
             <input type="text" placeholder="请输入姓名"></input>
         </div>
     </my-card>  
-     <div class="auto-card">         
+    <div style="margin:1rem;padding:2rem;background:var(--t-theme-bgcolor);text-align:center"> 
+background:var(--t-theme-bgcolor)
+    <div style="margin:1rem;padding:2rem;background:var(--t-theme-bgcolor-1);text-align:center"> 
+    background:var(--t-theme-bgcolor-1)
+<div style="margin:1rem;padding:2rem;background:var(--t-theme-bgcolor-2);text-align:center"> 
+background:var(--t-theme-bgcolor-2)
+<div style="margin:1rem;padding:2rem;background:var(--t-theme-bgcolor-3);text-align:center"> 
+background:var(--t-theme-bgcolor-3)
+<div style="margin:1rem;padding:2rem;background:var(--t-theme-bgcolor-4);text-align:center"> 
+background:var(--t-theme-bgcolor-4)
+
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+     <div class="auto-card">                
+
+        <span class="auto-icon user"></span>  
         <div class="auto-card-header"><span class="icon-house auto-icon "></span>老子-道德经</div>
         <div class="auto-card-body" style="gap:1rem;">
             道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
@@ -86,74 +104,77 @@
             </span>   
             <span class="display:flex;gap:1rem">
                 <button class="auto-btn primary x-large">确定</button>
-                <button class="auto-btn x-large">取消</button>
-                <button class="auto-btn success x-large">成功</button>
-                <button class="auto-btn warning x-large">保存</button>
+                <button class="auto-btn x-large"><span class="auto-icon close"></span>取消</button>
+                <button class="auto-btn success x-large"><span class="auto-icon settings"></span>成功</button>
+                <button class="auto-btn warning x-large"><span class="auto-icon star"></span>保存</button>
                 <button class="auto-btn danger x-large">删除</button>
                 <button class="auto-btn info x-large">关闭</button>
             </span>  
             <span class="display:flex;gap:1rem">
                 <button class="auto-btn primary large">确定</button>
-                <button class="auto-btn large">取消</button>
-                <button class="auto-btn success large">成功</button>
-                <button class="auto-btn warning large">保存</button>
+                <button class="auto-btn large"><span class="auto-icon close"></span>取消</button>
+                <button class="auto-btn success large"><span class="auto-icon settings"></span>成功</button>
+                <button class="auto-btn warning large"><span class="auto-icon star"></span>保存</button>
                 <button class="auto-btn danger large">删除</button>
                 <button class="auto-btn info large">关闭</button>
             </span>  
             <span class="display:flex;gap:1rem">
                 <button class="auto-btn primary">确定</button>
-                <button class="auto-btn">取消</button>
-                <button class="auto-btn success">成功</button>
-                <button class="auto-btn warning">保存</button>
+                <button class="auto-btn"><span class="auto-icon close"></span>取消</button>
+                <button class="auto-btn success"><span class="auto-icon settings"></span>成功</button>
+                <button class="auto-btn warning"><span class="auto-icon star"></span>保存</button>
                 <button class="auto-btn danger">删除</button>
                 <button class="auto-btn info">关闭</button>
             </span>            
             <span class="display:flex;gap:1rem">
                 <button class="auto-btn primary x-small">确定</button>
-                <button class="auto-btn x-small">取消</button>
-                <button class="auto-btn success x-small">成功</button>
-                <button class="auto-btn warning x-small">保存</button>
+                <button class="auto-btn x-small"><span class="auto-icon close"></span>取消</button>
+                <button class="auto-btn success x-small"><span class="auto-icon settings"></span>成功</button>
+                <button class="auto-btn warning x-small"><span class="auto-icon star"></span>保存</button>
                 <button class="auto-btn danger x-small">删除</button>
                 <button class="auto-btn info x-small">关闭</button>
             </span>
             
             <span class="display:flex;gap:1rem">
                 <button class="auto-btn primary compact small">确定</button>
-                <button class="auto-btn compact small">取消</button>
-                <button class="auto-btn success compact small">成功</button>
-                <button class="auto-btn warning compact small">保存</button>
+                <button class="auto-btn compact small"><span class="auto-icon close"></span>取消</button>
+                <button class="auto-btn success compact small"><span class="auto-icon settings"></span>成功</button>
+                <button class="auto-btn warning compact small"><span class="auto-icon star"></span>保存</button>
                 <button class="auto-btn danger compact small">删除</button>
                 <button class="auto-btn info compact small">关闭</button>
             </span>
         </div>
         <div class="auto-card-footer" style="gap:1rem;flex-direction:column">老子-道德经
-             
+             <span class="auto-icon close"></span>
         </div>
     </div>  
     <div style="padding:2rem;display:flex;gap:1rem;">
         <my-card title="标题">
-            卡片内容
+            卡片内容<span class="auto-icon close"></span>
         </my-card>
         <my-card title="标题">
             卡片内容
         </my-card>
     </div>
       
-    <div class="auto-box" style="padding:2rem;display:flex;gap:1rem;">
-        <div class="auto-box" >
-            卡片内容
+    <div class="auto-alert" style="padding:2rem;display:flex;flex-direction:column; gap:1rem;">
+        <div class="auto-alert " >
+            <span class="auto-icon close"></span>卡片内容<span class="closeable"></span>
         </div>
-        <div class="auto-box warning" >
+        <div class="auto-alert warning " >
             卡片内容:warning
+            <span class="closeable"></span>
         </div>        
-        <div class="auto-box error" >
-            卡片内容:error/danger
+        <div class="auto-alert error " >
+            卡片内容:error/danger<span class="closeable"></span>
         </div>    
-        <div class="auto-box success" >
-            卡片内容:success
+        <div class="auto-alert success " >
+            卡片内容:success<span class="closeable"></span>
         </div>  
-        <div class="auto-box primary" >
-            卡片内容:primary
+        <div class="auto-alert primary " >
+            <div class="title">卡片内容:primary<span class="closeable"></span></div>
+            <p>道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
+        有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门</p>
         </div>
     </div>
     <div class="neutral-colors"> 

@@ -15,10 +15,6 @@
     }
 }
 
-.auto-icon {
-    font-size: calc(1.5 * var(--auto-font-size)) !important;
-    stroke-width: 1 !important;
-}
 
 // 卡片
 .auto-card {
@@ -139,17 +135,62 @@
 }
 
 
-.auto-box {
+.closeable {
+    z-index: 1;
+    aspect-ratio: 1;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    line-height: 1;
+    align-items: center;
+    right: calc(0.5 * var(--auto-padding));
+    top: calc(var(--auto-input-padding) + 0.5 * var(--auto-font-size) / 4);
+    width: var(--auto-padding);
+    height: var(--auto-padding);
+    box-sizing: border-box;
+    cursor: pointer;
+    font-size: calc(0.8 * var(--auto-font-size));
+    border-radius: 50%;
+    background: color-mix(in hsl, currentColor, white 50%);
+    font-family: Helvetica;
+    user-select: none;
+    opacity: 0.6;
+    mask-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtZGFzaGFycmF5PSIyMiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTE5IDVMNSAxOSI+PGFuaW1hdGUgZmlsbD0iZnJlZXplIiBhdHRyaWJ1dGVOYW1lPSJzdHJva2UtZGFzaG9mZnNldCIgYmVnaW49IjAuM3MiIGR1cj0iMC4zcyIgdmFsdWVzPSIyMjswIi8+PC9wYXRoPjxwYXRoIGQ9Ik01IDVMMTkgMTkiPjxhbmltYXRlIGZpbGw9ImZyZWV6ZSIgYXR0cmlidXRlTmFtZT0ic3Ryb2tlLWRhc2hvZmZzZXQiIGR1cj0iMC4zcyIgdmFsdWVzPSIyMjswIi8+PC9wYXRoPjwvZz48L3N2Zz4=");
+    mask-size: cover;
+    -webkit-mask-size: cover;
+
+    &:hover {
+        background: color-mix(in hsl, currentColor, black 20%);
+    }
+
+    &:active {
+        opacity: 0.9;
+    }
+
+}
+
+.auto-alert {
     background: var(--auto-panel-bgcolor);
     border: var(--auto-border);
     padding: var(--auto-input-padding);
     border-radius: var(--auto-border-radius);
     box-shadow: var(--auto-shadow);
+    position: relative;
+    box-sizing: border-box;
+
+
+    &>.title {
+        font: var(--auto-title-font);
+    }
+
+
 
     &.warning {
         background: var(--t-color-warning-1);
         border: 1px solid var(--t-color-warning-3);
         color: var(--t-color-warning-9);
+
+
     }
 
     &.success {
@@ -170,6 +211,8 @@
         border: 1px solid var(--t-color-danger-3);
         color: var(--t-color-danger-9);
     }
+
+
 }
 
 
@@ -189,7 +232,8 @@
     box-shadow: var(--auto-shadow);
     border: var(--auto-border);
     box-sizing: border-box;
-    line-height: 1;
+    vertical-align: bottom;
+    gap: 0.3em;
 
     &:hover {
         border: var(--auto-active-border);
