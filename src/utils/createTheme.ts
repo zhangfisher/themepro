@@ -2,14 +2,6 @@ import { generateGradientColors } from "./generateGradientColors";
 import { getId } from "./getId";
 import { injectStylesheet } from "./injectStylesheet";
 
-/**
- * 在header中创建主题颜色CSS变量
- *
- *
- *
- *
- */
-
 export type ThemeKeyColorOptions = {
 	// 主题色，一般应该选择一个中间色调的值
 	baseColor: string;
@@ -17,7 +9,7 @@ export type ThemeKeyColorOptions = {
 	dark?: boolean;
 	//指定主题梯度颜色的范围，取值0-100
 	range?: [number, number];
-	// 指定主题背景梯度颜色，默认取值: [10,1,2,3,4]
+	// 指定主题背景梯度颜色，默认取值: [10,1,2,3,4,5]
 	keyLevels?: number[];
 };
 

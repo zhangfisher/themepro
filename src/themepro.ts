@@ -12,20 +12,24 @@ export type ThemeproOptions = {
 	selector?: string;
 	theme?: string;
 	size?: "x-small" | "small" | "medium" | "large" | "x-large";
-	primaryColor?: string;
-	successColor?: string;
-	warningColor?: string;
-	dangerColor?: string;
-	infoColor?: string;
+	primaryColor?: string | null;
+	successColor?: string | null;
+	warningColor?: string | null;
+	dangerColor?: string | null;
+	infoColor?: string | null;
 	radius?: string;
-	// 启用紧凑时的计算因子，默认是0.5，主要作用于spaces,padding,margin
-	compact?: boolean;
+	// 启用紧凑时的计算因子，默认是1，主要作用于spaces,padding,margin
+	compact?: number;
 	/**
 	 * 基于基准颜色生成梯度颜色
 	 * @param baseColor
 	 * @returns
 	 */
 	onGenerateGradientColors?: (baseColor: string, options: GenerateGradientOptions) => {};
+};
+
+export type ThemeScope = ThemeproOptions & {
+	el: HTMLElement;
 };
 
 export type ThemeSize = "x-small" | "small" | "medium" | "large" | "x-large";
@@ -38,7 +42,7 @@ export class Themepro {
 	_radius: string = "none";
 	options: ThemeproOptions;
 	defaultScope!: HTMLElement;
-	scopes!: HTMLElement[];
+	scopes: ThemeScope[] = [];
 	constructor(options?: ThemeproOptions) {
 		this.options = Object.assign(
 			{
@@ -73,6 +77,7 @@ export class Themepro {
 		}
 		this._theme = value;
 	}
+
 	createVariantColor(variant: ThemeVariants, color: string, options?: GenerateGradientOptions) {
 		const vars = {};
 		createKeyColors(
@@ -104,9 +109,7 @@ export class Themepro {
 		return this.defaultScope;
 	}
 
-    _loadThemeScope(){
-        const 
-    }
+	_loadThemeScope() {}
 
 	_resetScopeStyles() {
 		const selector = this.options.selector;
@@ -117,7 +120,6 @@ export class Themepro {
                 box-sizing: border-box;
                 color: var(--auto-color);
                 background: var(--auto-bgcolor);
-
             }
             ${selector} ::selection {
                 background-color: var(--t-color-theme-3);
@@ -139,22 +141,26 @@ export class Themepro {
 			id: "themepro-reset",
 		});
 	}
-	_getThemeMetas() {
+	_loadThemeScopes() {
 		const metas = Array.from(document.querySelectorAll("meta[name=themepro]") || []);
-        return metas.map(meta=>{
-            return {
-				selector: meta.getAttribute("selector"),
-				size: meta.getAttribute("size") || "medium",
-				radius: meta.getAttribute("radius") || "medium",
+		return metas.map((meta) => {
+			const scope: ThemeScope = {
+				selector: meta.getAttribute("selector") || "body",
 				theme: meta.getAttribute("theme") || "light",
+				size: (meta.getAttribute("size") || "medium") as ThemeSize,
+				radius: meta.getAttribute("radius") || "medium",
 				primaryColor: meta.getAttribute("primarycolor"),
 				successColor: meta.getAttribute("successcolor"),
 				warningColor: meta.getAttribute("warningcolor"),
 				dangerColor: meta.getAttribute("dangercolor"),
 				infoColor: meta.getAttribute("infocolor"),
-				compact: meta.getAttribute("compact")
+				compact: parseInt(meta.getAttribute("compact") || "1") ?? 1,
 			};
-        })
+			const el = document.querySelector(scope.selector || "body") as HTMLElement;
+			if (el) {
+				this.scopes.push(scope);
+			}
+		});
 	}
 
 	_onDomContentLoaded() {
