@@ -13,7 +13,7 @@ export function createVariantVars(prefix: string, options: string | ThemeVariant
 		typeof options === "string" ? { color: options } : options,
 	) as ThemeVariantOptions;
 
-	const { colors, dark } = generateGradientColors(opts.color, opts);
+	const { colors, dark } = generateGradientColors(opts);
 
 	const vars: Record<string, string> = {};
 	colors.reduce((all, cur, i) => {
@@ -47,21 +47,21 @@ export function createTheme(options: ThemeOptions) {
 		{
 			prefix: "--t-color-theme-",
 			range: [10, 100],
-			keyLevels: [10, 1, 2, 3, 4, 5],
+			levels: [10, 1, 2, 3, 4, 5],
 		},
 		opts.theme,
 	);
 
-	const { colors, vars, dark } = createVariantVars("--t-color-theme-", themeOpts);
+	const { vars, dark } = createVariantVars("--t-color-theme-", themeOpts);
 
 	if (opts.variants.primary) createVariantVars("--t-color-primary-", opts.variants.primary);
 	if (opts.variants.danger) createVariantVars("--t-color-danger-", opts.variants.danger);
-	if (opts.variants.info) createVariantVars("--t-color-info-", opts.variants.info);
 	if (opts.variants.success) createVariantVars("--t-color-success-", opts.variants.success);
 	if (opts.variants.warning) createVariantVars("--t-color-warning-", opts.variants.warning);
+	if (opts.variants.info) createVariantVars("--t-color-info-", opts.variants.info);
 
 	injectStylesheet(
-		`:host,[theme=${opts.name}]{
+		`:host,[data-theme=${opts.name}]{
         ${`color-schema: ${dark ? "dark" : "light"}`}
         ${Object.entries(vars)
 			.map(([key, value]) => `${key}:${value}`)

@@ -85,26 +85,16 @@ class ThemeproController extends HTMLElement {
 			ThemePro.createTheme({
 				name: "custom",
 				theme: {
-					baseColor: colorSelect.value,
+					color: colorSelect.value,
 				},
 			});
 			ThemePro.theme = "custom";
 		});
 	}
 	_onCreatePrimaryColor() {
-		const colorSelect = this.shadowRoot.getElementById("customcolor");
 		const primarySelect = this.shadowRoot.getElementById("primarycolor");
 		primarySelect.addEventListener("input", () => {
-			// if (ThemePro.theme !== "custom") {
-			// 	ThemePro.createTheme({
-			// 		name: "custom",
-			// 		theme: {
-			// 			baseColor: colorSelect.value,
-			// 		},
-			// 	});
-			// 	ThemePro.theme = "custom";
-			// }
-			ThemePro.createVariantColor("primary", primarySelect.value);
+			ThemePro.createVariant("primary", primarySelect.value);
 		});
 	}
 	_onSize() {

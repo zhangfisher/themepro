@@ -2,7 +2,7 @@ import type { GenerateGradientOptions } from "./utils/generateGradientColors";
 
 export type ThemeSize = "x-small" | "small" | "medium" | "large" | "x-large";
 export type ThemeRadius = "none" | ThemeSize;
-export type ThemeVariants = "primary" | "success" | "warning" | "danger" | "info";
+export type ThemeVariantType = "primary" | "success" | "warning" | "danger" | "info";
 
 export type ThemeVariantOptions = {
 	// 主题色，一般应该选择一个中间色调的值
@@ -33,11 +33,11 @@ export type ThemeOptions = {
 	};
 	radius?: string;
 	// 启用紧凑时的计算因子，默认是1，主要作用于spaces,padding,margin
-	compact?: number;
+	sparse?: number;
 	/**
 	 * 基于基准颜色生成梯度颜色
 	 * @param baseColor
 	 * @returns
 	 */
-	onGenerateGradientColors?: (baseColor: string, options: GenerateGradientOptions) => string[];
+	onGenerateGradientColors?: (options: GenerateGradientOptions) => string[];
 };

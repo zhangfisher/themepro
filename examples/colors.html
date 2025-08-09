@@ -3,11 +3,12 @@
   <head>
     <title>Themepro</title>    
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/src/styles/index.less" />     
+
     <link rel="stylesheet" type="text/css" href="/src/themes/light.css" />
     <link rel="stylesheet" type="text/css" href="/src/themes/dark.css" />
     <link rel="stylesheet" type="text/css" href="/src/themes/blue.css" />   
     <link rel="stylesheet" type="text/css" href="/src/themes/red.css" />   
-    <link rel="stylesheet" type="text/css" href="/src/styles/index.less" />     
     <link rel="stylesheet" href="https://unpkg.com/lucide-static@latest/font/lucide.css" />
  
     <script type="module" src="/src/index.ts"></script>
@@ -50,7 +51,7 @@
     <script type="module" src="/src/index.ts"></script>
     <script type="module" src="/controller.js"></script>
   </head>
-  <body>
+  <body data-theme>
     <themepro-controller></themepro-controller>
     <div style="padding:2rem;">    
     <input type="text" class="auto-input" placeholder="请输入姓名"></input>
