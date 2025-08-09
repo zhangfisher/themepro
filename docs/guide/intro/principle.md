@@ -53,8 +53,7 @@
 
 主题基准颜色共生成`11级`渐变色。如下:
 
-
-```css
+```css 
 :root{
     --t-color-theme-0: #001c49;
     --t-color-theme-1: #002766;

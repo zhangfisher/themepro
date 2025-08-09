@@ -2,12 +2,22 @@ import { createKeyColors, createTheme, type ThemeOptions } from "./utils/createT
 import type { GenerateGradientOptions } from "./utils/generateGradientColors";
 import { injectStylesheet } from "./utils/injectStylesheet";
 
+export type ThemeproMeta = {
+	// 指定使用ThemePro生效的的选择器，多个选择器使用,分隔,默认值是body
+	selector: string;
+};
+
 export type ThemeproOptions = {
+	// 指定生效的区域，通常情况下是根元素，但是你也可以设置scope，比如一个div。
+	selector?: string;
 	theme?: string;
 	size?: "x-small" | "small" | "medium" | "large" | "x-large";
 	primaryColor?: string;
+	successColor?: string;
+	warningColor?: string;
+	dangerColor?: string;
+	infoColor?: string;
 	radius?: string;
-	container?: string;
 	// 启用紧凑时的计算因子，默认是0.5，主要作用于spaces,padding,margin
 	compact?: boolean;
 	/**
@@ -27,7 +37,8 @@ export class Themepro {
 	_size: ThemeSize = "medium";
 	_radius: string = "none";
 	options: ThemeproOptions;
-	container!: HTMLElement;
+	defaultScope!: HTMLElement;
+	scopes!: HTMLElement[];
 	constructor(options?: ThemeproOptions) {
 		this.options = Object.assign(
 			{
@@ -41,14 +52,14 @@ export class Themepro {
 		return this._size;
 	}
 	set size(value: ThemeSize) {
-		this.container.setAttribute("size", value);
+		this.defaultScope.setAttribute("size", value);
 		this._size = value;
 	}
 	get radius(): string {
 		return this._radius;
 	}
 	set radius(value: string) {
-		this.container.setAttribute("radius", value);
+		this.defaultScope.setAttribute("radius", value);
 		this._radius = value;
 	}
 	get theme(): string {
@@ -56,13 +67,12 @@ export class Themepro {
 	}
 	set theme(value: string) {
 		if (value === "light") {
-			this.container.removeAttribute("theme");
+			this.defaultScope.removeAttribute("theme");
 		} else {
-			this.container.setAttribute("theme", value);
+			this.defaultScope.setAttribute("theme", value);
 		}
 		this._theme = value;
 	}
-
 	createVariantColor(variant: ThemeVariants, color: string, options?: GenerateGradientOptions) {
 		const vars = {};
 		createKeyColors(
@@ -87,15 +97,19 @@ export class Themepro {
 	}
 
 	getContainer() {
-		if (!this.container) {
-			this.container = (document.querySelector(this.options.container || "body") ||
+		if (!this.defaultScope) {
+			this.defaultScope = (document.querySelector(this.options.selector || "body") ||
 				document.querySelector("body")) as HTMLElement;
 		}
-		return this.container;
+		return this.defaultScope;
 	}
 
-	_resetContainerStyles() {
-		const selector = this.options.container;
+    _loadThemeScope(){
+        const 
+    }
+
+	_resetScopeStyles() {
+		const selector = this.options.selector;
 		const resetStyles = `
             ${selector} {
                 -moz-box-sizing: border-box;
@@ -125,14 +139,31 @@ export class Themepro {
 			id: "themepro-reset",
 		});
 	}
+	_getThemeMetas() {
+		const metas = Array.from(document.querySelectorAll("meta[name=themepro]") || []);
+        return metas.map(meta=>{
+            return {
+				selector: meta.getAttribute("selector"),
+				size: meta.getAttribute("size") || "medium",
+				radius: meta.getAttribute("radius") || "medium",
+				theme: meta.getAttribute("theme") || "light",
+				primaryColor: meta.getAttribute("primarycolor"),
+				successColor: meta.getAttribute("successcolor"),
+				warningColor: meta.getAttribute("warningcolor"),
+				dangerColor: meta.getAttribute("dangercolor"),
+				infoColor: meta.getAttribute("infocolor"),
+				compact: meta.getAttribute("compact")
+			};
+        })
+	}
 
 	_onDomContentLoaded() {
-		this._resetContainerStyles();
-		this.container = this.getContainer();
-		if (this.container) {
-			this._size = (this.container.getAttribute("size") as ThemeSize) || "medium";
-			this._theme = this.container.getAttribute("theme") || "light";
-			this._radius = (this.container.getAttribute("radius") as ThemeRadius) || "medium";
+		this._resetScopeStyles();
+		this.defaultScope = this.getContainer();
+		if (this.defaultScope) {
+			this._size = (this.defaultScope.getAttribute("size") as ThemeSize) || "medium";
+			this._theme = this.defaultScope.getAttribute("theme") || "light";
+			this._radius = (this.defaultScope.getAttribute("radius") as ThemeRadius) || "medium";
 		}
 	}
 	createTheme(options?: ThemeOptions) {
@@ -140,6 +171,7 @@ export class Themepro {
 	}
 }
 
+// 创建默认的主题应用
 export const themePro = new Themepro();
 
 globalThis.ThemePro = themePro;
