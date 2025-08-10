@@ -3,6 +3,13 @@
     --auto-border-radius: 0px;
 }
 
+:host([data-spacing='medium']),
+[data-spacing='medium'] {
+    --auto-spacing: var(--t-spacing-medium) !important;
+    --auto-padding: var(--t-spacing-medium) !important;
+    --auto-margin: var(--t-spacing-medium) !important;
+}
+
 :root,
 :host {
     /* 主色调 */
@@ -16,7 +23,6 @@
     /* 边框颜色 */
     --auto-border-color: var(--t-color-theme-2);
     --auto-border-active-color: var(--t-color-primary-6);
-
 
     /* 亮色: 相对于背景的亮色*/
     --auto-light-bgcolor: color-mix(in hsl, var(--auto-bgcolor), white 10%);
@@ -70,6 +76,12 @@
     --auto-border-radius: var(--t-border-radius-x-small);
 }
 
+:host([data-spacing='x-small']),
+[data-spacing='x-small'] {
+    --auto-spacing: var(--t-spacing-x-small) !important;
+    --auto-padding: var(--t-spacing-x-small) !important;
+    --auto-margin: var(--t-spacing-x-small) !important;
+}
 
 :host([data-size='x-small']),
 [data-size='x-small'] {
@@ -92,6 +104,13 @@
 :host([data-radius='small']),
 [data-radius='small'] {
     --auto-border-radius: var(--t-border-radius-small);
+}
+
+:host([data-spacing='small']),
+[data-spacing='small'] {
+    --auto-spacing: var(--t-spacing-small) !important;
+    --auto-padding: var(--t-spacing-small) !important;
+    --auto-margin: var(--t-spacing-small) !important;
 }
 
 :host([data-size='small']),
@@ -117,6 +136,13 @@
     --auto-border-radius: var(--t-border-radius-large);
 }
 
+:host([data-spacing='large']),
+[data-spacing='large'] {
+    --auto-spacing: var(--t-spacing-large) !important;
+    --auto-padding: var(--t-spacing-large) !important;
+    --auto-margin: var(--t-spacing-large) !important;
+}
+
 :host([data-size='large']),
 [data-size='large'] {
     /* 排版/字体 */
@@ -138,6 +164,13 @@
 :host([data-radius='x-large']),
 [data-radius='x-large'] {
     --auto-border-radius: var(--t-border-radius-x-large);
+}
+
+:host([data-spacing='x-large']),
+[data-spacing='x-large'] {
+    --auto-spacing: var(--t-spacing-x-large) !important;
+    --auto-padding: var(--t-spacing-x-large) !important;
+    --auto-margin: var(--t-spacing-x-large) !important;
 }
 
 :host([data-size='x-large']),
