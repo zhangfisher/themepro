@@ -1,7 +1,7 @@
-export const baseStyles = `
 :root,
 :host {
     color-scheme: light;
+
     --t-color-gray-0: hsl(0 0% 97.5%);
     --t-color-gray-1: hsl(240 4.8% 95.9%);
     --t-color-gray-2: hsl(240 5.9% 90%);
@@ -319,25 +319,11 @@ export const baseStyles = `
     --t-shadow-large: 0 2px 8px hsl(240 3.8% 46.1% / 12%);
     --t-shadow-x-large: 0 4px 16px hsl(240 3.8% 46.1% / 12%);
 
-    --t-spacing-3x-small: 0.125rem;
-    --t-spacing-2x-small: 0.25rem;
-    --t-spacing-x-small: 0.5rem;
-    --t-spacing-small: 0.75rem;
-    --t-spacing-medium: 1rem;
-    --t-spacing-large: 1.25rem;
-    --t-spacing-x-large: 1.75rem;
-    --t-spacing-2x-large: 2.25rem;
-    --t-spacing-3x-large: 3rem;
-    --t-spacing-4x-large: 4.5rem;
-
     --t-font-size-x-small: 0.75rem;
     --t-font-size-small: 0.875rem;
     --t-font-size-medium: 1rem;
     --t-font-size-large: 1.25rem;
     --t-font-size-x-large: 1.5rem;
-    --t-font-size-2x-large: 2.25rem;
-    --t-font-size-3x-large: 3rem;
-    --t-font-size-4x-large: 4.5rem;
 
     --t-font-weight-x-small: 100;
     --t-font-weight-small: 200;
@@ -345,17 +331,23 @@ export const baseStyles = `
     --t-font-weight-large: 400;
     --t-font-weight-x-large: 500;
 
-    --t-letter-spacing-x-small: -0.03em;
-    --t-letter-spacing-small: -0.015em;
-    --t-letter-spacing-medium: normal;
-    --t-letter-spacing-large: 0.075em;
-    --t-letter-spacing-x-large: 0.15em;
+    /* 间距 */
+    --t-spacing-x-small: 0.5rem;
+    --t-spacing-small: 0.75rem;
+    --t-spacing-medium: 1rem;
+    --t-spacing-large: 1.25rem;
+    --t-spacing-x-large: 1.75rem;
 
-    --t-line-height-x-small: 1;
-    --t-line-height-small: 1.3;
-    --t-line-height-medium: 1.5;
-    --t-line-height-large: 2;
-    --t-line-height-x-large: 2.5;
+    --t-letter-spacing-x-small: calc(var(--t-spacing-medium) * 0.01);
+    --t-letter-spacing-small: calc(var(--t-spacing-medium) * 0.02);
+    --t-letter-spacing-medium: calc(var(--t-spacing-medium) * 0.05);
+    --t-letter-spacing-large: calc(var(--t-spacing-medium) * 0.1);
+    --t-letter-spacing-x-large: calc(var(--t-spacing-medium) * 0.1);
 
+    --t-line-height-x-small: var(--t-spacing-medium);
+    --t-line-height-small: calc(var(--t-spacing-medium) * 1.2);
+    --t-line-height-medium: calc(var(--t-spacing-medium) * 1.5);
+    --t-line-height-large: calc(var(--t-spacing-medium) * 1.8);
+    --t-line-height-x-large: calc(var(--t-spacing-medium) * 2);
 
-}`;
+}

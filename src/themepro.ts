@@ -15,11 +15,11 @@ export class Themepro {
 	set size(value: ThemeSize) {
 		this.root.dataset.size = value;
 	}
-	get sparse(): number {
-		return parseInt(this.root.dataset.number || "1");
+	get spacing(): ThemeSize | "auto" {
+		return (this.root.dataset.spacing || "medium") as ThemeSize | "auto";
 	}
-	set sparse(value: number) {
-		this.root.dataset.sparse = String(value);
+	set spacing(value: ThemeSize | "auto") {
+		this.root.dataset.spacing = String(value);
 	}
 	get radius(): string {
 		return this.root.dataset.radius || "medium";

@@ -23,15 +23,20 @@ export default defineConfig({
 				text: "关于",
 				items: [
 					{ text: "安装", link: "/guide/intro/install" },
-					{ text: "快速入门", link: "/guide/intro/get-started" },
 					{ text: "工作原理", link: "/guide/intro/principle" },
+					{ text: "快速入门", link: "/guide/intro/get-started" },
 				],
 			},
 			{
 				text: "指南",
 				items: [
-					{ text: "安装", link: "/guide/intro/install" },
-					{ text: "快速入门", link: "/guide/intro/get-started" },
+					{ text: "主题色", link: "/guide/use/theme" },
+					{ text: "关键色", link: "/guide/use/variant" },
+					{ text: "尺寸", link: "/guide/use/size" },
+					{ text: "圆角", link: "/guide/use/radius" },
+					{ text: "间距", link: "/guide/use/spacing" },
+					{ text: "自动变量", link: "/guide/use/autovars" },
+					{ text: "预设主题", link: "/guide/use/presets" },
 				],
 			},
 			{
