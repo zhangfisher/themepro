@@ -1,5 +1,6 @@
 import type { ThemeOptions, ThemeSize, ThemeVariantType } from "./types";
-import { createTheme, createVariantVars } from "./utils/createTheme";
+import { createTheme } from "./utils/createTheme";
+import { createVariantVars } from "./utils/createVariantVars";
 import type { GenerateGradientOptions } from "./utils/generateGradientColors";
 import { injectStylesheet } from "./utils/injectStylesheet";
 
@@ -39,7 +40,7 @@ export class Themepro {
 
 	createVariant(variant: ThemeVariantType, options: GenerateGradientOptions) {
 		const { vars } = createVariantVars(`--t-color-${variant}-`, options);
-		const selector = this.theme === "light" ? `:root,:host` : `:host,\n[data-theme=${this.theme}]`;
+		const selector = this.theme === "light" ? `:root,:host` : `:host,\n:root[data-theme=${this.theme}]`;
 		const styles = `${selector}{${Object.entries(vars)
 			.map(([name, value]) => `${name}: ${value};`)
 			.join("\n")}`;

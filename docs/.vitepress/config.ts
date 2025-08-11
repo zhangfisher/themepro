@@ -37,6 +37,7 @@ export default defineConfig({
 					{ text: "间距", link: "/guide/use/spacing" },
 					{ text: "自动变量", link: "/guide/use/autovars" },
 					{ text: "预设主题", link: "/guide/use/presets" },
+					{ text: "颜色", link: "/guide/use/colors" },
 				],
 			},
 			{
@@ -53,7 +54,7 @@ export default defineConfig({
 	markdown: {
 		config(md) {
 			md.use(vitepressDemoPlugin, {
-				demoDir: path.resolve(__dirname, "../demos"),
+				demoDir: path.resolve(__dirname, "./demos"),
 				stackblitz: {
 					show: true,
 				},

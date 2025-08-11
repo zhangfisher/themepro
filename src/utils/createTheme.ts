@@ -1,38 +1,7 @@
-import type { ThemeOptions, ThemeVariantOptions } from "../types";
-import { generateGradientColors } from "./generateGradientColors";
+import type { ThemeOptions } from "../types";
+import { createVariantVars } from "./createVariantVars";
 import { getId } from "./getId";
 import { injectStylesheet } from "./injectStylesheet";
-
-export function createVariantVars(prefix: string, options: string | ThemeVariantOptions) {
-	const opts = Object.assign(
-		{
-			levels: [5, 1, 2, 3, 4, 5],
-			range: [10, 98],
-			count: 5,
-		},
-		typeof options === "string" ? { color: options } : options,
-	) as ThemeVariantOptions;
-
-	const { colors, dark } = generateGradientColors(opts);
-
-	const vars: Record<string, string> = {};
-	colors.reduce((all, cur, i) => {
-		vars[`${prefix}${i}`] = cur;
-		return all;
-	}, {}) as Required<ThemeOptions>;
-
-	const ps = prefix.split("-");
-	const levelPrefix: string = `--t-${ps[4]}`;
-
-	if (opts.levels) {
-		vars[`${levelPrefix}-color`] = `var(${prefix}${opts.levels[0]})`;
-		vars[`${levelPrefix}-bgcolor`] = `var(${prefix}${opts.levels[1]})`;
-		opts.levels.slice(2).forEach((level, i) => {
-			vars[`${levelPrefix}-bgcolor-${i + 1}`] = `var(${prefix}${level})`;
-		});
-	}
-	return { vars, colors, dark };
-}
 
 export function createTheme(options: ThemeOptions) {
 	const opts = Object.assign(
@@ -49,7 +18,7 @@ export function createTheme(options: ThemeOptions) {
 			range: [10, 100],
 			levels: [10, 1, 2, 3, 4, 5],
 		},
-		opts.theme,
+		typeof opts.theme === "string" ? { color: opts.theme } : opts.theme,
 	);
 
 	const { vars, dark } = createVariantVars("--t-color-theme-", themeOpts);
@@ -61,7 +30,7 @@ export function createTheme(options: ThemeOptions) {
 	if (opts.variants.info) createVariantVars("--t-color-info-", opts.variants.info);
 
 	injectStylesheet(
-		`:host,[data-theme=${opts.name}]{
+		`:host,:root[data-theme=${opts.name}]{
         ${`color-schema: ${dark ? "dark" : "light"}`}
         ${Object.entries(vars)
 			.map(([key, value]) => `${key}:${value}`)

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="custom">
+  <head>
+    <title>Themepro</title>    
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/themepro/public/themepro.css" />          
+    <link rel="stylesheet" type="text/css" href="/themepro/public/red.css" />          
+    <link rel="stylesheet" type="text/css" href="/themepro/public/blue.css" />          
+    <link rel="stylesheet" type="text/css" href="/themepro/public/dark.css" />          
+    <link rel="stylesheet" type="text/css" href="/themepro/public/vanilla-picker.csp.css" />          
+    <script src="/themepro/public/index.umd.js"></script>
+    <script src="https://unpkg.com/vanilla-picker@2"></script>
+
+    <style> 
+        .theme{
+            padding:1em;
+            background:white;
+            border:1px solid #333; 
+            cursor: pointer;
+            color:gray;
+        }
+    </style> 
+  </head>
+  <body> 
+
+    <div style="margin:1rem;padding:1rem;background:var(--t-theme-bgcolor);text-align:center;color: var(--auto-primary-color)"> 
+        <span class="display:flex;gap:1rem">
+            <button class="auto-btn">取消</button>
+            <button class="auto-btn primary">确定</button>                
+            <button class="auto-btn success">成功</button>
+            <button class="auto-btn warning">保存</button>
+            <button class="auto-btn danger">删除</button>
+            <button class="auto-btn info">关闭</button>
+        </span> 
+        <div style="margin:1rem;padding:1rem;background:var(--t-theme-bgcolor-1);text-align:center"> 
+            var(--t-theme-bgcolor-1)
+            <div style="margin:1rem;padding:1rem;background:var(--t-theme-bgcolor-2);text-align:center"> 
+                var(--t-theme-bgcolor-2)
+                <div style="margin:1rem;padding:1rem;background:var(--t-theme-bgcolor-3);gap:0.5em;display:flex;flex-direction:column;align-items:center"> 
+                        
+                        <button class="auto-btn primary">Primary</button>     
+                        <div id="primary-colorpicker"></div>
+                        <button class="auto-btn success">Success</button>
+                        <div id="success-colorpicker"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>        
+    <script> 
+        ThemePro.createTheme({
+            name:"custom",
+            theme:"#1890ff"
+        }) 
+        var primaryPicker = new Picker({
+            parent:  document.getElementById("primary-colorpicker"),
+            popup:false,
+            onChange: function(color) {
+                ThemePro.createVariant("primary", {color:color.hex})
+            }
+        })
+        var successPicker = new Picker({
+            parent:  document.getElementById("success-colorpicker"),
+            popup:false,
+            onChange: function(color) {
+                ThemePro.createVariant("success", {color:color.hex})
+            }
+        })
+
+    </script>
+  </body>
+</html>
+

@@ -1,24 +1,41 @@
 {
 	"name": "themepro",
-	"module": "src/index.ts",
+	"module": "dist/index.js",
 	"type": "module",
 	"version": "0.0.1",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.umd.js"
+		},
+		"./themes/*": {
+			"import": "./dist/*.css"
+		}
+	},
 	"scripts": {
 		"dev": "vite -c vite.dev.config.ts",
 		"build": "vite build",
 		"docs:dev": "vitepress dev docs",
 		"docs:build": "vitepress build docs",
-		"docs:preview": "vitepress preview docs"
+		"docs:preview": "vitepress preview docs",
+		"changeset": "changeset",
+		"version": "changeset version",
+		"release": "vite build && changeset version && changeset publish"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.1.3",
+		"@microsoft/api-extractor": "^7.52.10",
 		"@types/bun": "latest",
 		"biome": "^0.3.3",
 		"esbuild-copy-files-plugin": "^1.2.1",
 		"less": "^4.4.0",
 		"tsup": "^8.5.0",
 		"typescript": "^5.9.2",
+		"unplugin-dts": "1.0.0-beta.6",
+		"vanilla-picker": "^2.12.3",
 		"vite": "^7.0.6",
+		"vite-plugin-cp": "^6.0.3",
 		"vitepress": "^1.6.4"
 	},
 	"peerDependencies": {
