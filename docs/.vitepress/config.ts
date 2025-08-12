@@ -7,6 +7,7 @@ export default defineConfig({
 	base: "/themepro/",
 	title: "ThemePro",
 	description: "创建动态主题样式",
+
 	themeConfig: {
 		outline: {
 			label: "目录",
@@ -49,7 +50,7 @@ export default defineConfig({
 			},
 		],
 
-		socialLinks: [{ icon: "github", link: "https://github.com/vuejs/vitepress" }],
+		socialLinks: [{ icon: "github", link: "https://github.com/zhangfisher/themepro" }],
 	},
 	markdown: {
 		config(md) {
