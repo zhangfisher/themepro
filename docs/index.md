@@ -5,14 +5,14 @@ layout: home
 hero:
   name: "ThemePro"
   text: "强大的主题管理工具"
-  tagline: 简单、灵活、实时的网站主题定制方案
+  tagline: 创建简单、灵活、实时的网站主题
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: 快速开始
+      link: /guide/intro/get-started.html
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: Github
+      link: https://github.com/zhangfisher/themepro
 
 features:
   - title: 主题管理
