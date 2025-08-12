@@ -229,13 +229,13 @@ ThemePro.create({
         color: '#3366ff',        // 基础颜色
         dark: false,             // 是否为深色系主题
         range: [10, 98],         // 颜色亮度范围
-        levels: [5, 1, 2, 3, 4, 5]  // 主题背景梯度颜色级别
+        levels: [10, 1, 2, 3, 4, 5]  // 主题背景梯度颜色级别
     },
     variants: {
         primary: {
             color: '#3366ff',
             range: [10, 95],
-            levels: [5, 1, 2, 3, 4, 5]
+            levels: [10, 1, 2, 3, 4, 5]
         },
         success: {
             color: '#00cc66',
@@ -249,117 +249,7 @@ ThemePro.create({
 });
 ```
 
-## 完整示例
 
-以下是一个完整的 ThemePro 使用示例：
-
-```html
-<!DOCTYPE html>
-<html data-theme="light" data-size="medium" data-radius="medium" data-spacing="medium">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ThemePro 示例</title>
-    <link rel="stylesheet" href="themepro.min.css">
-    <link rel="stylesheet" href="themepro.dark.min.css">
-    <script src="themepro.min.js"></script>
-    <style>
-        body {
-            font-family: var(--auto-font-family);
-            color: var(--auto-color);
-            background-color: var(--auto-bgcolor);
-            padding: var(--auto-padding);
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .card {
-            background-color: var(--auto-panel-bgcolor);
-            border: var(--auto-border);
-            border-radius: var(--auto-border-radius);
-            padding: var(--auto-padding);
-            margin-bottom: var(--auto-margin);
-        }
-        
-        .card-title {
-            color: var(--auto-title-color);
-            margin-bottom: var(--auto-spacing);
-        }
-        
-        .button {
-            background-color: var(--auto-primary-color);
-            color: white;
-            border: none;
-            border-radius: var(--auto-border-radius);
-            padding: var(--auto-input-padding);
-            cursor: pointer;
-        }
-        
-        .button-danger {
-            background-color: var(--auto-danger-color);
-        }
-        
-        .controls {
-            display: flex;
-            gap: var(--auto-spacing);
-            margin-bottom: var(--auto-margin);
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>ThemePro 示例</h1>
-        
-        <div class="controls">
-            <button class="button" id="toggle-theme">切换主题</button>
-            <button class="button" id="toggle-size">切换尺寸</button>
-            <button class="button" id="toggle-radius">切换圆角</button>
-            <button class="button" id="toggle-spacing">切换间距</button>
-        </div>
-        
-        <div class="card">
-            <h2 class="card-title">卡片标题</h2>
-            <p>这是一个使用 ThemePro 样式的卡片组件。</p>
-            <button class="button">确认</button>
-            <button class="button button-danger">取消</button>
-        </div>
-    </div>
-    
-    <script>
-        // 主题切换
-        document.getElementById('toggle-theme').addEventListener('click', () => {
-            ThemePro.theme = ThemePro.theme === 'dark' ? 'light' : 'dark';
-        });
-        
-        // 尺寸切换
-        document.getElementById('toggle-size').addEventListener('click', () => {
-            const sizes = ['small', 'medium', 'large'];
-            const currentIndex = sizes.indexOf(ThemePro.size);
-            const nextIndex = (currentIndex + 1) % sizes.length;
-            ThemePro.size = sizes[nextIndex];
-        });
-        
-        // 圆角切换
-        document.getElementById('toggle-radius').addEventListener('click', () => {
-            const radiuses = ['none', 'small', 'medium', 'large'];
-            const currentIndex = radiuses.indexOf(ThemePro.radius);
-            const nextIndex = (currentIndex + 1) % radiuses.length;
-            ThemePro.radius = radiuses[nextIndex];
-        });
-        
-        // 间距切换
-        document.getElementById('toggle-spacing').addEventListener('click', () => {
-            const spacings = ['small', 'medium', 'large'];
-            const currentIndex = spacings.indexOf(ThemePro.spacing);
-            const nextIndex = (currentIndex + 1) % spacings.length;
-            ThemePro.spacing = spacings[nextIndex];
-        });
-    </script>
-</body>
-</html>
-```
-
-现在你已经掌握了 ThemePro 的基本用法，可以开始在你的项目中使用它来创建灵活的主题系统了！
+:::warning 要点
+引入`ThemePro`后，在开发时使用以`--auto-`前缀开头的CSS变量,然后当切换主题时界面就可以自动更新了。
+:::
