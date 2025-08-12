@@ -13,7 +13,7 @@ importers:
         version: 2.1.3
       '@lite-tree/vue':
         specifier: ^1.1.6
-        version: 1.1.6(vue@3.5.18(typescript@5.9.2))
+        version: 1.1.6(vue@3.5.18(typescript@5.8.2))
       '@microsoft/api-extractor':
         specifier: ^7.52.10
         version: 7.52.10(@types/node@24.1.0)
@@ -31,13 +31,13 @@ importers:
         version: 4.4.0
       tsup:
         specifier: ^8.5.0
-        version: 8.5.0(@microsoft/api-extractor@7.52.10(@types/node@24.1.0))(postcss@8.5.6)(typescript@5.9.2)
+        version: 8.5.0(@microsoft/api-extractor@7.52.10(@types/node@24.1.0))(postcss@8.5.6)(typescript@5.8.2)
       typescript:
-        specifier: ^5.9.2
-        version: 5.9.2
+        specifier: ^5.8.2
+        version: 5.8.2
       unplugin-dts:
         specifier: 1.0.0-beta.6
-        version: 1.0.0-beta.6(@microsoft/api-extractor@7.52.10(@types/node@24.1.0))(esbuild@0.25.8)(rollup@4.46.2)(typescript@5.9.2)(vite@7.0.6(@types/node@24.1.0)(less@4.4.0))
+        version: 1.0.0-beta.6(@microsoft/api-extractor@7.52.10(@types/node@24.1.0))(esbuild@0.25.8)(rollup@4.46.2)(typescript@5.8.2)(vite@7.0.6(@types/node@24.1.0)(less@4.4.0))
       vanilla-picker:
         specifier: ^2.12.3
         version: 2.12.3
@@ -49,10 +49,10 @@ importers:
         version: 6.0.3
       vitepress:
         specifier: ^1.6.4
-        version: 1.6.4(@algolia/client-search@5.35.0)(@types/node@24.1.0)(less@4.4.0)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.9.2)
+        version: 1.6.4(@algolia/client-search@5.35.0)(@types/node@24.1.0)(less@4.4.0)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.8.2)
       vitepress-demo-plugin:
         specifier: ^1.4.7
-        version: 1.4.7(shiki@2.5.0)(vitepress@1.6.4(@algolia/client-search@5.35.0)(@types/node@24.1.0)(less@4.4.0)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.9.2))(vue@3.5.18(typescript@5.9.2))
+        version: 1.4.7(shiki@2.5.0)(vitepress@1.6.4(@algolia/client-search@5.35.0)(@types/node@24.1.0)(less@4.4.0)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.8.2))(vue@3.5.18(typescript@5.8.2))
 
 packages:
 
@@ -1919,11 +1919,6 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  typescript@5.9.2:
-    resolution: {integrity: sha512-CWBzXQrc/qOkhidw1OzBTQuYRbfyxDXJMVJ1XNwUHGROVmuaeiEm3OslpZ1RV96d7SKKjZKrSJu3+t/xlw3R9A==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-
   ufo@1.6.1:
     resolution: {integrity: sha512-9a4/uxlTWJ4+a5i0ooc1rU7C7YOw3wT+UGqdeNNHWnOF9qcMBgLRS+4IYUqbczewFx4mLEig6gawh7X6mFlEkA==}
 
@@ -2525,10 +2520,10 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.4
 
-  '@lite-tree/vue@1.1.6(vue@3.5.18(typescript@5.9.2))':
+  '@lite-tree/vue@1.1.6(vue@3.5.18(typescript@5.8.2))':
     dependencies:
-      vue: 3.5.18(typescript@5.9.2)
-      vue-slide-up-down: 3.0.0(vue@3.5.18(typescript@5.9.2))
+      vue: 3.5.18(typescript@5.8.2)
+      vue-slide-up-down: 3.0.0(vue@3.5.18(typescript@5.8.2))
 
   '@microsoft/api-extractor-model@7.30.7(@types/node@24.1.0)':
     dependencies:
@@ -2764,10 +2759,10 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@vitejs/plugin-vue@5.2.4(vite@5.4.19(@types/node@24.1.0)(less@4.4.0))(vue@3.5.18(typescript@5.9.2))':
+  '@vitejs/plugin-vue@5.2.4(vite@5.4.19(@types/node@24.1.0)(less@4.4.0))(vue@3.5.18(typescript@5.8.2))':
     dependencies:
       vite: 5.4.19(@types/node@24.1.0)(less@4.4.0)
-      vue: 3.5.18(typescript@5.9.2)
+      vue: 3.5.18(typescript@5.8.2)
 
   '@volar/language-core@2.4.23':
     dependencies:
@@ -2845,28 +2840,28 @@ snapshots:
       '@vue/shared': 3.5.18
       csstype: 3.1.3
 
-  '@vue/server-renderer@3.5.18(vue@3.5.18(typescript@5.9.2))':
+  '@vue/server-renderer@3.5.18(vue@3.5.18(typescript@5.8.2))':
     dependencies:
       '@vue/compiler-ssr': 3.5.18
       '@vue/shared': 3.5.18
-      vue: 3.5.18(typescript@5.9.2)
+      vue: 3.5.18(typescript@5.8.2)
 
   '@vue/shared@3.5.18': {}
 
-  '@vueuse/core@12.8.2(typescript@5.9.2)':
+  '@vueuse/core@12.8.2(typescript@5.8.2)':
     dependencies:
       '@types/web-bluetooth': 0.0.21
       '@vueuse/metadata': 12.8.2
-      '@vueuse/shared': 12.8.2(typescript@5.9.2)
-      vue: 3.5.18(typescript@5.9.2)
+      '@vueuse/shared': 12.8.2(typescript@5.8.2)
+      vue: 3.5.18(typescript@5.8.2)
     transitivePeerDependencies:
       - typescript
 
-  '@vueuse/integrations@12.8.2(focus-trap@7.6.5)(typescript@5.9.2)':
+  '@vueuse/integrations@12.8.2(focus-trap@7.6.5)(typescript@5.8.2)':
     dependencies:
-      '@vueuse/core': 12.8.2(typescript@5.9.2)
-      '@vueuse/shared': 12.8.2(typescript@5.9.2)
-      vue: 3.5.18(typescript@5.9.2)
+      '@vueuse/core': 12.8.2(typescript@5.8.2)
+      '@vueuse/shared': 12.8.2(typescript@5.8.2)
+      vue: 3.5.18(typescript@5.8.2)
     optionalDependencies:
       focus-trap: 7.6.5
     transitivePeerDependencies:
@@ -2874,9 +2869,9 @@ snapshots:
 
   '@vueuse/metadata@12.8.2': {}
 
-  '@vueuse/shared@12.8.2(typescript@5.9.2)':
+  '@vueuse/shared@12.8.2(typescript@5.8.2)':
     dependencies:
-      vue: 3.5.18(typescript@5.9.2)
+      vue: 3.5.18(typescript@5.8.2)
     transitivePeerDependencies:
       - typescript
 
@@ -3940,7 +3935,7 @@ snapshots:
 
   tslib@2.8.1: {}
 
-  tsup@8.5.0(@microsoft/api-extractor@7.52.10(@types/node@24.1.0))(postcss@8.5.6)(typescript@5.9.2):
+  tsup@8.5.0(@microsoft/api-extractor@7.52.10(@types/node@24.1.0))(postcss@8.5.6)(typescript@5.8.2):
     dependencies:
       bundle-require: 5.1.0(esbuild@0.25.8)
       cac: 6.7.14
@@ -3962,7 +3957,7 @@ snapshots:
     optionalDependencies:
       '@microsoft/api-extractor': 7.52.10(@types/node@24.1.0)
       postcss: 8.5.6
-      typescript: 5.9.2
+      typescript: 5.8.2
     transitivePeerDependencies:
       - jiti
       - supports-color
@@ -3976,8 +3971,6 @@ snapshots:
   tweetnacl@0.14.5: {}
 
   typescript@5.8.2: {}
-
-  typescript@5.9.2: {}
 
   ufo@1.6.1: {}
 
@@ -4008,7 +4001,7 @@ snapshots:
 
   universalify@2.0.1: {}
 
-  unplugin-dts@1.0.0-beta.6(@microsoft/api-extractor@7.52.10(@types/node@24.1.0))(esbuild@0.25.8)(rollup@4.46.2)(typescript@5.9.2)(vite@7.0.6(@types/node@24.1.0)(less@4.4.0)):
+  unplugin-dts@1.0.0-beta.6(@microsoft/api-extractor@7.52.10(@types/node@24.1.0))(esbuild@0.25.8)(rollup@4.46.2)(typescript@5.8.2)(vite@7.0.6(@types/node@24.1.0)(less@4.4.0)):
     dependencies:
       '@rollup/pluginutils': 5.2.0(rollup@4.46.2)
       '@volar/typescript': 2.4.23
@@ -4017,7 +4010,7 @@ snapshots:
       kolorist: 1.8.0
       local-pkg: 1.1.1
       magic-string: 0.30.17
-      typescript: 5.9.2
+      typescript: 5.8.2
       unplugin: 2.3.5
     optionalDependencies:
       '@microsoft/api-extractor': 7.52.10(@types/node@24.1.0)
@@ -4097,13 +4090,13 @@ snapshots:
       fsevents: 2.3.3
       less: 4.4.0
 
-  vitepress-demo-plugin@1.4.7(shiki@2.5.0)(vitepress@1.6.4(@algolia/client-search@5.35.0)(@types/node@24.1.0)(less@4.4.0)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.9.2))(vue@3.5.18(typescript@5.9.2)):
+  vitepress-demo-plugin@1.4.7(shiki@2.5.0)(vitepress@1.6.4(@algolia/client-search@5.35.0)(@types/node@24.1.0)(less@4.4.0)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.8.2))(vue@3.5.18(typescript@5.8.2)):
     dependencies:
       shiki: 2.5.0
-      vitepress: 1.6.4(@algolia/client-search@5.35.0)(@types/node@24.1.0)(less@4.4.0)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.9.2)
-      vue: 3.5.18(typescript@5.9.2)
+      vitepress: 1.6.4(@algolia/client-search@5.35.0)(@types/node@24.1.0)(less@4.4.0)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.8.2)
+      vue: 3.5.18(typescript@5.8.2)
 
-  vitepress@1.6.4(@algolia/client-search@5.35.0)(@types/node@24.1.0)(less@4.4.0)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.9.2):
+  vitepress@1.6.4(@algolia/client-search@5.35.0)(@types/node@24.1.0)(less@4.4.0)(postcss@8.5.6)(search-insights@2.17.3)(typescript@5.8.2):
     dependencies:
       '@docsearch/css': 3.8.2
       '@docsearch/js': 3.8.2(@algolia/client-search@5.35.0)(search-insights@2.17.3)
@@ -4112,17 +4105,17 @@ snapshots:
       '@shikijs/transformers': 2.5.0
       '@shikijs/types': 2.5.0
       '@types/markdown-it': 14.1.2
-      '@vitejs/plugin-vue': 5.2.4(vite@5.4.19(@types/node@24.1.0)(less@4.4.0))(vue@3.5.18(typescript@5.9.2))
+      '@vitejs/plugin-vue': 5.2.4(vite@5.4.19(@types/node@24.1.0)(less@4.4.0))(vue@3.5.18(typescript@5.8.2))
       '@vue/devtools-api': 7.7.7
       '@vue/shared': 3.5.18
-      '@vueuse/core': 12.8.2(typescript@5.9.2)
-      '@vueuse/integrations': 12.8.2(focus-trap@7.6.5)(typescript@5.9.2)
+      '@vueuse/core': 12.8.2(typescript@5.8.2)
+      '@vueuse/integrations': 12.8.2(focus-trap@7.6.5)(typescript@5.8.2)
       focus-trap: 7.6.5
       mark.js: 8.11.1
       minisearch: 7.1.2
       shiki: 2.5.0
       vite: 5.4.19(@types/node@24.1.0)(less@4.4.0)
-      vue: 3.5.18(typescript@5.9.2)
+      vue: 3.5.18(typescript@5.8.2)
     optionalDependencies:
       postcss: 8.5.6
     transitivePeerDependencies:
@@ -4165,19 +4158,19 @@ snapshots:
 
   vscode-uri@3.1.0: {}
 
-  vue-slide-up-down@3.0.0(vue@3.5.18(typescript@5.9.2)):
+  vue-slide-up-down@3.0.0(vue@3.5.18(typescript@5.8.2)):
     dependencies:
-      vue: 3.5.18(typescript@5.9.2)
+      vue: 3.5.18(typescript@5.8.2)
 
-  vue@3.5.18(typescript@5.9.2):
+  vue@3.5.18(typescript@5.8.2):
     dependencies:
       '@vue/compiler-dom': 3.5.18
       '@vue/compiler-sfc': 3.5.18
       '@vue/runtime-dom': 3.5.18
-      '@vue/server-renderer': 3.5.18(vue@3.5.18(typescript@5.9.2))
+      '@vue/server-renderer': 3.5.18(vue@3.5.18(typescript@5.8.2))
       '@vue/shared': 3.5.18
     optionalDependencies:
-      typescript: 5.9.2
+      typescript: 5.8.2
 
   webidl-conversions@4.0.2: {}
 
