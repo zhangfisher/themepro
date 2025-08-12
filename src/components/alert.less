@@ -1,0 +1,40 @@
+.auto-alert {
+    background: var(--auto-panel-bgcolor);
+    border: var(--auto-border);
+    padding: var(--auto-input-padding);
+    border-radius: var(--auto-border-radius);
+    box-shadow: var(--auto-shadow);
+    position: relative;
+    box-sizing: border-box;
+
+    &>.title {
+        font: var(--auto-title-font);
+    }
+
+    &.warning {
+        background: var(--t-color-warning-1);
+        border: 1px solid var(--t-color-warning-3);
+        color: var(--t-color-warning-9);
+    }
+
+    &.success {
+        background: var(--t-color-success-1);
+        border: 1px solid var(--t-color-success-3);
+        color: var(--t-color-success-9);
+    }
+
+    &.primary {
+        background: var(--t-color-primary-1);
+        border: 1px solid var(--t-color-primary-3);
+        color: var(--t-color-primary-9);
+    }
+
+    &.error,
+    &.danger {
+        background: var(--t-color-danger-1);
+        border: 1px solid var(--t-color-danger-3);
+        color: var(--t-color-danger-9);
+    }
+
+
+}

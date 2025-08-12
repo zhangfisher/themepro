@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="blue">
+  <head>
+    <title>Themepro</title>    
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/themepro/public/index.css" />          
+    <link rel="stylesheet" type="text/css" href="/themepro/public/red.css" />          
+    <link rel="stylesheet" type="text/css" href="/themepro/public/blue.css" />          
+    <link rel="stylesheet" type="text/css" href="/themepro/public/dark.css" />          
+    <script src="/themepro/public/index.umd.js"></script>
+    <style> 
+        .theme{
+            padding:0.5em 1em;
+            background:white;
+            border:1px solid #333;
+            cursor: pointer;
+            color:gray;
+        }
+        .radius-input{
+            cursor:pointer;
+        }
+        .box{
+            width: 80%;
+            border: var(--auto-border);
+            margin: 0.5rem;
+            padding: var(--auto-padding);
+            background:var(--auto-panel-bgcolor);
+        }
+    </style> 
+  </head>
+  <body>
+    <div style="background:var(--t-theme-bgcolor);text-align:center">           
+        <div id="radius" style="display:flex;gap:0.5em;margin:1rem;padding:0.5rem;text-align:center;justify-content:center">             
+                <label class="radius-input"><input type="radio" name="radius" value="none" >none</label>
+                <label class="radius-input"><input type="radio" name="radius" value="x-small" >x-small</label>
+                <label class="radius-input"><input type="radio" name="radius" value="small"> small</label>
+                <label class="radius-input"><input type="radio" name="radius" value="medium" checked> medium</label>              
+                <label class="radius-input"><input type="radio" name="radius" value="large"> large</label>
+                <label class="radius-input"><input type="radio" name="radius" value="x-large"> x-large</label>              
+        </div> 
+        <div style="line-height:var(--auto-line-height);padding:1rem;display:flex;flex-direction: column;align-items:center;gap:1rem">             
+            <div class="box" style="border-radius:var(--auto-border-radius);background:var(--t-color-primary-3);color:#888">border-radius=var(--auto-border-radius)</div>            
+            <div class="box"  style="border-radius:var(--t-border-radius-x-small)">border-radius=var(--t-border-radius-x-small)</div> 
+            <div class="box"  style="border-radius:var(--t-border-radius-small)">border-radius=var(--t-border-radius-small)</div>
+            <div class="box"  style="border-radius:var(--t-border-radius-medium)">border-radius=var(--t-border-radius-medium)</div>
+            <div class="box"  style="border-radius:var(--t-border-radius-large)">border-radius=var(--t-border-radius-large)</div>
+            <div class="box"  style="border-radius:var(--t-border-radius-x-large)">border-radius=var(--t-border-radius-x-large)</div>
+            <div class="box"  style="border-radius:var(--t-border-radius-pill)">border-radius=var(--t-border-radius-pill)</div>
+        </div>
+    </div>        
+    <script>
+        const sizes = document.querySelector("#radius")
+        sizes.addEventListener('change', (event) => {
+            const radius = document.querySelector('input[type=radio][name=radius]:checked')
+            ThemePro.radius = radius.value
+        });
+    </script>
+  </body>
+</html>
+
+
