@@ -21,7 +21,7 @@
 		"dev": "vite -c vite.dev.config.ts",
 		"build": "vite build",
 		"docs:dev": "vitepress dev docs",
-		"docs:build": "vitepress build docs",
+		"docs:build": "cd docs && vitepress build ",
 		"docs:preview": "vitepress preview docs",
 		"changeset": "changeset",
 		"version": "changeset version",
