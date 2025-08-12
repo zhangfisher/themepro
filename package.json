@@ -21,7 +21,7 @@
 		"dev": "vite -c vite.dev.config.ts",
 		"build": "vite build",
 		"docs:dev": "vitepress dev docs",
-		"docs:build": "cd docs && vitepress build ",
+		"docs:build": "vitepress build docs",
 		"docs:preview": "vitepress preview docs",
 		"changeset": "changeset",
 		"version": "changeset version",
@@ -29,6 +29,7 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.1.3",
+		"@lite-tree/vue": "^1.1.6",
 		"@microsoft/api-extractor": "^7.52.10",
 		"@types/bun": "latest",
 		"biome": "^0.3.3",

@@ -57,19 +57,12 @@ jobs:
           ls -la docs/.vitepress/dist
           echo "Checking for index.html:"
           cat docs/.vitepress/dist/index.html || echo "index.html not found"
-      # 确保构建输出目录存在
-      - name: Ensure .vitepress/dist exists
-        run: mkdir -p .vitepress/dist
-      
-      # 复制构建输出到根目录下的.vitepress/dist
-      - name: Copy build output to root .vitepress/dist
-        run: cp -r docs/.vitepress/dist/* .vitepress/dist/
       
       # 上传构建产物
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .vitepress/dist
+          path: docs/.vitepress/dist
 
   # 部署工作
   deploy:

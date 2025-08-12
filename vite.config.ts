@@ -5,7 +5,7 @@ import dts from "unplugin-dts/vite";
 // https://vitejs.dev/config/
 export default defineConfig({
 	build: {
-		minify: false, // 禁用代码压缩
+		minify: true, // 禁用代码压缩
 		sourcemap: true, // 生成 sourceMap
 		lib: {
 			name: "themepro",

@@ -11,6 +11,9 @@ importers:
       '@biomejs/biome':
         specifier: ^2.1.3
         version: 2.1.3
+      '@lite-tree/vue':
+        specifier: ^1.1.6
+        version: 1.1.6(vue@3.5.18(typescript@5.9.2))
       '@microsoft/api-extractor':
         specifier: ^7.52.10
         version: 7.52.10(@types/node@24.1.0)
@@ -550,6 +553,11 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.29':
     resolution: {integrity: sha512-uw6guiW/gcAGPDhLmd77/6lW8QLeiV5RUTsAX46Db6oLhGaVj4lhnPwb184s1bkc8kdVg/+h988dro8GRDpmYQ==}
+
+  '@lite-tree/vue@1.1.6':
+    resolution: {integrity: sha512-+15i4sIJVcJTSuN1VAdU6+z+7BQGlLIvimJM2d04ulfa24N1dqX7eDylS3CNYIPGA58E5Nrm2bwT/F1SE5x37A==}
+    peerDependencies:
+      vue: ^3.0.0
 
   '@microsoft/api-extractor-model@7.30.7':
     resolution: {integrity: sha512-TBbmSI2/BHpfR9YhQA7nH0nqVmGgJ0xH0Ex4D99/qBDAUpnhA2oikGmdXanbw9AWWY/ExBYIpkmY8dBHdla3YQ==}
@@ -2105,6 +2113,11 @@ packages:
   vscode-uri@3.1.0:
     resolution: {integrity: sha512-/BpdSx+yCQGnCvecbyXdxHDkuk55/G3xwnC0GqY4gmQ3j+A+g8kzzgB4Nk/SINjqn6+waqw3EgbVF2QKExkRxQ==}
 
+  vue-slide-up-down@3.0.0:
+    resolution: {integrity: sha512-4ckwKgpkPfjDmwVKdu5UANvxt7nKemIKpqbRGhcekgDuvEwep8YFwkb8G9dix4lL+Wt2G73X1Z90c1oPJvXdOQ==}
+    peerDependencies:
+      vue: '>=3.0.0'
+
   vue@3.5.18:
     resolution: {integrity: sha512-7W4Y4ZbMiQ3SEo+m9lnoNpV9xG7QVMLa+/0RFwwiAVkeYoyGXqWE85jabU4pllJNUzqfLShJ5YLptewhCWUgNA==}
     peerDependencies:
@@ -2511,6 +2524,11 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.4
+
+  '@lite-tree/vue@1.1.6(vue@3.5.18(typescript@5.9.2))':
+    dependencies:
+      vue: 3.5.18(typescript@5.9.2)
+      vue-slide-up-down: 3.0.0(vue@3.5.18(typescript@5.9.2))
 
   '@microsoft/api-extractor-model@7.30.7(@types/node@24.1.0)':
     dependencies:
@@ -4146,6 +4164,10 @@ snapshots:
       - supports-color
 
   vscode-uri@3.1.0: {}
+
+  vue-slide-up-down@3.0.0(vue@3.5.18(typescript@5.9.2)):
+    dependencies:
+      vue: 3.5.18(typescript@5.9.2)
 
   vue@3.5.18(typescript@5.9.2):
     dependencies:
