@@ -6,12 +6,15 @@ ThemePro 提供了统一的圆角设置系统，用于控制元素的圆角半�
 
 ThemePro 支持以下圆角选项：
 
-- **none** - 无圆角（直角）
-- **x-small** - 特小圆角
-- **small** - 小圆角
-- **medium** - 中等圆角（默认）
-- **large** - 大圆角
-- **x-large** - 特大圆角
+| 圆角名称     |      |
+|-------------|------|
+| `none` |  无圆角（直角）
+| `x-small` | 特圆角
+| `small` | 小圆角
+| `medium` | 中等圆角（默认）
+| `large` | 大圆角
+| `x-large` | 特大圆角
+
 
 ## 设置全局圆角
 
@@ -38,72 +41,21 @@ document.documentElement.dataset.radius = 'large';
 ```
 
 然后，CSS 变量会根据不同的圆角设置不同的值：
-
-```css
-:root {
-  --t-radius-xs: 2px;
-  --t-radius-sm: 4px;
-  --t-radius-md: 8px;
-  --t-radius-lg: 12px;
-  --t-radius-xl: 16px;
-}
-
-[data-radius="none"] {
-  --t-radius-xs: 0;
-  --t-radius-sm: 0;
-  --t-radius-md: 0;
-  --t-radius-lg: 0;
-  --t-radius-xl: 0;
-}
-
-[data-radius="small"] {
-  --t-radius-xs: 1px;
-  --t-radius-sm: 2px;
-  --t-radius-md: 4px;
-  --t-radius-lg: 6px;
-  --t-radius-xl: 8px;
-}
-
-[data-radius="large"] {
-  --t-radius-xs: 4px;
-  --t-radius-sm: 8px;
-  --t-radius-md: 12px;
-  --t-radius-lg: 16px;
-  --t-radius-xl: 24px;
-}
-```
-
+  
 ## 使用圆角变量
 
 在样式中，你可以使用 CSS 变量来应用圆角：
 
 ```css
-.card {
-  border-radius: var(--t-radius-md);
+{
+    --t-border-radius-x-small: 0.2rem;
+    --t-border-radius-small: 0.3rem;
+    --t-border-radius-medium: 0.5rem;
+    --t-border-radius-large: 1rem;
+    --t-border-radius-x-large: 1.2rem;
+    --t-border-radius-circle: 50%;
+    --t-border-radius-pill: 9999px;
 }
-
-.button {
-  border-radius: var(--t-radius-sm);
-}
-
-.modal {
-  border-radius: var(--t-radius-lg);
-}
-```
-
-## 圆角工具类
-
-ThemePro 提供了一系列圆角工具类，用于快速应用圆角：
-
-```html
-<div class="t-radius-none">无圆角</div>
-<div class="t-radius-xs">特小圆角</div>
-<div class="t-radius-sm">小圆角</div>
-<div class="t-radius-md">中等圆角</div>
-<div class="t-radius-lg">大圆角</div>
-<div class="t-radius-xl">特大圆角</div>
-<div class="t-radius-circle">圆形</div>
-<div class="t-radius-pill">胶囊形</div>
 ```
 
 ## 在主题中设置圆角
@@ -111,8 +63,11 @@ ThemePro 提供了一系列圆角工具类，用于快速应用圆角：
 在创建主题时，你可以设置默认的圆角大小：
 
 ```js
-themePro.createTheme({
+themePro.create({
   // ...其他配置
   radius: 'medium'  // 设置默认圆角大小
 });
 ```
+
+
+<demo html="radius.html" demo-title="圆角控制" />

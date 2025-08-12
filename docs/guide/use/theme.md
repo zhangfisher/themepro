@@ -60,7 +60,7 @@ import 'themepro/dist/blue.css';
 除了内置的`light/dark/blue/red`，你还可以可以使用 `createTheme` 方法创建自定义主题：
 
 ```js
-ThemePro.createTheme({
+ThemePro.create({
   name: 'custom',  // 主题名称
   theme: '#3366ff',  // 主题基础颜色
   variants: {
@@ -83,25 +83,41 @@ ThemePro.createTheme({
 对于更复杂的主题需求，你可以提供详细的配置：
 
 ```js
-ThemePro.createTheme({
+ThemePro.create({
   name: 'advanced',
   theme: {
     color: '#3366ff',
     dark: false,        // 是否为深色系主题
     range: [10, 98],    // 颜色亮度范围
-    levels: [5, 1, 2, 3, 4, 5]  // 主题背景梯度颜色级别
+    levels: [10, 0, 1, 2, 3, 4 ]  // 主题背景梯度颜色级别
   },
   variants: {
     primary: {
       color: '#3366ff',
       range: [10, 95],
-      levels: [5, 1, 2, 3, 4, 5]
+      levels: [10, 0, 1, 2, 3, 4 ]
     },
     // 其他变体颜色...
   }
 });
 ```
 
+- `range`用于指定颜色主题亮度，数值范围在`0`至`100`之间。以`theme.color`为基准中间色，根据`range`指定的亮度范围生成`11级`梯度主题色。
+- `levels`用于指定从`11级`梯度主题色中挑选出`1`个主题色和`5`个梯度背景颜色。
+
+
+
+```css
+// 例如：levels=[10, 0, 1, 2, 3, 4 ]
+{
+    --t-theme-color: var(--t-color-theme-10);
+    --t-theme-bgcolor: var(--t-color-theme-0);
+    --t-theme-bgcolor-1: var(--t-color-theme-1);
+    --t-theme-bgcolor-2: var(--t-color-theme-2);
+    --t-theme-bgcolor-3: var(--t-color-theme-3);
+    --t-theme-bgcolor-4: var(--t-color-theme-4);
+}
+```
 
 ## 主题变量
 

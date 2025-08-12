@@ -40,65 +40,14 @@ console.log(colors);  // 输出生成的颜色数组
 生成的渐变色会根据基础颜色的明暗自动调整：
 - 如果基础颜色是亮色，渐变是从亮到暗
 - 如果基础颜色是暗色，渐变是从暗到亮
-
-## 颜色工具函数
-
-ThemePro 提供了一系列颜色工具函数：
-
-- `isDark(color)` - 判断颜色是否为暗色
-- `isLight(color)` - 判断颜色是否为亮色
-- `rgbToHsl(color)` - 将 RGB 颜色转换为 HSL 颜色
-- `hslToRgb(hsl)` - 将 HSL 颜色转换为 RGB 颜色
-- `toRGB(color)` - 将任意格式的颜色转换为 RGB 格式
-
-## 在 CSS 中使用颜色变量
-
-```css
-.button-primary {
-  background-color: var(--t-primary-bgcolor);
-  color: var(--t-primary-color);
-}
-
-.button-primary:hover {
-  background-color: var(--t-primary-bgcolor-1);
-}
-
-.button-primary:active {
-  background-color: var(--t-primary-bgcolor-2);
-}
-
-.alert-danger {
-  background-color: var(--t-danger-bgcolor);
-  color: var(--t-danger-color);
-}
-```
-
-## 颜色工具类
-
-ThemePro 提供了一系列颜色工具类，用于快速应用颜色：
-
-```html
-<!-- 文本颜色 -->
-<div class="t-text-primary">主要颜色文本</div>
-<div class="t-text-success">成功颜色文本</div>
-<div class="t-text-warning">警告颜色文本</div>
-<div class="t-text-danger">危险颜色文本</div>
-<div class="t-text-info">信息颜色文本</div>
-
-<!-- 背景颜色 -->
-<div class="t-bg-primary">主要颜色背景</div>
-<div class="t-bg-success">成功颜色背景</div>
-<div class="t-bg-warning">警告颜色背景</div>
-<div class="t-bg-danger">危险颜色背景</div>
-<div class="t-bg-info">信息颜色背景</div>
-```
+ 
 
 ## 自定义颜色处理
 
 在创建主题时，你可以提供自定义的颜色生成函数：
 
 ```js
-themePro.createTheme({
+themePro.create({
   // ...其他配置
   onGenerateGradientColors: (options) => {
     // 自定义颜色生成逻辑
@@ -108,3 +57,10 @@ themePro.createTheme({
   }
 });
 ```
+
+## 可用颜色
+
+
+以下颜色变量可以直接使用，与主题切换无关。
+
+<demo html="colors.html" ></demo>

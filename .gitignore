@@ -1,4 +1,5 @@
 docs/.vitepress/cache
+docs/.vitepress/cache/deps
 docs/.vitepress/dist
 
 # dependencies (bun install)

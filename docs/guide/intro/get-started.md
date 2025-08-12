@@ -127,7 +127,7 @@ ThemePro.spacing = 'large'
 除了内置的 `light`、`dark`、`red`、`blue` 等预设主题，ThemePro 也支持完全定制自己的主题：
 
 ```js 
-ThemePro.createTheme({
+ThemePro.create({
     name: 'custom',              // 主题名称
     theme: '#3366ff',            // 主题基础颜色
     size: 'medium',              // 组件尺寸
@@ -223,7 +223,7 @@ ThemePro 生成了一系列 CSS 变量，你可以在样式中直接使用这些
 对于更复杂的主题需求，你可以提供详细的配置：
 
 ```js
-ThemePro.createTheme({
+ThemePro.create({
     name: 'advanced',
     theme: {
         color: '#3366ff',        // 基础颜色

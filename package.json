@@ -2,7 +2,11 @@
 	"name": "themepro",
 	"module": "dist/index.js",
 	"type": "module",
-	"version": "0.0.1",
+	"version": "1.0.0",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/zhangfisher/themepro.git"
+	},
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",

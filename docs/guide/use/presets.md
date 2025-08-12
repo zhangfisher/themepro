@@ -59,7 +59,7 @@ themePro.theme = 'blue';
 import 'themepro/dist/themes/blue.css';
 
 // 扩展或覆盖预设主题的某些属性
-themePro.createTheme({
+themePro.create({
   name: 'custom-blue',
   theme: '#0055ff',  // 修改基础颜色
   variants: {

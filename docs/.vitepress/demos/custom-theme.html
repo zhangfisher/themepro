@@ -3,7 +3,7 @@
   <head>
     <title>Themepro</title>    
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/themepro/public/themepro.css" />          
+    <link rel="stylesheet" type="text/css" href="/themepro/public/index.css" />          
     <link rel="stylesheet" type="text/css" href="/themepro/public/red.css" />          
     <link rel="stylesheet" type="text/css" href="/themepro/public/blue.css" />          
     <link rel="stylesheet" type="text/css" href="/themepro/public/dark.css" />      
@@ -43,17 +43,16 @@
         </div>
     </div>        
     <script>    
-        ThemePro.createTheme({
+        ThemePro.create({
             name:"custom",
             theme:"#2d8ee4ff"
         })
-        const picker = document.getElementById("colorpicker"); 
         var colorPicker = new Picker({
-            parent: picker,
+            parent:  document.getElementById("colorpicker"),
             popup:false,
             color:'#2d8ee4ff',
             onChange: function(color) {
-                ThemePro.createTheme({
+                ThemePro.create({
                     name:"custom",
                     theme:color.hex
                 })

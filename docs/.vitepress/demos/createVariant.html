@@ -3,14 +3,13 @@
   <head>
     <title>Themepro</title>    
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/themepro/public/themepro.css" />          
+    <link rel="stylesheet" type="text/css" href="/themepro/public/index.css" />          
     <link rel="stylesheet" type="text/css" href="/themepro/public/red.css" />          
     <link rel="stylesheet" type="text/css" href="/themepro/public/blue.css" />          
     <link rel="stylesheet" type="text/css" href="/themepro/public/dark.css" />          
     <link rel="stylesheet" type="text/css" href="/themepro/public/vanilla-picker.csp.css" />          
     <script src="/themepro/public/index.umd.js"></script>
     <script src="https://unpkg.com/vanilla-picker@2"></script>
-
     <style> 
         .theme{
             padding:1em;
@@ -19,28 +18,48 @@
             cursor: pointer;
             color:gray;
         }
+        button{
+            position: relative; 
+        }
+        .current:before{
+            position: absolute;
+            content: " ";
+            top: calc(100% - 10px);
+            left: calc(50% - 8px);
+            width: 16px;
+            height: 24px;            
+            background: transparent;
+            border-color: transparent; 
+            border-width: 12px 8px 12px 8px;
+            border-style: solid; 
+            border-bottom-color: #54c8ff;
+        }
     </style> 
   </head>
   <body> 
-
     <div style="margin:1rem;padding:1rem;background:var(--t-theme-bgcolor);text-align:center;color: var(--auto-primary-color)"> 
-        <span class="display:flex;gap:1rem">
-            <button class="auto-btn">取消</button>
-            <button class="auto-btn primary">确定</button>                
-            <button class="auto-btn success">成功</button>
-            <button class="auto-btn warning">保存</button>
-            <button class="auto-btn danger">删除</button>
-            <button class="auto-btn info">关闭</button>
-        </span> 
-        <div style="margin:1rem;padding:1rem;background:var(--t-theme-bgcolor-1);text-align:center"> 
-            var(--t-theme-bgcolor-1)
+        <div style="background:var(--t-theme-bgcolor-1);text-align:center"> 
+            --t-theme-bgcolor-1
             <div style="margin:1rem;padding:1rem;background:var(--t-theme-bgcolor-2);text-align:center"> 
-                var(--t-theme-bgcolor-2)
-                <div style="margin:1rem;padding:1rem;background:var(--t-theme-bgcolor-3);gap:0.5em;display:flex;flex-direction:column;align-items:center"> 
-                        
-                        <button class="auto-btn primary">Primary</button>     
+                --t-theme-bgcolor-2
+                <div style="margin:1rem;padding:1rem;background:var(--t-theme-bgcolor-3);gap:1.5em;display:flex;flex-direction:column;align-items:center">                
+                        <div style="display:flex;gap:0.5rem;">
+                            <button class="auto-btn">取消</button>
+                            <button class="auto-btn primary current">确定</button>                
+                            <button class="auto-btn success">成功</button>
+                            <button class="auto-btn warning">保存</button>
+                            <button class="auto-btn danger">删除</button>
+                            <button class="auto-btn info">关闭</button>
+                        </div>
                         <div id="primary-colorpicker"></div>
-                        <button class="auto-btn success">Success</button>
+                        <div style="display:flex;gap:0.5rem;">
+                            <button class="auto-btn">取消</button>
+                            <button class="auto-btn primary">确定</button>                
+                            <button class="auto-btn success current">成功</button>
+                            <button class="auto-btn warning">保存</button>
+                            <button class="auto-btn danger">删除</button>
+                            <button class="auto-btn info">关闭</button>
+                        </div>
                         <div id="success-colorpicker"></div>
                     </div>
                 </div>
@@ -48,7 +67,7 @@
         </div>
     </div>        
     <script> 
-        ThemePro.createTheme({
+        ThemePro.create({
             name:"custom",
             theme:"#1890ff"
         }) 
@@ -59,14 +78,6 @@
                 ThemePro.createVariant("primary", {color:color.hex})
             }
         })
-        var successPicker = new Picker({
-            parent:  document.getElementById("success-colorpicker"),
-            popup:false,
-            onChange: function(color) {
-                ThemePro.createVariant("success", {color:color.hex})
-            }
-        })
-
     </script>
   </body>
 </html>

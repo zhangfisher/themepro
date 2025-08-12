@@ -1,10 +1,17 @@
 :host([data-radius='none']),
-[data-radius='none'] {
-    --auto-border-radius: 0px;
+:root[data-radius='none'] {
+    --auto-border-radius: 0px !important;
+}
+
+:host([data-spacing='none']),
+:root[data-spacing='none'] {
+    --auto-spacing: 0px !important;
+    --auto-padding: var(--t-spacing-medium) !important;
+    --auto-margin: var(--t-spacing-medium) !important;
 }
 
 :host([data-spacing='medium']),
-[data-spacing='medium'] {
+:root[data-spacing='medium'] {
     --auto-spacing: var(--t-spacing-medium) !important;
     --auto-padding: var(--t-spacing-medium) !important;
     --auto-margin: var(--t-spacing-medium) !important;
@@ -94,7 +101,6 @@
     --auto-letter-spacing: var(--t-letter-spacing-x-small);
     --auto-line-height: var(--t-line-height-x-small);
     /* 用于内边距和外边距 */
-    --auto-border-radius: var(--t-border-radius-x-small);
     --auto-shadow: var(--t-shadow-x-small);
     --auto-icon-size: calc(1.5 * var(--t-font-size-x-small));
     /* 输入框 */
@@ -124,7 +130,6 @@
     --auto-letter-spacing: var(--t-letter-spacing-small);
     --auto-line-height: var(--t-line-height-small);
     /* 用于内边距和外边距 */
-    --auto-border-radius: var(--t-border-radius-small);
     --auto-shadow: var(--t-shadow-small);
     --auto-icon-size: calc(1.5 * var(--t-font-size-small));
     /* 输入框 */
@@ -154,7 +159,6 @@
     --auto-letter-spacing: var(--t-letter-spacing-large);
     --auto-line-height: var(--t-line-height-large);
     /* 用于内边距和外边距 */
-    --auto-border-radius: var(--t-border-radius-large);
     --auto-shadow: var(--t-shadow-large);
     --auto-icon-size: calc(1.5 * var(--t-font-size-large));
     /* 输入框 */
@@ -184,7 +188,6 @@
     --auto-letter-spacing: var(--t-letter-spacing-x-large);
     --auto-line-height: var(--t-line-height-x-large);
     /* 用于内边距和外边距 */
-    --auto-border-radius: var(--t-border-radius-x-large);
     --auto-shadow: var(--t-shadow-large);
     --auto-icon-size: calc(1.5 * var(--t-font-size-large));
     --auto-input-height: var(--t-input-height-x-large);

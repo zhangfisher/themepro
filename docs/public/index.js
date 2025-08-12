@@ -200,15 +200,14 @@ function createTheme(options) {
   if (opts.variants.success) createVariantVars("--t-color-success-", opts.variants.success);
   if (opts.variants.warning) createVariantVars("--t-color-warning-", opts.variants.warning);
   if (opts.variants.info) createVariantVars("--t-color-info-", opts.variants.info);
-  injectStylesheet(
-    `:host,:root[data-theme=${opts.name}]{
-        ${`color-schema: ${dark ? "dark" : "light"}`}
-        ${Object.entries(vars).map(([key, value]) => `${key}:${value}`).join(";\n")}}`,
-    {
-      id: `theme-${opts.name || getId()}`,
-      mode: "replace"
-    }
-  );
+  const style = `:host,:root[data-theme=${opts.name}]{
+        ${`color-schema: ${dark ? "dark" : "light"}`};
+        ${Object.entries(vars).map(([key, value]) => `${key}:${value}`).join(";\n")}}`;
+  injectStylesheet(style, {
+    id: `theme-${opts.name || getId()}`,
+    mode: "replace"
+  });
+  return style;
 }
 class Themepro {
   root;
@@ -253,7 +252,7 @@ class Themepro {
       mode: "replace"
     });
   }
-  createTheme(options) {
+  create(options) {
     createTheme(options);
   }
 }

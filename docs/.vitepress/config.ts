@@ -36,14 +36,14 @@ export default defineConfig({
 					{ text: "圆角", link: "/guide/use/radius" },
 					{ text: "间距", link: "/guide/use/spacing" },
 					{ text: "自动变量", link: "/guide/use/autovars" },
-					{ text: "预设主题", link: "/guide/use/presets" },
 					{ text: "颜色", link: "/guide/use/colors" },
+					{ text: "工具类", link: "/guide/use/classs" },
 				],
 			},
 			{
 				text: "组件",
 				items: [
-					{ text: "Title", link: "/guide/components/title" },
+					{ text: "Button", link: "/guide/components/button" },
 					{ text: "Card", link: "/guide/components/card" },
 				],
 			},

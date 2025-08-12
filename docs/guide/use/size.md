@@ -1,16 +1,19 @@
 # 尺寸系统
 
-ThemePro 提供了统一的尺寸系统，用于控制组件大小、间距和其他尺寸相关的样式属性。
+`ThemePro`提供了统一的尺寸系统，用于控制组件大小、间距和其他尺寸相关的样式属性。
 
 ## 尺寸选项
 
 ThemePro 支持以下尺寸选项：
 
-- **x-small** - 特小尺寸
-- **small** - 小尺寸
-- **medium** - 中等尺寸（默认）
-- **large** - 大尺寸
-- **x-large** - 特大尺寸
+| 尺寸名称      |      |
+|-------------|------|
+| `x-small` | 特小 |
+| `small`  | 小   |
+| `medium` | 中等（默认） |
+| `large`  | 大   |
+| `x-large` | 特大 |
+
 
 ## 设置全局尺寸
 
@@ -28,7 +31,7 @@ themePro.size = 'small';
 
 ## 尺寸实现原理
 
-ThemePro 通过在根元素上设置 `data-size` 属性来控制尺寸：
+`ThemePro`通过在根元素上设置 `data-size` 属性来控制尺寸：
 
 ```js
 // 在 JavaScript 中设置
@@ -38,50 +41,14 @@ document.documentElement.dataset.size = 'large';
 // <html data-size="large">
 ```
 
-然后，CSS 变量会根据不同的尺寸设置不同的值：
+然后，在开发时使用以`--auto-`开发的CSS变量，就可以实现在切换尺寸动态调整组件尺寸。
 
-```css
-:root {
-  --t-font-size: 14px;
-  --t-line-height: 1.5;
-  --t-padding-x: 16px;
-  --t-padding-y: 8px;
-}
 
-[data-size="small"] {
-  --t-font-size: 12px;
-  --t-line-height: 1.4;
-  --t-padding-x: 12px;
-  --t-padding-y: 6px;
-}
 
-[data-size="large"] {
-  --t-font-size: 16px;
-  --t-line-height: 1.6;
-  --t-padding-x: 20px;
-  --t-padding-y: 10px;
-}
-```
+<demo html="sizes.html" demo-title="尺寸控制" />
 
-## 组件中使用尺寸
 
-在组件中，你可以使用 CSS 变量来应用尺寸：
 
-```css
-.button {
-  font-size: var(--t-font-size);
-  line-height: var(--t-line-height);
-  padding: var(--t-padding-y) var(--t-padding-x);
-}
-```
-
-## 单独设置组件尺寸
-
-你也可以为单个组件设置不同的尺寸，覆盖全局设置：
-
-```html
-<button class="t-size-small">小按钮</button>
-<button class="t-size-large">大按钮</button>
-```
-
-ThemePro 提供了相应的 CSS 类来支持这种用法。
+:::warning 提示
+更多的受`data-size`影响的以`--auto-`开头的CSS变量参见[自动变量](./autovars)
+:::

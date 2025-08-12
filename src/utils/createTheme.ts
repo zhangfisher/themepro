@@ -28,16 +28,15 @@ export function createTheme(options: ThemeOptions) {
 	if (opts.variants.success) createVariantVars("--t-color-success-", opts.variants.success);
 	if (opts.variants.warning) createVariantVars("--t-color-warning-", opts.variants.warning);
 	if (opts.variants.info) createVariantVars("--t-color-info-", opts.variants.info);
-
-	injectStylesheet(
-		`:host,:root[data-theme=${opts.name}]{
-        ${`color-schema: ${dark ? "dark" : "light"}`}
+	const style = `:host,:root[data-theme=${opts.name}]{
+        ${`color-schema: ${dark ? "dark" : "light"}`};
         ${Object.entries(vars)
 			.map(([key, value]) => `${key}:${value}`)
-			.join(";\n")}}`,
-		{
-			id: `theme-${opts.name || getId()}`,
-			mode: "replace",
-		},
-	);
+			.join(";\n")}}`;
+
+	injectStylesheet(style, {
+		id: `theme-${opts.name || getId()}`,
+		mode: "replace",
+	});
+	return style;
 }

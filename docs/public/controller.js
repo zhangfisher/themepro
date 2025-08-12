@@ -82,7 +82,7 @@ class ThemeproController extends HTMLElement {
 	_onCreateTheme() {
 		const colorSelect = this.shadowRoot.getElementById("customcolor");
 		colorSelect.addEventListener("input", () => {
-			ThemePro.createTheme({
+			ThemePro.create({
 				name: "custom",
 				theme: {
 					color: colorSelect.value,

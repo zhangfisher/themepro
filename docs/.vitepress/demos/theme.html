@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="blue">
   <head>
     <title>Themepro</title>    
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="/themepro/public/themepro.css" />          
+    <link rel="stylesheet" type="text/css" href="/themepro/public/index.css" />          
     <link rel="stylesheet" type="text/css" href="/themepro/public/red.css" />          
     <link rel="stylesheet" type="text/css" href="/themepro/public/blue.css" />          
     <link rel="stylesheet" type="text/css" href="/themepro/public/dark.css" />          
-    <script src="/themepro/public/index.umd.cjs"></script>
+    <script src="/themepro/public/index.umd.js"></script>
     <style> 
         .theme{
             padding:0.5em 1em;
@@ -19,25 +19,22 @@
     </style> 
   </head>
   <body>
-    
-     
-
-    <div style="margin:1rem;padding:0.5rem;background:var(--t-theme-bgcolor);text-align:center"> 
-    var(--t-theme-bgcolor)
+    <div style="background:var(--t-theme-bgcolor);text-align:center"> 
+    --t-theme-bgcolor
         <div style="margin:1rem;padding:0.5rem;background:var(--t-theme-bgcolor-1);text-align:center"> 
-            var(--t-theme-bgcolor-1)
+            --t-theme-bgcolor-1
             <div style="margin:1rem;padding:0.5rem;background:var(--t-theme-bgcolor-2);text-align:center"> 
-                var(--t-theme-bgcolor-2)
+                --t-theme-bgcolor-2
                 <div style="margin:1rem;padding:0.5rem;background:var(--t-theme-bgcolor-3);text-align:center"> 
-                    var(--t-theme-bgcolor-3)
+                    --t-theme-bgcolor-3
                     <div style="margin:1rem;padding:0.5rem;background:var(--t-theme-bgcolor-4);text-align:center"> 
-                    var(--t-theme-bgcolor-4)
-                    <div id="themes" style="1em;display:flex;gap:0.5em;justify-content:center;">                        
-                        <div class="theme" style="background:white;">Light</div>
-                        <div class="theme" style="background:#444;">Dark</div>
-                        <div class="theme" style="background:blue;">Blue</div>
-                        <div class="theme" style="background:red;">Red</div>
-                    </div>
+                        --t-theme-bgcolor-4
+                        <div id="themes" style="padding:1em;display:flex;gap:0.5em;justify-content:center;">
+                            <div class="theme" style="background:white;">Light</div>
+                            <div class="theme" style="background:#444;">Dark</div>
+                            <div class="theme" style="background:blue;">Blue</div>
+                            <div class="theme" style="background:red;">Red</div>
+                        </div> 
                     </div>
                 </div>
             </div>

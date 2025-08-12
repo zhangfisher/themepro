@@ -141,3 +141,8 @@ ThemePro.createVariant('info', { color: '#0d0d27' });
 
 <demo html="createVariant.html" demo-title="自定义变体颜色" />
 
+
+
+:::warning 提示
+通过`ThemePro.createVariant`也可以设置`success`、`info`等颜色。
+:::

@@ -1,6 +1,8 @@
-# ThemePro 指南
+# 关于
 
-ThemePro 是一个强大的主题管理工具，专为现代 Web 应用设计，提供了简单易用的 API 来管理应用的主题、颜色、尺寸和间距等样式属性。
+`ThemePro` 是一个强大的主题管理工具，专为现代 Web 应用设计，提供了简单易用的 API 来管理应用的主题、颜色、尺寸和间距等样式属性。
+
+如果您想构建一个可扩展、能实时响应主题切换、具有沉浸式体验的 Web 应用，`ThemePro` 将是您的最佳选择。
 
 ## 核心特性
 
@@ -25,7 +27,7 @@ themePro.theme = 'dark';
 themePro.size = 'large';
 
 // 创建自定义主题
-themePro.createTheme({
+themePro.create({
   name: 'custom',
   theme: '#3366ff',
   variants: {

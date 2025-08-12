@@ -1,4 +1,4 @@
-export declare function createTheme(options: ThemeOptions): void;
+export declare function createTheme(options: ThemeOptions): string;
 
 export declare function generateGradientColors(options?: GenerateGradientOptions): {
     colors: string[];
@@ -49,7 +49,7 @@ export declare class Themepro {
     constructor();
     get size(): ThemeSize;
     set size(value: ThemeSize);
-    get spacing(): ThemeSize | "auto";
+    get spacing(): ThemeSize;
     set spacing(value: ThemeSize | "auto");
     get radius(): string;
     set radius(value: string);
@@ -57,7 +57,7 @@ export declare class Themepro {
     set theme(value: string);
     _onDomContentLoaded(): void;
     createVariant(variant: ThemeVariantType, options: GenerateGradientOptions): void;
-    createTheme(options: ThemeOptions): void;
+    create(options: ThemeOptions): void;
 }
 
 export declare const themePro: Themepro;

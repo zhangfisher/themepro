@@ -16,8 +16,8 @@ export class Themepro {
 	set size(value: ThemeSize) {
 		this.root.dataset.size = value;
 	}
-	get spacing(): ThemeSize | "auto" {
-		return (this.root.dataset.spacing || "medium") as ThemeSize | "auto";
+	get spacing(): ThemeSize {
+		return (this.root.dataset.spacing || "medium") as ThemeSize;
 	}
 	set spacing(value: ThemeSize | "auto") {
 		this.root.dataset.spacing = String(value);
@@ -51,7 +51,7 @@ export class Themepro {
 		});
 	}
 
-	createTheme(options: ThemeOptions) {
+	create(options: ThemeOptions) {
 		createTheme(options);
 	}
 }
