@@ -1,3 +1,4 @@
+.vitepress/cache
 docs/.vitepress/cache
 docs/.vitepress/cache/deps
 docs/.vitepress/dist
@@ -36,3 +37,4 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
 # Finder (MacOS) folder config
 .DS_Store
+/e:/Work/Code/sources/themepro/.vitepress

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <title>Themepro</title>    
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/themepro/index.css" />          
+    <link rel="stylesheet" type="text/css" href="/themepro/red.css" />          
+    <link rel="stylesheet" type="text/css" href="/themepro/blue.css" />          
+    <link rel="stylesheet" type="text/css" href="/themepro/dark.css" />          
+    <link rel="stylesheet" type="text/css" href="/themepro/vanilla-picker.csp.css" />          
+    <script src="/themepro/index.umd.js"></script>
+    <script src="https://unpkg.com/vanilla-picker@2"></script>
+    <style> 
+        .theme,.custom-theme{
+            padding:0.5em 1em;
+            background:white;
+            border:1px solid #333;
+            cursor: pointer;
+            color:gray;
+        }
+        .color{
+            width: 49%;
+            padding: 0.5em 1em;
+            border: var(--auto-border);
+            cursor: pointer;
+        }
+    </style> 
+  </head>
+  <body style="overflow: hidden;">
+    <div style="text-align:center;display:flex;flex-direction:column;gap:1em;padding:1rem;"> 
+            <div class="auto-card">
+                <div class="auto-card-header">主题色</div>
+                <div class="auto-card-body"> 
+                    <div id="themes" style="display:flex;gap:0.5em;justify-content:center;">                    
+                        <div class="custom-theme" id="custom-colorpicker">定制</div>
+                        <div class="theme" style="background:white;">Light</div>
+                        <div class="theme" style="background:#444;">Dark</div>
+                        <div class="theme" style="background:blue;">Blue</div>
+                        <div class="theme" style="background:red;">Red</div>
+                    </div> 
+                </div>
+            </div>  
+            <div class="auto-card">
+                <div class="auto-card-header">颜色</div>
+                <div class="auto-card-body color-container" style="flex-direction:row;flex-wrap: wrap; gap:0.2rem;align-items: center;justify-content: space-between"> 
+                    <div class="color" style="color:#aaa;background:var(--auto-color)">--auto-color</div> 
+                    <div class="color" style="background:var(--auto-bgcolor)">--auto-bgcolor</div> 
+                    <div class="color" style="background:var(--auto-border-color)">--auto-border-color</div> 
+                    <div class="color" style="background:var(--auto-active-border-color)">--auto-active-border-color</div> 
+                    <div class="color" style="background:var(--auto-panel-bgcolor)">--auto-panel-bgcolor</div> 
+                    <div class="color" style="background:var(--auto-title-color)">--auto-title-color</div> 
+                    <div class="color" style="background:var(--auto-title-bgcolor)">--auto-title-bgcolor</div> 
+                    <div class="color" style="background:var(--auto-input-bgcolor)">--auto-input-bgcolor</div> 
+                    <div class="color" style="background:var(--auto-primary-color)">--auto-primary-color</div> 
+                    <div class="color" style="background:var(--auto-danger-color)">--auto-danger-color</div> 
+                    <div class="color" style="background:var(--auto-warning-color)">--auto-warning-color</div> 
+                    <div class="color" style="background:var(--auto-info-color)">--auto-info-color</div> 
+                    <div class="color" style="background:var(--auto-success-color)">--auto-success-color</div> 
+                    <div class="color" style="background:var(--auto-light-bgcolor)">--auto-light-bgcolor</div> 
+                    <div class="color" style="background:var(--auto-dark-bgcolor)">--auto-dark-bgcolor</div> 
+                    <div class="color" style="background:var(--auto-disable-color)">--auto-disable-color</div> 
+                </div>
+            </div> 
+    </div>        
+    <script>
+        const element = document.getElementById('themes');  
+        element.addEventListener('click', (event) => {
+            if(event.target.classList.contains('theme')){
+                document.documentElement.dataset.theme = event.target.innerText.toLowerCase();  
+            }            
+        });        
+        var primaryPicker = new Picker({
+            parent:  document.getElementById("custom-colorpicker"), 
+            onChange: function(color) {
+                ThemePro.theme = 'custom'; 
+                ThemePro.create({
+                    name:"custom",
+                    theme:color.hex
+                }) 
+            }
+        })
+    </script>
+    
+    <script>
+      document.querySelector('.color-container').addEventListener('click', function(event) {
+        // 检查点击的是否为.color元素
+        if (event.target.classList.contains('color')) {
+          // 获取背景颜色变量
+          const style = window.getComputedStyle(event.target);
+          const backgroundStyle = event.target.getAttribute('style');
+          const match = backgroundStyle.match(/background:\s*(var\([^)]+\))/);
+          
+          if (match && match[1]) {
+            const colorVariable = match[1];
+            
+            // 复制到剪贴板
+            navigator.clipboard.writeText(colorVariable)
+              .then(() => {
+                // 显示复制成功的提示
+                const originalText = event.target.innerHTML;
+                event.target.innerHTML = '已复制!';
+                
+                // 2秒后恢复原始文本
+                setTimeout(() => {
+                  event.target.innerHTML = originalText;
+                }, 1000);
+              })
+              .catch(err => {
+                console.error('复制失败:', err);
+              });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
+

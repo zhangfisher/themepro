@@ -1,8 +1,11 @@
 # 自动变量
 
-ThemePro 提供了一系列以 `--auto-` 开头的 CSS 变量，这些变量会在切换 `data-theme`、`data-size`、`data-radius` 和 `data-spacing` 时自动更新，让你的应用能够无缝适应不同的主题和尺寸设置。
+`ThemePro`提供了一系列以 `--auto-` 开头的 `CSS` 变量，这些变量会在切换 `data-theme`、`data-size`、`data-radius` 和 `data-spacing` 时自动更新，让你的应用能够无缝适应不同的主题和尺寸设置。
+
 
 > **注意**：您可以在网站开发时直接使用这些 CSS 变量来实现主题化，无需手动管理变量切换。
+
+ 
 
 ## 自动变量的优势
 
@@ -58,6 +61,9 @@ ThemePro 提供了一系列以 `--auto-` 开头的 CSS 变量，这些变量会�
 | - |||
 | `--auto-dark-bgcolor` | `color-mix( in hsl, var(--auto-bgcolor) , black 10%)` | 暗色背景色 |
 | `--auto-light-bgcolor` | `color-mix( in hsl, var(--auto-bgcolor) , white 10%)` | 亮色背景色 |
+| `--auto-disable-color` | ` var(--t-color-theme-3)` | 禁用前景色 |
+
+<demo html="autovars-colors.html"></demo>
 
 ## 字体变量
 
@@ -69,6 +75,9 @@ ThemePro 提供了一系列以 `--auto-` 开头的 CSS 变量，这些变量会�
 | `--auto-font-weight` | `var(--t-font-weight-medium)` | 字体粗细 |
 | `--auto-letter-spacing` | `var(--t-letter-spacing-medium)` | 字体间距 |
 | `--auto-line-height` | `var(--t-line-height-medium)` | 行高 |
+
+<demo html="autovars-font.html"></demo>
+
 
 ## 间距变量
 
@@ -157,3 +166,6 @@ themePro.radius = 'small';
   <button class="card-button">确认</button>
 </div>
 ```
+
+
+
