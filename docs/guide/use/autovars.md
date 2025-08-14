@@ -61,7 +61,10 @@
 | - |||
 | `--auto-dark-bgcolor` | `color-mix( in hsl, var(--auto-bgcolor) , black 10%)` | 暗色背景色 |
 | `--auto-light-bgcolor` | `color-mix( in hsl, var(--auto-bgcolor) , white 10%)` | 亮色背景色 |
+| `--auto-dark-color` | `color-mix( in hsl, var(--auto-color) , black 10%)` | 暗色前景色 |
+| `--auto-light-color` | `color-mix( in hsl, var(--auto-color) , white 10%)` | 亮色前景色 | 
 | `--auto-disable-color` | ` var(--t-color-theme-3)` | 禁用前景色 |
+| `--auto-selected-color` | ` var(--t-color-theme-3)` | 选择前景色 |
 
 <demo html="autovars-colors.html"></demo>
 

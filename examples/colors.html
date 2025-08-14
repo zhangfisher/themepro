@@ -52,6 +52,12 @@
   <body data-theme>
     <themepro-controller></themepro-controller>
     <div style="padding:2rem;">    
+        <div style="padding:1rem;margin:1rem;" class="auto-selected">
+        selected
+        
+    </div>
+    
+        <div style="color:var(--auto-secondary-color)">道可道，非常道；名可名，非常名</div>
     <input type="text" class="auto-input" placeholder="请输入姓名"></input>
         <label>        
         <input type="checkbox" class="auto-input"></input>记住
@@ -160,10 +166,15 @@ background:var(--t-theme-bgcolor-4)
     <div style="padding:2rem;display:flex;gap:1rem;">
         <my-card title="标题">
             卡片内容<span class="auto-icon close"></span>
+            <div style="color:var(--auto-secondary-color)">道可道，非常道；名可名，非常名</div>
         </my-card>
-        <my-card title="标题">
+        <div class="auto-card">
+            <div class="auto-card-header">老子-道德经</div>
+            <div class="auto-card-body">            
             卡片内容
-        </my-card>
+            <div style="color:var(--auto-secondary-color)">道可道，非常道；名可名，非常名</div>
+            </div>
+        </div>
     </div>
       
     <div class="auto-alert" style="padding:2rem;display:flex;flex-direction:column; gap:1rem;">
