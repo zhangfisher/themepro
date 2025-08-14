@@ -43,6 +43,7 @@
 
 | 变量名称  | 值  | 用途 |
 | ---- | ---- | --- |
+| `--auto-theme-color` | `var(--t-theme-color)` | 默认主题颜色 |
 | `--auto-color` | `var(--t-theme-color)` | 默认字体颜色 |
 | `--auto-bgcolor` | `var(--t-theme-bgcolor)` | 默认背景色 |
 | `--auto-border-color` | `var(--t-color-theme-2)` | 边框颜色 |
@@ -64,7 +65,7 @@
 | `--auto-dark-color` | `color-mix( in hsl, var(--auto-color) , black 10%)` | 暗色前景色 |
 | `--auto-light-color` | `color-mix( in hsl, var(--auto-color) , white 10%)` | 亮色前景色 | 
 | `--auto-disable-color` | ` var(--t-color-theme-3)` | 禁用前景色 |
-| `--auto-selected-color` | ` var(--t-color-theme-3)` | 选择前景色 |
+| `--auto-selected-color` | `color-mix(in srgb, var(--t-color-theme-3) 40%, transparent)` | 选择前景色 |
 
 <demo html="autovars-colors.html"></demo>
 

@@ -25,6 +25,7 @@
     --auto-danger-color: var(--t-color-danger-5);
     --auto-warning-color: var(--t-color-warning-5);
     --auto-info-color: var(--t-color-info-5);
+    --auto-theme-color: var(--t-color-theme-5);
     /* 字体颜色oklch(from var(--auto-color) calc(l > 0.6 ? l - 0.2 : l + 0.2) c h) */
     --auto-color: var(--t-theme-color);
     --auto-secondary-color: var(--t-color-theme-4);
@@ -78,7 +79,7 @@
     /** 输入框背景颜色：用于输入框背景颜色*/
     --auto-input-bgcolor: var(--t-theme-bgcolor);
     /** 随随色背景颜色：用于自动选中颜色，或根据背景颜色自动匹配背景颜色*/
-    --auto-selected-bgcolor: color-mix(in hsl, var(--t-color-theme-1), white 20%);
+    --auto-selected-bgcolor: color-mix(in srgb, var(--t-color-theme-3) 40%, transparent);
 
     --auto-icon-size: calc(1.5 * var(--t-font-size-medium));
 }
