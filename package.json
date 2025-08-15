@@ -13,8 +13,13 @@
 			"import": "./dist/index.js",
 			"require": "./dist/index.umd.js"
 		},
-		"./themes/*": {
-			"import": "./dist/*.css"
+		"./index.css": {
+			"import": "./dist/index.css",
+			"require": "./dist/index.css"
+		},
+		"./themes/*.css": {
+			"import": "./dist/*.css",
+			"require": "./dist/*.css"
 		}
 	},
 	"files": [
