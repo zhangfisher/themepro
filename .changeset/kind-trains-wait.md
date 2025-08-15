@@ -1,0 +1,5 @@
+---
+"themepro": patch
+---
+
+fix exports
