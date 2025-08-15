@@ -1,5 +1,11 @@
 # themepro
 
+## 1.0.5
+
+### Patch Changes
+
+- db884e0: fix exports
+
 ## 1.0.4
 
 ### Patch Changes
