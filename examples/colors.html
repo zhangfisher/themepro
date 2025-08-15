@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="/src/themes/dark.css" />    
     <link rel="stylesheet" type="text/css" href="/src/themes/blue.css" />   
     <link rel="stylesheet" type="text/css" href="/src/themes/red.css" />   
+    <link rel="stylesheet" type="text/css" href="/src/themes/green.css" />   
         
 
     <script type="module" src="/src/index.ts"></script>
@@ -45,19 +46,29 @@
       .neutral-colors .color {
         color: #aaa;
       }
-
+        button{
+            border: 1px solid var(--auto-primery-color);
+            font-size:2rem;
+            padding: var(--auto-padding);
+            cursor:pointer;
+        }
 
     </style>
   </head>
   <body data-theme>
     <themepro-controller></themepro-controller>
     <div style="padding:2rem;">    
-        <div style="padding:1rem;margin:1rem;" class="auto-selected">
-        selected
-        
-    </div>
+        <div class="themes">
+            <button>Light</button>
+            <button variant="primary">Dark</button>
+            <button variant="success">Blue</button>
+            <button variant="warning">Red</button>
+            <button variant="warning">green</button>
+        </div>
     
         <div style="color:var(--auto-secondary-color)">道可道，非常道；名可名，非常名</div>
+        <div style="padding:1rem;background:var(--auto-primary-color)">道可道，非常道；名可名，非常名</div>
+
     <input type="text" class="auto-input" placeholder="请输入姓名"></input>
         <label>        
         <input type="checkbox" class="auto-input"></input>记住
@@ -916,5 +927,12 @@ background:var(--t-theme-bgcolor-4)
       </div>
     </div>
     </div>
+
+        <script>
+            const themes = document.querySelector('.themes');
+            themes.addEventListener('click', (e) => { 
+                ThemePro.theme = e.target.innerText.toLowerCase();
+            });
+        </script>
   </body>
 </html>

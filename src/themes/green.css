@@ -1,0 +1,40 @@
+:host,
+:root[data-theme=green] {
+    color-scheme: dark;
+    --t-color-primary-0: #ffffff;
+    --t-color-primary-1: #ffffff;
+    --t-color-primary-2: #ffffff;
+    --t-color-primary-3: #defaf7;
+    --t-color-primary-4: #aaf2e9;
+    --t-color-primary-5: #76eadc;
+    --t-color-primary-6: #5de6d6;
+    --t-color-primary-7: #43e2cf;
+    --t-color-primary-8: #29dec9;
+    --t-color-primary-9: #20cab6;
+    --t-color-primary-10: #1cb09f;
+    --t-primary-color: var(--t-color-primary-5);
+    --t-primary-bgcolor: var(--t-color-primary-1);
+    --t-primary-bgcolor-1: var(--t-color-primary-2);
+    --t-primary-bgcolor-2: var(--t-color-primary-3);
+    --t-primary-bgcolor-3: var(--t-color-primary-4);
+    --t-primary-bgcolor-4: var(--t-color-primary-5);
+
+    --t-color-theme-0: #092b00;
+    --t-color-theme-1: #135200;
+    --t-color-theme-2: #237804;
+    --t-color-theme-3: #389e0d;
+    --t-color-theme-4: #52c41a;
+    --t-color-theme-5: #73d13d;
+    --t-color-theme-6: #95de64;
+    --t-color-theme-7: #b7eb8f;
+    --t-color-theme-8: #d9f7be;
+    --t-color-theme-9: #f6ffed;
+    --t-color-theme-10: #f4f8f0;
+
+    --t-theme-color: var(--t-color-theme-10);
+    --t-theme-bgcolor: var(--t-color-theme-0);
+    --t-theme-bgcolor-1: var(--t-color-theme-1);
+    --t-theme-bgcolor-2: var(--t-color-theme-2);
+    --t-theme-bgcolor-3: var(--t-color-theme-3);
+    --t-theme-bgcolor-4: var(--t-color-theme-4);
+}
