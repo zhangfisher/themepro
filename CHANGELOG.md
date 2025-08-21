@@ -1,5 +1,11 @@
 # themepro
 
+## 1.0.6
+
+### Patch Changes
+
+- a918d20: update light theme color
+
 ## 1.0.5
 
 ### Patch Changes
