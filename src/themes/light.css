@@ -297,7 +297,7 @@
     --t-color-theme-9: var(--t-color-gray-9);
     --t-color-theme-10: var(--t-color-gray-10);
 
-    --t-theme-color: hsl(0, 0%, 0%);
+    --t-theme-color: hsl(0, 0%, 30%);
     --t-theme-bgcolor: hsl(0, 0%, 100%);
     --t-theme-bgcolor-1: hsl(0, 0%, 100%);
     --t-theme-bgcolor-2: var(--t-color-gray-1);
