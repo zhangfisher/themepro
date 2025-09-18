@@ -1,5 +1,6 @@
 :host,
-:root[data-theme=dark] {
+:root[data-theme=dark],
+[data-theme=dark] {
     color-scheme: dark;
     --t-color-primary-0: var(--t-color-sky-0);
     --t-color-primary-1: var(--t-color-sky-1);

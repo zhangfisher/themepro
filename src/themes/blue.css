@@ -1,5 +1,6 @@
 :host,
-:root[data-theme=blue] {
+:root[data-theme=blue],
+[data-theme=blue] {
     color-scheme: dark;
     --t-color-primary-0: #ffffff;
     --t-color-primary-1: #ffffff;
