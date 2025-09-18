@@ -1,5 +1,11 @@
 # themepro
 
+## 1.0.7
+
+### Patch Changes
+
+- b4061ee: data-theme use in element
+
 ## 1.0.6
 
 ### Patch Changes
