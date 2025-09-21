@@ -1,4 +1,4 @@
-:host,
+:host([data-theme=dark]),
 :root[data-theme=dark],
 [data-theme=dark] {
     color-scheme: dark;
