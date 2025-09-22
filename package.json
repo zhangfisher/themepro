@@ -12,7 +12,7 @@
 			"types": "./dist/index.d.ts",
 			"import": "./dist/index.js",
 			"require": "./dist/index.umd.js"
-		},
+		}, 
 		"./index.css": {
 			"import": "./dist/index.css",
 			"require": "./dist/index.css"
@@ -34,7 +34,7 @@
 		"docs:preview": "vitepress preview docs",
 		"changeset": "changeset",
 		"version": "changeset version",
-		"release": "vite build && changeset version && changeset publish"
+		"release": "npm run build && changeset version && changeset publish"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.1.3",

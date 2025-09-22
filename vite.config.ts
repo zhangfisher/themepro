@@ -1,18 +1,21 @@
 import { defineConfig } from "vite";
 import cp from "vite-plugin-cp";
 import dts from "unplugin-dts/vite";
+import { resolve } from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
     build: {
-        minify: true, // 禁用代码压缩
+        minify: true, // 代码压缩
         sourcemap: true, // 生成 sourceMap
         lib: {
             name: "themepro",
-            entry: ["src/index.ts", "src/lit/index.ts"],
-            formats: ["es", "cjs"],
-            fileName: (format) =>
-                format === "es" ? "index.js" : "index.umd.js",
+            // 由于 UMD/IIFE 格式不支持多入口，我们需要分别构建
+            entry: resolve(__dirname, "src/index.ts"),
+            formats: ["es", "umd"],
+            fileName: (format) => {
+                return format === "es" ? "index.js" : "index.umd.js";
+            },
         },
         rollupOptions: {
             output: {

@@ -1,102 +1,101 @@
-import { C as k, a as H, c as w, s as E } from "./css-B6jjRtQ2.js";
-function p(o) {
-  let t = o.trim();
+function y(e) {
+  let t = e.trim();
   if (t.startsWith("#") && (t = t.slice(1)), t.length === 3 ? t = t.replace(/(.)/g, "$1$1") : t.length === 4 && (t = t.replace(/(.)/g, "$1$1")), t.length > 6 && (t = t.slice(0, 6)), !/^[0-9a-f]{6}$/i.test(t))
     throw new Error("Invalid hex color");
-  const a = parseInt(t, 16), d = a >> 16 & 255, s = a >> 8 & 255, e = a & 255;
-  return [d, s, e];
+  const n = parseInt(t, 16), a = n >> 16 & 255, o = n >> 8 & 255, s = n & 255;
+  return [a, o, s];
 }
-function y(o) {
-  const t = p(o);
+function M(e) {
+  const t = y(e);
   return (t[0] * 2126 + t[1] * 7152 + t[2] * 722) / 1e4 < 128;
 }
-function M(o) {
-  const [t, a, d] = Array.isArray(o) ? o : p(o), s = t / 255, e = a / 255, i = d / 255, r = Math.max(s, e, i), c = Math.min(s, e, i), h = r - c;
-  let n = 0, l = 0;
-  const m = (r + c) / 2;
-  return h !== 0 && (r === s ? n = ((e - i) / h + (e < i ? 6 : 0)) / 6 : r === e ? n = ((i - s) / h + 2) / 6 : n = ((s - e) / h + 4) / 6), h !== 0 && (l = h / (1 - Math.abs(2 * m - 1))), [
-    Math.round(n * 360),
+function w(e) {
+  const [t, n, a] = Array.isArray(e) ? e : y(e), o = t / 255, s = n / 255, c = a / 255, i = Math.max(o, s, c), l = Math.min(o, s, c), d = i - l;
+  let r = 0, h = 0;
+  const u = (i + l) / 2;
+  return d !== 0 && (i === o ? r = ((s - c) / d + (s < c ? 6 : 0)) / 6 : i === s ? r = ((c - o) / d + 2) / 6 : r = ((o - s) / d + 4) / 6), d !== 0 && (h = d / (1 - Math.abs(2 * u - 1))), [
+    Math.round(r * 360),
     // 0-360
-    Math.round(l * 100),
+    Math.round(h * 100),
     // 0-100
-    Math.round(m * 100)
+    Math.round(u * 100)
     // 0-100
   ];
 }
-function $(o) {
-  const [t, a, d] = o, s = t / 360, e = a / 100, i = d / 100, r = (1 - Math.abs(2 * i - 1)) * e, c = r * (1 - Math.abs(s * 6 % 2 - 1)), h = i - r / 2;
-  let n = 0, l = 0, m = 0;
-  0 <= s && s < 1 / 6 ? (n = r, l = c, m = 0) : 1 / 6 <= s && s < 2 / 6 ? (n = c, l = r, m = 0) : 2 / 6 <= s && s < 3 / 6 ? (n = 0, l = r, m = c) : 3 / 6 <= s && s < 4 / 6 ? (n = 0, l = c, m = r) : 4 / 6 <= s && s < 5 / 6 ? (n = c, l = 0, m = r) : (n = r, l = 0, m = c);
-  const g = (v) => Math.round((v + h) * 255).toString(16).padStart(2, "0");
-  return `#${g(n)}${g(l)}${g(m)}`;
+function p(e) {
+  const [t, n, a] = e, o = t / 360, s = n / 100, c = a / 100, i = (1 - Math.abs(2 * c - 1)) * s, l = i * (1 - Math.abs(o * 6 % 2 - 1)), d = c - i / 2;
+  let r = 0, h = 0, u = 0;
+  0 <= o && o < 1 / 6 ? (r = i, h = l, u = 0) : 1 / 6 <= o && o < 2 / 6 ? (r = l, h = i, u = 0) : 2 / 6 <= o && o < 3 / 6 ? (r = 0, h = i, u = l) : 3 / 6 <= o && o < 4 / 6 ? (r = 0, h = l, u = i) : 4 / 6 <= o && o < 5 / 6 ? (r = l, h = 0, u = i) : (r = i, h = 0, u = l);
+  const g = (T) => Math.round((T + d) * 255).toString(16).padStart(2, "0");
+  return `#${g(r)}${g(h)}${g(u)}`;
 }
-function S(o) {
-  const { color: t, range: a, dark: d, count: s } = Object.assign(
+function x(e) {
+  const { color: t, range: n, dark: a, count: o } = Object.assign(
     {
       range: [5, 98],
       count: 5
     },
-    o
-  ), e = M(t), i = d ?? y(t), r = Array.from({ length: 2 * s + 1 });
-  r[s] = t;
-  let c = Math.abs(e[2] - a[0]), h = c / s, n = e[2];
-  for (let l = s - 1; l >= 0; l--)
-    n = n + (i ? -1 : 1) * h, n < 0 && (n = 0), n > 100 && (n = 100), r[l] = $([e[0], e[1], n]);
-  n = e[2], c = Math.abs(e[2] - a[1]), h = c / s;
-  for (let l = s + 1; l < s * 2 + 1; l++)
-    n = n + (i ? 1 : -1) * h, n < 0 && (n = 0), n > 100 && (n = 100), r[l] = $([e[0], e[1], n]);
-  return { colors: r, dark: i };
+    e
+  ), s = w(t), c = a ?? M(t), i = Array.from({ length: 2 * o + 1 });
+  i[o] = t;
+  let l = Math.abs(s[2] - n[0]), d = l / o, r = s[2];
+  for (let h = o - 1; h >= 0; h--)
+    r = r + (c ? -1 : 1) * d, r < 0 && (r = 0), r > 100 && (r = 100), i[h] = p([s[0], s[1], r]);
+  r = s[2], l = Math.abs(s[2] - n[1]), d = l / o;
+  for (let h = o + 1; h < o * 2 + 1; h++)
+    r = r + (c ? 1 : -1) * d, r < 0 && (r = 0), r > 100 && (r = 100), i[h] = p([s[0], s[1], r]);
+  return { colors: i, dark: c };
 }
-function u(o, t) {
-  const a = Object.assign(
+function m(e, t) {
+  const n = Object.assign(
     {
       levels: [5, 1, 2, 3, 4, 5],
       range: [10, 98],
       count: 5
     },
     typeof t == "string" ? { color: t } : t
-  ), { colors: d, dark: s } = S(a), e = {};
-  d.reduce((c, h, n) => (e[`${o}${n}`] = h, c), {});
-  const r = `--t-${o.split("-")[4]}`;
-  return a.levels && (e[`${r}-color`] = `var(${o}${a.levels[0]})`, e[`${r}-bgcolor`] = `var(${o}${a.levels[1]})`, a.levels.slice(2).forEach((c, h) => {
-    e[`${r}-bgcolor-${h + 1}`] = `var(${o}${c})`;
-  })), { vars: e, colors: d, dark: s };
+  ), { colors: a, dark: o } = x(n), s = {};
+  a.reduce((l, d, r) => (s[`${e}${r}`] = d, l), {});
+  const i = `--t-${e.split("-")[4]}`;
+  return n.levels && (s[`${i}-color`] = `var(${e}${n.levels[0]})`, s[`${i}-bgcolor`] = `var(${e}${n.levels[1]})`, n.levels.slice(2).forEach((l, d) => {
+    s[`${i}-bgcolor-${d + 1}`] = `var(${e}${l})`;
+  })), { vars: s, colors: a, dark: o };
 }
-function f(o = 10) {
-  return Math.random().toString(36).substring(2, o + 2);
+function S(e = 10) {
+  return Math.random().toString(36).substring(2, e + 2);
 }
-function b(o, t) {
+function b(e, t) {
   if (globalThis.document == null) return;
-  const { id: a, mode: d, location: s = "head" } = Object.assign({ mode: "default" }, t);
-  let e = document.head.querySelector(`#${a}`), i = a || f();
-  return e ? (d == "replace" ? e.innerHTML = o : d == "append" && (e.innerHTML += o), i) : (e = document.createElement("style"), e.innerHTML = o, e.id = i, t?.el ? t.el.appendChild(e) : s == "head" ? document.head.appendChild(e) : document.body.appendChild(e), e);
+  const { id: n, mode: a, location: o = "head" } = Object.assign({ mode: "default" }, t);
+  let s = document.head.querySelector(`#${n}`), c = n || S();
+  return s ? (a == "replace" ? s.innerHTML = e : a == "append" && (s.innerHTML += e), c) : (s = document.createElement("style"), s.innerHTML = e, s.id = c, t?.el ? t.el.appendChild(s) : o == "head" ? document.head.appendChild(s) : document.body.appendChild(s), s);
 }
-function C(o) {
+function j(e) {
   const t = Object.assign(
     {
-      name: f(),
+      name: S(),
       variants: {}
     },
-    o
-  ), a = Object.assign(
+    e
+  ), n = Object.assign(
     {
       prefix: "--t-color-theme-",
       range: [10, 100],
       levels: [10, 1, 2, 3, 4, 5]
     },
     typeof t.theme == "string" ? { color: t.theme } : t.theme
-  ), d = t.selector || ":root,:host", { vars: s, dark: e } = u("--t-color-theme-", a);
-  t.variants.primary && u("--t-color-primary-", t.variants.primary), t.variants.danger && u("--t-color-danger-", t.variants.danger), t.variants.success && u("--t-color-success-", t.variants.success), t.variants.warning && u("--t-color-warning-", t.variants.warning), t.variants.info && u("--t-color-info-", t.variants.info);
-  const i = `${d}[data-theme=${t.name}]{
-        ${`color-schema: ${e ? "dark" : "light"}`};
-        ${Object.entries(s).map(([r, c]) => `${r}:${c}`).join(`;
+  ), a = t.selector || ":root,:host", { vars: o, dark: s } = m("--t-color-theme-", n);
+  t.variants.primary && m("--t-color-primary-", t.variants.primary), t.variants.danger && m("--t-color-danger-", t.variants.danger), t.variants.success && m("--t-color-success-", t.variants.success), t.variants.warning && m("--t-color-warning-", t.variants.warning), t.variants.info && m("--t-color-info-", t.variants.info);
+  const c = `${a}[data-theme=${t.name}]{
+        ${`color-schema: ${s ? "dark" : "light"}`};
+        ${Object.entries(o).map(([i, l]) => `${i}:${l}`).join(`;
 `)}}`;
-  return b(i, {
-    id: `theme-${t.name || f()}`,
+  return b(c, {
+    id: `theme-${t.name || S()}`,
     mode: "replace"
-  }), i;
+  }), c;
 }
-class j {
+class k {
   root;
   constructor() {
     this.root = document.documentElement, document.addEventListener("DOMContentLoaded", this._onDomContentLoaded.bind(this));
@@ -128,31 +127,94 @@ class j {
   _onDomContentLoaded() {
     this.root = document.documentElement;
   }
-  createVariant(t, a) {
-    const { vars: d } = u(`--t-color-${t}-`, a), e = `${this.theme === "light" ? ":root,:host" : `:host,
-:root[data-theme=${this.theme}]`}{${Object.entries(d).map(([i, r]) => `${i}: ${r};`).join(`
+  createVariant(t, n) {
+    const { vars: a } = m(`--t-color-${t}-`, n), s = `${this.theme === "light" ? ":root,:host" : `:host,
+:root[data-theme=${this.theme}]`}{${Object.entries(a).map(([c, i]) => `${c}: ${i};`).join(`
 `)}`;
-    b(e, {
+    b(s, {
       id: `t-${this.theme}-${t}`,
       mode: "replace"
     });
   }
   create(t) {
-    C(t);
+    j(t);
   }
 }
-const T = new j();
-globalThis.ThemePro = T;
+const _ = new k();
+globalThis.ThemePro = _;
+const f = globalThis, v = f.ShadowRoot && // @ts-expect-error
+(f.ShadyCSS === void 0 || f.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype, C = Symbol(), $ = /* @__PURE__ */ new WeakMap();
+class E {
+  // This property needs to remain unminified.
+  _$cssResult$ = !0;
+  cssText;
+  _styleSheet;
+  _strings;
+  constructor(t, n, a) {
+    if (a !== C)
+      throw new Error(
+        "CSSResult is not constructable. Use `unsafeCSS` or `css` instead."
+      );
+    this.cssText = t, this._strings = n;
+  }
+  // This is a getter so that it's lazy. In practice, this means stylesheets
+  // are not created until the first element instance is made.
+  get styleSheet() {
+    let t = this._styleSheet;
+    const n = this._strings;
+    if (v && t === void 0) {
+      const a = n !== void 0 && n.length === 1;
+      a && (t = $.get(n)), t === void 0 && ((this._styleSheet = t = new CSSStyleSheet()).replaceSync(this.cssText), a && $.set(n, t));
+    }
+    return t;
+  }
+  toString() {
+    return this.cssText;
+  }
+}
+const O = (e) => {
+  if (e._$cssResult$ === !0)
+    return e.cssText;
+  if (typeof e == "number")
+    return e;
+  throw new Error(
+    `Value passed to 'css' function must be a 'css' function result: ${e}. Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.`
+  );
+}, L = (e, ...t) => {
+  const n = e.length === 1 ? e[0] : t.reduce(
+    (a, o, s) => (
+      // @ts-expect-error
+      a + O(o) + e[s + 1]
+    ),
+    e[0]
+  );
+  return new E(
+    // @ts-expect-error
+    n,
+    e,
+    C
+  );
+}, R = (e, t) => {
+  if (v)
+    e.adoptedStyleSheets = t.map(
+      (n) => n instanceof CSSStyleSheet ? n : n.styleSheet
+    );
+  else
+    for (const n of t) {
+      const a = document.createElement("style"), o = f.litNonce;
+      o !== void 0 && a.setAttribute("nonce", o), a.textContent = n.cssText, e.appendChild(a);
+    }
+};
 export {
-  k as CSSResult,
-  j as Themepro,
-  H as adoptStyles,
-  C as createTheme,
-  w as css,
-  S as generateGradientColors,
-  f as getId,
+  E as CSSResult,
+  k as Themepro,
+  R as adoptStyles,
+  j as createTheme,
+  L as css,
+  x as generateGradientColors,
+  S as getId,
   b as injectStylesheet,
-  E as supportsAdoptingStyleSheets,
-  T as themePro
+  v as supportsAdoptingStyleSheets,
+  _ as themePro
 };
 //# sourceMappingURL=index.js.map
