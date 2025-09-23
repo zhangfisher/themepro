@@ -1,3 +1,4 @@
+import type { InjectStylesheetOptions } from "./utils";
 import type { GenerateGradientOptions } from "./utils/generateGradientColors";
 
 export type ThemeSize = "x-small" | "small" | "medium" | "large" | "x-large";
@@ -46,4 +47,8 @@ export type ThemeOptions = {
      * @returns
      */
     onGenerateGradientColors?: (options: GenerateGradientOptions) => string[];
+    /**
+     * 主题样式注入选项
+     */
+    injectStyle?: InjectStylesheetOptions;
 };

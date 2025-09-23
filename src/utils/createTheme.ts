@@ -42,9 +42,15 @@ export function createTheme(options: ThemeOptions) {
             .map(([key, value]) => `${key}:${value}`)
             .join(";\n")}}`;
 
-    injectStylesheet(style, {
-        id: `theme-${opts.name || getId()}`,
-        mode: "replace",
-    });
+    injectStylesheet(
+        style,
+        Object.assign(
+            {
+                id: `theme-${opts.name || getId()}`,
+                mode: "replace",
+            },
+            options?.injectStyle
+        )
+    );
     return style;
 }

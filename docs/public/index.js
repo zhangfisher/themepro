@@ -26,10 +26,10 @@ function p(e) {
   const [t, n, a] = e, o = t / 360, s = n / 100, c = a / 100, i = (1 - Math.abs(2 * c - 1)) * s, l = i * (1 - Math.abs(o * 6 % 2 - 1)), d = c - i / 2;
   let r = 0, h = 0, u = 0;
   0 <= o && o < 1 / 6 ? (r = i, h = l, u = 0) : 1 / 6 <= o && o < 2 / 6 ? (r = l, h = i, u = 0) : 2 / 6 <= o && o < 3 / 6 ? (r = 0, h = i, u = l) : 3 / 6 <= o && o < 4 / 6 ? (r = 0, h = l, u = i) : 4 / 6 <= o && o < 5 / 6 ? (r = l, h = 0, u = i) : (r = i, h = 0, u = l);
-  const g = (T) => Math.round((T + d) * 255).toString(16).padStart(2, "0");
-  return `#${g(r)}${g(h)}${g(u)}`;
+  const f = (T) => Math.round((T + d) * 255).toString(16).padStart(2, "0");
+  return `#${f(r)}${f(h)}${f(u)}`;
 }
-function x(e) {
+function j(e) {
   const { color: t, range: n, dark: a, count: o } = Object.assign(
     {
       range: [5, 98],
@@ -54,7 +54,7 @@ function m(e, t) {
       count: 5
     },
     typeof t == "string" ? { color: t } : t
-  ), { colors: a, dark: o } = x(n), s = {};
+  ), { colors: a, dark: o } = j(n), s = {};
   a.reduce((l, d, r) => (s[`${e}${r}`] = d, l), {});
   const i = `--t-${e.split("-")[4]}`;
   return n.levels && (s[`${i}-color`] = `var(${e}${n.levels[0]})`, s[`${i}-bgcolor`] = `var(${e}${n.levels[1]})`, n.levels.slice(2).forEach((l, d) => {
@@ -65,12 +65,17 @@ function S(e = 10) {
   return Math.random().toString(36).substring(2, e + 2);
 }
 function b(e, t) {
-  if (globalThis.document == null) return;
-  const { id: n, mode: a, location: o = "head" } = Object.assign({ mode: "default" }, t);
-  let s = document.head.querySelector(`#${n}`), c = n || S();
-  return s ? (a == "replace" ? s.innerHTML = e : a == "append" && (s.innerHTML += e), c) : (s = document.createElement("style"), s.innerHTML = e, s.id = c, t?.el ? t.el.appendChild(s) : o == "head" ? document.head.appendChild(s) : document.body.appendChild(s), s);
+  if (globalThis.document === void 0) return;
+  const {
+    id: n,
+    mode: a,
+    location: o = "head"
+  } = Object.assign({ mode: "default" }, t);
+  let s = document.head.querySelector(`#${n}`);
+  const c = n || S();
+  return s ? (a === "replace" ? s.innerHTML = e : a === "append" && (s.innerHTML += e), c) : (s = document.createElement("style"), s.innerHTML = e, s.id = c, t?.el ? t.el.appendChild(s) : o === "head" ? document.head.appendChild(s) : document.body.appendChild(s), s);
 }
-function j(e) {
+function x(e) {
   const t = Object.assign(
     {
       name: S(),
@@ -90,10 +95,16 @@ function j(e) {
         ${`color-schema: ${s ? "dark" : "light"}`};
         ${Object.entries(o).map(([i, l]) => `${i}:${l}`).join(`;
 `)}}`;
-  return b(c, {
-    id: `theme-${t.name || S()}`,
-    mode: "replace"
-  }), c;
+  return b(
+    c,
+    Object.assign(
+      {
+        id: `theme-${t.name || S()}`,
+        mode: "replace"
+      },
+      e?.injectStyle
+    )
+  ), c;
 }
 class k {
   root;
@@ -137,14 +148,14 @@ class k {
     });
   }
   create(t) {
-    j(t);
+    x(t);
   }
 }
-const _ = new k();
-globalThis.ThemePro = _;
-const f = globalThis, v = f.ShadowRoot && // @ts-expect-error
-(f.ShadyCSS === void 0 || f.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype, C = Symbol(), $ = /* @__PURE__ */ new WeakMap();
-class E {
+const O = new k();
+globalThis.ThemePro = O;
+const g = globalThis, v = g.ShadowRoot && // @ts-expect-error
+(g.ShadyCSS === void 0 || g.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype, C = Symbol(), $ = /* @__PURE__ */ new WeakMap();
+class _ {
   // This property needs to remain unminified.
   _$cssResult$ = !0;
   cssText;
@@ -172,7 +183,7 @@ class E {
     return this.cssText;
   }
 }
-const O = (e) => {
+const E = (e) => {
   if (e._$cssResult$ === !0)
     return e.cssText;
   if (typeof e == "number")
@@ -184,11 +195,11 @@ const O = (e) => {
   const n = e.length === 1 ? e[0] : t.reduce(
     (a, o, s) => (
       // @ts-expect-error
-      a + O(o) + e[s + 1]
+      a + E(o) + e[s + 1]
     ),
     e[0]
   );
-  return new E(
+  return new _(
     // @ts-expect-error
     n,
     e,
@@ -201,20 +212,20 @@ const O = (e) => {
     );
   else
     for (const n of t) {
-      const a = document.createElement("style"), o = f.litNonce;
+      const a = document.createElement("style"), o = g.litNonce;
       o !== void 0 && a.setAttribute("nonce", o), a.textContent = n.cssText, e.appendChild(a);
     }
 };
 export {
-  E as CSSResult,
+  _ as CSSResult,
   k as Themepro,
   R as adoptStyles,
-  j as createTheme,
+  x as createTheme,
   L as css,
-  x as generateGradientColors,
+  j as generateGradientColors,
   S as getId,
   b as injectStylesheet,
   v as supportsAdoptingStyleSheets,
-  _ as themePro
+  O as themePro
 };
 //# sourceMappingURL=index.js.map

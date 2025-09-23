@@ -73,7 +73,7 @@ export declare function injectStylesheet(css: string, options?: InjectStylesheet
 export declare interface InjectStylesheetOptions {
     location?: "head" | "body";
     id?: string;
-    mode?: "replace" | "append" | 'default';
+    mode?: "replace" | "append" | "default";
     el?: HTMLElement;
 }
 
@@ -102,6 +102,10 @@ export declare type ThemeOptions = {
      * @returns
      */
     onGenerateGradientColors?: (options: GenerateGradientOptions) => string[];
+    /**
+     * 主题样式注入选项
+     */
+    injectStyle?: InjectStylesheetOptions;
 };
 
 export declare class Themepro {
