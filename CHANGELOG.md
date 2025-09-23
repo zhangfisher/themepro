@@ -1,5 +1,11 @@
 # themepro
 
+## 1.0.8
+
+### Patch Changes
+
+- 6824e48: createTheme add injectStyle option
+
 ## 1.0.7
 
 ### Patch Changes
