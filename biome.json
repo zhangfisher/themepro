@@ -26,7 +26,8 @@
 			},
 			"complexity": {
 				"noArguments": "off",
-				"useArrowFunction": "off"
+				"useArrowFunction": "off",
+				"noImportantStyles": "off"
 			}
 		}
 	},
