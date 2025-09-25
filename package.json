@@ -27,7 +27,7 @@
 		"readme.md"
 	],
 	"scripts": {
-		"dev": "vite -c vite.dev.config.ts",
+		"dev": "vite",
 		"build": "vite build",
 		"build:css": "lessc src/styles/index.less dist/index.css && lessc src/styles/lite.less dist/lite.css &&  lessc src/components/index.less dist/components.css && bun run build:themes",
 		"build:themes": "lessc src/themes/dark.less dist/dark.css && lessc src/themes/red.less dist/red.css && lessc src/themes/blue.less dist/blue.css && lessc src/themes/light.less dist/light.css ",
