@@ -27,10 +27,12 @@
 		"readme.md"
 	],
 	"scripts": {
-		"dev": "vite",
+		"dev": "bun run dev:build:css && vite",
 		"build": "vite build",
-		"build:css": "lessc src/styles/index.less dist/index.css && lessc src/styles/lite.less dist/lite.css &&  lessc src/components/index.less dist/components.css && bun run build:themes",
-		"build:themes": "lessc src/themes/dark.less dist/dark.css && lessc src/themes/red.less dist/red.css && lessc src/themes/blue.less dist/blue.css && lessc src/themes/light.less dist/light.css ",
+		"dev:build:css": "lessc src/styles/base.less public/base.css &&  lessc src/styles/index.less public/index.css &&  lessc src/components/index.less public/components.css && bun run dev:build:themes",
+		"dev:build:themes": "lessc src/themes/dark.less public/dark.css && lessc src/themes/red.less public/red.css && lessc src/themes/blue.less public/blue.css && lessc src/themes/light.less public/light.css",
+		"build:css": "lessc src/styles/base.less dist/base.css && lessc src/styles/index.less dist/index.css &&  lessc src/components/index.less dist/components.css && bun run build:themes",
+		"build:themes": "lessc src/themes/dark.less dist/dark.css && lessc src/themes/red.less dist/red.css && lessc src/themes/blue.less dist/blue.css && lessc src/themes/light.less dist/light.css",
 		"build:tsup": "tsup",
 		"docs:dev": "vitepress dev docs",
 		"docs:build": "vitepress build docs",

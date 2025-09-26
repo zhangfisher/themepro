@@ -6,13 +6,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Themepro</title>
         <script src="https://cdn.jsdelivr.net/npm/less@4.1.1"></script>
+        <script type="module" src="card.ts"></script>
+        <script type="module" src="list.ts"></script>
         <script type="module" src="controller.ts"></script>
-        <script type="module" src="@/components/index.less"></script>
+        <link rel="stylesheet" href="/index.css" />
+        <link rel="stylesheet" href="/dark.css" />
+        <link rel="stylesheet" href="/red.css" />
+        <link rel="stylesheet" href="/blue.css" />
+        <link rel="stylesheet" href="/components.css" />
         <link
             rel="stylesheet"
             href="https://unpkg.com/lucide-static@latest/font/lucide.css"
         />
         <style>
+            .row {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 1em;
+            }
+            .row > * {
+                flex-grow: 1;
+            }
             .color {
                 margin-bottom: 0.2rem;
                 font-size: 1rem;
@@ -40,12 +56,14 @@
             .neutral-colors {
                 display: flex;
                 padding: 0.5em;
+                align-items: center;
+                justify-content: center;
                 flex-direction: row;
-                margin: 0.5em;
                 gap: 0.5em;
             }
             .neutral-colors .color {
                 color: #aaa;
+                flex-grow: 1;
             }
             button {
                 border: 1px solid var(--auto-primery-color);
@@ -65,6 +83,276 @@
     <body>
         <div>
             <themepro-controller></themepro-controller>
+        </div>
+        <div class="row">
+            <auto-list>
+                <auto-list-item title="标题1">内容1</auto-list-item>
+                <auto-list-item title="标题2">内容2</auto-list-item>
+                <auto-list-item title="标题3">内容3</auto-list-item>
+            </auto-list>
+        </div>
+        <div class="row">
+            <auto-card title="道德经">
+                道可道,非常道;名可名,非常名。无名天地之始,有名万物之母。故常无欲,以观其妙;常
+                有欲,以观其徼
+            </auto-card>
+            <auto-card title="道德经" data-theme="light">
+                道可道,非常道;名可名,非常名。无名天地之始,有名万物之母。故常无欲,以观其妙;常
+                有欲,以观其徼
+            </auto-card>
+            <auto-card title="道德经" data-theme="dark"
+                >道可道,非常道;名可名,非常名。无名天地之始,有名万物之母。故常无欲,以观其妙;常
+                有欲,以观其徼
+            </auto-card>
+            <auto-card title="道德经" data-theme="red"
+                >道可道,非常道;名可名,非常名。无名天地之始,有名万物之母。故常无欲,以观其妙;常
+                有欲,以观其徼
+            </auto-card>
+            <auto-card title="道德经" data-theme="blue"
+                >道可道,非常道;名可名,非常名。无名天地之始,有名万物之母。故常无欲,以观其妙;常
+                有欲,以观其徼
+            </auto-card>
+        </div>
+        <div>
+            <div class="neutral-colors row">
+                <div class="color" style="background: var(--t-theme-color)">
+                    theme-color
+                </div>
+                <div class="color" style="background: var(--t-theme-bgcolor)">
+                    theme-bgcolor
+                </div>
+                <div class="color" style="background: var(--t-theme-bgcolor-1)">
+                    theme-bgcolor-1
+                </div>
+                <div class="color" style="background: var(--t-theme-bgcolor-2)">
+                    theme-bgcolor-2
+                </div>
+                <div class="color" style="background: var(--t-theme-bgcolor-3)">
+                    theme-bgcolor-3
+                </div>
+                <div class="color" style="background: var(--t-theme-bgcolor-4)">
+                    theme-bgcolor-4
+                </div>
+            </div>
+            <div class="neutral-colors">
+                <div class="color" style="background: var(--t-color-primary-0)">
+                    primary-0
+                </div>
+                <div class="color" style="background: var(--t-color-primary-1)">
+                    primary-1
+                </div>
+                <div class="color" style="background: var(--t-color-primary-2)">
+                    primary-2
+                </div>
+                <div class="color" style="background: var(--t-color-primary-3)">
+                    primary-3
+                </div>
+                <div class="color" style="background: var(--t-color-primary-4)">
+                    primary-4
+                </div>
+                <div class="color" style="background: var(--t-color-primary-5)">
+                    primary-5
+                </div>
+                <div class="color" style="background: var(--t-color-primary-6)">
+                    primary-6
+                </div>
+                <div class="color" style="background: var(--t-color-primary-7)">
+                    primary-7
+                </div>
+                <div class="color" style="background: var(--t-color-primary-8)">
+                    primary-8
+                </div>
+                <div class="color" style="background: var(--t-color-primary-9)">
+                    primary-9
+                </div>
+                <div
+                    class="color"
+                    style="background: var(--t-color-primary-10)"
+                >
+                    primary-10
+                </div>
+            </div>
+            <div class="neutral-colors">
+                <div class="color" style="background: var(--t-color-success-0)">
+                    success-0
+                </div>
+                <div class="color" style="background: var(--t-color-success-1)">
+                    success-1
+                </div>
+                <div class="color" style="background: var(--t-color-success-2)">
+                    success-2
+                </div>
+                <div class="color" style="background: var(--t-color-success-3)">
+                    success-3
+                </div>
+                <div class="color" style="background: var(--t-color-success-4)">
+                    success-4
+                </div>
+                <div class="color" style="background: var(--t-color-success-5)">
+                    success-5
+                </div>
+                <div class="color" style="background: var(--t-color-success-6)">
+                    success-6
+                </div>
+                <div class="color" style="background: var(--t-color-success-7)">
+                    success-7
+                </div>
+                <div class="color" style="background: var(--t-color-success-8)">
+                    success-8
+                </div>
+                <div class="color" style="background: var(--t-color-success-9)">
+                    success-9
+                </div>
+                <div
+                    class="color"
+                    style="background: var(--t-color-success-10)"
+                >
+                    success-10
+                </div>
+            </div>
+            <div class="neutral-colors">
+                <div class="color" style="background: var(--t-color-danger-0)">
+                    danger-0
+                </div>
+                <div class="color" style="background: var(--t-color-danger-1)">
+                    danger-1
+                </div>
+                <div class="color" style="background: var(--t-color-danger-2)">
+                    danger-2
+                </div>
+                <div class="color" style="background: var(--t-color-danger-3)">
+                    danger-3
+                </div>
+                <div class="color" style="background: var(--t-color-danger-4)">
+                    danger-4
+                </div>
+                <div class="color" style="background: var(--t-color-danger-5)">
+                    danger-5
+                </div>
+                <div class="color" style="background: var(--t-color-danger-6)">
+                    danger-6
+                </div>
+                <div class="color" style="background: var(--t-color-danger-7)">
+                    danger-7
+                </div>
+                <div class="color" style="background: var(--t-color-danger-8)">
+                    danger-8
+                </div>
+                <div class="color" style="background: var(--t-color-danger-9)">
+                    danger-9
+                </div>
+                <div class="color" style="background: var(--t-color-danger-10)">
+                    danger-10
+                </div>
+            </div>
+            <div class="neutral-colors">
+                <div class="color" style="background: var(--t-color-warning-0)">
+                    warning-0
+                </div>
+                <div class="color" style="background: var(--t-color-warning-1)">
+                    warning-1
+                </div>
+                <div class="color" style="background: var(--t-color-warning-2)">
+                    warning-2
+                </div>
+                <div class="color" style="background: var(--t-color-warning-3)">
+                    warning-3
+                </div>
+                <div class="color" style="background: var(--t-color-warning-4)">
+                    warning-4
+                </div>
+                <div class="color" style="background: var(--t-color-warning-5)">
+                    warning-5
+                </div>
+                <div class="color" style="background: var(--t-color-warning-6)">
+                    warning-6
+                </div>
+                <div class="color" style="background: var(--t-color-warning-7)">
+                    warning-7
+                </div>
+                <div class="color" style="background: var(--t-color-warning-8)">
+                    warning-8
+                </div>
+                <div class="color" style="background: var(--t-color-warning-9)">
+                    warning-9
+                </div>
+                <div
+                    class="color"
+                    style="background: var(--t-color-warning-10)"
+                >
+                    warning-10
+                </div>
+            </div>
+            <div class="neutral-colors">
+                <div class="color" style="background: var(--t-color-info-0)">
+                    info-0
+                </div>
+                <div class="color" style="background: var(--t-color-info-1)">
+                    info-1
+                </div>
+                <div class="color" style="background: var(--t-color-info-2)">
+                    info-2
+                </div>
+                <div class="color" style="background: var(--t-color-info-3)">
+                    info-3
+                </div>
+                <div class="color" style="background: var(--t-color-info-4)">
+                    info-4
+                </div>
+                <div class="color" style="background: var(--t-color-info-5)">
+                    info-5
+                </div>
+                <div class="color" style="background: var(--t-color-info-6)">
+                    info-6
+                </div>
+                <div class="color" style="background: var(--t-color-info-7)">
+                    info-7
+                </div>
+                <div class="color" style="background: var(--t-color-info-8)">
+                    info-8
+                </div>
+                <div class="color" style="background: var(--t-color-info-9)">
+                    info-9
+                </div>
+                <div class="color" style="background: var(--t-color-info-10)">
+                    info-10
+                </div>
+            </div>
+            <div class="neutral-colors">
+                <div class="color" style="background: var(--t-color-theme-0)">
+                    theme-0
+                </div>
+                <div class="color" style="background: var(--t-color-theme-1)">
+                    theme-1
+                </div>
+                <div class="color" style="background: var(--t-color-theme-2)">
+                    theme-2
+                </div>
+                <div class="color" style="background: var(--t-color-theme-3)">
+                    theme-3
+                </div>
+                <div class="color" style="background: var(--t-color-theme-4)">
+                    theme-4
+                </div>
+                <div class="color" style="background: var(--t-color-theme-5)">
+                    theme-5
+                </div>
+                <div class="color" style="background: var(--t-color-theme-6)">
+                    theme-6
+                </div>
+                <div class="color" style="background: var(--t-color-theme-7)">
+                    theme-7
+                </div>
+                <div class="color" style="background: var(--t-color-theme-8)">
+                    theme-8
+                </div>
+                <div class="color" style="background: var(--t-color-theme-9)">
+                    theme-9
+                </div>
+                <div class="color" style="background: var(--t-color-theme-10)">
+                    theme-10
+                </div>
+            </div>
         </div>
         <div>
             <div class="themes">
