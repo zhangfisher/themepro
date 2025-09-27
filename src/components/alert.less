@@ -1,14 +1,37 @@
 .auto-alert {
     background: var(--auto-panel-bgcolor);
     border: var(--auto-border);
-    padding: var(--auto-input-padding);
     border-radius: var(--auto-border-radius);
     box-shadow: var(--auto-shadow);
     position: relative;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    font-size: var(--auto-font-size);
+    padding: var(--auto-spacing);
 
     &>.title {
         font: var(--auto-title-font);
+        color: var(--auto-title-color);
+        display: flex;
+        align-items: center;
+        padding-bottom: calc(0.5 * var(--auto-spacing));
+        justify-content: space-between;
+
+        &:first-child {
+            flex-grow: 1;
+        }
+
+        &>.closeable {
+            flex-shrink: 0;
+        }
+    }
+
+    &>.closeable {
+        position: absolute;
+        right: var(--auto-spacing);
+        top: 50%;
+        transform: translateY(-50%);
     }
 
     &.warning {

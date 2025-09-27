@@ -1,231 +1,388 @@
-function y(e) {
-  let t = e.trim();
-  if (t.startsWith("#") && (t = t.slice(1)), t.length === 3 ? t = t.replace(/(.)/g, "$1$1") : t.length === 4 && (t = t.replace(/(.)/g, "$1$1")), t.length > 6 && (t = t.slice(0, 6)), !/^[0-9a-f]{6}$/i.test(t))
+// src/utils/toRGB.ts
+function toRGB(hexColor) {
+  let str = hexColor.trim();
+  if (str.startsWith("#")) str = str.slice(1);
+  if (str.length === 3) {
+    str = str.replace(/(.)/g, "$1$1");
+  } else if (str.length === 4) {
+    str = str.replace(/(.)/g, "$1$1");
+  }
+  if (str.length > 6) {
+    str = str.slice(0, 6);
+  }
+  if (!/^[0-9a-f]{6}$/i.test(str)) {
     throw new Error("Invalid hex color");
-  const n = parseInt(t, 16), a = n >> 16 & 255, o = n >> 8 & 255, s = n & 255;
-  return [a, o, s];
+  }
+  const bigint = parseInt(str, 16);
+  const r = bigint >> 16 & 255;
+  const g = bigint >> 8 & 255;
+  const b = bigint & 255;
+  return [r, g, b];
 }
-function M(e) {
-  const t = y(e);
-  return (t[0] * 2126 + t[1] * 7152 + t[2] * 722) / 1e4 < 128;
+
+// src/utils/isDark.ts
+function isDark(color) {
+  const rgb = toRGB(color);
+  const yiq = (rgb[0] * 2126 + rgb[1] * 7152 + rgb[2] * 722) / 1e4;
+  return yiq < 128;
 }
-function w(e) {
-  const [t, n, a] = Array.isArray(e) ? e : y(e), o = t / 255, s = n / 255, c = a / 255, i = Math.max(o, s, c), l = Math.min(o, s, c), d = i - l;
-  let r = 0, h = 0;
-  const u = (i + l) / 2;
-  return d !== 0 && (i === o ? r = ((s - c) / d + (s < c ? 6 : 0)) / 6 : i === s ? r = ((c - o) / d + 2) / 6 : r = ((o - s) / d + 4) / 6), d !== 0 && (h = d / (1 - Math.abs(2 * u - 1))), [
-    Math.round(r * 360),
+
+// src/utils/rgbToHsl.ts
+function rgbToHsl(color) {
+  const [r, g, b] = Array.isArray(color) ? color : toRGB(color);
+  const rd = r / 255;
+  const gd = g / 255;
+  const bd = b / 255;
+  const max = Math.max(rd, gd, bd);
+  const min = Math.min(rd, gd, bd);
+  const delta = max - min;
+  let h = 0;
+  let s = 0;
+  const l = (max + min) / 2;
+  if (delta !== 0) {
+    if (max === rd) {
+      h = ((gd - bd) / delta + (gd < bd ? 6 : 0)) / 6;
+    } else if (max === gd) {
+      h = ((bd - rd) / delta + 2) / 6;
+    } else {
+      h = ((rd - gd) / delta + 4) / 6;
+    }
+  }
+  if (delta !== 0) {
+    s = delta / (1 - Math.abs(2 * l - 1));
+  }
+  return [
+    Math.round(h * 360),
     // 0-360
-    Math.round(h * 100),
+    Math.round(s * 100),
     // 0-100
-    Math.round(u * 100)
+    Math.round(l * 100)
     // 0-100
   ];
 }
-function p(e) {
-  const [t, n, a] = e, o = t / 360, s = n / 100, c = a / 100, i = (1 - Math.abs(2 * c - 1)) * s, l = i * (1 - Math.abs(o * 6 % 2 - 1)), d = c - i / 2;
-  let r = 0, h = 0, u = 0;
-  0 <= o && o < 1 / 6 ? (r = i, h = l, u = 0) : 1 / 6 <= o && o < 2 / 6 ? (r = l, h = i, u = 0) : 2 / 6 <= o && o < 3 / 6 ? (r = 0, h = i, u = l) : 3 / 6 <= o && o < 4 / 6 ? (r = 0, h = l, u = i) : 4 / 6 <= o && o < 5 / 6 ? (r = l, h = 0, u = i) : (r = i, h = 0, u = l);
-  const f = (T) => Math.round((T + d) * 255).toString(16).padStart(2, "0");
-  return `#${f(r)}${f(h)}${f(u)}`;
+
+// src/utils/hslToRgb.ts
+function hslToRgb(hsl) {
+  const [h, s, l] = hsl;
+  const H = h / 360;
+  const S = s / 100;
+  const L = l / 100;
+  const C = (1 - Math.abs(2 * L - 1)) * S;
+  const X = C * (1 - Math.abs(H * 6 % 2 - 1));
+  const m = L - C / 2;
+  let r = 0, g = 0, b = 0;
+  if (0 <= H && H < 1 / 6) {
+    r = C;
+    g = X;
+    b = 0;
+  } else if (1 / 6 <= H && H < 2 / 6) {
+    r = X;
+    g = C;
+    b = 0;
+  } else if (2 / 6 <= H && H < 3 / 6) {
+    r = 0;
+    g = C;
+    b = X;
+  } else if (3 / 6 <= H && H < 4 / 6) {
+    r = 0;
+    g = X;
+    b = C;
+  } else if (4 / 6 <= H && H < 5 / 6) {
+    r = X;
+    g = 0;
+    b = C;
+  } else {
+    r = C;
+    g = 0;
+    b = X;
+  }
+  const toHex = (v) => Math.round((v + m) * 255).toString(16).padStart(2, "0");
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
 }
-function j(e) {
-  const { color: t, range: n, dark: a, count: o } = Object.assign(
+
+// src/utils/generateGradientColors.ts
+function generateGradientColors(options) {
+  const { color, range, dark, count } = Object.assign(
     {
       range: [5, 98],
       count: 5
     },
-    e
-  ), s = w(t), c = a ?? M(t), i = Array.from({ length: 2 * o + 1 });
-  i[o] = t;
-  let l = Math.abs(s[2] - n[0]), d = l / o, r = s[2];
-  for (let h = o - 1; h >= 0; h--)
-    r = r + (c ? -1 : 1) * d, r < 0 && (r = 0), r > 100 && (r = 100), i[h] = p([s[0], s[1], r]);
-  r = s[2], l = Math.abs(s[2] - n[1]), d = l / o;
-  for (let h = o + 1; h < o * 2 + 1; h++)
-    r = r + (c ? 1 : -1) * d, r < 0 && (r = 0), r > 100 && (r = 100), i[h] = p([s[0], s[1], r]);
-  return { colors: i, dark: c };
+    options
+  );
+  const baseHsl = rgbToHsl(color);
+  const isDarkColor = dark ?? isDark(color);
+  const colors = Array.from({ length: 2 * count + 1 });
+  colors[count] = color;
+  let lightnessRange = Math.abs(baseHsl[2] - range[0]);
+  let step = lightnessRange / count;
+  let lightness = baseHsl[2];
+  for (let i = count - 1; i >= 0; i--) {
+    lightness = lightness + (isDarkColor ? -1 : 1) * step;
+    if (lightness < 0) lightness = 0;
+    if (lightness > 100) lightness = 100;
+    colors[i] = hslToRgb([baseHsl[0], baseHsl[1], lightness]);
+  }
+  lightness = baseHsl[2];
+  lightnessRange = Math.abs(baseHsl[2] - range[1]);
+  step = lightnessRange / count;
+  for (let i = count + 1; i < count * 2 + 1; i++) {
+    lightness = lightness + (isDarkColor ? 1 : -1) * step;
+    if (lightness < 0) lightness = 0;
+    if (lightness > 100) lightness = 100;
+    colors[i] = hslToRgb([baseHsl[0], baseHsl[1], lightness]);
+  }
+  return { colors, dark: isDarkColor };
 }
-function m(e, t) {
-  const n = Object.assign(
+
+// src/utils/createVariantVars.ts
+function createVariantVars(prefix, options) {
+  const opts = Object.assign(
     {
       levels: [5, 1, 2, 3, 4, 5],
       range: [10, 98],
       count: 5
     },
-    typeof t == "string" ? { color: t } : t
-  ), { colors: a, dark: o } = j(n), s = {};
-  a.reduce((l, d, r) => (s[`${e}${r}`] = d, l), {});
-  const i = `--t-${e.split("-")[4]}`;
-  return n.levels && (s[`${i}-color`] = `var(${e}${n.levels[0]})`, s[`${i}-bgcolor`] = `var(${e}${n.levels[1]})`, n.levels.slice(2).forEach((l, d) => {
-    s[`${i}-bgcolor-${d + 1}`] = `var(${e}${l})`;
-  })), { vars: s, colors: a, dark: o };
+    typeof options === "string" ? { color: options } : options
+  );
+  const { colors, dark } = generateGradientColors(opts);
+  const vars = {};
+  colors.reduce((all, cur, i) => {
+    vars[`${prefix}${i}`] = cur;
+    return all;
+  }, {});
+  const ps = prefix.split("-");
+  const levelPrefix = `--t-${ps[4]}`;
+  if (opts.levels) {
+    vars[`${levelPrefix}-color`] = `var(${prefix}${opts.levels[0]})`;
+    vars[`${levelPrefix}-bgcolor`] = `var(${prefix}${opts.levels[1]})`;
+    opts.levels.slice(2).forEach((level, i) => {
+      vars[`${levelPrefix}-bgcolor-${i + 1}`] = `var(${prefix}${level})`;
+    });
+  }
+  return { vars, colors, dark };
 }
-function S(e = 10) {
-  return Math.random().toString(36).substring(2, e + 2);
+
+// src/utils/getId.ts
+function getId(len = 10) {
+  return Math.random().toString(36).substring(2, len + 2);
 }
-function b(e, t) {
+
+// src/utils/injectStylesheet.ts
+function injectStylesheet(css2, options) {
   if (globalThis.document === void 0) return;
-  const {
-    id: n,
-    mode: a,
-    location: o = "head"
-  } = Object.assign({ mode: "default" }, t);
-  let s = document.head.querySelector(`#${n}`);
-  const c = n || S();
-  return s ? (a === "replace" ? s.innerHTML = e : a === "append" && (s.innerHTML += e), c) : (s = document.createElement("style"), s.innerHTML = e, s.id = c, t?.el ? t.el.appendChild(s) : o === "head" ? document.head.appendChild(s) : document.body.appendChild(s), s);
+  const { id, mode, location = "head" } = Object.assign({ mode: "default" }, options);
+  let style = document.head.querySelector(`#${id}`);
+  const scopeId = id || getId();
+  if (!style) {
+    style = document.createElement("style");
+    style.innerHTML = css2;
+    style.id = scopeId;
+    if (options?.el) {
+      options.el.appendChild(style);
+    } else if (location === "head") {
+      document.head.appendChild(style);
+    } else {
+      document.body.appendChild(style);
+    }
+  }
+  if (mode === "replace") {
+    style.innerHTML = css2;
+  } else if (mode === "append") {
+    style.innerHTML += css2;
+  }
+  return scopeId;
 }
-function x(e) {
-  const t = Object.assign(
+
+// src/utils/createTheme.ts
+function createTheme(options) {
+  const opts = Object.assign(
     {
-      name: S(),
-      variants: {}
+      name: getId(),
+      variants: {},
+      onInjectStyles: (themeStyles, themeName) => {
+        return `:host,:root[data-theme=${themeName}]{
+${themeStyles}
+}`;
+      }
     },
-    e
-  ), n = Object.assign(
+    options
+  );
+  const themeOpts = Object.assign(
     {
       prefix: "--t-color-theme-",
       range: [10, 100],
       levels: [10, 1, 2, 3, 4, 5]
     },
-    typeof t.theme == "string" ? { color: t.theme } : t.theme
-  ), a = t.selector || ":root,:host", { vars: o, dark: s } = m("--t-color-theme-", n);
-  t.variants.primary && m("--t-color-primary-", t.variants.primary), t.variants.danger && m("--t-color-danger-", t.variants.danger), t.variants.success && m("--t-color-success-", t.variants.success), t.variants.warning && m("--t-color-warning-", t.variants.warning), t.variants.info && m("--t-color-info-", t.variants.info);
-  const c = `${a}[data-theme=${t.name}]{
-        ${`color-schema: ${s ? "dark" : "light"}`};
-        ${Object.entries(o).map(([i, l]) => `${i}:${l}`).join(`;
-`)}}`;
-  return b(
-    c,
+    typeof opts.theme === "string" ? { color: opts.theme } : opts.theme
+  );
+  const { vars, dark } = createVariantVars("--t-color-theme-", themeOpts);
+  if (opts.variants.primary) createVariantVars("--t-color-primary-", opts.variants.primary);
+  if (opts.variants.danger) createVariantVars("--t-color-danger-", opts.variants.danger);
+  if (opts.variants.success) createVariantVars("--t-color-success-", opts.variants.success);
+  if (opts.variants.warning) createVariantVars("--t-color-warning-", opts.variants.warning);
+  if (opts.variants.info) createVariantVars("--t-color-info-", opts.variants.info);
+  const style = opts.onInjectStyles(
+    `${`color-schema: ${dark ? "dark" : "light"}`};
+        ${Object.entries(vars).map(([key, value]) => `${key}:${value}`).join(";\n")}`,
+    opts.name
+  );
+  injectStylesheet(
+    style,
     Object.assign(
       {
-        id: `theme-${t.name || S()}`,
+        id: `theme-${opts.name || getId()}`,
         mode: "replace"
       },
-      e?.injectStyle
+      options?.injectStyle
     )
-  ), c;
+  );
+  return style;
 }
-class k {
-  root;
+
+// src/themepro.ts
+var Themepro = class {
   constructor() {
-    this.root = document.documentElement, document.addEventListener("DOMContentLoaded", this._onDomContentLoaded.bind(this));
+    this.root = document.documentElement;
+    document.addEventListener("DOMContentLoaded", this._onDomContentLoaded.bind(this));
   }
   get size() {
     return this.root.dataset.size || "medium";
   }
-  set size(t) {
-    this.root.dataset.size = t;
+  set size(value) {
+    this.root.dataset.size = value;
   }
   get spacing() {
     return this.root.dataset.spacing || "medium";
   }
-  set spacing(t) {
-    this.root.dataset.spacing = String(t);
+  set spacing(value) {
+    this.root.dataset.spacing = String(value);
   }
   get radius() {
     return this.root.dataset.radius || "medium";
   }
-  set radius(t) {
-    this.root.dataset.radius = t;
+  set radius(value) {
+    this.root.dataset.radius = value;
   }
   get theme() {
     return this.root.dataset.theme || "light";
   }
-  set theme(t) {
-    this.root.dataset.theme = t;
+  set theme(value) {
+    this.root.dataset.theme = value;
   }
   _onDomContentLoaded() {
     this.root = document.documentElement;
   }
-  createVariant(t, n) {
-    const { vars: a } = m(`--t-color-${t}-`, n), s = `${this.theme === "light" ? ":root,:host" : `:host,
-:root[data-theme=${this.theme}]`}{${Object.entries(a).map(([c, i]) => `${c}: ${i};`).join(`
-`)}`;
-    b(s, {
-      id: `t-${this.theme}-${t}`,
+  createVariant(variant, options) {
+    const { vars } = createVariantVars(`--t-color-${variant}-`, options);
+    const selector = this.theme === "light" ? `:root,:host` : `:host,
+:root[data-theme=${this.theme}]`;
+    const styles = `${selector}{${Object.entries(vars).map(([name, value]) => `${name}: ${value};`).join("\n")}`;
+    injectStylesheet(styles, {
+      id: `t-${this.theme}-${variant}`,
       mode: "replace"
     });
   }
-  create(t) {
-    x(t);
+  create(options) {
+    createTheme(options);
   }
-}
-const O = new k();
-globalThis.ThemePro = O;
-const g = globalThis, v = g.ShadowRoot && // @ts-expect-error
-(g.ShadyCSS === void 0 || g.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype, C = Symbol(), $ = /* @__PURE__ */ new WeakMap();
-class _ {
-  // This property needs to remain unminified.
-  _$cssResult$ = !0;
-  cssText;
-  _styleSheet;
-  _strings;
-  constructor(t, n, a) {
-    if (a !== C)
+};
+var themePro = new Themepro();
+globalThis.ThemePro = themePro;
+
+// src/utils/css.ts
+var global = globalThis;
+var supportsAdoptingStyleSheets = global.ShadowRoot && // @ts-expect-error
+(global.ShadyCSS === void 0 || global.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype;
+var constructionToken = Symbol();
+var cssTagCache = /* @__PURE__ */ new WeakMap();
+var CSSResult = class {
+  constructor(cssText, strings, safeToken) {
+    // This property needs to remain unminified.
+    this["_$cssResult$"] = true;
+    if (safeToken !== constructionToken) {
       throw new Error(
         "CSSResult is not constructable. Use `unsafeCSS` or `css` instead."
       );
-    this.cssText = t, this._strings = n;
+    }
+    this.cssText = cssText;
+    this._strings = strings;
   }
   // This is a getter so that it's lazy. In practice, this means stylesheets
   // are not created until the first element instance is made.
   get styleSheet() {
-    let t = this._styleSheet;
-    const n = this._strings;
-    if (v && t === void 0) {
-      const a = n !== void 0 && n.length === 1;
-      a && (t = $.get(n)), t === void 0 && ((this._styleSheet = t = new CSSStyleSheet()).replaceSync(this.cssText), a && $.set(n, t));
+    let styleSheet = this._styleSheet;
+    const strings = this._strings;
+    if (supportsAdoptingStyleSheets && styleSheet === void 0) {
+      const cacheable = strings !== void 0 && strings.length === 1;
+      if (cacheable) {
+        styleSheet = cssTagCache.get(strings);
+      }
+      if (styleSheet === void 0) {
+        (this._styleSheet = styleSheet = new CSSStyleSheet()).replaceSync(this.cssText);
+        if (cacheable) {
+          cssTagCache.set(strings, styleSheet);
+        }
+      }
     }
-    return t;
+    return styleSheet;
   }
   toString() {
     return this.cssText;
   }
-}
-const E = (e) => {
-  if (e._$cssResult$ === !0)
-    return e.cssText;
-  if (typeof e == "number")
-    return e;
-  throw new Error(
-    `Value passed to 'css' function must be a 'css' function result: ${e}. Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.`
-  );
-}, L = (e, ...t) => {
-  const n = e.length === 1 ? e[0] : t.reduce(
-    (a, o, s) => (
-      // @ts-expect-error
-      a + E(o) + e[s + 1]
-    ),
-    e[0]
-  );
-  return new _(
-    // @ts-expect-error
-    n,
-    e,
-    C
-  );
-}, R = (e, t) => {
-  if (v)
-    e.adoptedStyleSheets = t.map(
-      (n) => n instanceof CSSStyleSheet ? n : n.styleSheet
+};
+var textFromCSSResult = (value) => {
+  if (value["_$cssResult$"] === true) {
+    return value.cssText;
+  } else if (typeof value === "number") {
+    return value;
+  } else {
+    throw new Error(
+      `Value passed to 'css' function must be a 'css' function result: ${value}. Use 'unsafeCSS' to pass non-literal values, but take care to ensure page security.`
     );
-  else
-    for (const n of t) {
-      const a = document.createElement("style"), o = g.litNonce;
-      o !== void 0 && a.setAttribute("nonce", o), a.textContent = n.cssText, e.appendChild(a);
+  }
+};
+var css = (strings, ...values) => {
+  const cssText = strings.length === 1 ? strings[0] : values.reduce(
+    (acc, v, idx) => (
+      // @ts-expect-error
+      acc + textFromCSSResult(v) + strings[idx + 1]
+    ),
+    strings[0]
+  );
+  return new CSSResult(
+    // @ts-expect-error
+    cssText,
+    strings,
+    constructionToken
+  );
+};
+var adoptStyles = (renderRoot, styles) => {
+  if (supportsAdoptingStyleSheets) {
+    renderRoot.adoptedStyleSheets = styles.map(
+      (s) => s instanceof CSSStyleSheet ? s : s.styleSheet
+    );
+  } else {
+    for (const s of styles) {
+      const style = document.createElement("style");
+      const nonce = global["litNonce"];
+      if (nonce !== void 0) {
+        style.setAttribute("nonce", nonce);
+      }
+      style.textContent = s.cssText;
+      renderRoot.appendChild(style);
     }
+  }
 };
 export {
-  _ as CSSResult,
-  k as Themepro,
-  R as adoptStyles,
-  x as createTheme,
-  L as css,
-  j as generateGradientColors,
-  S as getId,
-  b as injectStylesheet,
-  v as supportsAdoptingStyleSheets,
-  O as themePro
+  CSSResult,
+  Themepro,
+  adoptStyles,
+  createTheme,
+  css,
+  generateGradientColors,
+  getId,
+  injectStylesheet,
+  supportsAdoptingStyleSheets,
+  themePro
 };
 //# sourceMappingURL=index.js.map

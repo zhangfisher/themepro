@@ -29,6 +29,16 @@
             .row > * {
                 flex-grow: 1;
             }
+            .col {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 1em;
+            }
+            .col > * {
+                width: 100%;
+            }
             .color {
                 margin-bottom: 0.2rem;
                 font-size: 1rem;
@@ -83,6 +93,41 @@
     <body>
         <div>
             <themepro-controller></themepro-controller>
+        </div>
+        <div class="row">
+            <span class="display:flex;gap:1rem">
+                <button class="auto-btn primary">确定</button>
+                <button class="auto-btn">取消</button>
+                <button class="auto-btn success">成功</button>
+                <button class="auto-btn warning">保存</button>
+                <button class="auto-btn danger">删除</button>
+                <button class="auto-btn info">关闭</button>
+            </span>
+        </div>
+        <div class="col">
+            <div class="auto-alert">
+                卡片内容
+                <span class="closeable"></span>
+            </div>
+            <div class="auto-alert warning">
+                卡片内容:warning
+                <span class="closeable"></span>
+            </div>
+            <div class="auto-alert error">
+                卡片内容:error/danger<span class="closeable"></span>
+            </div>
+            <div class="auto-alert success">
+                卡片内容:success<span class="closeable"></span>
+            </div>
+            <div class="auto-alert primary">
+                <div class="title">
+                    卡片内容:primary<span class="closeable"></span>
+                </div>
+                <p>
+                    道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
+                    有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门
+                </p>
+            </div>
         </div>
         <div class="row">
             <auto-list>

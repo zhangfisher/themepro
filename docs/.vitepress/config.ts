@@ -38,6 +38,7 @@ export default defineConfig({
 					{ text: "间距", link: "/guide/use/spacing" },
 					{ text: "自动变量", link: "/guide/use/autovars" },
 					{ text: "颜色", link: "/guide/use/colors" },
+					{ text: "局部主题", link: "/guide/use/scope" },
 					{ text: "工具类", link: "/guide/use/classs" },
 				],
 			},

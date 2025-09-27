@@ -28,7 +28,7 @@
 	],
 	"scripts": {
 		"dev": "bun run dev:build:css && vite",
-		"build": "vite build",
+		"build": "bun run build:css && tsup",
 		"dev:build:css": "lessc src/styles/base.less public/base.css &&  lessc src/styles/index.less public/index.css &&  lessc src/components/index.less public/components.css && bun run dev:build:themes",
 		"dev:build:themes": "lessc src/themes/dark.less public/dark.css && lessc src/themes/red.less public/red.css && lessc src/themes/blue.less public/blue.css && lessc src/themes/light.less public/light.css",
 		"build:css": "lessc src/styles/base.less dist/base.css && lessc src/styles/index.less dist/index.css &&  lessc src/components/index.less dist/components.css && bun run build:themes",
@@ -48,6 +48,7 @@
 		"@microsoft/api-extractor": "^7.52.10",
 		"@types/bun": "1.2.22",
 		"biome": "^0.3.3",
+		"cpx": "^1.5.0",
 		"esbuild-copy-files-plugin": "^1.2.1",
 		"less": "^4.4.1",
 		"lit": "^3.3.1",

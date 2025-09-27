@@ -12,10 +12,14 @@
  */
 import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
+import { ThemeProController } from "../src/webcomponent/lit";
 
 @customElement("auto-list")
 export class AutoListComponent extends LitElement {
-	static styles = css`
+	themepro = new ThemeProController(this);
+
+	static styles = [
+		css`
     :host {
       display: block;
       width: 100%;
@@ -38,7 +42,8 @@ export class AutoListComponent extends LitElement {
     ::slotted(auto-list-item:last-child) {
       border-bottom: none;
     }
-  `;
+  `,
+	];
 
 	render() {
 		return html`
