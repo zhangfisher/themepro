@@ -1,29 +1,65 @@
 import type { ThemeOptions } from "@/types";
-import { createTheme } from "@/utils";
+import { createTheme, injectStylesheet } from "@/utils";
+import { createVariantVars } from "@/utils/createVariantVars";
 import type { LitElement, ReactiveController } from "lit";
 
 export class ThemeProController implements ReactiveController {
 	host: LitElement;
 	private observer: MutationObserver;
-	
+
 	constructor(host: LitElement) {
 		this.host = host;
 		this.host.addController(this);
-		
+
 		// 创建MutationObserver来监听data-theme属性变化
 		this.observer = new MutationObserver((mutations) => {
 			for (const mutation of mutations) {
-				if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-					const theme = this.host.getAttribute("data-theme");
-					if (theme) {
-						this.create({
-							name: theme,
-							theme,
-						});
+				const attrName = mutation.attributeName;
+				if (mutation.type === "attributes") {
+					if (attrName === "data-theme") {
+						this._onThemeChange();
+					} else if (attrName) {
+						const variantType = this._getVariantType(attrName);
+						if (variantType) this._onVariantColorChange(variantType);
 					}
+					break;
 				}
 			}
 		});
+	}
+
+	_getVariantType(attrName: string) {
+		const pattern = /^data-(primary|danger|success|warning|info)-color$/;
+		const result = pattern.exec(attrName);
+		if (result?.[1]) {
+			return result[1];
+		} else {
+			return null;
+		}
+	}
+	_onThemeChange() {
+		const theme = this.host.getAttribute("data-theme");
+		if (theme) {
+			this.create({
+				name: theme,
+				theme,
+			});
+		}
+	}
+	_onVariantColorChange(variant: string) {
+		const color = this.host.getAttribute(`data-${variant}-color`);
+		if (color) {
+			const { vars } = createVariantVars(`--t-color-${variant}-`, {
+				color,
+			});
+			injectStylesheet(
+				`:host{
+				${Object.entries(vars)
+					.map(([key, value]) => `${key}:${value}`)
+					.join(";\n")}`,
+				{ el: this.host },
+			);
+		}
 	}
 
 	/**
@@ -31,11 +67,11 @@ export class ThemeProController implements ReactiveController {
 	 */
 	hostConnected() {
 		// 开始监听data-theme属性变化
-		this.observer.observe(this.host, { 
-			attributes: true, 
-			attributeFilter: ['data-theme'] 
+		this.observer.observe(this.host, {
+			attributes: true,
+			attributeFilter: ["data-theme", "data-primary-color"],
 		});
-		
+
 		const theme = this.host.getAttribute("data-theme");
 		if (theme) {
 			this.create({
@@ -57,6 +93,7 @@ export class ThemeProController implements ReactiveController {
 				injectStyle: {
 					id: "themepro",
 					el: this.host,
+					mode: "replace",
 				},
 				onInjectStyles: (themeStyles: string) => {
 					return `.themepro{\n

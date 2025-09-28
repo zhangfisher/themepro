@@ -86,14 +86,6 @@
                         event.target.innerText.toLowerCase();
                 }
             });
-
-            const sizes = document.querySelector("#sizes");
-            sizes.addEventListener("change", (event) => {
-                const size = document.querySelector(
-                    "input[type=radio][name=size]:checked"
-                );
-                ThemePro.size = size.value;
-            });
             var primaryPicker = new Picker({
                 parent: document.getElementById("custom-colorpicker"),
                 onChange: function (color) {
