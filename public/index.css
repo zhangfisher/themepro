@@ -1,7 +1,8 @@
 @charset "utf-8";
 body {
   color: var(--auto-color);
-  background: var(--auto-bgcolor);
+  background: var(--auto-workspace-bgcolor);
+  line-height: var(--auto-line-height);
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   text-rendering: optimizelegibility;
@@ -434,12 +435,12 @@ h6 {
   --t-color-theme-8: var(--t-color-gray-8);
   --t-color-theme-9: var(--t-color-gray-9);
   --t-color-theme-10: var(--t-color-gray-10);
-  --t-theme-color: hsl(0, 0%, 30%);
-  --t-theme-bgcolor: hsl(0, 0%, 100%);
-  --t-theme-bgcolor-1: hsl(0, 0%, 100%);
-  --t-theme-bgcolor-2: var(--t-color-gray-1);
-  --t-theme-bgcolor-3: var(--t-color-gray-2);
-  --t-theme-bgcolor-4: hsl(0, 0%, 100%);
+  --t-theme-color: hsl(0, 0%, 40%);
+  --t-theme-bgcolor: hsl(0, 0%, 99%);
+  --t-theme-bgcolor-1: hsl(0, 0%, 98%);
+  --t-theme-bgcolor-2: hsl(0, 0%, 100%);
+  --t-theme-bgcolor-3: hsl(0, 0%, 97%);
+  --t-theme-bgcolor-4: hsl(0, 0%, 96%);
   --t-border-radius-x-small: 0.2rem;
   --t-border-radius-small: 0.3rem;
   --t-border-radius-medium: 0.5rem;
@@ -512,8 +513,8 @@ h6 {
   --auto-dark-color: color-mix(in srgb, var(--auto-color), black 20%);
   --auto-light-color: color-mix(in srgb, var(--auto-color), white 20%);
   /* 边框颜色 */
-  --auto-border-color: var(--t-color-theme-3);
-  --auto-border-active-color: var(--t-color-primary-6);
+  --auto-border-color: var(--t-color-theme-2);
+  --auto-border-active-color: var(--t-color-primary-3);
   /* 排版/字体 */
   --auto-font: var(--auto-font-weight) var(--auto-font-size)/1.5 var(--auto-font-family);
   --auto-font-family: Lantinghei SC, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
@@ -537,18 +538,19 @@ h6 {
   --auto-input-height: var(--t-line-height-medium);
   /* 背景颜色，用于面板/对话框/组件的背景 */
   --auto-bgcolor: var(--t-theme-bgcolor);
+  --auto-workspace-bgcolor: var(--t-theme-bgcolor);
   /* 亮色: 相对于背景的亮色*/
   --auto-light-bgcolor: color-mix(in hsl, var(--auto-bgcolor), white 20%);
   /* 暗色: 相对于背景的暗色背景*/
   --auto-dark-bgcolor: color-mix(in hsl, var(--auto-bgcolor), black 20%);
   /* 面板背景颜色：用于面板/区块/Drawer等背景颜色*/
-  --auto-panel-bgcolor: var(--t-theme-bgcolor-1);
+  --auto-panel-bgcolor: var(--t-theme-bgcolor-2);
   /** 标题背景颜色：用于标题/标题栏的背景颜色*/
-  --auto-title-bgcolor: var(--t-theme-bgcolor-2);
+  --auto-title-bgcolor: var(--t-theme-bgcolor-1);
   /** 输入框背景颜色：用于输入框背景颜色*/
   --auto-input-bgcolor: var(--t-theme-bgcolor);
   /** 随随色背景颜色：用于自动选中颜色，或根据背景颜色自动匹配背景颜色*/
-  --auto-selected-bgcolor: color-mix(in srgb, var(--t-color-theme-3) 40%, transparent);
+  --auto-selected-bgcolor: color-mix(in srgb, var(--auto-bgcolor) 80%, transparent);
   --auto-icon-size: calc(1.5 * var(--t-font-size-medium));
 }
 :host([data-radius='x-small']),

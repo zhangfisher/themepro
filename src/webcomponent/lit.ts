@@ -136,6 +136,7 @@ export class ThemeProController implements ReactiveController {
 
     /* 背景颜色，用于面板/对话框/组件的背景 */
     --auto-bgcolor: var(--t-theme-bgcolor);
+    --auto-workspace-bgcolor: var(--t-theme-bgcolor-1);
     /* 亮色: 相对于背景的亮色*/
     --auto-light-bgcolor: color-mix(in hsl, var(--auto-bgcolor), white 20%);
     /* 暗色: 相对于背景的暗色背景*/

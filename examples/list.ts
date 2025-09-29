@@ -89,6 +89,14 @@ export class AutoListItemComponent extends LitElement {
         <div class="list-item-header">${this.title}</div>
         <div class="list-item-body">
           <slot></slot>
+            <span class="display:flex;gap:1rem">
+                <button class="auto-btn primary">确定</button>
+                <button class="auto-btn">取消</button>
+                <button class="auto-btn success">成功</button>
+                <button class="auto-btn warning">保存</button>
+                <button class="auto-btn danger">删除</button>
+                <button class="auto-btn info">关闭</button>
+            </span>
         </div>
       </div>
     `;
