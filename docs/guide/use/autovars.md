@@ -26,7 +26,7 @@
 }
 
 .my-component-title {
-    color: var(--auto-title-color);
+    color: var(--auto-card-title-color);
     background-color: var(--auto-title-bgcolor);
 }
 
@@ -47,8 +47,8 @@
 | `--auto-border-color`        | `var(--t-color-theme-2)`                                      | 边框颜色       |
 | `--auto-active-border-color` | `var(--t-color-primary-6)`                                    | 活动边框颜色   |
 | -                            |                                                               |                |
-| `--auto-panel-bgcolor`       | `var(--t-theme-bgcolor-1)`                                    | 面板背景颜色   |
-| `--auto-title-color`         | `var(--t-color-primary-6)`                                    | 标题字体颜色   |
+| `--auto-card-bgcolor`        | `var(--t-theme-bgcolor-1)`                                    | 面板背景颜色   |
+| `--auto-card-title-color`    | `var(--t-color-primary-6)`                                    | 标题字体颜色   |
 | `--auto-title-bgcolor`       | `var(--t-theme-bgcolor-2)`                                    | 标题背景颜色   |
 | `--auto-input-bgcolor`       | `var(--t-theme-bgcolor)`                                      | 输入框背景颜色 |
 | -                            |                                                               |                |
@@ -130,7 +130,7 @@ themePro.radius = "small";
 ```html
 <style>
     .card {
-        background-color: var(--auto-panel-bgcolor);
+        background-color: var(--auto-card-bgcolor);
         border: var(--auto-border);
         border-radius: var(--auto-border-radius);
         padding: var(--auto-padding);
@@ -139,7 +139,7 @@ themePro.radius = "small";
     }
 
     .card-title {
-        color: var(--auto-title-color);
+        color: var(--auto-card-title-color);
         font-size: var(--auto-font-size);
         font-weight: var(--auto-font-weight);
         margin-bottom: var(--auto-spacing);

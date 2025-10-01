@@ -7,11 +7,11 @@
 }
 
 .auto-title {
-    font: var(--auto-title-font);
+    font: var(--auto-card-title-font);
     font-weight: 500;
 
     &.colorized {
-        color: var(--auto-title-color);
+        color: var(--auto-card-title-color);
     }
 }
 
@@ -23,15 +23,17 @@
     font: var(--auto-font);
 
     &.colorized {
-        color: var(--auto-title-color);
+        color: var(--auto-card-title-color);
     }
 }
 
-.auto-disable {
-    color: var(--auto-disable-color);
+.auto-disabled {
+    color: color-mix(in srgb, var(--auto-theme-color) 50%, transparent 10%) !important;
+    background: color-mix(in srgb, var(--auto-theme-color) 0%, black 10%) !important;
+
 }
 
 .auto-selected {
-    color: var(--auto-primary-color);
-    background: var(--auto-selected-bgcolor);
+    color: color-mix(in srgb, var(--auto-theme-color) 0%, white 100%) !important;
+    background: var(--t-color-theme-5) !important;
 }

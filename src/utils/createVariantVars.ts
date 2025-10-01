@@ -1,33 +1,23 @@
-import type { ThemeOptions, ThemeVariantOptions } from "../types";
+import type { ThemeOptions } from "../types";
 import { generateGradientColors } from "./generateGradientColors";
+import { isDark } from "./isDark";
 
-export function createVariantVars(prefix: string, options: string | ThemeVariantOptions) {
-	const opts = Object.assign(
-		{
-			levels: [5, 1, 2, 3, 4, 5],
-			range: [10, 98],
-			count: 5,
-		},
-		typeof options === "string" ? { color: options } : options,
-	) as ThemeVariantOptions;
+export type ThemeVariantOptions = {
+	prefix: string;
+};
+export function generateGradientVars(color: string, options?: ThemeVariantOptions) {
+	const { prefix } = Object.assign({}, options) as ThemeVariantOptions;
 
-	const { colors, dark } = generateGradientColors(opts);
+	const colors = generateGradientColors(color);
+	if (isDark(color)) colors.reverse();
 
 	const vars: Record<string, string> = {};
+
 	colors.reduce((all, cur, i) => {
 		vars[`${prefix}${i}`] = cur;
 		return all;
 	}, {}) as Required<ThemeOptions>;
-
-	const ps = prefix.split("-");
-	const levelPrefix: string = `--t-${ps[4]}`;
-
-	if (opts.levels) {
-		vars[`${levelPrefix}-color`] = `var(${prefix}${opts.levels[0]})`;
-		vars[`${levelPrefix}-bgcolor`] = `var(${prefix}${opts.levels[1]})`;
-		opts.levels.slice(2).forEach((level, i) => {
-			vars[`${levelPrefix}-bgcolor-${i + 1}`] = `var(${prefix}${level})`;
-		});
-	}
-	return { vars, colors, dark };
+	return vars;
 }
+
+// console.log(JSON.stringify(generateGradientVars("red", { prefix: "--t-color-theme-" })));

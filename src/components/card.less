@@ -3,7 +3,7 @@
     display: flex;
     position: relative;
     flex-direction: column;
-    background: var(--auto-bgcolor);
+    background: var(--auto-card-bgcolor);
     color: var(--auto-color);
     border-radius: var(--auto-border-radius);
     box-shadow: var(--auto-shadow);
@@ -16,13 +16,12 @@
         position: relative;
         flex-direction: row;
         align-items: center;
-        border-bottom: var(--auto-border);
         padding: calc(0.5 * var(--auto-spacing));
         border-radius: var(--auto-border-radius) var(--auto-border-radius) 0 0;
         flex-shrink: 0;
-        font: var(--auto-title-font);
-        color: var(--auto-title-color);
-        background: var(--auto-title-bgcolor);
+        font: var(--auto-card-title-font);
+        color: var(--auto-card-title-color);
+        background-color: var(--auto-card-title-bgcolor);
 
         &>.auto-card-title {
             display: flex;

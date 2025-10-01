@@ -13,32 +13,31 @@ export class AutoCardComponent extends LitElement {
         display: block;
         }
         .auto-card {
-        display: flex;
-        flex-direction: column;
-        background: var(--auto-panel-bgcolor);
-        color: var(--auto-color);
-        border-radius: var(--auto-border-radius);
-        border: var(--auto-border);
-        padding: 0;
-        box-shadow: var(--auto-shadow);
-        box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            background: var(--auto-card-bgcolor);
+            color: var(--auto-color);
+            border-radius: var(--auto-border-radius);
+            border: var(--auto-border);
+            padding: 0;
+            box-shadow: var(--auto-shadow);
+            box-sizing: border-box;
         }
         .auto-card-header {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        border-bottom: var(--auto-border);
-        padding: calc(0.6 * var(--auto-spacing));
-        border-radius: var(--auto-border-radius) var(--auto-border-radius) 0 0;
-        flex-shrink: 0;
-        font: var(--auto-title-font);
-        color: var(--auto-title-color);
-        background: var(--auto-title-bgcolor);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            padding: calc(0.6 * var(--auto-spacing));
+            border-radius: var(--auto-border-radius) var(--auto-border-radius) 0 0;
+            flex-shrink: 0;
+            font: var(--auto-card-title-font);
+            color: var(--auto-card-title-color);
+            background: var(--auto-card-title-bgcolor);
         }
         .auto-card-body {
-        flex: 1 1 auto;
-        padding: var(--auto-spacing);
-        border-radius: 0 0 var(--auto-border-radius) var(--auto-border-radius);        
+            flex: 1 1 auto;
+            padding: var(--auto-spacing);
+            border-radius: 0 0 var(--auto-border-radius) var(--auto-border-radius);        
         }  
     `;
 

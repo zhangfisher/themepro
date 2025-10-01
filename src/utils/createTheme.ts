@@ -1,54 +1,65 @@
 import type { ThemeOptions } from "../types";
-import { createVariantVars } from "./createVariantVars";
+import { generateGradientVars } from "./createVariantVars";
 import { getId } from "./getId";
 import { injectStylesheet } from "./injectStylesheet";
+import { isDark } from "./isDark";
 
 export function createTheme(options: ThemeOptions) {
 	const opts = Object.assign(
 		{
 			name: getId(),
+			theme: "#FF0000",
 			variants: {},
-			onInjectStyles: (themeStyles: string, themeName: string) => {
-				return `:host,:root[data-theme=${themeName}]{\n${themeStyles}\n}`;
-			},
+			injector: {},
 		},
 		options,
 	) as Required<ThemeOptions>;
 
-	const themeOpts = Object.assign(
-		{
-			prefix: "--t-color-theme-",
-			range: [10, 100],
-			levels: [10, 1, 2, 3, 4, 5],
+	opts.injector = Object.assign({
+		location: (css: string) => {
+			console.log(opts.name);
+			return `:host,:root[data-theme=${opts.name}]{\n${css}\n}`;
 		},
-		typeof opts.theme === "string" ? { color: opts.theme } : opts.theme,
-	);
+	});
 
-	const { vars, dark } = createVariantVars("--t-color-theme-", themeOpts);
+	const vars = generateGradientVars(opts.theme, {
+		prefix: "--t-color-theme-",
+	});
 
-	if (opts.variants.primary) createVariantVars("--t-color-primary-", opts.variants.primary);
-	if (opts.variants.danger) createVariantVars("--t-color-danger-", opts.variants.danger);
-	if (opts.variants.success) createVariantVars("--t-color-success-", opts.variants.success);
-	if (opts.variants.warning) createVariantVars("--t-color-warning-", opts.variants.warning);
-	if (opts.variants.info) createVariantVars("--t-color-info-", opts.variants.info);
+	const dark = isDark(opts.theme);
 
-	const style = opts.onInjectStyles(
-		`${`color-schema: ${dark ? "dark" : "light"}`};
+	Object.entries(opts.variants).forEach(([key, value]) => {
+		Object.assign(vars, generateGradientVars(value, { prefix: `--t-color-${key}-` }));
+	});
+
+	const style = `${`color-schema: ${dark ? "dark" : "light"}`};
         ${Object.entries(vars)
 			.map(([key, value]) => `${key}:${value}`)
-			.join(";\n")}`,
-		opts.name,
-	);
+			.join(";\n")}`;
 
+	// 将样式注入到页面中
 	injectStylesheet(
 		style,
 		Object.assign(
 			{
-				id: `theme-${opts.name || getId()}`,
+				id: `themepro-${opts.name || getId()}`,
 				mode: "replace",
 			},
-			options?.injectStyle,
+			opts.injector,
 		),
 	);
-	return style;
+	return {
+		dark,
+		vars,
+	};
 }
+
+console.log(
+	JSON.stringify(
+		createTheme({
+			theme: "#1677ff",
+		}),
+		null,
+		4,
+	),
+);

@@ -2,21 +2,19 @@
 
 `ThemePro`内置了一个工具类。
 
-
 ## auto-border
 
 ```css
-.auto-border{
-  border: var(--auto-border);
+.auto-border {
+    border: var(--auto-border);
 }
 ```
-
 
 ## auto-radius
 
 ```css
-.auto-radius{
-  border-radius: var(--auto-border-radius);
+.auto-radius {
+    border-radius: var(--auto-border-radius);
 }
 ```
 
@@ -25,10 +23,10 @@
 ```css
 .auto-title{
   .auto-title {
-    font: var(--auto-title-font);
+    font: var(--auto-card-title-font);
     font-weight: 500;
     &.colorized {
-        color: var(--auto-title-color);
+        color: var(--auto-card-title-color);
     }
 }
 ```
@@ -37,10 +35,9 @@
 
 ```css
 .auto-shadow {
-  box-shadow: var(--auto-shadow);
+    box-shadow: var(--auto-shadow);
 }
 ```
-
 
 ## auto-text
 
@@ -48,7 +45,7 @@
 .auto-text {
     font: var(--auto-font);
     &.colorized {
-        color: var(--auto-title-color);
+        color: var(--auto-card-title-color);
     }
 }
 ```
