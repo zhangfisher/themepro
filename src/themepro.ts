@@ -2,8 +2,11 @@ import { AttrObserver } from "./observer";
 import type { ThemeOptions, ThemeSize } from "./types";
 import { createTheme } from "./utils/createTheme";
 import { generateGradientVars } from "./utils/createVariantVars";
+import { getVarsStyles } from "./utils/getVarsStyles";
 import { injectStylesheet } from "./utils/injectStylesheet";
 import { isDark } from "./utils/isDark";
+import { toVarStyles } from "./utils/toVarStyles";
+import { baseVars, radiusVars, derivedVars, shadowVars, spacingVars, sizeVars } from "./vars";
 
 export const presetThemes: Record<string, string> = {
 	light: "#b5b5b5",
@@ -21,17 +24,23 @@ export const presetThemes: Record<string, string> = {
 
 export class Themepro {
 	scope!: HTMLElement;
-	options: ThemeOptions;
+	options: Required<ThemeOptions>;
 	attrObserver!: AttrObserver;
 	dark: boolean = false;
 	vars: Record<string, string> = {};
+	selector: string = ":host,:root";
 	constructor(scope?: string | HTMLElement, options?: ThemeOptions) {
 		this.options = Object.assign(
 			{
 				theme: "#b5b5b5",
+				size: "medium",
+				radius: "medium",
+				spacing: "medium",
+				shadow: "medium",
+				border: "1px",
 			},
 			options,
-		);
+		) as Required<ThemeOptions>;
 		if (typeof scope === "string") {
 			window.addEventListener("DOMContentLoaded", () => {
 				this.scope = document.querySelector(scope) || document.body;
@@ -51,6 +60,7 @@ export class Themepro {
 				"data-spacing",
 				"data-border",
 				"data-radius",
+				"data-shadow",
 				"data-primary",
 				"data-success",
 				"data-warning",
@@ -59,31 +69,59 @@ export class Themepro {
 			],
 			this._onThemeAttrsChange.bind(this),
 		);
+		this._injectBaseStyles();
 		this.update();
 	}
 	get size() {
-		return (this.scope.dataset.size || "medium") as ThemeSize;
+		return this.options.size || ("medium" as ThemeSize);
 	}
 	set size(value: ThemeSize) {
-		this.scope.dataset.size = value;
+		if (value === "medium") {
+			this.scope.removeAttribute("data-size");
+		} else {
+			this.scope.dataset.size = value;
+		}
 	}
 	get spacing(): ThemeSize {
-		return (this.scope.dataset.spacing || "medium") as ThemeSize;
+		return (this.options.spacing || "medium") as ThemeSize;
 	}
-	set spacing(value: ThemeSize | "auto") {
-		this.scope.dataset.spacing = String(value);
+	set spacing(value: ThemeSize) {
+		if (value === "medium") {
+			this.scope.removeAttribute("data-spacing");
+		} else {
+			this.scope.dataset.spacing = value;
+		}
 	}
-	get radius(): string {
-		return this.scope.dataset.radius || "medium";
+	get shadow() {
+		return this.options.shadow || "medium";
 	}
-	set radius(value: string) {
-		this.scope.dataset.radius = value;
+	set shadow(value: ThemeSize) {
+		if (value === "medium") {
+			this.scope.removeAttribute("data-shadow");
+		} else {
+			this.scope.dataset.shadow = value;
+		}
+	}
+	get radius(): ThemeSize {
+		return this.options.radius || "medium";
+	}
+	set radius(value: ThemeSize) {
+		if (value === "medium") {
+			this.scope.removeAttribute("data-radius");
+		} else {
+			this.scope.dataset.radius = value;
+		}
 	}
 	get theme(): string {
-		return this.scope.dataset.theme || "light";
+		return this.options.theme || "light";
 	}
 	set theme(value: string) {
-		this.scope.dataset.theme = value;
+		if (value === "medium") {
+			this.scope.removeAttribute("data-theme");
+		} else {
+			this.scope.dataset.theme = value;
+		}
+		this.update({ theme: value });
 	}
 
 	/**
@@ -97,27 +135,41 @@ export class Themepro {
 			this.update({ theme: attrValue || "light" });
 		}
 	}
+	/**
+	 *
+	 */
 	update(options?: ThemeOptions) {
-		const opts = Object.assign({}, this.options, options);
+		const { theme = "light", size, radius, spacing, shadow } = Object.assign({}, this.options, options);
 		this.dark = false;
 		this.vars = {};
-		if (!opts.theme) opts.theme = "light";
-		if (this.options.theme in presetThemes) {
+		if (theme in presetThemes) {
 			this.options.theme = presetThemes[this.options.theme];
 		}
+		this.size = size;
+		this.radius = radius;
+		this.spacing = spacing;
+		this.shadow = shadow;
 
 		const themeColorVars = this._createThemeColorVars();
 		const variantVars = this._createVariantColorVars();
 		this.vars = {
+			...baseVars,
 			...themeColorVars,
 			...variantVars,
 		};
 
-		const style = `${`color-schema: ${this.dark ? "dark" : "light"}`};
-        ${Object.entries(this.vars)
-			.map(([key, value]) => `${key}:${value}`)
-			.join(";\n")}`;
+		const style = `${this.selector}[data-theme=${theme}],[data-theme=${theme}]{
+            ${`color-schema: ${this.dark ? "dark" : "light"}`};
+            ${Object.entries(this.vars)
+				.map(([key, value]) => `${key}:${value}`)
+				.join(";\n")};
+            }`;
+
+		injectStylesheet(style, {
+			id: `themepro`,
+		});
 	}
+
 	private _createThemeColorVars() {
 		const vars: Record<string, string> = generateGradientVars(this.options.theme, {
 			prefix: "--t-color-theme-",
@@ -138,8 +190,7 @@ export class Themepro {
 		});
 		return vars;
 	}
-
-	private _injectThemeproStyles() {
+	private _injectThemeStyles() {
 		const selector: string = `:host,:root[data-theme=${this.options.theme}]`;
 		const style = `${selector}{
             ${`color-schema: ${this.dark ? "dark" : "light"}`};
@@ -149,6 +200,23 @@ export class Themepro {
 		injectStylesheet(style, {
 			id: `themepro`,
 		});
+	}
+	private _injectBaseStyles() {
+		const baseStyles = `${this.selector}[data-theme],[data-theme]{\n${toVarStyles(baseVars)}\n}\n`;
+
+		const derivedStyles = `${this.selector}[data-theme],[data-theme]{\n${toVarStyles(derivedVars)}\n}\n`;
+
+		const sizeStyles = getVarsStyles(sizeVars, this.selector, "data-size");
+		const radiusStyles = getVarsStyles(radiusVars, this.selector, "data-radius");
+		const spacingStyles = getVarsStyles(spacingVars, this.selector, "data-spacing");
+		const shadowStyles = getVarsStyles(shadowVars, this.selector, "data-shadow");
+		injectStylesheet(
+			`${baseStyles}\n${derivedStyles}\n${sizeStyles}\n${radiusStyles}\n${spacingStyles}\n${shadowStyles}
+        `,
+			{
+				id: "themepro-vars",
+			},
+		);
 	}
 	create(options: ThemeOptions) {
 		return createTheme(options);

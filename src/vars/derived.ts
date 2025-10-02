@@ -1,25 +1,3 @@
-export const sizes = {
-	"x-small": {},
-	small: {},
-	medium: {},
-	large: {},
-	"x-large": {},
-};
-export const radius = {
-	none: {},
-	"x-small": {},
-	small: {},
-	medium: {},
-	large: {},
-	"x-large": {},
-};
-export const spacing = {
-	"x-small": {},
-	small: {},
-	medium: {},
-	large: {},
-	"x-large": {},
-};
 export const derivedVars = {
 	/* 主题色 */
 	"--t-theme-color": "var(--t-color-theme-8)",
@@ -58,12 +36,11 @@ export const derivedVars = {
 	"--auto-hover-bgcolor": "color-mix(in srgb, var(--t-color-theme-5), transparent 85%)",
 
 	/* 边框 */
+	"--auto-border": "1px solid var(--auto-border-color)",
 	"--auto-border-color": "var(--t-color-theme-2)",
 	"--auto-selected-border": "1px solid var(--t-color-theme-6)",
 	"--auto-disable-border": "1px solid var(--auto-disable-color)",
 	"--auto-border-active-color": "var(--t-color-primary-3)",
-
-	"--auto-border": "1px solid var(--auto-border-color)",
 
 	/* 排版/字体 */
 	"--auto-font": "var(--auto-font-weight) var(--auto-font-size)/1.5 var(--auto-font-family)",

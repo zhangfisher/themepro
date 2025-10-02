@@ -11,11 +11,13 @@ export type ThemeOptions = {
 	/**
 	 * 大小
 	 */
-	size?: "x-small" | "small" | "medium" | "large" | "x-large";
+	size?: ThemeSize;
+	spacing?: ThemeSize;
+	shadow?: ThemeSize;
 	/**
 	 * 圆角大小
 	 */
-	radius?: string;
+	radius?: ThemeSize;
 	/**
 	 * 边框大小
 	 * @default 1px
