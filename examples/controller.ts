@@ -5,7 +5,7 @@ import { repeat } from "lit/directives/repeat.js";
 import type { Themepro } from "../src/index.ts";
 import "../src/index.ts";
 import { generate } from "@ant-design/colors";
-import { isDark } from "@/utils/isDark.ts";
+import { isDark } from "@/utils/isDark";
 declare global {
 	var ThemePro: Themepro;
 }
@@ -81,6 +81,9 @@ class ThemeproController extends LitElement {
                                 <option value="dark">Dark</option>
                                 <option value="blue">Blue</option>
                                 <option value="red">Red</option>
+                                <option value="orange">Orange</option>
+                                <option value="green">Green</option>
+                                <option value="volcano">Volcano</option>
                                 <option value="custom">Custom</option>
                             </select>
                         </label>
@@ -88,7 +91,7 @@ class ThemeproController extends LitElement {
                     <div class="item">
                         <label>
                             Size:
-                            <select id="size" class="auto-input">
+                            <select id="size" class="auto-input" @input=${this._onSize}>
                                 <option value="x-small">x-small</option>
                                 <option value="small">small</option>
                                 <option value="medium">medium</option>
@@ -100,7 +103,7 @@ class ThemeproController extends LitElement {
                     <div class="item">
                         <label>
                             Radius:
-                            <select id="radius" class="auto-input">
+                            <select id="radius" class="auto-input" @input=${this._onRadius} >
                                 <option value="x-small">x-small</option>
                                 <option value="small">small</option>
                                 <option value="medium">medium</option>
@@ -163,47 +166,22 @@ class ThemeproController extends LitElement {
 	_onCreateTheme(e: any) {
 		this.themeColor = e.target.value;
 		this._generateThemeColors();
-		// ThemePro.create({
-		// 	name: "custom",
-		// 	theme: {
-		// 		color: colorSelect.value,
-		// 	},
-		// });
-		// ThemePro.theme = "custom";
+		ThemePro.create({
+			name: "custom",
+			theme: this.themeColor,
+		});
+		ThemePro.theme = "custom";
 	}
 	_onCreatePrimaryColor(e: any) {
-		this.themeBgColor = e.target.value;
-		this._generateThemeColors();
-		// ThemePro.createVariant("primary", primarySelect.value);
+		ThemePro.createVariant("primary", e.target.value);
 	}
-	_onSize() {
-		const sizeSelect = this.shadowRoot!.getElementById("size");
-		if (sizeSelect) {
-			sizeSelect.addEventListener("change", (e: any) => {
-				const size = e.target.value;
-				ThemePro.size = size;
-			});
-		}
+	_onSize(e: any) {
+		ThemePro.size = e.target.value;
 	}
-	_onRadius() {
-		const radiusSelect = this.shadowRoot!.getElementById("radius");
-		if (radiusSelect) {
-			radiusSelect.addEventListener("change", (e: any) => {
-				ThemePro.radius = e.target.value;
-			});
-		}
+	_onRadius(e: any) {
+		ThemePro.radius = e.target.value;
 	}
 	_onPresetTheme(e: any) {
 		ThemePro.theme = e.target.value;
-	}
-	_onDark() {
-		// 添加对id=dark的事件处理
-		const darkModeCheckbox = this.shadowRoot!.getElementById("dark");
-		if (darkModeCheckbox) {
-			darkModeCheckbox.addEventListener("change", (e: any) => {
-				const isDarkMode = e.target.checked;
-				ThemePro.dark = isDarkMode;
-			});
-		}
 	}
 }

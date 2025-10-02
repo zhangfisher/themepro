@@ -20,6 +20,21 @@
         <div>
             <themepro-controller></themepro-controller>
         </div>
+        <div class="themes row">
+            <span class="theme" style="background: #b5b5b5">Light</span>
+            <span class="theme" style="background: hsl(240 3.7% 44%)">
+                Dark
+            </span>
+            <span class="theme" style="background: #4096ff">Blue</span>
+            <span class="theme" style="background: #ff4d4f">Red</span>
+            <span class="theme" style="background: #52c41a">Green</span>
+            <span class="theme" style="background: #fa8c16">Orange</span>
+            <span class="theme" style="background: #ff7a45">Volcano</span>
+            <span class="theme" style="background: #fadb14">Yellow</span>
+            <span class="theme" style="background: #a0d911">Lime</span>
+            <span class="theme" style="background: #eb2f96">Magenta</span>
+            <span class="theme" style="background: #722ed1">Purple</span>
+        </div>
         <div class="row">
             <div class="list">
                 <div class="item">习近平深情瞻仰人民英雄纪念碑</div>
@@ -36,14 +51,18 @@
                     <span>.hover</span>中国正式成为安第斯共同体观察员国
                 </div>
                 <div class="item" style="color: var(--auto-secondary-color)">
-                    <span>--auto-secondary-color</span
-                    >天问二号最新影像！五星红旗与地球同框
+                    <span>--auto-secondary-color</span>
+                    天问二号最新影像！五星红旗与地球同框
                 </div>
                 <div class="item">特朗普再次威胁征收“电影关税”</div>
-                <div class="item">
+                <div class="item" style="border: var(--auto-disable-border)">
+                    <span>--auto-disable-border</span>
                     国庆主题曲《这一路》发布！今天，一起向祖国告白！
                 </div>
-                <div class="item">盛世同歌 风华正茂</div>
+                <div class="item" style="border: var(--auto-selected-border)">
+                    <span>--auto-selected-border</span>
+                    盛世同歌 风华正茂
+                </div>
                 <div class="item">以物述史 读懂故宫的“前世今生”</div>
                 <div class="item">超级黄金周展现流动中国活力和潜力</div>
             </div>
@@ -52,10 +71,37 @@
         <div class="row">
             <div class="auto-card">
                 <div class="auto-card-header">颜色变量</div>
-                <div
-                    class="auto-card-body"
-                    style="display: flex; gap: 1rem; flex-wrap: wrap;flex-direction: row;"
-                >                    
+                <div class="auto-card-body">
+                    <div class="row wrap">
+                        <span class="var" style="background: var(--auto-color)"
+                            >--auto-color</span
+                        >
+                        <span
+                            class="var"
+                            style="background: var(--auto-secondary-color)"
+                            >--auto-secondary-color</span
+                        >
+                        <span
+                            class="var"
+                            style="background: var(--auto-disable-color)"
+                            >--auto-disable-color</span
+                        >
+                        <span
+                            class="var"
+                            style="background: var(--auto-hover-color)"
+                        >
+                            --auto-hover-color</span
+                        >
+                        <span
+                            class="var"
+                            style="background: var(--auto-dark-color)"
+                            >--auto-dark-color</span
+                        >
+                        <span
+                            class="var"
+                            style="background: var(--auto-light-color)"
+                            >--auto-light-color</span
+                        >
                         <span class="var" style="background: var(--auto-color)"
                             >--auto-color</span
                         >
@@ -69,7 +115,25 @@
                             style="background: var(--auto-workspace-bgcolor)"
                             >--auto-workspace-bgcolor</span
                         >
-                    </p>
+                        <span
+                            class="var"
+                            style="background: var(--auto-light-bgcolor)"
+                            >--auto-light-bgcolor</span
+                        ><span
+                            class="var"
+                            style="background: var(--auto-dark-bgcolor)"
+                            >--auto-dark-bgcolor</span
+                        >
+                        <span
+                            class="var"
+                            style="background: var(--auto-selected-bgcolor)"
+                            >--auto-selected-bgcolor</span
+                        ><span
+                            class="var"
+                            style="background: var(--auto-hover-bgcolor)"
+                            >--auto-hover-bgcolor</span
+                        >
+                    </div>
                 </div>
             </div>
         </div>
@@ -96,14 +160,20 @@
             </auto-card>
         </div>
         <div class="row">
-            <span class="display:flex;gap:1rem">
-                <button class="auto-btn primary">确定</button>
-                <button class="auto-btn">取消</button>
-                <button class="auto-btn success">成功</button>
-                <button class="auto-btn warning">保存</button>
-                <button class="auto-btn danger">删除</button>
-                <button class="auto-btn info">关闭</button>
-            </span>
+            <div class="auto-card">
+                <div class="auto-card-header">按钮</div>
+                <div
+                    class="auto-card-body"
+                    style="flex-direction: row; gap: 0.5em"
+                >
+                    <button class="auto-btn primary">确定</button>
+                    <button class="auto-btn">取消</button>
+                    <button class="auto-btn success">成功</button>
+                    <button class="auto-btn warning">保存</button>
+                    <button class="auto-btn danger">删除</button>
+                    <button class="auto-btn info">关闭</button>
+                </div>
+            </div>
         </div>
         <div class="col">
             <div class="auto-alert">
@@ -171,6 +241,38 @@
                 </div>
                 <div class="color" style="background: var(--t-theme-bgcolor-4)">
                     theme-bgcolor-4
+                </div>
+            </div>
+            <div class="key-colors">
+                <div class="color" style="background: var(--t-color-theme-0)">
+                    theme-0
+                </div>
+                <div class="color" style="background: var(--t-color-theme-1)">
+                    theme-1
+                </div>
+                <div class="color" style="background: var(--t-color-theme-2)">
+                    theme-2
+                </div>
+                <div class="color" style="background: var(--t-color-theme-3)">
+                    theme-3
+                </div>
+                <div class="color" style="background: var(--t-color-theme-4)">
+                    theme-4
+                </div>
+                <div class="color" style="background: var(--t-color-theme-5)">
+                    theme-5
+                </div>
+                <div class="color" style="background: var(--t-color-theme-6)">
+                    theme-6
+                </div>
+                <div class="color" style="background: var(--t-color-theme-7)">
+                    theme-7
+                </div>
+                <div class="color" style="background: var(--t-color-theme-8)">
+                    theme-8
+                </div>
+                <div class="color" style="background: var(--t-color-theme-9)">
+                    theme-9
                 </div>
             </div>
             <div class="key-colors">
@@ -331,38 +433,6 @@
                 </div>
                 <div class="color" style="background: var(--t-color-info-9)">
                     info-9
-                </div>
-            </div>
-            <div class="key-colors">
-                <div class="color" style="background: var(--t-color-theme-0)">
-                    theme-0
-                </div>
-                <div class="color" style="background: var(--t-color-theme-1)">
-                    theme-1
-                </div>
-                <div class="color" style="background: var(--t-color-theme-2)">
-                    theme-2
-                </div>
-                <div class="color" style="background: var(--t-color-theme-3)">
-                    theme-3
-                </div>
-                <div class="color" style="background: var(--t-color-theme-4)">
-                    theme-4
-                </div>
-                <div class="color" style="background: var(--t-color-theme-5)">
-                    theme-5
-                </div>
-                <div class="color" style="background: var(--t-color-theme-6)">
-                    theme-6
-                </div>
-                <div class="color" style="background: var(--t-color-theme-7)">
-                    theme-7
-                </div>
-                <div class="color" style="background: var(--t-color-theme-8)">
-                    theme-8
-                </div>
-                <div class="color" style="background: var(--t-color-theme-9)">
-                    theme-9
                 </div>
             </div>
         </div>

@@ -1,58 +1,157 @@
-import type { ThemeOptions, ThemeSize, ThemeVariantType } from "./types";
+import { AttrObserver } from "./observer";
+import type { ThemeOptions, ThemeSize } from "./types";
 import { createTheme } from "./utils/createTheme";
 import { generateGradientVars } from "./utils/createVariantVars";
-import type { GenerateGradientOptions } from "./utils/generateGradientColors";
 import { injectStylesheet } from "./utils/injectStylesheet";
+import { isDark } from "./utils/isDark";
+
+export const presetThemes: Record<string, string> = {
+	light: "#b5b5b5",
+	dark: "hsl(240 3.7% 44%)",
+	blue: "#4096ff",
+	red: "#ff4d4f",
+	green: "#52c41a",
+	orange: "#fa8c16",
+	volcano: "#ff7a45",
+	yellow: "#fadb14",
+	lime: "#a0d911",
+	magenta: "#eb2f96",
+	purple: "#722ed1",
+};
 
 export class Themepro {
-	root!: HTMLElement;
-	constructor() {
-		this.root = document.documentElement;
-		document.addEventListener("DOMContentLoaded", this._onDomContentLoaded.bind(this));
+	scope!: HTMLElement;
+	options: ThemeOptions;
+	attrObserver!: AttrObserver;
+	dark: boolean = false;
+	vars: Record<string, string> = {};
+	constructor(scope?: string | HTMLElement, options?: ThemeOptions) {
+		this.options = Object.assign(
+			{
+				theme: "#b5b5b5",
+			},
+			options,
+		);
+		if (typeof scope === "string") {
+			window.addEventListener("DOMContentLoaded", () => {
+				this.scope = document.querySelector(scope) || document.body;
+				this._init();
+			});
+		} else {
+			this.scope = scope || document.body;
+			this._init();
+		}
+	}
+	private _init() {
+		this.attrObserver = new AttrObserver(
+			this.scope,
+			[
+				"data-theme",
+				"data-size",
+				"data-spacing",
+				"data-border",
+				"data-radius",
+				"data-primary",
+				"data-success",
+				"data-warning",
+				"data-danger",
+				"data-info",
+			],
+			this._onThemeAttrsChange.bind(this),
+		);
+		this.update();
 	}
 	get size() {
-		return (this.root.dataset.size || "medium") as ThemeSize;
+		return (this.scope.dataset.size || "medium") as ThemeSize;
 	}
 	set size(value: ThemeSize) {
-		this.root.dataset.size = value;
+		this.scope.dataset.size = value;
 	}
 	get spacing(): ThemeSize {
-		return (this.root.dataset.spacing || "medium") as ThemeSize;
+		return (this.scope.dataset.spacing || "medium") as ThemeSize;
 	}
 	set spacing(value: ThemeSize | "auto") {
-		this.root.dataset.spacing = String(value);
+		this.scope.dataset.spacing = String(value);
 	}
 	get radius(): string {
-		return this.root.dataset.radius || "medium";
+		return this.scope.dataset.radius || "medium";
 	}
 	set radius(value: string) {
-		this.root.dataset.radius = value;
+		this.scope.dataset.radius = value;
 	}
 	get theme(): string {
-		return this.root.dataset.theme || "light";
+		return this.scope.dataset.theme || "light";
 	}
 	set theme(value: string) {
-		this.root.dataset.theme = value;
-	}
-	_onDomContentLoaded() {
-		this.root = document.documentElement;
+		this.scope.dataset.theme = value;
 	}
 
-	createVariant(variant: ThemeVariantType, options: GenerateGradientOptions) {
-		const { vars } = generateGradientVars(`--t-color-${variant}-`, options);
-		const selector = this.theme === "light" ? `:root,:host` : `:host,\n:root[data-theme=${this.theme}]`;
-		const styles = `${selector}{${Object.entries(vars)
-			.map(([name, value]) => `${name}: ${value};`)
-			.join("\n")}`;
+	/**
+	 * 当属性变化时，更新主题
+	 *
+	 * @param attrName
+	 * @param attrValue
+	 */
+	private _onThemeAttrsChange(attrName: string, attrValue: string | null) {
+		if (attrName === "data-theme") {
+			this.update({ theme: attrValue || "light" });
+		}
+	}
+	update(options?: ThemeOptions) {
+		const opts = Object.assign({}, this.options, options);
+		this.dark = false;
+		this.vars = {};
+		if (!opts.theme) opts.theme = "light";
+		if (this.options.theme in presetThemes) {
+			this.options.theme = presetThemes[this.options.theme];
+		}
 
-		injectStylesheet(styles, {
-			id: `t-${this.theme}-${variant}`,
-			mode: "replace",
+		const themeColorVars = this._createThemeColorVars();
+		const variantVars = this._createVariantColorVars();
+		this.vars = {
+			...themeColorVars,
+			...variantVars,
+		};
+
+		const style = `${`color-schema: ${this.dark ? "dark" : "light"}`};
+        ${Object.entries(this.vars)
+			.map(([key, value]) => `${key}:${value}`)
+			.join(";\n")}`;
+	}
+	private _createThemeColorVars() {
+		const vars: Record<string, string> = generateGradientVars(this.options.theme, {
+			prefix: "--t-color-theme-",
+		});
+		this.dark = isDark(this.options.theme);
+		vars["--t-theme-color"];
+		return vars;
+	}
+	private _createVariantColorVars() {
+		const variants = ["primary", "success", "warning", "danger", "info"];
+		const vars: Record<string, string> = {};
+		variants.forEach((name) => {
+			// @ts-expect-error
+			if (this.options[name]) {
+				// @ts-expect-error
+				Object.assign(vars, generateGradientVars(this.options[name], { prefix: `--t-color-${name}-` }));
+			}
+		});
+		return vars;
+	}
+
+	private _injectThemeproStyles() {
+		const selector: string = `:host,:root[data-theme=${this.options.theme}]`;
+		const style = `${selector}{
+            ${`color-schema: ${this.dark ? "dark" : "light"}`};
+            ${Object.entries(this.vars)
+				.map(([key, value]) => `${key}:${value}`)
+				.join(";\n")}`;
+		injectStylesheet(style, {
+			id: `themepro`,
 		});
 	}
-
 	create(options: ThemeOptions) {
-		createTheme(options);
+		return createTheme(options);
 	}
 }
 

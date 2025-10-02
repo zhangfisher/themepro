@@ -29,7 +29,6 @@
     --t-theme-bgcolor-4: var(--t-color-theme-4);
     --t-theme-bgcolor-5: var(--t-color-theme-5);
 
-
     /* 主色调 */
     --auto-primary-color: var(--t-color-primary-6);
     --auto-success-color: var(--t-color-success-6);
@@ -53,7 +52,7 @@
     /* 亮色: 相对于背景的亮色*/
     --auto-light-bgcolor: color-mix(in hsl, var(--auto-bgcolor), white 20%);
     /* 暗色: 相对于背景的暗色背景*/
-    --auto-dark-bgcolor: color-mix(in hsl, var(--auto-bgcolor), black 20%);
+    --auto-dark-bgcolor: color-mix(in hsl, var(--auto-bgcolor), black 10%);
 
 
     /** 随随色背景颜色：用于自动选中颜色，或根据背景颜色自动匹配背景颜色*/
@@ -62,9 +61,10 @@
 
     /* 边框 */
     --auto-border-color: var(--t-color-theme-2);
-    --auto-active-border: 1px solid var(--auto-border-active-color);
+    --auto-selected-border: 1px solid var(--t-color-theme-6);
+    --auto-disable-border: 1px solid var(--auto-disable-color);
     --auto-border-active-color: var(--t-color-primary-3);
-    --auto-selected-border: 1px solid var(--auto-border-color);
+
     --auto-border: 1px solid var(--auto-border-color);
 
     /* 排版/字体 */
@@ -88,7 +88,6 @@
     /* 面板背景颜色：用于面板/区块/Drawer等背景颜色*/
     --auto-card-bgcolor: var(--auto-light-bgcolor);
 
-
     /* 边框/间距 */
     --auto-border-radius: var(--t-border-radius-medium);
     --auto-spacing: var(--t-spacing-medium);
@@ -101,6 +100,7 @@
     --auto-input-bgcolor: var(--t-theme-bgcolor);
     --auto-input-padding: calc(0.5 * var(--auto-padding));
     --auto-input-height: var(--t-line-height-medium);
+    /** 其他 */
     --auto-icon-size: calc(1.5 * var(--t-font-size-medium));
 }
 

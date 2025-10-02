@@ -10,6 +10,10 @@
     flex-grow: 1;
 }
 
+.row.wrap {
+    flex-wrap: wrap;
+}
+
 .col {
     display: flex;
     flex-direction: column;
@@ -97,9 +101,19 @@ button {
 .var {
     padding: 0.5em;
     border-radius: 4px;
-    color: white;
+    color: rgb(198, 54, 32);
     cursor: pointer;
     text-align: center;
     box-sizing: border-box;
-    width: 20%;
+    font-size: 0.5em;
+    border: var(--auto-border);
+}
+
+.theme {
+    padding: 0.5em;
+    border-radius: var(--auto-border-radius);
+    border: var(--auto-border);
+    text-align: center;
+    cursor: pointer;
+    color: white;
 }

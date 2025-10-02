@@ -9,18 +9,9 @@ export function createTheme(options: ThemeOptions) {
 		{
 			name: getId(),
 			theme: "#FF0000",
-			variants: {},
-			injector: {},
 		},
 		options,
 	) as Required<ThemeOptions>;
-
-	opts.injector = Object.assign({
-		location: (css: string) => {
-			console.log(opts.name);
-			return `:host,:root[data-theme=${opts.name}]{\n${css}\n}`;
-		},
-	});
 
 	const vars = generateGradientVars(opts.theme, {
 		prefix: "--t-color-theme-",
@@ -28,8 +19,13 @@ export function createTheme(options: ThemeOptions) {
 
 	const dark = isDark(opts.theme);
 
-	Object.entries(opts.variants).forEach(([key, value]) => {
-		Object.assign(vars, generateGradientVars(value, { prefix: `--t-color-${key}-` }));
+	const variants = ["primary", "success", "warning", "danger", "info"];
+	variants.forEach((name) => {
+		// @ts-expect-error
+		if (opts[name]) {
+			// @ts-expect-error
+			Object.assign(vars, generateGradientVars(opts[name], { prefix: `--t-color-${name}-` }));
+		}
 	});
 
 	const style = `${`color-schema: ${dark ? "dark" : "light"}`};
@@ -38,28 +34,24 @@ export function createTheme(options: ThemeOptions) {
 			.join(";\n")}`;
 
 	// 将样式注入到页面中
-	injectStylesheet(
-		style,
-		Object.assign(
-			{
-				id: `themepro-${opts.name || getId()}`,
-				mode: "replace",
-			},
-			opts.injector,
-		),
-	);
+	injectStylesheet(style, {
+		id: `themepro-${opts.name || getId()}`,
+		wrapper: (css: string) => {
+			return `:host,:root[data-theme=${opts.name}]{\n${css}\n}`;
+		},
+	});
 	return {
 		dark,
 		vars,
 	};
 }
 
-console.log(
-	JSON.stringify(
-		createTheme({
-			theme: "#1677ff",
-		}),
-		null,
-		4,
-	),
-);
+// console.log(
+// 	JSON.stringify(
+// 		createTheme({
+// 			theme: "#fadb14",
+// 		}),
+// 		null,
+// 		4,
+// 	),
+// );
