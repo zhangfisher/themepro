@@ -4,6 +4,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 1em;
+    background: var(--auto-bgcolor);
 }
 
 .row>* {
@@ -20,6 +21,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 1em;
+    background: var(--auto-bgcolor);
 }
 
 .col>* {

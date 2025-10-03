@@ -1,5 +1,5 @@
 export function toVarStyles(vars: Record<string, string>) {
-	return Object.entries(vars)
+	return `${Object.entries(vars)
 		.map(([key, value]) => `${key}:${value}`)
-		.join(";\n");
+		.join(";\n")};`;
 }

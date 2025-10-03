@@ -1,0 +1,43 @@
+button,
+input,
+select,
+option,
+textarea {
+    font: var(--auto-font);
+    color: var(--auto-color);
+    background: var(--auto-bgcolor);
+    border: var(--auto-border);
+    border-radius: var(--auto-border-radius);
+    box-sizing: border-box;
+    padding: var(--auto-input-padding);
+    outline: none;
+    transition: border, background-color 0.5s ease-in-out;
+}
+
+input:hover,
+select:hover,
+option:hover,
+textarea:hover {
+    background: var(--auto-bgcolor);
+    border: 1px solid var(--t-color-theme-3);
+}
+
+input[type=checkbox] {
+    width: 1em;
+    height: 1em;
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    cursor: pointer;
+}
+
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    padding: 0;
+    border: 0;
+}

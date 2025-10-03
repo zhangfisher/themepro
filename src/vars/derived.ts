@@ -8,12 +8,12 @@ export const derivedVars = {
 	"--t-theme-bgcolor-4": "var(--t-color-theme-4)",
 	"--t-theme-bgcolor-5": "var(--t-color-theme-5)",
 	/* 主色调 */
-	"--auto-primary-color": "var(--t-color-primary-6)",
-	"--auto-success-color": "var(--t-color-success-6)",
-	"--auto-danger-color": "var(--t-color-danger-6)",
-	"--auto-warning-color": "var(--t-color-warning-6)",
-	"--auto-info-color": "var(--t-color-info-6)",
-	"--auto-theme-color": "var(--t-color-theme-6)",
+	"--auto-primary-color": "var(--t-color-primary-5)",
+	"--auto-success-color": "var(--t-color-success-5)",
+	"--auto-danger-color": "var(--t-color-danger-5)",
+	"--auto-warning-color": "var(--t-color-warning-5)",
+	"--auto-info-color": "var(--t-color-info-5)",
+	"--auto-theme-color": "var(--t-color-theme-5)",
 
 	/* 字体颜色 */
 	"--auto-color": "var(--t-theme-color)",
@@ -39,6 +39,7 @@ export const derivedVars = {
 	"--auto-border": "1px solid var(--auto-border-color)",
 	"--auto-border-color": "var(--t-color-theme-2)",
 	"--auto-selected-border": "1px solid var(--t-color-theme-6)",
+	"--auto-active-border": "1px solid var(--t-color-theme-6)",
 	"--auto-disable-border": "1px solid var(--auto-disable-color)",
 	"--auto-border-active-color": "var(--t-color-primary-3)",
 

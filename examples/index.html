@@ -6,9 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Themepro</title>
         <script src="https://cdn.jsdelivr.net/npm/less@4.1.1"></script>
+        <script type="module" src="index.ts"></script>
         <script type="module" src="card.ts"></script>
         <script type="module" src="list.ts"></script>
-        <script type="module" src="index.ts"></script>
         <script type="module" src="controller.ts"></script>
         <link rel="stylesheet" href="index.css" />
         <!-- <link
@@ -34,6 +34,74 @@
             <span class="theme" style="background: #a0d911">Lime</span>
             <span class="theme" style="background: #eb2f96">Magenta</span>
             <span class="theme" style="background: #722ed1">Purple</span>
+        </div>
+        <div class="row">
+            <div class="auto-card">
+                <div class="auto-card-header">按钮</div>
+                <div
+                    class="auto-card-body"
+                    style="flex-direction: row; gap: 0.5em"
+                >
+                    <auto-icon name="home"></auto-icon>
+                    <auto-icon name="info"></auto-icon>
+                    <auto-icon name="close"></auto-icon>
+                    <auto-icon name="settings"></auto-icon>
+                    <auto-icon name="star"></auto-icon>
+                    <auto-icon name="tag"></auto-icon>
+                    <auto-icon name="yes"></auto-icon>
+                    <auto-icon name="no"></auto-icon>
+                    <auto-icon name="important"></auto-icon>
+                    <auto-icon name="file"></auto-icon>
+                    <auto-icon name="folder"></auto-icon>
+                    <auto-icon name="arrow"></auto-icon>
+                    <auto-icon name="folder-open"></auto-icon>
+                    <auto-icon name="checked"></auto-icon>
+                    <auto-icon name="unchecked"></auto-icon>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="auto-card">
+                <div class="auto-card-header">按钮</div>
+                <div
+                    class="auto-card-body"
+                    style="flex-direction: row; gap: 0.5em"
+                >
+                    <auto-button
+                        ><auto-icon name="close"></auto-icon>启动</auto-button
+                    >
+                    <auto-button type="primary"
+                        ><auto-icon name="settings"></auto-icon
+                        >确定</auto-button
+                    >
+                    <auto-button type="success"
+                        ><auto-icon name="star"></auto-icon>成功</auto-button
+                    >
+                    <auto-button type="warning"
+                        ><auto-icon name="home"></auto-icon>保存</auto-button
+                    >
+                    <auto-button type="danger">删除</auto-button>
+                    <auto-button type="info">关闭</auto-button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="auto-card">
+                <div class="auto-card-header">表单</div>
+                <div
+                    class="auto-card-body"
+                    style="flex-direction: column; gap: 0.5em"
+                >
+                    <input placeholder="请输入内容" />
+                    <label>
+                        <input type="checkbox" placeholder="请输入内容" />
+                        自动生成主题
+                    </label>
+                    <input placeholder="请输入内容" />
+                    <input placeholder="请输入内容" />
+                    <textarea placeholder="请输入内容" rows="3"></textarea>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="list">
@@ -159,22 +227,6 @@
                 有欲,以观其徼
             </auto-card>
         </div>
-        <div class="row">
-            <div class="auto-card">
-                <div class="auto-card-header">按钮</div>
-                <div
-                    class="auto-card-body"
-                    style="flex-direction: row; gap: 0.5em"
-                >
-                    <button class="auto-btn primary">确定</button>
-                    <button class="auto-btn">取消</button>
-                    <button class="auto-btn success">成功</button>
-                    <button class="auto-btn warning">保存</button>
-                    <button class="auto-btn danger">删除</button>
-                    <button class="auto-btn info">关闭</button>
-                </div>
-            </div>
-        </div>
         <div class="col">
             <div class="auto-alert">
                 卡片内容
@@ -222,7 +274,7 @@
                 </div>
             </div>
         </div>
-        <div>
+        <div class="col" style="background: var(--auto-bgcolor)">
             <div class="key-colors row">
                 <div class="color" style="background: var(--t-theme-color)">
                     theme-color

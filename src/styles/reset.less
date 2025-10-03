@@ -76,21 +76,6 @@ video {
     display: inline-block;
 }
 
-button,
-input,
-select,
-option,
-textarea {
-    font: var(--auto-font);
-    color: var(--auto-color);
-    background: var(--auto-bgcolor-2);
-}
-
-button::-moz-focus-inner,
-input::-moz-focus-inner {
-    padding: 0;
-    border: 0;
-}
 
 /* 所有主流浏览器 */
 ::selection {
@@ -182,3 +167,7 @@ h6 {
     font: var(--auto-title-font);
     margin: 0;
 }
+
+
+
+@import url('./input.less');

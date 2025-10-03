@@ -1,16 +1,68 @@
-export const presetThemes: Record<string, [string, string]> = {
-	light: ["#b5b5b5", "亮色"],
-	dark: ["#7d7d7d", "暗黑"],
-	red: ["#f5222d", "薄暮"],
-	volcano: ["#fa541c", "火山"],
-	orange: ["#fa8c16", "日暮"],
-	lime: ["#a0d911", "青柠"],
-	gold: ["#faad14", "金盏花"],
-	yellow: ["#fadb14", "日出"],
-	green: ["#52c41a", "极光绿"],
-	cyan: ["#13c2c2", "明青"],
-	blue: ["#1677ff", "拂晓蓝"],
-	geekblue: ["#2f54eb", "极客蓝"],
-	purple: ["#722ed1", "酱紫"],
-	magenta: ["#eb2f96", "法式洋红"],
+export type PresetTheme = {
+	baseColor: string;
+	title?: string;
+	primary?: string;
+	success?: string;
+	warning?: string;
+	danger?: string;
+	info?: string;
+};
+
+export const presetThemes: Record<string, PresetTheme> = {
+	light: {
+		baseColor: "#c5c5c5",
+		title: "亮色",
+	},
+	dark: {
+		baseColor: "#7d7d7d",
+		title: "暗黑",
+	},
+	red: {
+		baseColor: "#f5222d",
+		title: "薄暮",
+	},
+	volcano: {
+		baseColor: "#fa541c",
+		title: "火山",
+	},
+	orange: {
+		baseColor: "#fa8c16",
+		title: "日暮",
+	},
+	lime: {
+		baseColor: "#a0d911",
+		title: "青柠",
+	},
+	gold: {
+		baseColor: "#faad14",
+		title: "金盏花",
+	},
+	yellow: {
+		baseColor: "#fadb14",
+		title: "日出",
+	},
+	green: {
+		baseColor: "#52c41a",
+		title: "极光绿",
+	},
+	cyan: {
+		baseColor: "#13c2c2",
+		title: "明青",
+	},
+	blue: {
+		baseColor: "#1677ff",
+		title: "拂晓蓝",
+	},
+	geekblue: {
+		baseColor: "#2f54eb",
+		title: "极客蓝",
+	},
+	purple: {
+		baseColor: "#722ed1",
+		title: "酱紫",
+	},
+	magenta: {
+		baseColor: "#eb2f96",
+		title: "法式洋红",
+	},
 };

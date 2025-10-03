@@ -1,12 +1,37 @@
+@auto-icon-home: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" /><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>');
+@auto-icon-info: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciICB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2Utd2lkdGg9IjEiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgY2xhc3M9Imx1Y2lkZSBsdWNpZGUtaW5mby1pY29uIGx1Y2lkZS1pbmZvIj48Y2lyY2xlIGN4PSIxMiIgY3k9IjEyIiByPSIxMCIvPjxwYXRoIGQ9Ik0xMiAxNnYtNCIvPjxwYXRoIGQ9Ik0xMiA4aC4wMSIvPjwvc3ZnPg==");
 @auto-icon-close: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtZGFzaGFycmF5PSIyMiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTE5IDVMNSAxOSI+PGFuaW1hdGUgZmlsbD0iZnJlZXplIiBhdHRyaWJ1dGVOYW1lPSJzdHJva2UtZGFzaG9mZnNldCIgYmVnaW49IjAuM3MiIGR1cj0iMC4zcyIgdmFsdWVzPSIyMjswIi8+PC9wYXRoPjxwYXRoIGQ9Ik01IDVMMTkgMTkiPjxhbmltYXRlIGZpbGw9ImZyZWV6ZSIgYXR0cmlidXRlTmFtZT0ic3Ryb2tlLWRhc2hvZmZzZXQiIGR1cj0iMC4zcyIgdmFsdWVzPSIyMjswIi8+PC9wYXRoPjwvZz48L3N2Zz4=");
 @auto-icon-settings: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik05LjY3MSA0LjEzNmEyLjM0IDIuMzQgMCAwIDEgNC42NTkgMCAyLjM0IDIuMzQgMCAwIDAgMy4zMTkgMS45MTUgMi4zNCAyLjM0IDAgMCAxIDIuMzMgNC4wMzMgMi4zNCAyLjM0IDAgMCAwIDAgMy44MzEgMi4zNCAyLjM0IDAgMCAxLTIuMzMgNC4wMzMgMi4zNCAyLjM0IDAgMCAwLTMuMzE5IDEuOTE1IDIuMzQgMi4zNCAwIDAgMS00LjY1OSAwIDIuMzQgMi4zNCAwIDAgMC0zLjMyLTEuOTE1IDIuMzQgMi4zNCAwIDAgMS0yLjMzLTQuMDMzIDIuMzQgMi4zNCAwIDAgMCAwLTMuODMxQTIuMzQgMi4zNCAwIDAgMSA2LjM1IDYuMDUxYTIuMzQgMi4zNCAwIDAgMCAzLjMxOS0xLjkxNSIvPjxjaXJjbGUgY3g9IjEyIiBjeT0iMTIiIHI9IjMiLz48L3N2Zz4=");
 @auto-icon-star: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9ImN1cnJlbnRDb2xvciIgZD0ibTIyIDkuMjRsLTcuMTktLjYyTDEyIDJMOS4xOSA4LjYzTDIgOS4yNGw1LjQ2IDQuNzNMNS44MiAyMUwxMiAxNy4yN0wxOC4xOCAyMWwtMS42My03LjAzek0xMiAxNS40bC0zLjc2IDIuMjdsMS00LjI4bC0zLjMyLTIuODhsNC4zOC0uMzhMMTIgNi4xbDEuNzEgNC4wNGw0LjM4LjM4bC0zLjMyIDIuODhsMSA0LjI4eiIvPjwvc3ZnPg==");
+@auto-icon-file: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjU2IDI1NiI+PHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJtMjEzLjY2IDgyLjM0bC01Ni01NkE4IDggMCAwIDAgMTUyIDI0SDU2YTE2IDE2IDAgMCAwLTE2IDE2djE3NmExNiAxNiAwIDAgMCAxNiAxNmgxNDRhMTYgMTYgMCAwIDAgMTYtMTZWODhhOCA4IDAgMCAwLTIuMzQtNS42Nk0xNjAgNTEuMzFMMTg4LjY5IDgwSDE2MFpNMjAwIDIxNkg1NlY0MGg4OHY0OGE4IDggMCAwIDAgOCA4aDQ4eiIvPjwvc3ZnPg==");
+@auto-icon-folder: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0iTTUgNGg0bDMgM2g3YTIgMiAwIDAgMSAyIDJ2OGEyIDIgMCAwIDEtMiAySDVhMiAyIDAgMCAxLTItMlY2YTIgMiAwIDAgMSAyLTIiLz48L3N2Zz4=");
+@auto-icon-folder-open: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iMiIgZD0ibTUgMTlsMi43NTctNy4zNTFBMSAxIDAgMCAxIDguNjkzIDExSDIxYTEgMSAwIDAgMSAuOTg2IDEuMTY0bC0uOTk2IDUuMjExQTIgMiAwIDAgMSAxOS4wMjYgMTl6YTIgMiAwIDAgMS0yLTJWNmEyIDIgMCAwIDEgMi0yaDRsMyAzaDdhMiAyIDAgMCAxIDIgMnYyIi8+PC9zdmc+");
+@auto-icon-arrow: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMzIgMzIiPjxwYXRoIGZpbGw9IiNhYmFiYWIiIGQ9Im0xMiA4bDEwIDhsLTEwIDh6Ii8+PC9zdmc+");
+@auto-icon-tag: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMzIgMzIiPjxwYXRoIGZpbGw9ImN1cnJlbnRDb2xvciIgZD0iTTEwIDE0YTQgNCAwIDEgMSA0LTRhNC4wMDUgNC4wMDUgMCAwIDEtNCA0Wm0wLTZhMiAyIDAgMSAwIDEuOTk4IDIuMDA0QTIuMDAyIDIuMDAyIDAgMCAwIDEwIDhaIi8+PHBhdGggZmlsbD0iY3VycmVudENvbG9yIiBkPSJNMTYuNjQ0IDI5LjQxNUwyLjU4NiAxNS4zNTRBMiAyIDAgMCAxIDIgMTMuOTQxVjRhMiAyIDAgMCAxIDItMmg5Ljk0MWEyIDIgMCAwIDEgMS40MTQuNTg2bDE0LjA2IDE0LjA1OGEyIDIgMCAwIDEgMCAyLjgyOGwtOS45NDMgOS45NDNhMiAyIDAgMCAxLTIuODI5IDBaTTQgNHY5Ljk0MkwxOC4wNTggMjhMMjggMTguMDU4TDEzLjk0MiA0WiIvPjwvc3ZnPg==");
+@auto-icon-checked: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjEgMjEiPjxnIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc3Ryb2tlPSJjdXJyZW50Q29sb3IiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PHBhdGggZD0iTTUuNSAzLjVoMTBhMiAyIDAgMCAxIDIgMnYxMGEyIDIgMCAwIDEtMiAyaC0xMGEyIDIgMCAwIDEtMi0ydi0xMGEyIDIgMCAwIDEgMi0yIi8+PHBhdGggZD0ibTcuNSAxMC41bDIgMmw0LTQiLz48L2c+PC9zdmc+");
+@auto-icon-unchecked: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjEgMjEiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIGQ9Ik01LjUgMy41aDEwYTIgMiAwIDAgMSAyIDJ2MTBhMiAyIDAgMCAxLTIgMmgtMTBhMiAyIDAgMCAxLTItMnYtMTBhMiAyIDAgMCAxIDItMiIvPjwvc3ZnPg==");
+@auto-icon-star: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9ImN1cnJlbnRDb2xvciIgZD0ibTIyIDkuMjRsLTcuMTktLjYyTDEyIDJMOS4xOSA4LjYzTDIgOS4yNGw1LjQ2IDQuNzNMNS44MiAyMUwxMiAxNy4yN0wxOC4xOCAyMWwtMS42My03LjAzek0xMiAxNS40bC0zLjc2IDIuMjdsMS00LjI4bC0zLjMyLTIuODhsNC4zOC0uMzhMMTIgNi4xbDEuNzEgNC4wNGw0LjM4LjM4bC0zLjMyIDIuODhsMSA0LjI4eiIvPjwvc3ZnPg==");
+@auto-icon-yes: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgNDggNDgiPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiIHN0cm9rZS13aWR0aD0iNCIgZD0ibTQgMjRsNS01bDEwIDEwTDM5IDlsNSA1bC0yNSAyNXoiIGNsaXAtcnVsZT0iZXZlbm9kZCIvPjwvc3ZnPg==");
+@auto-icon-no: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtZGFzaGFycmF5PSIyMiIgc3Ryb2tlLWRhc2hvZmZzZXQ9IjIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS13aWR0aD0iMiI+PHBhdGggZD0iTTE5IDVMNSAxOSI+PGFuaW1hdGUgZmlsbD0iZnJlZXplIiBhdHRyaWJ1dGVOYW1lPSJzdHJva2UtZGFzaG9mZnNldCIgYmVnaW49IjAuM3MiIGR1cj0iMC4zcyIgdmFsdWVzPSIyMjswIi8+PC9wYXRoPjxwYXRoIGQ9Ik01IDVMMTkgMTkiPjxhbmltYXRlIGZpbGw9ImZyZWV6ZSIgYXR0cmlidXRlTmFtZT0ic3Ryb2tlLWRhc2hvZmZzZXQiIGR1cj0iMC4zcyIgdmFsdWVzPSIyMjswIi8+PC9wYXRoPjwvZz48L3N2Zz4=");
+@auto-icon-important: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxZW0iIGhlaWdodD0iMWVtIiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9ImN1cnJlbnRDb2xvciIgZD0iTTEyIDIuMDAyYTMuODc1IDMuODc1IDAgMCAwLTMuODc1IDMuODc1YzAgMi45MiAxLjIwNyA2LjU1MiAxLjgxMyA4LjE5OWEyLjE4NyAyLjE4NyAwIDAgMCAyLjA2NCAxLjQyM2MuOTA0IDAgMS43MzktLjU0MiAyLjA2My0xLjQxOGMuNjA2LTEuNjQgMS44MS01LjI1NCAxLjgxLTguMjA0QTMuODc1IDMuODc1IDAgMCAwIDEyIDIuMDAyTTkuNjI1IDUuODc3YTIuMzc1IDIuMzc1IDAgMCAxIDQuNzUgMGMwIDIuNjU1LTEuMTExIDYuMDQzLTEuNzE3IDcuNjg0YS42ODYuNjg2IDAgMCAxLS42NTUuNDM4YS42ODcuNjg3IDAgMCAxLS42NTctLjQ0Yy0uNjA3LTEuNjUyLTEuNzIxLTUuMDU4LTEuNzIxLTcuNjgybTIuMzc2IDExLjEyNGEyLjUwMSAyLjUwMSAwIDEgMCAwIDUuMDAyYTIuNTAxIDIuNTAxIDAgMCAwIDAtNS4wMDJNMTEgMTkuNTAyYTEuMDAxIDEuMDAxIDAgMSAxIDIuMDAyIDBhMS4wMDEgMS4wMDEgMCAwIDEtMi4wMDIgMCIvPjwvc3ZnPg==");
 
 :root,
 :host {
+    --auto-icon-home: @auto-icon-home;
+    --auto-icon-info: @auto-icon-info;
     --auto-icon-close: @auto-icon-close;
     --auto-icon-settings: @auto-icon-settings;
     --auto-icon-star: @auto-icon-star;
+    --auto-icon-tag: @auto-icon-tag;
+    --auto-icon-checked: @auto-icon-checked;
+    --auto-icon-unchecked: @auto-icon-unchecked;
+    --auto-icon-yes: @auto-icon-yes;
+    --auto-icon-no: @auto-icon-no;
+    --auto-icon-important: @auto-icon-important;
+    --auto-icon-file: @auto-icon-file;
+    --auto-icon-folder: @auto-icon-folder;
+    --auto-icon-folder-open: @auto-icon-folder-open;
+    --auto-icon-arrow: @auto-icon-arrow;
 }
 
 .auto-icon {
@@ -18,22 +43,68 @@
     height: 1.2em;
     vertical-align: text-bottom;
     position: relative;
+    stroke-width: 1;
+
+    &.home {
+        mask-image: var(--auto-icon-home);
+        -webkit-mask-image: var(--auto-icon-home);
+        -moz-mask-image: var(--auto-icon-home);
+    }
+
+    &.info {
+        mask-image: var(--auto-icon-info);
+    }
 
     &.close {
         mask-image: var(--auto-icon-close);
-        -webkit-mask-image: var(--auto-icon-close);
-        -moz-mask-image: var(--auto-icon-close);
     }
 
     &.settings {
         mask-image: var(--auto-icon-settings);
-        -webkit-mask-image: var(--auto-icon-settings);
-        -moz-mask-image: var(--auto-icon-settings);
     }
 
     &.star {
         mask-image: var(--auto-icon-star);
-        -webkit-mask-image: var(--auto-icon-star);
-        -moz-mask-image: var(--auto-icon-star);
     }
+
+    &.tag {
+        mask-image: var(--auto-icon-tag);
+    }
+
+    &.checked {
+        mask-image: var(--auto-icon-checked);
+    }
+
+    &.unchecked {
+        mask-image: var(--auto-icon-unchecked);
+    }
+
+    &.yes {
+        mask-image: var(--auto-icon-yes);
+    }
+
+    &.no {
+        mask-image: var(--auto-icon-no);
+    }
+
+    &.important {
+        mask-image: var(--auto-icon-important);
+    }
+
+    &.file {
+        mask-image: var(--auto-icon-file);
+    }
+
+    &.folder {
+        mask-image: var(--auto-icon-folder);
+    }
+
+    &.folder-open {
+        mask-image: var(--auto-icon-folder-open);
+    }
+
+    &.arrow {
+        mask-image: var(--auto-icon-arrow);
+    }
+
 }

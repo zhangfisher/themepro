@@ -6,7 +6,7 @@ import { generateGradientVars } from "./utils/generateGradientVars";
 import { getVarsStyles } from "./utils/getVarsStyles";
 import { injectStylesheet } from "./utils/injectStylesheet";
 import { isDark } from "./utils/isDark";
-import { toRGB, toRGBString } from "./utils/toRGB";
+import { toRGBString } from "./utils/toRGB";
 import { toVarStyles } from "./utils/toVarStyles";
 import { baseVars, radiusVars, derivedVars, shadowVars, spacingVars, sizeVars } from "./vars";
 
@@ -27,6 +27,11 @@ export class Themepro {
 				spacing: "medium",
 				shadow: "medium",
 				border: "1px",
+				primary: "#2f54eb",
+				success: "#22c55e",
+				warning: "#f59e0b",
+				danger: "#ef4444",
+				info: "#71717a",
 			},
 			options,
 		) as Required<ThemeOptions>;
@@ -47,6 +52,7 @@ export class Themepro {
 			this._onThemeAttrsChange.bind(this),
 		);
 		this._injectBaseStyles();
+		this._createKeyColorStyles();
 		this.update();
 	}
 	get size() {
@@ -96,7 +102,7 @@ export class Themepro {
 		if (value === "medium") {
 			this.scope.removeAttribute("data-theme");
 		} else {
-			this.scope.dataset.theme = value in presetThemes ? presetThemes[value][0] : toRGBString(value);
+			this.scope.dataset.theme = value in presetThemes ? presetThemes[value].baseColor : toRGBString(value);
 		}
 	}
 
@@ -119,7 +125,7 @@ export class Themepro {
 		const { theme = "light", size, radius, spacing, shadow } = this.options;
 		this.dark = false;
 		if (theme in presetThemes) {
-			this.options.theme = presetThemes[theme][0];
+			this.options.theme = presetThemes[theme].baseColor;
 		}
 
 		this.size = size;
@@ -128,17 +134,11 @@ export class Themepro {
 		this.shadow = shadow;
 
 		const themeColorVars = this._createThemeColorVars();
-		const variantVars = this._createVariantColorVars();
-		const vars = {
-			...themeColorVars,
-			...variantVars,
-		};
-
 		this.dark = isDark(this.theme);
 		const themeName = theme;
 		const style = `${this.selector}[data-theme='${themeName}'],[data-theme='${themeName}']{
             ${`color-scheme: ${this.dark ? "dark" : "light"}`};
-            ${Object.entries(vars)
+            ${Object.entries(themeColorVars)
 				.map(([key, value]) => `${key}:${value}`)
 				.join(";\n")};
             }`;
@@ -153,17 +153,17 @@ export class Themepro {
 	 * @private
 	 */
 	private _getDefaultThemeStyles() {
-		const dark = isDark(presetThemes.light[0]);
-		return `${this.selector}{\n${`color-scheme: ${dark ? "dark" : "light"}`};\n${toVarStyles(this._createThemeColorVars(presetThemes.light[0]))}\n}\n`;
+		const dark = isDark(presetThemes.light.baseColor);
+		return `${this.selector}{\n${`color-scheme: ${dark ? "dark" : "light"}`};\n${toVarStyles(this._createThemeColorVars(presetThemes.light.baseColor))}\n}\n`;
 	}
 	private _createThemeColorVars(theme: string = this.theme) {
-		const themeColor = theme in presetThemes ? presetThemes[theme][0] : theme;
+		const themeColor = theme in presetThemes ? presetThemes[theme].baseColor : theme;
 		const vars: Record<string, string> = generateGradientVars(themeColor, {
 			prefix: "--t-color-theme-",
 		});
 		return vars;
 	}
-	private _createVariantColorVars() {
+	private _createKeyColorStyles() {
 		const variants = ["primary", "success", "warning", "danger", "info"];
 		const vars: Record<string, string> = {};
 		variants.forEach((name) => {
@@ -173,7 +173,9 @@ export class Themepro {
 				Object.assign(vars, generateGradientVars(this.options[name], { prefix: `--t-color-${name}-` }));
 			}
 		});
-		return vars;
+		injectStylesheet(`${this.selector}{\n${toVarStyles(vars)}}\n}\n`, {
+			id: "themepro-keycolors",
+		});
 	}
 	private _injectBaseStyles() {
 		const baseStyles = `${this.selector}{\n${toVarStyles(baseVars)}\n${toVarStyles(derivedVars)}\n}\n`;
@@ -183,8 +185,7 @@ export class Themepro {
 		const shadowStyles = getVarsStyles(shadowVars, this.selector, "data-shadow");
 		const lightStyles = this._getDefaultThemeStyles();
 		injectStylesheet(
-			`${baseStyles}\n${sizeStyles}\n${radiusStyles}\n${spacingStyles}\n${shadowStyles}\n${lightStyles}
-        `,
+			`${baseStyles}\n${sizeStyles}\n${radiusStyles}\n${spacingStyles}\n${shadowStyles}\n${lightStyles}`,
 			{
 				id: "themepro-vars",
 			},
