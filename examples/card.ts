@@ -15,7 +15,7 @@ export class AutoCardComponent extends LitElement {
         .auto-card {
             display: flex;
             flex-direction: column;
-            background: var(--auto-card-bgcolor);
+            background: var(--auto-panel-bgcolor);
             color: var(--auto-color);
             border-radius: var(--auto-border-radius);
             border: var(--auto-border);
@@ -30,9 +30,9 @@ export class AutoCardComponent extends LitElement {
             padding: calc(0.6 * var(--auto-spacing));
             border-radius: var(--auto-border-radius) var(--auto-border-radius) 0 0;
             flex-shrink: 0;
-            font: var(--auto-card-title-font);
-            color: var(--auto-card-title-color);
-            background: var(--auto-card-title-bgcolor);
+            font: var(--auto-title-font);
+            color: var(--auto-panel-title-color);
+            background: var(--auto-panel-title-bgcolor);
         }
         .auto-card-body {
             flex: 1 1 auto;

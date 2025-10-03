@@ -50,15 +50,14 @@ export const derivedVars = {
 	"--auto-font-weight": "var(--t-font-weight-medium)",
 	"--auto-letter-spacing": "var(--t-letter-spacing-medium)",
 	"--auto-line-height": "var(--t-line-height-medium)",
-
-	/* 卡片: 用于导航/标题栏/标签页标题 */
-	"--auto-card-title-color": "var(--t-theme-color-6)",
-	/** 标题背景颜色：用于标题/标题栏的背景颜色*/
-	"--auto-card-title-bgcolor": "color-mix(in hsl, var(--auto-bgcolor), black 5%)",
-	"--auto-card-title-font":
+	"--auto-title-font":
 		"calc(var(--auto-font-weight) + 200) calc(var(--auto-font-size) * 1.1)/1.5 var(--auto-font-family)",
+	/* 面板: 用于导航/标题栏/标签页标题 */
+	"--auto-panel-title-color": "var(--t-theme-color-6)",
+	/** 标题背景颜色：用于标题/标题栏的背景颜色*/
+	"--auto-panel-title-bgcolor": "color-mix(in hsl, var(--auto-bgcolor), black 5%)",
 	/* 面板背景颜色：用于面板/区块/Drawer等背景颜色*/
-	"--auto-card-bgcolor": "var(--auto-light-bgcolor)",
+	"--auto-panel-bgcolor": "var(--auto-light-bgcolor)",
 
 	/* 边框/间距 */
 	"--auto-border-radius": "var(--t-border-radius-medium)",

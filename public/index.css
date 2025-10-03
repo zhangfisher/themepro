@@ -179,7 +179,7 @@ h3,
 h4,
 h5,
 h6 {
-    font: var(--auto-card-title-font);
+    font: var(--auto-title-font);
     margin: 0;
 }
 
@@ -555,7 +555,7 @@ h6 {
     /** 标题背景颜色：用于标题/标题栏的背景颜色*/
     --auto-title-bgcolor: var(--t-theme-bgcolor-1);
     /* 面板背景颜色：用于面板/区块/Drawer等背景颜色*/
-    --auto-card-bgcolor: var(--t-theme-bgcolor-2);
+    --auto-panel-bgcolor: var(--t-theme-bgcolor-2);
     /** 随随色背景颜色：用于自动选中颜色，或根据背景颜色自动匹配背景颜色*/
     --auto-selected-bgcolor: color-mix(in srgb, var(--auto-bgcolor) 60%, transparent);
     --auto-hover-bgcolor: color-mix(in srgb, var(--auto-bgcolor), black 5%);
@@ -575,8 +575,8 @@ h6 {
     --auto-letter-spacing: var(--t-letter-spacing-medium);
     --auto-line-height: var(--t-line-height-medium);
     /* 标题，用于导航/标题栏/标签页标题 */
-    --auto-card-title-font: calc(var(--auto-font-weight) + 200) calc(var(--auto-font-size) * 1.1)/1.5 var(--auto-font-family);
-    --auto-card-title-color: var(--t-color-primary-6);
+    --auto-title-font: calc(var(--auto-font-weight) + 200) calc(var(--auto-font-size) * 1.1)/1.5 var(--auto-font-family);
+    --auto-panel-title-color: var(--t-color-primary-6);
     /* 边框/间距 */
     --auto-border-radius: var(--t-border-radius-medium);
     --auto-spacing: var(--t-spacing-medium);
@@ -713,12 +713,12 @@ h6 {
 }
 
 .auto-title {
-    font: var(--auto-card-title-font);
+    font: var(--auto-title-font);
     font-weight: 500;
 }
 
 .auto-title.colorized {
-    color: var(--auto-card-title-color);
+    color: var(--auto-panel-title-color);
 }
 
 .auto-shadow {
@@ -730,7 +730,7 @@ h6 {
 }
 
 .auto-text.colorized {
-    color: var(--auto-card-title-color);
+    color: var(--auto-panel-title-color);
 }
 
 .auto-disable {

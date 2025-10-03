@@ -1,11 +1,9 @@
 import { LitElement, type PropertyValues, css, html } from "lit";
-import { customElement, state } from "lit/decorators.js";
+import { customElement } from "lit/decorators.js";
 import { repeat } from "lit/directives/repeat.js";
 
 import type { Themepro } from "../src/index.ts";
 import "../src/index.ts";
-import { generate } from "@ant-design/colors";
-import { isDark } from "@/utils/isDark";
 declare global {
 	var ThemePro: Themepro;
 }
@@ -146,35 +144,11 @@ class ThemeproController extends LitElement {
 
 	darkThemeColors: string[] = [];
 	lightThemeColors: string[] = [];
-	@state()
-	themeColor: string = "blue";
-	@state()
-	themeBgColor: string = "#141414";
 
-	_generateThemeColors() {
-		this.darkThemeColors = generate(this.themeColor, {
-			theme: "dark",
-			backgroundColor: this.themeBgColor,
-		});
-		const colors = generate(this.themeColor, {
-			theme: "default",
-			backgroundColor: this.themeBgColor,
-		});
-		this.lightThemeColors = isDark(this.themeColor) ? colors.reverse() : colors;
-		console.log("ThemeColors=", this.lightThemeColors);
-	}
 	_onCreateTheme(e: any) {
-		this.themeColor = e.target.value;
-		this._generateThemeColors();
-		ThemePro.create({
-			name: "custom",
-			theme: this.themeColor,
-		});
-		ThemePro.theme = "custom";
+		ThemePro.theme = e.target.value;
 	}
-	_onCreatePrimaryColor(e: any) {
-		ThemePro.createVariant("primary", e.target.value);
-	}
+	_onCreatePrimaryColor(e: any) {}
 	_onSize(e: any) {
 		ThemePro.size = e.target.value;
 	}

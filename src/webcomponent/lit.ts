@@ -1,6 +1,6 @@
 import type { ThemeOptions } from "@/types";
 import { createTheme, injectStylesheet } from "@/utils";
-import { generateGradientVars } from "@/utils/createVariantVars";
+import { generateGradientVars } from "@/utils/generateGradientVars";
 import type { LitElement, ReactiveController } from "lit";
 
 export class ThemeProController implements ReactiveController {
@@ -118,8 +118,8 @@ export class ThemeProController implements ReactiveController {
     
 
     /* 标题，用于导航/标题栏/标签页标题 */
-    --auto-card-title-font: calc(var(--auto-font-weight) + 200) calc(var(--auto-font-size) * 1.1)/1.5 var(--auto-font-family);
-    --auto-card-title-color: var(--t-color-primary-6);
+    --auto-title-font: calc(var(--auto-font-weight) + 200) calc(var(--auto-font-size) * 1.1)/1.5 var(--auto-font-family);
+    --auto-panel-title-color: var(--t-color-primary-6);
 
     /* 边框/间距 */
     --auto-spacing: var(--t-spacing-medium);
@@ -142,7 +142,7 @@ export class ThemeProController implements ReactiveController {
     /* 暗色: 相对于背景的暗色背景*/
     --auto-dark-bgcolor: color-mix(in hsl, var(--auto-bgcolor), black 20%);
     /* 面板背景颜色：用于面板/区块/Drawer等背景颜色*/
-    --auto-card-bgcolor: var(--t-theme-bgcolor-1);
+    --auto-panel-bgcolor: var(--t-theme-bgcolor-1);
     /** 标题背景颜色：用于标题/标题栏的背景颜色*/
     --auto-title-bgcolor: var(--t-theme-bgcolor-2);
     /** 输入框背景颜色：用于输入框背景颜色*/

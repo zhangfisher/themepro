@@ -1,5 +1,5 @@
 import type { ThemeOptions } from "../types";
-import { generateGradientVars } from "./createVariantVars";
+import { generateGradientVars } from "./generateGradientVars";
 import { getId } from "./getId";
 import { injectStylesheet } from "./injectStylesheet";
 import { isDark } from "./isDark";

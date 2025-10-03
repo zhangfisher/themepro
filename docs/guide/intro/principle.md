@@ -113,7 +113,7 @@ ThemePro 设计 `--t-theme-bgcolor-?` 的理念是基于这样的假设：一个
     /* 背景颜色，用于面板/对话框/组件的背景 */
     --auto-bgcolor: var(--t-theme-bgcolor);
     /* 面板背景颜色：用于面板/区块/Drawer等背景颜色*/
-    --auto-card-bgcolor: var(--t-theme-bgcolor-1);
+    --auto-panel-bgcolor: var(--t-theme-bgcolor-1);
     /** 标题背景颜色：用于标题/标题栏的背景颜色*/
     --auto-title-bgcolor: var(--t-theme-bgcolor-2);
     /** 输入框背景颜色：用于输入框背景颜色*/

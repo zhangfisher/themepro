@@ -1,5 +1,5 @@
 .auto-alert {
-    background: var(--auto-card-bgcolor);
+    background: var(--auto-panel-bgcolor);
     border: var(--auto-border);
     border-radius: var(--auto-border-radius);
     box-shadow: var(--auto-shadow);
@@ -12,8 +12,8 @@
 }
 
 .auto-alert>.title {
-    font: var(--auto-card-title-font);
-    color: var(--auto-card-title-color);
+    font: var(--auto-title-font);
+    color: var(--auto-panel-title-color);
     display: flex;
     align-items: center;
     padding-bottom: calc(0.5 * var(--auto-spacing));
@@ -112,8 +112,8 @@
     padding: calc(0.6 * var(--auto-spacing));
     border-radius: var(--auto-border-radius) var(--auto-border-radius) 0 0;
     flex-shrink: 0;
-    font: var(--auto-card-title-font);
-    color: var(--auto-card-title-color);
+    font: var(--auto-title-font);
+    color: var(--auto-panel-title-color);
     background: var(--auto-title-bgcolor);
 }
 

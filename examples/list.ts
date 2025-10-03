@@ -27,7 +27,7 @@ export class AutoListComponent extends LitElement {
     .auto-list {
       display: flex;
       flex-direction: column;
-      background: var(--auto-card-bgcolor, #ffffff);
+      background: var(--auto-panel-bgcolor, #ffffff);
       color: var(--auto-color, #333333);
       border-radius: var(--auto-border-radius, 4px);
       border: var(--auto-border, 1px solid #e0e0e0);
@@ -75,7 +75,7 @@ export class AutoListItemComponent extends LitElement {
       display: flex;
       flex-direction: row;
       align-items: center;
-      font: var(--auto-card-title-font);      
+      font: var(--auto-title-font);      
     }
     .list-item-body {
       padding: var(--auto-spacing-x-small);

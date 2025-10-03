@@ -23,10 +23,10 @@
 ```css
 .auto-title{
   .auto-title {
-    font: var(--auto-card-title-font);
+    font: var(--auto-title-font);
     font-weight: 500;
     &.colorized {
-        color: var(--auto-card-title-color);
+        color: var(--auto-panel-title-color);
     }
 }
 ```
@@ -45,7 +45,7 @@
 .auto-text {
     font: var(--auto-font);
     &.colorized {
-        color: var(--auto-card-title-color);
+        color: var(--auto-panel-title-color);
     }
 }
 ```

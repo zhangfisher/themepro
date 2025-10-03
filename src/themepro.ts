@@ -1,26 +1,14 @@
 import { AttrObserver } from "./observer";
+import { presetThemes } from "./presets";
 import type { ThemeOptions, ThemeSize } from "./types";
 import { createTheme } from "./utils/createTheme";
-import { generateGradientVars } from "./utils/createVariantVars";
+import { generateGradientVars } from "./utils/generateGradientVars";
 import { getVarsStyles } from "./utils/getVarsStyles";
 import { injectStylesheet } from "./utils/injectStylesheet";
 import { isDark } from "./utils/isDark";
+import { toRGB, toRGBString } from "./utils/toRGB";
 import { toVarStyles } from "./utils/toVarStyles";
 import { baseVars, radiusVars, derivedVars, shadowVars, spacingVars, sizeVars } from "./vars";
-
-export const presetThemes: Record<string, string> = {
-	light: "#b5b5b5",
-	dark: "hsl(240 3.7% 44%)",
-	blue: "#4096ff",
-	red: "#ff4d4f",
-	green: "#52c41a",
-	orange: "#fa8c16",
-	volcano: "#ff7a45",
-	yellow: "#fadb14",
-	lime: "#a0d911",
-	magenta: "#eb2f96",
-	purple: "#722ed1",
-};
 
 export class Themepro {
 	scope!: HTMLElement;
@@ -32,7 +20,8 @@ export class Themepro {
 	constructor(scope?: string | HTMLElement, options?: ThemeOptions) {
 		this.options = Object.assign(
 			{
-				theme: "#b5b5b5",
+				selector: ":host,:root",
+				theme: "light",
 				size: "medium",
 				radius: "medium",
 				spacing: "medium",
@@ -43,37 +32,25 @@ export class Themepro {
 		) as Required<ThemeOptions>;
 		if (typeof scope === "string") {
 			window.addEventListener("DOMContentLoaded", () => {
-				this.scope = document.querySelector(scope) || document.body;
+				this.scope = document.querySelector(scope) || document.documentElement;
 				this._init();
 			});
 		} else {
-			this.scope = scope || document.body;
+			this.scope = scope || document.documentElement;
 			this._init();
 		}
 	}
 	private _init() {
 		this.attrObserver = new AttrObserver(
 			this.scope,
-			[
-				"data-theme",
-				"data-size",
-				"data-spacing",
-				"data-border",
-				"data-radius",
-				"data-shadow",
-				"data-primary",
-				"data-success",
-				"data-warning",
-				"data-danger",
-				"data-info",
-			],
+			["data-theme", "data-primary", "data-success", "data-warning", "data-danger", "data-info"],
 			this._onThemeAttrsChange.bind(this),
 		);
 		this._injectBaseStyles();
 		this.update();
 	}
 	get size() {
-		return this.options.size || ("medium" as ThemeSize);
+		return (this.scope.dataset.size || this.options.size || "medium") as ThemeSize;
 	}
 	set size(value: ThemeSize) {
 		if (value === "medium") {
@@ -83,7 +60,7 @@ export class Themepro {
 		}
 	}
 	get spacing(): ThemeSize {
-		return (this.options.spacing || "medium") as ThemeSize;
+		return (this.scope.dataset.spacing || this.options.spacing || "medium") as ThemeSize;
 	}
 	set spacing(value: ThemeSize) {
 		if (value === "medium") {
@@ -93,7 +70,7 @@ export class Themepro {
 		}
 	}
 	get shadow() {
-		return this.options.shadow || "medium";
+		return (this.scope.dataset.shadow || this.options.shadow || "medium") as ThemeSize;
 	}
 	set shadow(value: ThemeSize) {
 		if (value === "medium") {
@@ -103,7 +80,7 @@ export class Themepro {
 		}
 	}
 	get radius(): ThemeSize {
-		return this.options.radius || "medium";
+		return (this.scope.dataset.radius || this.options.radius || "medium") as ThemeSize;
 	}
 	set radius(value: ThemeSize) {
 		if (value === "medium") {
@@ -113,15 +90,14 @@ export class Themepro {
 		}
 	}
 	get theme(): string {
-		return this.options.theme || "light";
+		return (this.scope.dataset.theme || this.options.theme || "light") as string;
 	}
 	set theme(value: string) {
 		if (value === "medium") {
 			this.scope.removeAttribute("data-theme");
 		} else {
-			this.scope.dataset.theme = value;
+			this.scope.dataset.theme = value in presetThemes ? presetThemes[value][0] : toRGBString(value);
 		}
-		this.update({ theme: value });
 	}
 
 	/**
@@ -139,12 +115,13 @@ export class Themepro {
 	 *
 	 */
 	update(options?: ThemeOptions) {
-		const { theme = "light", size, radius, spacing, shadow } = Object.assign({}, this.options, options);
+		Object.assign(this.options, options);
+		const { theme = "light", size, radius, spacing, shadow } = this.options;
 		this.dark = false;
-		this.vars = {};
 		if (theme in presetThemes) {
-			this.options.theme = presetThemes[this.options.theme];
+			this.options.theme = presetThemes[theme][0];
 		}
+
 		this.size = size;
 		this.radius = radius;
 		this.spacing = spacing;
@@ -152,30 +129,38 @@ export class Themepro {
 
 		const themeColorVars = this._createThemeColorVars();
 		const variantVars = this._createVariantColorVars();
-		this.vars = {
-			...baseVars,
+		const vars = {
 			...themeColorVars,
 			...variantVars,
 		};
 
-		const style = `${this.selector}[data-theme=${theme}],[data-theme=${theme}]{
-            ${`color-schema: ${this.dark ? "dark" : "light"}`};
-            ${Object.entries(this.vars)
+		this.dark = isDark(this.theme);
+		const themeName = theme;
+		const style = `${this.selector}[data-theme='${themeName}'],[data-theme='${themeName}']{
+            ${`color-scheme: ${this.dark ? "dark" : "light"}`};
+            ${Object.entries(vars)
 				.map(([key, value]) => `${key}:${value}`)
 				.join(";\n")};
             }`;
 
 		injectStylesheet(style, {
-			id: `themepro`,
+			id: `themepro-theme`,
 		});
 	}
-
-	private _createThemeColorVars() {
-		const vars: Record<string, string> = generateGradientVars(this.options.theme, {
+	/**
+	 * 获取默认主题的样式字符串
+	 * @returns {string} 包含CSS变量和颜色模式的主题样式字符串
+	 * @private
+	 */
+	private _getDefaultThemeStyles() {
+		const dark = isDark(presetThemes.light[0]);
+		return `${this.selector}{\n${`color-scheme: ${dark ? "dark" : "light"}`};\n${toVarStyles(this._createThemeColorVars(presetThemes.light[0]))}\n}\n`;
+	}
+	private _createThemeColorVars(theme: string = this.theme) {
+		const themeColor = theme in presetThemes ? presetThemes[theme][0] : theme;
+		const vars: Record<string, string> = generateGradientVars(themeColor, {
 			prefix: "--t-color-theme-",
 		});
-		this.dark = isDark(this.options.theme);
-		vars["--t-theme-color"];
 		return vars;
 	}
 	private _createVariantColorVars() {
@@ -190,28 +175,15 @@ export class Themepro {
 		});
 		return vars;
 	}
-	private _injectThemeStyles() {
-		const selector: string = `:host,:root[data-theme=${this.options.theme}]`;
-		const style = `${selector}{
-            ${`color-schema: ${this.dark ? "dark" : "light"}`};
-            ${Object.entries(this.vars)
-				.map(([key, value]) => `${key}:${value}`)
-				.join(";\n")}`;
-		injectStylesheet(style, {
-			id: `themepro`,
-		});
-	}
 	private _injectBaseStyles() {
-		const baseStyles = `${this.selector}[data-theme],[data-theme]{\n${toVarStyles(baseVars)}\n}\n`;
-
-		const derivedStyles = `${this.selector}[data-theme],[data-theme]{\n${toVarStyles(derivedVars)}\n}\n`;
-
+		const baseStyles = `${this.selector}{\n${toVarStyles(baseVars)}\n${toVarStyles(derivedVars)}\n}\n`;
 		const sizeStyles = getVarsStyles(sizeVars, this.selector, "data-size");
 		const radiusStyles = getVarsStyles(radiusVars, this.selector, "data-radius");
 		const spacingStyles = getVarsStyles(spacingVars, this.selector, "data-spacing");
 		const shadowStyles = getVarsStyles(shadowVars, this.selector, "data-shadow");
+		const lightStyles = this._getDefaultThemeStyles();
 		injectStylesheet(
-			`${baseStyles}\n${derivedStyles}\n${sizeStyles}\n${radiusStyles}\n${spacingStyles}\n${shadowStyles}
+			`${baseStyles}\n${sizeStyles}\n${radiusStyles}\n${spacingStyles}\n${shadowStyles}\n${lightStyles}
         `,
 			{
 				id: "themepro-vars",

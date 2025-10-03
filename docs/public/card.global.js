@@ -1475,7 +1475,7 @@ Make sure to test your application with a production build as repeat registratio
         .auto-card {
         display: flex;
         flex-direction: column;
-        background: var(--auto-card-bgcolor);
+        background: var(--auto-panel-bgcolor);
         color: var(--auto-color);
         border-radius: var(--auto-border-radius);
         border: var(--auto-border);
@@ -1491,8 +1491,8 @@ Make sure to test your application with a production build as repeat registratio
         padding: calc(0.6 * var(--auto-spacing));
         border-radius: var(--auto-border-radius) var(--auto-border-radius) 0 0;
         flex-shrink: 0;
-        font: var(--auto-card-title-font);
-        color: var(--auto-card-title-color);
+        font: var(--auto-title-font);
+        color: var(--auto-panel-title-color);
         background: var(--auto-title-bgcolor);
         }
         .auto-card-body {
