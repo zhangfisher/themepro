@@ -12,6 +12,8 @@
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
 import { customElement } from "lit/decorators/custom-element.js";
+import { when } from "lit/directives/when.js";
+
 import { styles } from "./styles";
 import type { ThemeSize } from "@/types";
 
@@ -31,10 +33,21 @@ export class AutoButton extends LitElement {
 	@property({ type: String })
 	shape?: "circle" | "pill";
 
+	@property({ type: Boolean })
+	caret?: boolean;
+
+	@property({ type: Boolean })
+	disabled?: boolean;
+
+	@property({ type: Boolean })
+	loading?: boolean;
+
 	render() {
 		return html`
         <div class="auto-btn ${this.type} ${this.size}">
+            ${when(this.icon, () => html`<auto-icon name="${this.icon!}"></auto-icon>`)}
             <slot></slot>
+            ${when(this.caret, () => html`<auto-icon name="arrow" rotate="90"></auto-icon>`)}
         </div>
         `;
 	}

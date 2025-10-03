@@ -15,6 +15,15 @@
     flex-wrap: wrap;
 }
 
+.inline-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5em;
+    background: var(--auto-bgcolor);
+}
+
 .col {
     display: flex;
     flex-direction: column;

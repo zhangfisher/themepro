@@ -6,12 +6,10 @@ export const styles = css`
         background-color: currentColor;
         mask-size: cover;
         -webkit-mask-size: cover;
+        width: var(--auto-icon-size);
+        height: var(--auto-icon-size);
         vertical-align: text-bottom;
         position: relative; 
-        font-size:var(--auto-icon-size);
-        width: 1em;
-        height: 1em;
-        stroke-width: var(--stroke-width,1);
     }    
     @keyframes spin {
         from {

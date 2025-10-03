@@ -12,25 +12,46 @@
 import { LitElement, html } from "lit";
 import { property } from "lit/decorators.js";
 import { customElement } from "lit/decorators/custom-element.js";
+import { styleMap } from "lit/directives/style-map.js";
+import { classMap } from "lit/directives/class-map.js";
 import { styles } from "./styles";
-import type { ThemeSize } from "@/types";
 
 @customElement("auto-icon")
 export class AutoIcon extends LitElement {
 	static styles = styles;
 
 	@property({ type: String })
-	size?: ThemeSize;
+	size?: string;
 
 	@property({ type: String })
 	name: string = "star";
 
+	@property({ type: String })
+	type: "icon" | "checkbox" | "button" = "icon";
+
+	@property({ type: String })
+	color?: string;
+
+	@property({ type: String })
+	rotate?: string;
+
 	@property({ type: Boolean })
-	btn: boolean = false;
+	loading?: boolean = false;
+	@property({ type: Number })
+	strokeWidth?: number;
 
 	render() {
 		return html`
-            <div class="auto-icon ${this.name}">                
+            <div class="${classMap({
+				"auto-icon": true,
+				loading: !!this.loading,
+			})} " style="${styleMap({
+				"mask-image": `var(--auto-icon-${this.name})`,
+				color: this.color,
+				"font-size": this.size,
+				"--stroke-width": this.strokeWidth,
+				transform: this.rotate ? `rotate(${this.rotate}deg)` : undefined,
+			})}">                
             </div>
         `;
 	}

@@ -6,7 +6,7 @@ export const styles = css`
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: calc(0.8 * var(--auto-input-padding)) calc(2 * var(--auto-input-padding));
+        padding: calc(0.8 * var(--auto-input-padding)) calc(1.2 * var(--auto-input-padding));
         border-radius: var(--auto-border-radius);
         font: var(--auto-font);
         text-transform: uppercase;
@@ -17,6 +17,7 @@ export const styles = css`
         box-sizing: border-box;
         vertical-align: bottom;
         gap: 0.3em;
+        user-select: none;
         &:hover {
             border: var(--auto-active-border);
             background-color: var(--t-color-theme-1);

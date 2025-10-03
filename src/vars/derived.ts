@@ -73,5 +73,5 @@ export const derivedVars = {
 	"--auto-input-padding": "calc(0.5 * var(--auto-padding))",
 	"--auto-input-height": "var(--t-line-height-medium)",
 	/** 其他 */
-	"--auto-icon-size": "calc(1.5 * var(--t-font-size-medium))",
+	"--auto-icon-size": "calc(1.2 * var(--t-font-size-medium))",
 };

@@ -37,26 +37,65 @@
         </div>
         <div class="row">
             <div class="auto-card">
-                <div class="auto-card-header">按钮</div>
+                <div class="auto-card-header">图标</div>
                 <div
                     class="auto-card-body"
-                    style="flex-direction: row; gap: 0.5em"
+                    style="flex-direction: column; gap: 0.5em"
                 >
-                    <auto-icon name="home"></auto-icon>
-                    <auto-icon name="info"></auto-icon>
-                    <auto-icon name="close"></auto-icon>
-                    <auto-icon name="settings"></auto-icon>
-                    <auto-icon name="star"></auto-icon>
-                    <auto-icon name="tag"></auto-icon>
-                    <auto-icon name="yes"></auto-icon>
-                    <auto-icon name="no"></auto-icon>
-                    <auto-icon name="important"></auto-icon>
-                    <auto-icon name="file"></auto-icon>
-                    <auto-icon name="folder"></auto-icon>
-                    <auto-icon name="arrow"></auto-icon>
-                    <auto-icon name="folder-open"></auto-icon>
-                    <auto-icon name="checked"></auto-icon>
-                    <auto-icon name="unchecked"></auto-icon>
+                    <div class="inline-row">
+                        <auto-icon name="home"></auto-icon>
+                        <auto-icon name="info"></auto-icon>
+                        <auto-icon name="close"></auto-icon>
+                        <auto-icon name="settings"></auto-icon>
+                        <auto-icon name="star"></auto-icon>
+                        <auto-icon name="tag"></auto-icon>
+                        <auto-icon name="yes"></auto-icon>
+                        <auto-icon name="no"></auto-icon>
+                        <auto-icon name="important"></auto-icon>
+                        <auto-icon name="file"></auto-icon>
+                        <auto-icon name="folder"></auto-icon>
+                        <auto-icon name="arrow"></auto-icon>
+                        <auto-icon name="folder-open"></auto-icon>
+                        <auto-icon name="checked"></auto-icon>
+                        <auto-icon name="unchecked"></auto-icon>
+                        <auto-icon name="save"></auto-icon>
+                        <auto-icon name="loading"></auto-icon>
+                        <auto-icon name="alert"></auto-icon>
+                    </div>
+                    <div class="inline-row" style="font-size: 2em">
+                        <auto-icon name="home" strokeWidth="2"></auto-icon>
+                        <auto-icon name="info" strokeWidth="2"></auto-icon>
+                        <auto-icon name="close" strokeWidth="2"></auto-icon>
+                        <auto-icon name="settings" strokeWidth="2"></auto-icon>
+                        <auto-icon
+                            title="star"
+                            name="star"
+                            strokeWidth="2"
+                        ></auto-icon>
+                        <auto-icon name="tag" strokeWidth="2"></auto-icon>
+                        <auto-icon name="yes" strokeWidth="2"></auto-icon>
+                        <auto-icon name="no" strokeWidth="2"></auto-icon>
+                        <auto-icon name="important" strokeWidth="2"></auto-icon>
+                        <auto-icon name="file" strokeWidth="2"></auto-icon>
+                        <auto-icon name="folder" strokeWidth="2"></auto-icon>
+                        <auto-icon name="arrow" strokeWidth="2"></auto-icon>
+                        <auto-icon
+                            name="folder-open"
+                            strokeWidth="2"
+                        ></auto-icon>
+                        <auto-icon name="checked" strokeWidth="2"></auto-icon>
+                        <auto-icon name="unchecked" strokeWidth="2"></auto-icon>
+                        <auto-icon name="save" strokeWidth="2"></auto-icon>
+                    </div>
+                    <div class="inline-row">
+                        <auto-loading>加载中</auto-loading>
+                        <auto-loading size="12px">加载中</auto-loading>
+                        <auto-loading size="24px">加载中</auto-loading>
+                        <auto-loading size="32px" color="red"
+                            >加载中</auto-loading
+                        >
+                        <auto-loading size="x-large">加载中</auto-loading>
+                    </div>
                 </div>
             </div>
         </div>
@@ -65,23 +104,39 @@
                 <div class="auto-card-header">按钮</div>
                 <div
                     class="auto-card-body"
-                    style="flex-direction: row; gap: 0.5em"
+                    style="flex-direction: column; gap: 0.5em"
                 >
-                    <auto-button
-                        ><auto-icon name="close"></auto-icon>启动</auto-button
-                    >
-                    <auto-button type="primary"
-                        ><auto-icon name="settings"></auto-icon
-                        >确定</auto-button
-                    >
-                    <auto-button type="success"
-                        ><auto-icon name="star"></auto-icon>成功</auto-button
-                    >
-                    <auto-button type="warning"
-                        ><auto-icon name="home"></auto-icon>保存</auto-button
-                    >
-                    <auto-button type="danger">删除</auto-button>
-                    <auto-button type="info">关闭</auto-button>
+                    <div class="row">
+                        <auto-button icon="close" caret>启动</auto-button>
+                        <auto-button type="primary" icon="settings"
+                            >确定</auto-button
+                        >
+                        <auto-button type="success" icon="star"
+                            >成功</auto-button
+                        >
+                        <auto-button type="warning" icon="home" caret>
+                            保存</auto-button
+                        >
+                        <auto-button type="danger">删除</auto-button>
+                        <auto-button type="info" icon="folder-open"
+                            >打开文件</auto-button
+                        >
+                    </div>
+                    <div class="row">
+                        <auto-button icon="close">启动</auto-button>
+                        <auto-button
+                            type="primary"
+                            icon="settings"
+                        ></auto-button>
+                        <auto-button type="success" icon="star"></auto-button>
+                        <auto-button type="warning" icon="home" caret>
+                        </auto-button>
+                        <auto-button type="danger" icon="loading"></auto-button>
+                        <auto-button
+                            type="info"
+                            icon="folder-open"
+                        ></auto-button>
+                    </div>
                 </div>
             </div>
         </div>
