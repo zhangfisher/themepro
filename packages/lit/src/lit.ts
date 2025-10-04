@@ -1,4 +1,4 @@
-import type { ThemeOptions } from "@/types";
+import type { ThemeOptions } from "packages/core/src/types";
 import { createTheme, injectStylesheet } from "@/utils";
 import { generateGradientVars } from "@/utils/generateGradientVars";
 import type { LitElement, ReactiveController } from "lit";

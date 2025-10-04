@@ -15,7 +15,7 @@ import { customElement } from "lit/decorators/custom-element.js";
 import { when } from "lit/directives/when.js";
 
 import { styles } from "./styles";
-import type { ThemeSize } from "@/types";
+import type { ThemeSize } from "packages/core/src/types";
 
 @customElement("auto-button")
 export class AutoButton extends LitElement {

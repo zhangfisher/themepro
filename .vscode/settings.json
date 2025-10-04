@@ -1,18 +1,18 @@
 {
+    "terminal.integrated.persistentSessionReviveProcess": "onExitAndWindowClose",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/node_modules": false
+    },
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
-    "editor.detectIndentation": false,
+    "editor.detectIndentation": true,
     "editor.formatOnSave": true,
     "prettier.tabWidth": 4,
-    "editor.gotoLocation.alternativeDeclarationCommand": "editor.action.revealDefinition",
-    "editor.gotoLocation.alternativeDefinitionCommand": "editor.action.revealDefinition",
-    "editor.gotoLocation.alternativeTypeDefinitionCommand": "editor.action.revealDefinition",
-    "editor.selectionHighlight": false,
-    "files.autoSave": "onFocusChange",
-    "editor.suggest.snippetsPreventQuickSuggestions": false,
-    "editor.quickSuggestions": {
-        "other": "on",
-        "comments": "off",
-        "strings": "on"
-    }
+    "oxlint.enable": true
 }

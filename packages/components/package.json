@@ -1,5 +1,5 @@
 {
-	"name": "themepro",
+	"name": "@themepro/components",
 	"module": "dist/index.js",
 	"type": "module",
 	"version": "1.0.7",
@@ -30,26 +30,13 @@
 		"dev": "vite",
 		"storybook": "storybook dev -p 6006",
 		"build:storybook": "storybook build",
-		"build": "bun run build:css && tsup",
-		"build:tsup": "tsup",
-		"docs:dev": "vitepress dev docs",
-		"docs:build": "vitepress build docs",
-		"docs:preview": "vitepress preview docs",
-		"changeset": "changeset",
-		"version": "changeset version",
-		"release": "bun run build && changeset version && changeset publish"
+		"build": "tsup"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^2.2.4",
-		"@changesets/cli": "^2.29.7",
-		"@lite-tree/vue": "^1.1.6",
-		"@storybook/addon-a11y": "^9.1.10",
+		"@storybook/addon-docs": "^9.1.10",
 		"@storybook/web-components-vite": "^9.1.10",
 		"@types/bun": "1.2.22",
-		"biome": "^0.3.3",
-		"cpx": "^1.5.0",
 		"esbuild-copy-files-plugin": "^1.2.1",
-		"less": "^4.4.1",
 		"lit": "^3.3.1",
 		"storybook": "^9.1.10",
 		"tsup": "^8.5.0",
@@ -68,8 +55,5 @@
 		"@ant-design/colors": "^7.2.1",
 		"@ant-design/fast-color": "^3.0.0"
 	},
-	"packages": [
-		"packages/*"
-	],
 	"packageManager": "bun@1.2.23"
 }
