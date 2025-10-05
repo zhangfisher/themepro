@@ -1,77 +1,77 @@
 export const derivedVars = {
-	/* 主题色 */
-	"--t-theme-color": "var(--t-color-theme-8)",
-	"--t-theme-bgcolor": "var(--t-color-theme-0)",
-	"--t-theme-bgcolor-1": "var(--t-color-theme-1)",
-	"--t-theme-bgcolor-2": "var(--t-color-theme-2)",
-	"--t-theme-bgcolor-3": "var(--t-color-theme-3)",
-	"--t-theme-bgcolor-4": "var(--t-color-theme-4)",
-	"--t-theme-bgcolor-5": "var(--t-color-theme-5)",
-	/* 主色调 */
-	"--auto-primary-color": "var(--t-color-primary-5)",
-	"--auto-success-color": "var(--t-color-success-5)",
-	"--auto-danger-color": "var(--t-color-danger-5)",
-	"--auto-warning-color": "var(--t-color-warning-5)",
-	"--auto-info-color": "var(--t-color-info-5)",
-	"--auto-theme-color": "var(--t-color-theme-5)",
+    /* 主题色 */
+    '--t-theme-color': 'var(--t-color-theme-8)',
+    '--t-theme-bgcolor': 'var(--t-color-theme-0)',
+    '--t-theme-bgcolor-1': 'var(--t-color-theme-1)',
+    '--t-theme-bgcolor-2': 'var(--t-color-theme-2)',
+    '--t-theme-bgcolor-3': 'var(--t-color-theme-3)',
+    '--t-theme-bgcolor-4': 'var(--t-color-theme-4)',
+    '--t-theme-bgcolor-5': 'var(--t-color-theme-5)',
+    /* 语义色调 */
+    '--auto-primary-color': 'var(--t-color-primary-5)',
+    '--auto-success-color': 'var(--t-color-success-5)',
+    '--auto-danger-color': 'var(--t-color-danger-5)',
+    '--auto-warning-color': 'var(--t-color-warning-5)',
+    '--auto-info-color': 'var(--t-color-info-5)',
+    '--auto-theme-color': 'var(--t-color-theme-5)',
 
-	/* 字体颜色 */
-	"--auto-color": "var(--t-theme-color)",
-	"--auto-secondary-color": "var(--t-color-theme-4)",
-	"--auto-disable-color": "var(--t-color-theme-3)",
-	"--auto-hover-color": "var(--t-color-theme-4)",
-	"--auto-dark-color": "color-mix(in srgb, var(--auto-color), black 10%)",
-	"--auto-light-color": "color-mix(in srgb, var(--auto-color), white 10%)",
+    /* 字体颜色 */
+    '--auto-color': 'var(--t-theme-color)',
+    '--auto-secondary-color': 'var(--t-color-theme-4)',
+    '--auto-disable-color': 'var(--t-color-theme-3)',
+    '--auto-hover-color': 'var(--t-color-theme-4)',
+    '--auto-dark-color': 'color-mix(in srgb, var(--auto-color), black 10%)',
+    '--auto-light-color': 'color-mix(in srgb, var(--auto-color), white 10%)',
 
-	/* 背景颜色: 用于面板/对话框/组件的背景 */
-	"--auto-bgcolor": "var(--t-theme-bgcolor)",
-	"--auto-workspace-bgcolor": "var(--t-color-theme-1)",
-	/* 亮色: 相对于背景的亮色*/
-	"--auto-light-bgcolor": "color-mix(in hsl, var(--auto-bgcolor), white 20%)",
-	/* 暗色: 相对于背景的暗色背景*/
-	"--auto-dark-bgcolor": "color-mix(in hsl, var(--auto-bgcolor), black 10%)",
+    /* 背景颜色: 用于面板/对话框/组件的背景 */
+    '--auto-bgcolor': 'var(--t-theme-bgcolor)',
+    '--auto-workspace-bgcolor': 'var(--t-color-theme-1)',
+    /* 亮色: 相对于背景的亮色*/
+    '--auto-light-bgcolor': 'color-mix(in hsl, var(--auto-bgcolor), white 20%)',
+    /* 暗色: 相对于背景的暗色背景*/
+    '--auto-dark-bgcolor': 'color-mix(in hsl, var(--auto-bgcolor), black 10%)',
 
-	/** 随随色背景颜色：用于自动选中颜色，或根据背景颜色自动匹配背景颜色*/
-	"--auto-selected-bgcolor": "var(--t-color-theme-5)",
-	"--auto-hover-bgcolor": "color-mix(in srgb, var(--t-color-theme-5), transparent 85%)",
+    /** 随随色背景颜色：用于自动选中颜色，或根据背景颜色自动匹配背景颜色*/
+    '--auto-selected-bgcolor': 'var(--t-color-theme-5)',
+    '--auto-hover-bgcolor': 'color-mix(in srgb, var(--t-color-theme-5), transparent 85%)',
 
-	/* 边框 */
-	"--auto-border": "1px solid var(--auto-border-color)",
-	"--auto-border-color": "var(--t-color-theme-2)",
-	"--auto-selected-border": "1px solid var(--t-color-theme-6)",
-	"--auto-active-border": "1px solid var(--t-color-theme-6)",
-	"--auto-disable-border": "1px solid var(--auto-disable-color)",
-	"--auto-border-active-color": "var(--t-color-primary-3)",
+    /* 边框 */
+    '--auto-border': '1px solid var(--auto-border-color)',
+    '--auto-border-color': 'var(--t-color-theme-2)',
+    '--auto-selected-border': '1px solid var(--t-color-theme-6)',
+    '--auto-active-border': '1px solid var(--t-color-theme-6)',
+    '--auto-disable-border': '1px solid var(--auto-disable-color)',
+    '--auto-border-active-color': 'var(--t-color-primary-3)',
 
-	/* 排版/字体 */
-	"--auto-font": "var(--auto-font-weight) var(--auto-font-size)/1.5 var(--auto-font-family)",
-	"--auto-font-family":
-		"Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif",
-	"--auto-font-size": "var(--t-font-size-medium)",
-	"--auto-font-weight": "var(--t-font-weight-medium)",
-	"--auto-letter-spacing": "var(--t-letter-spacing-medium)",
-	"--auto-line-height": "var(--t-line-height-medium)",
-	"--auto-title-font":
-		"calc(var(--auto-font-weight) + 200) calc(var(--auto-font-size) * 1.1)/1.5 var(--auto-font-family)",
-	/* 面板: 用于导航/标题栏/标签页标题 */
-	"--auto-panel-title-color": "var(--t-theme-color-6)",
-	/** 标题背景颜色：用于标题/标题栏的背景颜色*/
-	"--auto-panel-title-bgcolor": "color-mix(in hsl, var(--auto-bgcolor), black 5%)",
-	/* 面板背景颜色：用于面板/区块/Drawer等背景颜色*/
-	"--auto-panel-bgcolor": "var(--auto-light-bgcolor)",
+    /* 排版/字体 */
+    '--auto-font': 'var(--auto-font-weight) var(--auto-font-size)/1.5 var(--auto-font-family)',
+    '--auto-font-family':
+        'Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif',
+    '--auto-font-size': 'var(--t-font-size-medium)',
+    '--auto-font-weight': 'var(--t-font-weight-medium)',
+    '--auto-letter-spacing': 'var(--t-letter-spacing-medium)',
+    '--auto-line-height': 'var(--t-line-height-medium)',
+    '--auto-title-font':
+        'calc(var(--auto-font-weight) + 200) calc(var(--auto-font-size) * 1.1)/1.5 var(--auto-font-family)',
+    /* 面板: 用于导航/标题栏/标签页标题 */
+    '--auto-panel-title-color': 'var(--t-theme-color-6)',
+    /** 标题背景颜色：用于标题/标题栏的背景颜色*/
+    '--auto-panel-title-bgcolor': 'color-mix(in hsl, var(--auto-bgcolor), black 5%)',
+    /* 面板背景颜色：用于面板/区块/Drawer等背景颜色*/
+    '--auto-panel-bgcolor': 'var(--auto-light-bgcolor)',
 
-	/* 边框/间距 */
-	"--auto-border-radius": "var(--t-border-radius-medium)",
-	"--auto-spacing": "var(--t-spacing-medium)",
-	"--auto-padding": "var(--t-spacing-medium)",
-	"--auto-margin": "var(--t-spacing-medium)",
-	"--auto-shadow": "var(--t-shadow-medium)",
+    /* 边框/间距 */
+    '--auto-border-radius': 'var(--t-border-radius-medium)',
+    '--auto-spacing': 'var(--t-spacing-medium)',
+    '--auto-padding': 'var(--t-spacing-medium)',
+    '--auto-margin': 'var(--t-spacing-medium)',
+    '--auto-shadow': 'var(--t-shadow-medium)',
 
-	/* 输入框 */
-	/** 输入框背景颜色：用于输入框背景颜色*/
-	"--auto-input-bgcolor": "var(--t-theme-bgcolor)",
-	"--auto-input-padding": "calc(0.5 * var(--auto-padding))",
-	"--auto-input-height": "var(--t-line-height-medium)",
-	/** 其他 */
-	"--auto-icon-size": "calc(1.2 * var(--t-font-size-medium))",
-};
+    /* 输入框 */
+    /** 输入框背景颜色：用于输入框背景颜色*/
+    '--auto-input-bgcolor': 'var(--t-theme-bgcolor)',
+    '--auto-input-padding': 'calc(0.5 * var(--auto-padding))',
+    '--auto-input-height': 'var(--t-line-height-medium)',
+    /** 其他 */
+    '--auto-icon-size': 'calc(1.2 * var(--t-font-size-medium))',
+}

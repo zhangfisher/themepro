@@ -46,6 +46,7 @@
         "packages/core/src/index.ts",
         "packages/core/src/types.ts",
         "packages/core/src/vars",
-        "packages/lit/src/lit.ts"
+        "packages/lit/src/lit.ts",
+        "packages/core/.storybook/_styles.ts"
     ],
 }
