@@ -27,11 +27,11 @@ export class Themepro {
                 spacing: 'medium',
                 shadow: 'medium',
                 border: '1px',
-                primary: '#2f54eb',
-                success: '#22c55e',
-                warning: '#f59e0b',
-                danger: '#ef4444',
-                info: '#71717a',
+                // primary: '#2f54eb',
+                // success: '#22c55e',
+                // warning: '#f59e0b',
+                // danger: '#ef4444',
+                // info: '#71717a',
             },
             options,
         ) as Required<ThemeOptions>
@@ -52,7 +52,7 @@ export class Themepro {
             this._onThemeAttrsChange.bind(this),
         )
         this._injectBaseStyles()
-        this._createKeyColorStyles()
+        this._createSemanticColorStyles()
         this.update()
     }
     get size() {
@@ -95,17 +95,26 @@ export class Themepro {
             this.scope.dataset.radius = value
         }
     }
-    get theme(): string {
-        return (this.scope.dataset.theme || this.options.theme || 'light') as string
+    get themeColor(): string {
+        return (this.scope.dataset.theme || this.options.themeColor || 'light') as string
     }
-    set theme(value: string) {
-        if (value === 'medium') {
+    set themeColor(value: string) {
+        if (value === 'light') {
             this.scope.removeAttribute('data-theme')
         } else {
             this.scope.dataset.theme = value in presetThemes ? presetThemes[value].baseColor : toRGBString(value)
         }
     }
-
+    get themeBgolor(): string | undefined {
+        return this.scope.dataset.themeBgcolor || this.options.themeBgcolor
+    }
+    set themeBgolor(value: string) {
+        if (value === 'light') {
+            this.scope.removeAttribute('data-theme-bgcolor')
+        } else {
+            this.scope.dataset.themeBgcolor = toRGBString(value)
+        }
+    }
     /**
      * 当属性变化时，更新主题
      *
@@ -114,7 +123,7 @@ export class Themepro {
      */
     private _onThemeAttrsChange(attrName: string, attrValue: string | null) {
         if (attrName === 'data-theme') {
-            this.update({ theme: attrValue || 'light' })
+            this.update({ themeColor: attrValue || 'light' })
         }
     }
     /**
@@ -122,10 +131,10 @@ export class Themepro {
      */
     update(options?: ThemeOptions) {
         Object.assign(this.options, options)
-        const { theme = 'light', size, radius, spacing, shadow } = this.options
+        const { themeColor: theme = 'light', size, radius, spacing, shadow } = this.options
         this.dark = false
         if (theme in presetThemes) {
-            this.options.theme = presetThemes[theme].baseColor
+            this.options.themeColor = presetThemes[theme].baseColor
         }
 
         this.size = size
@@ -134,7 +143,7 @@ export class Themepro {
         this.shadow = shadow
 
         const themeColorVars = this._createThemeColorVars()
-        this.dark = isDark(this.theme)
+        this.dark = isDark(this.themeColor)
         const themeName = theme
         const style = `${this.selector}[data-theme='${themeName}'],[data-theme='${themeName}']{
             ${`color-scheme: ${this.dark ? 'dark' : 'light'}`};
@@ -156,25 +165,39 @@ export class Themepro {
         const dark = isDark(presetThemes.light.baseColor)
         return `${this.selector}{\n${`color-scheme: ${dark ? 'dark' : 'light'}`};\n${toVarStyles(this._createThemeColorVars(presetThemes.light.baseColor))}\n}\n`
     }
-    private _createThemeColorVars(theme: string = this.theme) {
+    private _createThemeColorVars(theme: string = this.themeColor) {
         const themeColor = theme in presetThemes ? presetThemes[theme].baseColor : theme
         const vars: Record<string, string> = generateGradientVars(themeColor, {
             prefix: '--t-color-theme-',
         })
         return vars
     }
-    private _createKeyColorStyles() {
-        const variants = ['primary', 'success', 'warning', 'danger', 'info']
-        const vars: Record<string, string> = {}
-        variants.forEach((name) => {
-            // @ts-expect-error
-            if (this.options[name]) {
-                // @ts-expect-error
-                Object.assign(vars, generateGradientVars(this.options[name], { prefix: `--t-color-${name}-` }))
-            }
-        })
+    private _createSemanticColorStyles() {
+        const vars: Record<string, string> = {
+            '--t-color-primary': this.options.primary,
+            '--t-color-success': this.options.success,
+            '--t-color-warning': this.options.warning,
+            '--t-color-danger': this.options.danger,
+            '--t-color-info': this.options.info,
+        }
+        const isOverride = !!(
+            this.options.primary ||
+            this.options.success ||
+            this.options.warning ||
+            this.options.danger ||
+            this.options.info
+        )
+        if (!isOverride) return
+
         injectStylesheet(`${this.selector}{\n${toVarStyles(vars)}}\n}\n`, {
-            id: 'themepro-keycolors',
+            id: 'themepro-semantics',
+        })
+    }
+    private _createThemeBgColorStyles() {
+        if (!this.themeBgolor) return
+        const bgColorVars = generateGradientVars(this.themeBgolor)
+        injectStylesheet(`${this.selector}{\n${toVarStyles(bgColorVars)}\n}\n`, {
+            id: 'themepro-bgcolors',
         })
     }
     private _injectBaseStyles() {

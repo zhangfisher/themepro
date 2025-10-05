@@ -1,34 +1,32 @@
 import { html } from 'lit'
 import { themeSelector } from '../_blocks'
 
-export const renderThemeStory = () => {
+export const renderSemanticsColorStory = () => {
     return html`
             <div style="padding: 1em;">${themeSelector()}</div>
             <div class="auto-card">
-                <div class="auto-card-header">主题色</div>
+                <div class="auto-card-header">语义颜色</div>
                 <div class="auto-card-body col">                  
-                    <pre><code>HueUI</code>支持primary,secondary,success,warning,info</pre>  
-                    <div class="auto-card-body-item " style="background-color:var(--t-color-primary-5)">
-                        --t-theme-color: var(--t-color-theme-8)
+                    <pre><code>HueUI</code>支持primary,success,danger,warning,info</pre>  
+                    <div class="auto-card-body-item center " style="color:white;background-color:var(--auto-primary-color)">
+                        --auto-primary-color: var(--t-color-primary)
                     </div>
-                    <div class="auto-card-body-item " style="background-color:var(--t-color-theme-0)">
-                        <code>--t-theme-bgcolor:var( --t-color-theme-0)</code>
+                    <div class="auto-card-body-item  center" style="color:white;background-color:var(--auto-secondary-color)">
+                        --auto-secondary-color: var(--t-color-secondary)
+                    </div>                    
+                    <div class="auto-card-body-item center " style="color:white;background-color:var(--auto-success-color)">
+                        --auto-success-color: var(--t-color-success)                        
                     </div>
-                    <div class="auto-card-body-item " style="background-color:var(--t-color-theme-1)">
-                        <code>--t-theme-bgcolor-1: var(--t-color-theme-1)</code>
+                    <div class="auto-card-body-item center " style="color:white;background-color:var(--auto-danger-color)">
+                        --auto-danger-color: var(--t-color-danger)                        
                     </div>
-                    <div class="auto-card-body-item " style="background-color:var(--t-color-theme-2)">
-                        <code>--t-theme-bgcolor-2: var(--t-color-theme-2)</code>
+                    <div class="auto-card-body-item center" style="color:white;background-color:var(--auto-warning-color)">
+                        --auto-warning-color: var(--t-color-warning)                        
                     </div>
-                    <div class="auto-card-body-item " style="background-color:var(--t-color-theme-3)">
-                        <code>--t-theme-bgcolor-3: var(--t-color-theme-3)</code>
+                    <div class="auto-card-body-item center " style="color:white;background-color:var(--auto-info-color)">
+                        --auto-info-color: var(--t-color-info)                        
                     </div>
-                    <div class="auto-card-body-item " style="background-color:var(--t-color-theme-4)">
-                        <code>--t-theme-bgcolor-4: var(--t-color-theme-4)</code>
-                    </div>
-                    <div class="auto-card-body-item " style="background-color:var(--t-color-theme-5)">
-                        <code>--t-theme-bgcolor-5: var(--t-color-theme-5)</code>
-                    </div>
+                     
                 </div>
             </div>          
         `

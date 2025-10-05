@@ -1,4 +1,4 @@
-export * from './themepro'
+export * from './manager'
 export * from './utils'
 export * from './types'
 export * from './presets'

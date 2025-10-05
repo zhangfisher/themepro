@@ -153,6 +153,10 @@ button {
     background: var(--auto-hover-bgcolor);
 }
 
+.auto-card-body-item.center {
+    justify-content: center;
+}
+
 .var {
     padding: 0.5em;
     border-radius: 4px;

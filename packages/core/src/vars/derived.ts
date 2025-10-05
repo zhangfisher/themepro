@@ -8,11 +8,11 @@ export const derivedVars = {
     '--t-theme-bgcolor-4': 'var(--t-color-theme-4)',
     '--t-theme-bgcolor-5': 'var(--t-color-theme-5)',
     /* 语义色调 */
-    '--auto-primary-color': 'var(--t-color-primary-5)',
-    '--auto-success-color': 'var(--t-color-success-5)',
-    '--auto-danger-color': 'var(--t-color-danger-5)',
-    '--auto-warning-color': 'var(--t-color-warning-5)',
-    '--auto-info-color': 'var(--t-color-info-5)',
+    '--auto-primary-color': 'var(--t-color-primary)',
+    '--auto-success-color': 'var(--t-color-success)',
+    '--auto-danger-color': 'var(--t-color-danger)',
+    '--auto-warning-color': 'var(--t-color-warning)',
+    '--auto-info-color': 'var(--t-color-info)',
     '--auto-theme-color': 'var(--t-color-theme-5)',
 
     /* 字体颜色 */
@@ -25,7 +25,7 @@ export const derivedVars = {
 
     /* 背景颜色: 用于面板/对话框/组件的背景 */
     '--auto-bgcolor': 'var(--t-theme-bgcolor)',
-    '--auto-workspace-bgcolor': 'var(--t-color-theme-1)',
+    '--auto-workspace-bgcolor': 'var(--t-color-theme-2)',
     /* 亮色: 相对于背景的亮色*/
     '--auto-light-bgcolor': 'color-mix(in hsl, var(--auto-bgcolor), white 20%)',
     /* 暗色: 相对于背景的暗色背景*/
