@@ -3,7 +3,6 @@
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
-    padding: 1em;
     background: var(--auto-bgcolor);
 }
 
@@ -187,5 +186,9 @@ pre {
 
 code {
     color: #ec520f;
-    padding: 0.5em;
+    background-color: var(--auto-bgcolor);
+    border-radius: var(--auto-border-radius);
+    border: var(--auto-border);
+    padding: calc(0.2 * var(--auto-padding));
+    box-sizing: border-box;
 }

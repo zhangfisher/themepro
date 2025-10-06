@@ -7,6 +7,11 @@ export const derivedVars = {
     '--t-theme-bgcolor-3': 'var(--t-color-theme-3)',
     '--t-theme-bgcolor-4': 'var(--t-color-theme-4)',
     '--t-theme-bgcolor-5': 'var(--t-color-theme-5)',
+    '--t-theme-bgcolor-6': 'var(--t-color-theme-6)',
+    '--t-theme-bgcolor-7': 'var(--t-color-theme-7)',
+    '--t-theme-bgcolor-8': 'var(--t-color-theme-8)',
+    '--t-theme-bgcolor-9': 'var(--t-color-theme-9)',
+    /** 主题背景色 */
     /* 语义色调 */
     '--auto-primary-color': 'var(--t-color-primary)',
     '--auto-success-color': 'var(--t-color-success)',

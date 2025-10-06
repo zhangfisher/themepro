@@ -28,7 +28,7 @@
 	],
 	"scripts": {
 		"dev": "vite",
-		"storybook": "storybook dev -p 6006",
+		"storybook": "storybook dev -p 6006 --no-open",
 		"build": "bun run build:css && tsup",
 		"build:css": "lessc src/styles/index.less dist/index.css",
 		"build:storybook": "storybook build"

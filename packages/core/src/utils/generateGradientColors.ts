@@ -1,129 +1,37 @@
-import type { ColorInput } from '@ant-design/fast-color'
 import { FastColor } from '@ant-design/fast-color'
-
-const hueStep = 2 // 色相阶梯
-const saturationStep = 0.16 // 饱和度阶梯，浅色部分
-const saturationStep2 = 0.05 // 饱和度阶梯，深色部分
-const brightnessStep1 = 0.05 // 亮度阶梯，浅色部分
-const brightnessStep2 = 0.15 // 亮度阶梯，深色部分
-const lightColorCount = 5 // 浅色数量，主色上
-const darkColorCount = 4 // 深色数量，主色下
-
-// 暗色主题颜色映射关系表
-const darkColorMap = [
-    { index: 7, amount: 15 },
-    { index: 6, amount: 25 },
-    { index: 5, amount: 30 },
-    { index: 5, amount: 45 },
-    { index: 5, amount: 65 },
-    { index: 5, amount: 85 },
-    { index: 4, amount: 90 },
-    { index: 3, amount: 95 },
-    { index: 2, amount: 97 },
-    { index: 1, amount: 98 },
-]
-
-interface HsvObject {
-    h: number
-    s: number
-    v: number
+import { generateThemeGradientColors } from './generateThemeGradientColors'
+import { isDark } from './isDark'
+/**
+ * 限制数值在最小最大值之间
+ */
+function clamp(value: number, min: number = 0, max: number = 255): number {
+    return Math.min(Math.max(value, min), max)
 }
-
-function getHue(hsv: HsvObject, i: number, light?: boolean): number {
-    let hue: number
-    // 根据色相不同，色相转向不同
-    if (Math.round(hsv.h) >= 60 && Math.round(hsv.h) <= 240) {
-        hue = light ? Math.round(hsv.h) - hueStep * i : Math.round(hsv.h) + hueStep * i
-    } else {
-        hue = light ? Math.round(hsv.h) + hueStep * i : Math.round(hsv.h) - hueStep * i
-    }
-    if (hue < 0) {
-        hue += 360
-    } else if (hue >= 360) {
-        hue -= 360
-    }
-    return hue
+export type GenerateGradientColorsOptions = {
+    count?: number
+    steps?: number // 色相阶梯
 }
-
-function getSaturation(hsv: HsvObject, i: number, light?: boolean): number {
-    // grey color don't change saturation
-    if (hsv.h === 0 && hsv.s === 0) {
-        return hsv.s
-    }
-    let saturation: number
-    if (light) {
-        saturation = hsv.s - saturationStep * i
-    } else if (i === darkColorCount) {
-        saturation = hsv.s + saturationStep
-    } else {
-        saturation = hsv.s + saturationStep2 * i
-    }
-    // 边界值修正
-    if (saturation > 1) {
-        saturation = 1
-    }
-    // 第一格的 s 限制在 0.06-0.1 之间
-    if (light && i === lightColorCount && saturation > 0.1) {
-        saturation = 0.1
-    }
-    if (saturation < 0.06) {
-        saturation = 0.06
-    }
-    return Math.round(saturation * 100) / 100
-}
-
-function getValue(hsv: HsvObject, i: number, light?: boolean): number {
-    let value: number
-    if (light) {
-        value = hsv.v + brightnessStep1 * i
-    } else {
-        value = hsv.v - brightnessStep2 * i
-    }
-    // Clamp value between 0 and 1
-    value = Math.max(0, Math.min(1, value))
-    return Math.round(value * 100) / 100
-}
-
-export type generateGradientOptions = {
-    theme?: 'dark' | 'default'
-    backgroundColor?: string
-    lightColorCount?: number
-    darkColorCount?: number
-}
-
-export function generateGradientColors(color: ColorInput, opts: generateGradientOptions = {}): string[] {
-    const { lightColorCount, darkColorCount } = Object.assign(
-        {
-            lightColorCount: 5,
-            darkColorCount: 4,
-        },
-        opts,
-    )
+/**
+ * 生成浅色渐变颜色数组
+ * @param {ColorInput} color - 基础颜色输入
+ * @param {GenerateLightGradientColorsOptions} [options={count: 10}] - 生成选项，包含颜色数量等参数
+ * @returns {string[]} 生成的浅色渐变颜色数组
+ */
+export function generateGradientColors(
+    color: string,
+    options: GenerateGradientColorsOptions = { steps: 10 },
+): string[] {
+    const rgbColor = new FastColor(color).toRgb()
+    const steps = options.steps!
     const patterns: FastColor[] = []
-    const pColor = new FastColor(color)
-    const hsv = pColor.toHsv()
-    for (let i = lightColorCount; i > 0; i -= 1) {
-        const c = new FastColor({
-            h: getHue(hsv, i, true),
-            s: getSaturation(hsv, i, true),
-            v: getValue(hsv, i, true),
-        })
-        patterns.push(c)
-    }
-    patterns.push(pColor)
-    for (let i = 1; i <= darkColorCount; i += 1) {
-        const c = new FastColor({
-            h: getHue(hsv, i),
-            s: getSaturation(hsv, i),
-            v: getValue(hsv, i),
-        })
-        patterns.push(c)
-    }
-
-    // dark theme patterns
-    if (opts.theme === 'dark') {
-        return darkColorMap.map(({ index, amount }) =>
-            new FastColor(opts.backgroundColor || '#141414').mix(patterns[index], amount).toHexString(),
+    for (let i = 0; i < steps!; i++) {
+        const factor = i * 2
+        patterns.push(
+            new FastColor({
+                r: Math.round(clamp(rgbColor.r * factor)),
+                g: Math.round(clamp(rgbColor.g * factor)),
+                b: Math.round(clamp(rgbColor.b * factor)),
+            }),
         )
     }
 

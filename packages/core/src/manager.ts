@@ -21,17 +21,17 @@ export class Themepro {
         this.options = Object.assign(
             {
                 selector: ':host,:root',
-                theme: 'light',
+                themeColor: 'light',
                 size: 'medium',
                 radius: 'medium',
                 spacing: 'medium',
                 shadow: 'medium',
                 border: '1px',
-                // primary: '#2f54eb',
-                // success: '#22c55e',
-                // warning: '#f59e0b',
-                // danger: '#ef4444',
-                // info: '#71717a',
+                primary: '#2f54eb',
+                success: '#22c55e',
+                warning: '#f59e0b',
+                danger: '#ef4444',
+                info: '#71717a',
             },
             options,
         ) as Required<ThemeOptions>
@@ -48,15 +48,24 @@ export class Themepro {
     private _init() {
         this.attrObserver = new AttrObserver(
             this.scope,
-            ['data-theme', 'data-primary', 'data-success', 'data-warning', 'data-danger', 'data-info'],
+            [
+                'data-theme',
+                'data-primary',
+                'data-success',
+                'data-warning',
+                'data-danger',
+                'data-info',
+                'data-theme-bgcolor',
+            ],
             this._onThemeAttrsChange.bind(this),
         )
         this._injectBaseStyles()
         this._createSemanticColorStyles()
+        this._createThemeBgColorStyles()
         this.update()
     }
     get size() {
-        return (this.scope.dataset.size || this.options.size || 'medium') as ThemeSize
+        return (this.scope.dataset.size || this.options.size) as ThemeSize
     }
     set size(value: ThemeSize) {
         if (value === 'medium') {
@@ -66,7 +75,7 @@ export class Themepro {
         }
     }
     get spacing(): ThemeSize {
-        return (this.scope.dataset.spacing || this.options.spacing || 'medium') as ThemeSize
+        return (this.scope.dataset.spacing || this.options.spacing) as ThemeSize
     }
     set spacing(value: ThemeSize) {
         if (value === 'medium') {
@@ -76,7 +85,7 @@ export class Themepro {
         }
     }
     get shadow() {
-        return (this.scope.dataset.shadow || this.options.shadow || 'medium') as ThemeSize
+        return (this.scope.dataset.shadow || this.options.shadow) as ThemeSize
     }
     set shadow(value: ThemeSize) {
         if (value === 'medium') {
@@ -105,11 +114,11 @@ export class Themepro {
             this.scope.dataset.theme = value in presetThemes ? presetThemes[value].baseColor : toRGBString(value)
         }
     }
-    get themeBgolor(): string | undefined {
+    get themeBgcolor(): string | undefined {
         return this.scope.dataset.themeBgcolor || this.options.themeBgcolor
     }
-    set themeBgolor(value: string) {
-        if (value === 'light') {
+    set themeBgcolor(value: string | undefined) {
+        if (value === undefined) {
             this.scope.removeAttribute('data-theme-bgcolor')
         } else {
             this.scope.dataset.themeBgcolor = toRGBString(value)
@@ -194,9 +203,9 @@ export class Themepro {
         })
     }
     private _createThemeBgColorStyles() {
-        if (!this.themeBgolor) return
-        const bgColorVars = generateGradientVars(this.themeBgolor)
-        injectStylesheet(`${this.selector}{\n${toVarStyles(bgColorVars)}\n}\n`, {
+        if (!this.themeBgcolor) return
+        const bgColorVars = generateGradientVars(this.themeBgcolor, { prefix: '--t-theme-bgcolor-' })
+        injectStylesheet(`${this.selector}]{\n${toVarStyles(bgColorVars)}\n}\n`, {
             id: 'themepro-bgcolors',
         })
     }
