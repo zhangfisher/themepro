@@ -6,6 +6,10 @@ export const derivedVars = {
     '--t-theme-color-3': 'var(--t-color-theme-3)',
     '--t-theme-color-4': 'var(--t-color-theme-4)',
     '--t-theme-color-5': 'var(--t-color-theme-5)',
+    '--t-theme-color-6': 'var(--t-color-theme-6)',
+    '--t-theme-color-7': 'var(--t-color-theme-7)',
+    '--t-theme-color-8': 'var(--t-color-theme-8)',
+    '--t-theme-color-9': 'var(--t-color-theme-9)',
     /* 主题背景色 */
     '--t-theme-bgcolor': 'var(--t-color-theme-0)',
     '--t-theme-bgcolor-1': 'var(--t-color-theme-1)',
@@ -13,6 +17,10 @@ export const derivedVars = {
     '--t-theme-bgcolor-3': 'var(--t-color-theme-3)',
     '--t-theme-bgcolor-4': 'var(--t-color-theme-4)',
     '--t-theme-bgcolor-5': 'var(--t-color-theme-5)',
+    '--t-theme-bgcolor-6': 'var(--t-color-theme-6)',
+    '--t-theme-bgcolor-7': 'var(--t-color-theme-7)',
+    '--t-theme-bgcolor-8': 'var(--t-color-theme-8)',
+    '--t-theme-bgcolor-9': 'var(--t-color-theme-9)',
 
     /* 语义色调 */
     '--auto-primary-color': 'var(--t-color-primary)',
