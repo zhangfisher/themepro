@@ -1,27 +1,19 @@
-import { AttrObserver } from './observer'
-import { presetThemes } from './presets'
+import { ThemeScope } from './scope'
 import type { ThemeOptions, ThemeSize } from './types'
-import { generateThemeGradientColorVars } from './utils/generateGradientVars'
-import { getVarsStyles } from './utils/getVarsStyles'
-import { injectStylesheet } from './utils/injectStylesheet'
-import { toRGBString } from './utils/toRGBString'
-import { toVarStyles } from './utils/toVarStyles'
-import { baseVars, radiusVars, derivedVars, shadowVars, spacingVars, sizeVars } from './vars'
 
-export class Themepro {
-    scope!: HTMLElement
+export class ThemeManager {
     options: Required<ThemeOptions>
-    attrObserver!: AttrObserver
     vars: Record<string, string> = {}
-    selector: string = ':host,:root'
-    scopes: WeakMap<HTMLElement, ThemeOptions> = new WeakMap()
-
+    scopes: WeakMap<HTMLElement, ThemeScope> = new WeakMap()
+    root!: ThemeScope
     constructor(scope?: string | HTMLElement, options?: ThemeOptions) {
         this.options = Object.assign(
             {
                 selector: ':host,:root',
                 themeColor: 'light',
                 size: 'medium',
+                dark: false,
+                colorized: false,
                 radius: 'medium',
                 spacing: 'medium',
                 shadow: 'medium',
@@ -34,195 +26,84 @@ export class Themepro {
             },
             options,
         ) as Required<ThemeOptions>
-        if (typeof scope === 'string') {
-            window.addEventListener('DOMContentLoaded', () => {
-                this.scope = document.querySelector(scope) || document.documentElement
-                this._init()
-            })
-        } else {
-            this.scope = scope || document.documentElement
-            this._init()
-        }
-    }
-    private _init() {
-        this.attrObserver = new AttrObserver(
-            this.scope,
-            ['data-theme', 'data-primary', 'data-success', 'data-warning', 'data-danger', 'data-info'],
-            this._onThemeAttrsChange.bind(this),
-        )
-        this._injectBaseStyles()
-        this._createSemanticColorStyles()
-        this.update()
+        this.addScope(scope || document.documentElement, this.options)
     }
     get size() {
-        return (this.scope.dataset.size || this.options.size) as ThemeSize
+        return this.root.size
     }
     set size(value: ThemeSize) {
-        if (value === 'medium') {
-            this.scope.removeAttribute('data-size')
-        } else {
-            this.scope.dataset.size = value
-        }
+        this.root.size = value
     }
     get dark() {
-        return !!(this.scope.getAttribute('dark') || this.options.dark)
+        return this.root.dark
     }
     set dark(value: boolean) {
-        if (value === false) {
-            this.scope.removeAttribute('dark')
-        } else {
-            this.scope.setAttribute('dark', '')
-        }
-        this.options.dark = value
+        this.root.dark = value
     }
     get spacing(): ThemeSize {
-        return (this.scope.dataset.spacing || this.options.spacing) as ThemeSize
+        return this.root.spacing
     }
     set spacing(value: ThemeSize) {
-        if (value === 'medium') {
-            this.scope.removeAttribute('data-spacing')
-        } else {
-            this.scope.dataset.spacing = value
-        }
-        this.options.spacing = value
+        this.root.spacing = value
     }
     get shadow() {
-        return (this.scope.dataset.shadow || this.options.shadow) as ThemeSize
+        return this.root.shadow
     }
     set shadow(value: ThemeSize) {
-        if (value === 'medium') {
-            this.scope.removeAttribute('data-shadow')
-        } else {
-            this.scope.dataset.shadow = value
-        }
-        this.options.shadow = value
+        this.root.shadow = value
     }
     get colorized() {
-        return !!(this.scope.getAttribute('colorized') || this.options.colorized)
+        return this.root.colorized
     }
     set colorized(value: boolean) {
-        if (value === false) {
-            this.scope.removeAttribute('colorized')
-        } else {
-            this.scope.setAttribute('colorized', '')
-        }
-        this.options.colorized = value
+        this.root.colorized = value
     }
     get radius(): ThemeSize {
-        return (this.scope.dataset.radius || this.options.radius || 'medium') as ThemeSize
+        return this.root.radius
     }
     set radius(value: ThemeSize) {
-        if (value === 'medium') {
-            this.scope.removeAttribute('data-radius')
-        } else {
-            this.scope.dataset.radius = value
-        }
-        this.options.radius = value
+        this.root.radius = value
     }
     get themeColor(): string {
-        return (this.scope.dataset.theme || this.options.themeColor || 'light') as string
+        return this.root.themeColor
     }
     set themeColor(value: string) {
-        if (value === 'light') {
-            this.scope.removeAttribute('data-theme')
-        } else {
-            this.scope.dataset.theme = value in presetThemes ? presetThemes[value].color : toRGBString(value)
-        }
-        this.options.themeColor = value
+        this.root.themeColor = value
     }
     /**
-     * 当属性变化时，更新主题
-     *
-     * @param attrName
-     * @param attrValue
-     */
-    private _onThemeAttrsChange(attrName: string, attrValue: string | null) {
-        if (attrName === 'data-theme') {
-            this.update({ themeColor: attrValue || 'light' })
-        }
-    }
-    /**
-     *
+     * 更新主题
      */
     update(options?: ThemeOptions) {
-        Object.assign(this.options, options)
-        const { themeColor, size, radius, spacing, shadow, dark } = this.options
-        this.dark = false
-        if (themeColor in presetThemes) {
-            this.options.themeColor = presetThemes[themeColor].color
+        this.root.update(options)
+    }
+    addScope(el: string | HTMLElement, options?: ThemeOptions) {
+        if (typeof el === 'string') {
+            window.addEventListener('DOMContentLoaded', () => {
+                const scopeEle = (document.querySelector(el) || document.documentElement) as HTMLElement
+                if (!scopeEle) {
+                    throw new Error(`${el} is not a valid selector or element`)
+                }
+                const scope = new ThemeScope(scopeEle, Object.assign({}, this.options, options))
+                this.scopes.set(scopeEle, scope)
+            })
+        } else if (el instanceof HTMLElement) {
+            const scope = new ThemeScope(el, Object.assign({}, this.options, options))
+            this.scopes.set(el, scope)
+            if (el === document.documentElement) {
+                this.root = scope
+            }
         }
-        this.size = size
-        this.radius = radius
-        this.spacing = spacing
-        this.shadow = shadow
-        this.dark = dark
-        const style = `${this.selector}[data-theme='${themeColor}'],[data-theme='${themeColor}']{
-            color-scheme: light;
-            ${toVarStyles(this._createThemeColorVars(themeColor))};\n}
-            ${this.selector}[data-theme='${themeColor}'][dark],[data-theme='${themeColor}'][dark]{
-            color-scheme: dark;
-            ${toVarStyles(this._createThemeColorVars(themeColor, true))};\n}`
-
-        injectStylesheet(style, {
-            id: `themepro-theme`,
-        })
     }
-    /**
-     * 获取默认主题的样式字符串
-     * @returns {string} 包含CSS变量和颜色模式的主题样式字符串
-     * @private
-     */
-    private _getDefaultThemeStyles() {
-        return `${this.selector}{\ncolor-scheme: light;\n${toVarStyles(this._createThemeColorVars(presetThemes.light.color))}\n}\n
-        ${this.selector}[dark],[dark]{\ncolor-scheme: dark;\n${toVarStyles(this._createThemeColorVars(presetThemes.light.color, true))}\n}\n`
-    }
-    private _createThemeColorVars(color: string = this.themeColor, reverse: boolean = false) {
-        const themeColor = color in presetThemes ? presetThemes[color].color : color
-        const vars: Record<string, string> = generateThemeGradientColorVars(themeColor, {
-            prefix: '--t-color-theme-',
-            reverse,
-        })
-        return vars
-    }
-    private _createSemanticColorStyles() {
-        const vars: Record<string, string> = {
-            '--t-color-primary': this.options.primary,
-            '--t-color-success': this.options.success,
-            '--t-color-warning': this.options.warning,
-            '--t-color-danger': this.options.danger,
-            '--t-color-info': this.options.info,
+    removeScope(el: HTMLElement) {
+        const scope = this.scopes.get(el)
+        if (scope) {
+            this.scopes.delete(el)
         }
-        const isOverride = !!(
-            this.options.primary ||
-            this.options.success ||
-            this.options.warning ||
-            this.options.danger ||
-            this.options.info
-        )
-        if (!isOverride) return
-
-        injectStylesheet(`${this.selector}{\n${toVarStyles(vars)}}\n}\n`, {
-            id: 'themepro-semantics',
-        })
-    }
-    private _injectBaseStyles() {
-        const baseStyles = `${this.selector}{\n${toVarStyles(baseVars)}\n${toVarStyles(derivedVars)}\n}\n`
-        const sizeStyles = getVarsStyles(sizeVars, this.selector, 'data-size')
-        const radiusStyles = getVarsStyles(radiusVars, this.selector, 'data-radius')
-        const spacingStyles = getVarsStyles(spacingVars, this.selector, 'data-spacing')
-        const shadowStyles = getVarsStyles(shadowVars, this.selector, 'data-shadow')
-        const lightStyles = this._getDefaultThemeStyles()
-        injectStylesheet(
-            `${baseStyles}\n${sizeStyles}\n${radiusStyles}\n${spacingStyles}\n${shadowStyles}\n${lightStyles}`,
-            {
-                id: 'themepro-vars',
-            },
-        )
     }
 }
 
 // 创建默认的主题应用
-export const themePro = new Themepro()
+export const themePro = new ThemeManager()
 
 globalThis.ThemePro = themePro
 

@@ -3,7 +3,7 @@ export type ThemeRadius = 'none' | ThemeSize
 export type ThemeVariantType = 'primary' | 'success' | 'warning' | 'danger' | 'info'
 
 export type ThemeOptions = {
-    name?: string
+    id?: string
     /**
      * 主题颜色
      */
@@ -33,6 +33,7 @@ export type ThemeOptions = {
      * 面板按钮等的阴影大小
      */
     shadow?: ThemeSize
+    selector?: string
     /**
      * 圆角大小
      */

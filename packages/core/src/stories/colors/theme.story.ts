@@ -7,10 +7,9 @@ export const renderThemeStory = () => {
             <div class="auto-card">
                 <div class="auto-card-header">主题梯度颜色</div>
                 <div class="auto-card-body">                    
-                    <pre><code>HueUI</code>会根据输入的主题色自动生成<code>10</code>个梯度主题色，并且会主题色的色调明暗调节梯度方向。</pre>
-                      <div id="themeSelector" style="padding:1em;display: flex; gap: 0.5rem;align-items: center;background:white" >
+                      <div id="themeSelector" style="padding:1em;display: flex; gap: 0.5rem;align-items: center;" >
                         ${repeat(Array.from({ length: 10 }), (_, i) => {
-                            return html`<span class="theme-color" style="width: 2em;height: 2em;background-color:var(--t-color-theme-${i});"></span>`
+                            return html`<span class="theme-color" style="width: 2em;height: 2em;background-color:var(--t-color-theme-${i});">${i}</span>`
                         })}        
                     </div>   
                 </div>                

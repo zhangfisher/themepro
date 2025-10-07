@@ -1,17 +1,17 @@
-import { LitElement, type PropertyValues, css, html } from "lit";
-import { customElement } from "lit/decorators.js";
-import { repeat } from "lit/directives/repeat.js";
+import { LitElement, type PropertyValues, css, html } from 'lit'
+import { customElement } from 'lit/decorators.js'
+import { repeat } from 'lit/directives/repeat.js'
 
-import type { Themepro } from "../src/index.ts";
-import "../src/index.ts";
+import type { ThemeManager } from '../src/index.ts'
+import '../src/index.ts'
 declare global {
-	var ThemePro: Themepro;
+    var ThemePro: ThemeManager
 }
 
-@customElement("themepro-controller")
+@customElement('themepro-controller')
 // biome-ignore lint/correctness/noUnusedVariables: <lint/correctness/noUnusedVariables>
 class ThemeproController extends LitElement {
-	static styles = css`
+    static styles = css`
         :host{
             background-color: var(--auto-bgcolor);
         }
@@ -58,17 +58,17 @@ class ThemeproController extends LitElement {
             border: 1px solid var(--auto-border-color);
             border-radius: 4px;
         }
-    `;
-	protected updated(_changedProperties: PropertyValues): void {
-		// this._onTheme();
-		// this._onSize();
-		// this._onRadius();
-		// this._onCreateTheme();
-		// this._onCreatePrimaryColor();
-		// this._onDark();
-	}
-	override render() {
-		return html` 
+    `
+    protected updated(_changedProperties: PropertyValues): void {
+        // this._onTheme();
+        // this._onSize();
+        // this._onRadius();
+        // this._onCreateTheme();
+        // this._onCreatePrimaryColor();
+        // this._onDark();
+    }
+    override render() {
+        return html` 
             <div class="controller">
                 <div class="row">
                     <div class="item">
@@ -135,27 +135,27 @@ class ThemeproController extends LitElement {
                 </div>
                 <div class="row">                    
                     ${repeat(this.lightThemeColors, (color) => {
-						return html`<span class="theme-color" style="background-color: ${color};"></span>`;
-					})}
+                        return html`<span class="theme-color" style="background-color: ${color};"></span>`
+                    })}
                 </div>
             </div>
-        `;
-	}
+        `
+    }
 
-	darkThemeColors: string[] = [];
-	lightThemeColors: string[] = [];
+    darkThemeColors: string[] = []
+    lightThemeColors: string[] = []
 
-	_onCreateTheme(e: any) {
-		ThemePro.theme = e.target.value;
-	}
-	_onCreatePrimaryColor(e: any) {}
-	_onSize(e: any) {
-		ThemePro.size = e.target.value;
-	}
-	_onRadius(e: any) {
-		ThemePro.radius = e.target.value;
-	}
-	_onPresetTheme(e: any) {
-		ThemePro.theme = e.target.value;
-	}
+    _onCreateTheme(e: any) {
+        ThemePro.theme = e.target.value
+    }
+    _onCreatePrimaryColor(e: any) {}
+    _onSize(e: any) {
+        ThemePro.size = e.target.value
+    }
+    _onRadius(e: any) {
+        ThemePro.radius = e.target.value
+    }
+    _onPresetTheme(e: any) {
+        ThemePro.theme = e.target.value
+    }
 }

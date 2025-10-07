@@ -3,7 +3,7 @@
  * 监听DOM元素的指定属性变化，并执行回调函数
  *
  */
-export class AttrObserver {
+export class ThemeAttrObserver {
     observer: MutationObserver | null = null
     connected: boolean = false
     constructor(
@@ -35,7 +35,6 @@ export class AttrObserver {
                     this.attrs.includes(mutation.attributeName)
                 ) {
                     const newValue = this.el.getAttribute(mutation.attributeName)
-
                     this.callback(mutation.attributeName, newValue, this.el)
                 }
             })

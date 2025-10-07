@@ -11,7 +11,7 @@ export type PresetTheme = {
 export const presetThemes: Record<string, PresetTheme> = {
     light: {
         color: '#c6c6c6',
-        title: '亮色',
+        title: '默认',
     },
     dark: {
         color: '#030303',

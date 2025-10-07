@@ -37,6 +37,8 @@ export function ThemeSelector() {
                 const target = e.target  
                 if (target.classList.contains('mode')) {                    
                     ThemePro.dark = target.dataset.value==='dark'
+                }else if(target.classList.contains('colorized')){
+                    ThemePro.colorized=!ThemePro.colorized
                 }
             })
             var colorpicker = document.querySelector('#colorpicker');
@@ -55,16 +57,14 @@ export function SizeSelector(attr: 'size' | 'radius' | 'shadow' | 'spacing' = 's
                 return html`<span class="auto-btn ${attr}-size" data-size-value="${size}" >${size}</span>`
             })}        
         </div>   
-        <script>
-            (()=>{
-                const sizeSelector = document.getElementById('sizeSelector')
-                sizeSelector.addEventListener('click', (e) => {
-                    const target = e.target  
-                    if (target.classList.contains('${attr}-size')) { 
-                        ThemePro['${attr}']=target.dataset.sizeValue
-                    }
-                })
-            })()            
+        <script> 
+            const sizeSelector = document.getElementById('sizeSelector')
+            sizeSelector.addEventListener('click', (e) => {
+                const target = e.target  
+                if (target.classList.contains('${attr}-size')) { 
+                    ThemePro['${attr}']=target.dataset.sizeValue
+                }
+            })       
         </script> 
     `
 }
@@ -83,16 +83,14 @@ export function BorderRadiusSelector() {
                 return html`<span class="radius-size" data-radius-value="${size}" >${size}</span>`
             })}        
         </div>   
-        <script >
-            (()=>{
-                const sizeSelector = document.getElementById('radiusSelector')
-                sizeSelector.addEventListener('click', (e) => {
-                    const target = e.target  
-                    if (target.classList.contains('radius-size')) {
-                        ThemePro.radius=target.dataset.radiusSize
-                    }
-                })
-            })()            
+        <script > 
+            const sizeSelector = document.getElementById('radiusSelector')
+            sizeSelector.addEventListener('click', (e) => {
+                const target = e.target  
+                if (target.classList.contains('radius-size')) {
+                    ThemePro.radius=target.dataset.radiusSize
+                }
+            })        
         </script> 
     `
 }

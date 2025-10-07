@@ -52,7 +52,7 @@ export const derivedVars = {
 
     /* 边框 */
     '--auto-border': '1px solid var(--auto-border-color)',
-    '--auto-border-color': 'var(--t-theme-color-1)',
+    '--auto-border-color': 'var(--t-theme-color-2)',
     '--auto-selected-border': '1px solid var(--t-color-theme-6)',
     '--auto-active-border': '1px solid var(--t-color-theme-6)',
     '--auto-disable-border': '1px solid var(--auto-disable-color)',
