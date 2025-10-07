@@ -9,9 +9,17 @@ export type ThemeOptions = {
      */
     themeColor: string
     /**
+     * 深色模式
+     */
+    dark?: boolean
+    /**
      * 主题背景颜色
      */
     themeBgcolor?: string
+    /**
+     * 多彩模式
+     */
+    colorized?: boolean
     /**
      * 大小
      */

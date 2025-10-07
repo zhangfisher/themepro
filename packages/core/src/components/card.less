@@ -20,8 +20,8 @@
         border-radius: var(--auto-border-radius) var(--auto-border-radius) 0 0;
         flex-shrink: 0;
         font: var(--auto-title-font);
-        color: var(--auto-panel-title-color);
-        background-color: var(--auto-panel-title-bgcolor);
+        color: var(--auto-panel-header-color);
+        background-color: var(--auto-panel-header-bgcolor);
 
         &>.auto-card-title {
             display: flex;
@@ -46,8 +46,11 @@
         position: relative;
         flex: 1 1 auto;
         padding: var(--auto-spacing);
-        border-radius: 0 0 var(--auto-border-radius) var(--auto-border-radius);
         min-height: 0;
+    }
+
+    &>.auto-card-body:not(:has(+ .auto-card-footer)) {
+        border-radius: 0 0 var(--auto-border-radius) var(--auto-border-radius);
     }
 
     &>.auto-card-footer {

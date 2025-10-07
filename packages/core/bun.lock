@@ -4,8 +4,8 @@
     "": {
       "name": "themepro",
       "dependencies": {
-        "@ant-design/colors": "^7.2.1",
         "@ant-design/fast-color": "^3.0.0",
+        "@yosulramp/material-color-palette-js": "^1.0.4",
       },
       "devDependencies": {
         "@storybook/addon-docs": "^9.1.10",
@@ -63,8 +63,6 @@
     "@algolia/requester-fetch": ["@algolia/requester-fetch@5.39.0", "https://registry.npmmirror.com/@algolia/requester-fetch/-/requester-fetch-5.39.0.tgz", { "dependencies": { "@algolia/client-common": "5.39.0" } }, "sha512-LIrCkrxu1WnO3ev1+w6NnZ12JZL/o+2H9w6oWnZAjQZIlA/Ym6M9QHkt+OQ/SwkuoiNkW3DAo+Pi4A2V9FPtqg=="],
 
     "@algolia/requester-node-http": ["@algolia/requester-node-http@5.39.0", "https://registry.npmmirror.com/@algolia/requester-node-http/-/requester-node-http-5.39.0.tgz", { "dependencies": { "@algolia/client-common": "5.39.0" } }, "sha512-6beG+egPwXmvhAg+m0STCj+ZssDcjrLzf4L05aKm2nGglMXSSPz0cH/rM+kVD9krNfldiMctURd4wjojW1fV0w=="],
-
-    "@ant-design/colors": ["@ant-design/colors@7.2.1", "https://registry.npmmirror.com/@ant-design/colors/-/colors-7.2.1.tgz", { "dependencies": { "@ant-design/fast-color": "^2.0.6" } }, "sha512-lCHDcEzieu4GA3n8ELeZ5VQ8pKQAWcGGLRTQ50aQM2iqPpq2evTxER84jfdPvsPAtEcZ7m44NI45edFMo8oOYQ=="],
 
     "@ant-design/fast-color": ["@ant-design/fast-color@3.0.0", "https://registry.npmmirror.com/@ant-design/fast-color/-/fast-color-3.0.0.tgz", {}, "sha512-eqvpP7xEDm2S7dUzl5srEQCBTXZMmY3ekf97zI+M2DHOYyKdJGH0qua0JACHTqbkRnD/KHFQP9J1uMJ/XWVzzA=="],
 
@@ -329,6 +327,8 @@
     "@vueuse/metadata": ["@vueuse/metadata@12.8.2", "https://registry.npmmirror.com/@vueuse/metadata/-/metadata-12.8.2.tgz", {}, "sha512-rAyLGEuoBJ/Il5AmFHiziCPdQzRt88VxR+Y/A/QhJ1EWtWqPBBAxTAFaSkviwEuOEZNtW8pvkPgoCZQ+HxqW1A=="],
 
     "@vueuse/shared": ["@vueuse/shared@12.8.2", "https://registry.npmmirror.com/@vueuse/shared/-/shared-12.8.2.tgz", { "dependencies": { "vue": "^3.5.13" } }, "sha512-dznP38YzxZoNloI0qpEfpkms8knDtaoQ6Y/sfS0L7Yki4zh40LFHEhur0odJC6xTHG5dxWVPiUWBXn+wCG2s5w=="],
+
+    "@yosulramp/material-color-palette-js": ["@yosulramp/material-color-palette-js@1.0.4", "", {}, "sha512-G27tCACcY7pmFIo97IT0W/ESf/WhzKDG/7At2W2Ql3/EWtdsOccwdW+Z2ijekrD+0z2pms7+2po8aB6GlLXaaA=="],
 
     "acorn": ["acorn@8.15.0", "https://registry.npmmirror.com/acorn/-/acorn-8.15.0.tgz", { "bin": { "acorn": "bin/acorn" } }, "sha512-NZyJarBfL7nWwIq+FDL6Zp/yHEhePMNnnJ0y3qfieCrmNvYct8uvtiV41UvlSe6apAfk0fY1FbWx+NwfmpvtTg=="],
 
@@ -741,8 +741,6 @@
     "ws": ["ws@8.18.3", "https://registry.npmmirror.com/ws/-/ws-8.18.3.tgz", { "peerDependencies": { "bufferutil": "^4.0.1", "utf-8-validate": ">=5.0.2" }, "optionalPeers": ["bufferutil", "utf-8-validate"] }, "sha512-PEIGCY5tSlUt50cqyMXfCzX+oOPqN0vuGqWzbcJ2xvnkzkq46oOpz7dQaTDBdfICb4N14+GARUDw2XV2N4tvzg=="],
 
     "zwitch": ["zwitch@2.0.4", "https://registry.npmmirror.com/zwitch/-/zwitch-2.0.4.tgz", {}, "sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A=="],
-
-    "@ant-design/colors/@ant-design/fast-color": ["@ant-design/fast-color@2.0.6", "https://registry.npmmirror.com/@ant-design/fast-color/-/fast-color-2.0.6.tgz", { "dependencies": { "@babel/runtime": "^7.24.7" } }, "sha512-y2217gk4NqL35giHl72o6Zzqji9O7vHh9YmhUVkPtAOpoTCH4uWxo/pr4VE8t0+ChEPs0qo4eJRC5Q1eXWo3vA=="],
 
     "@testing-library/dom/aria-query": ["aria-query@5.3.0", "https://registry.npmmirror.com/aria-query/-/aria-query-5.3.0.tgz", { "dependencies": { "dequal": "^2.0.3" } }, "sha512-b0P0sZPKtyu8HkeRAfCq0IfURZK+SuwMjY1UXGBU27wpAiTwQAIlq56IbIO+ytk/JjS1fMR14ee5WBBfKi5J6A=="],
 

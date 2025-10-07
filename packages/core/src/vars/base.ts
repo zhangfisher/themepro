@@ -25,15 +25,15 @@ export const baseVars = {
     '--t-font-weight-x-small': '100',
     '--t-font-weight-small': '200',
     '--t-font-weight-medium': '300',
-    '--t-font-weight-large': '400',
-    '--t-font-weight-x-large': '500',
+    '--t-font-weight-large': '500',
+    '--t-font-weight-x-large': '600',
 
     /* 间距 */
     '--t-spacing-x-small': '0.5rem',
     '--t-spacing-small': '0.75rem',
     '--t-spacing-medium': '1rem',
     '--t-spacing-large': '1.25rem',
-    '--t-spacing-x-large': '1.75rem',
+    '--t-spacing-x-large': '1.5rem',
 
     '--t-letter-spacing-x-small': 'calc(var(--t-spacing-medium) * 0.01)',
     '--t-letter-spacing-small': 'calc(var(--t-spacing-medium) * 0.02)',

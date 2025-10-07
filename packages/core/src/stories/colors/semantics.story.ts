@@ -1,5 +1,4 @@
 import { html } from 'lit'
-import { themeSelector } from '../_blocks'
 
 export const renderSemanticsColorStory = () => {
     return html`

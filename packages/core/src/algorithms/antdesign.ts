@@ -1,3 +1,8 @@
+/**
+ *
+ * 使用Ant Design的颜色生成算法，生成主题梯度颜色
+ *
+ */
 import type { ColorInput } from '@ant-design/fast-color'
 import { FastColor } from '@ant-design/fast-color'
 

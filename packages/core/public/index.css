@@ -576,7 +576,7 @@ h6 {
     --auto-line-height: var(--t-line-height-medium);
     /* 标题，用于导航/标题栏/标签页标题 */
     --auto-title-font: calc(var(--auto-font-weight) + 200) calc(var(--auto-font-size) * 1.1)/1.5 var(--auto-font-family);
-    --auto-panel-title-color: var(--t-color-primary-6);
+    --auto-panel-header-color: var(--t-color-primary-6);
     /* 边框/间距 */
     --auto-border-radius: var(--t-border-radius-medium);
     --auto-spacing: var(--t-spacing-medium);
@@ -718,7 +718,7 @@ h6 {
 }
 
 .auto-title.colorized {
-    color: var(--auto-panel-title-color);
+    color: var(--auto-panel-header-color);
 }
 
 .auto-shadow {
@@ -730,7 +730,7 @@ h6 {
 }
 
 .auto-text.colorized {
-    color: var(--auto-panel-title-color);
+    color: var(--auto-panel-header-color);
 }
 
 .auto-disable {

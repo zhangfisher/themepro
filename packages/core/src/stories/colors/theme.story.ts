@@ -1,5 +1,4 @@
 import { html } from 'lit'
-import { themeSelector } from '../_blocks'
 import { repeat } from 'lit/directives/repeat.js'
 
 export const renderThemeStory = () => {
@@ -15,6 +14,9 @@ export const renderThemeStory = () => {
                         })}        
                     </div>   
                 </div>                
+                <div class="auto-card-footer">
+                        主题色调明暗调节梯度方向
+                </div>
             </div> 
             <div class="auto-card">
                 <div class="auto-card-header">主题色</div>
@@ -25,22 +27,34 @@ export const renderThemeStory = () => {
                         --t-theme-color: var(--t-color-theme-8)
                     </div>
                     <div class="auto-card-body-item " style="background-color:var(--t-color-theme-0)">
-                        <code>--t-theme-bgcolor:var( --t-color-theme-0)</code>
+                        --t-theme-bgcolor:var( --t-color-theme-0)
                     </div>
                     <div class="auto-card-body-item " style="background-color:var(--t-color-theme-1)">
-                        <code>--t-theme-bgcolor-1: var(--t-color-theme-1)</code>
+                        --t-theme-bgcolor-1: var(--t-color-theme-1)
                     </div>
                     <div class="auto-card-body-item " style="background-color:var(--t-color-theme-2)">
-                        <code>--t-theme-bgcolor-2: var(--t-color-theme-2)</code>
+                        --t-theme-bgcolor-2: var(--t-color-theme-2)
                     </div>
                     <div class="auto-card-body-item " style="background-color:var(--t-color-theme-3)">
-                        <code>--t-theme-bgcolor-3: var(--t-color-theme-3)</code>
+                        --t-theme-bgcolor-3: var(--t-color-theme-3)
                     </div>
                     <div class="auto-card-body-item " style="background-color:var(--t-color-theme-4)">
-                        <code>--t-theme-bgcolor-4: var(--t-color-theme-4)</code>
+                        --t-theme-bgcolor-4: var(--t-color-theme-4)
                     </div>
                     <div class="auto-card-body-item " style="background-color:var(--t-color-theme-5)">
-                        <code>--t-theme-bgcolor-5: var(--t-color-theme-5)</code>
+                        --t-theme-bgcolor-5: var(--t-color-theme-5)
+                    </div>
+                    <div class="auto-card-body-item " style="background-color:var(--t-color-theme-6)">
+                        --t-theme-bgcolor-6: var(--t-color-theme-6)
+                    </div>
+                    <div class="auto-card-body-item " style="background-color:var(--t-color-theme-7)">
+                        --t-theme-bgcolor-7: var(--t-color-theme-7)</code>                 
+                    </div>
+                    <div class="auto-card-body-item " style="background-color:var(--t-color-theme-8)">
+                        --t-theme-bgcolor-8: var(--t-color-theme-8)
+                    </div>
+                    <div class="auto-card-body-item " style="background-color:var(--t-color-theme-9)">
+                        --t-theme-bgcolor-9: var(--t-color-theme-9)
                     </div>
                 </div>                
             </div>

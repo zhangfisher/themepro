@@ -13,7 +13,7 @@
 
 .auto-alert>.title {
     font: var(--auto-title-font);
-    color: var(--auto-panel-title-color);
+    color: var(--auto-panel-header-color);
     display: flex;
     align-items: center;
     padding-bottom: calc(0.5 * var(--auto-spacing));
@@ -113,7 +113,7 @@
     border-radius: var(--auto-border-radius) var(--auto-border-radius) 0 0;
     flex-shrink: 0;
     font: var(--auto-title-font);
-    color: var(--auto-panel-title-color);
+    color: var(--auto-panel-header-color);
     background: var(--auto-title-bgcolor);
 }
 

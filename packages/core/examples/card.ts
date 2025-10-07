@@ -1,14 +1,14 @@
 // card-lit.ts - Lit 实现的卡片组件
-import { LitElement, html, css } from "lit";
-import { property } from "lit/decorators.js";
-import { customElement } from "lit/decorators/custom-element.js";
-import { ThemeProController } from "../src/webcomponent/litController";
-@customElement("auto-card")
+import { LitElement, html, css } from 'lit'
+import { property } from 'lit/decorators.js'
+import { customElement } from 'lit/decorators/custom-element.js'
+import { ThemeProController } from '../src/webcomponent/litController'
+@customElement('auto-card')
 export class AutoCardComponent extends LitElement {
-	@property({ type: String, reflect: true })
-	title: string = "";
+    @property({ type: String, reflect: true })
+    title: string = ''
 
-	static styles = css`
+    static styles = css`
         :host {
         display: block;
         }
@@ -31,30 +31,30 @@ export class AutoCardComponent extends LitElement {
             border-radius: var(--auto-border-radius) var(--auto-border-radius) 0 0;
             flex-shrink: 0;
             font: var(--auto-title-font);
-            color: var(--auto-panel-title-color);
-            background: var(--auto-panel-title-bgcolor);
+            color: var(--auto-panel-header-color);
+            background: var(--auto-panel-header-bgcolor);
         }
         .auto-card-body {
             flex: 1 1 auto;
             padding: var(--auto-spacing);
             border-radius: 0 0 var(--auto-border-radius) var(--auto-border-radius);        
         }  
-    `;
+    `
 
-	render() {
-		return html`
+    render() {
+        return html`
         <div class="auto-card">
             <div class="auto-card-header">${this.title}</div>
             <div class="auto-card-body">
                 <slot></slot>         
             </div>
         </div>
-        `;
-	}
+        `
+    }
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		"auto-card": AutoCardComponent;
-	}
+    interface HTMLElementTagNameMap {
+        'auto-card': AutoCardComponent
+    }
 }

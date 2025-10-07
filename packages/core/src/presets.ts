@@ -1,5 +1,5 @@
 export type PresetTheme = {
-    baseColor: string
+    color: string
     title?: string
     primary?: string
     success?: string
@@ -10,59 +10,59 @@ export type PresetTheme = {
 
 export const presetThemes: Record<string, PresetTheme> = {
     light: {
-        baseColor: '#c6c6c6',
+        color: '#c6c6c6',
         title: '亮色',
     },
     dark: {
-        baseColor: '#8e8e8e',
+        color: '#030303',
         title: '暗黑',
     },
     red: {
-        baseColor: '#f5222d',
+        color: '#f5222d',
         title: '薄暮',
     },
     volcano: {
-        baseColor: '#fa541c',
+        color: '#fa541c',
         title: '火山',
     },
     orange: {
-        baseColor: '#fa8c16',
+        color: '#fa8c16',
         title: '日暮',
     },
     lime: {
-        baseColor: '#a0d911',
+        color: '#a0d911',
         title: '青柠',
     },
     gold: {
-        baseColor: '#faad14',
+        color: '#faad14',
         title: '金盏花',
     },
     yellow: {
-        baseColor: '#fadb14',
+        color: '#fadb14',
         title: '日出',
     },
     green: {
-        baseColor: '#52c41a',
+        color: '#52c41a',
         title: '极光绿',
     },
     cyan: {
-        baseColor: '#13c2c2',
+        color: '#13c2c2',
         title: '明青',
     },
     blue: {
-        baseColor: '#1677ff',
+        color: '#1677ff',
         title: '拂晓蓝',
     },
     geekblue: {
-        baseColor: '#2f54eb',
+        color: '#2f54eb',
         title: '极客蓝',
     },
     purple: {
-        baseColor: '#722ed1',
+        color: '#722ed1',
         title: '酱紫',
     },
     magenta: {
-        baseColor: '#eb2f96',
+        color: '#eb2f96',
         title: '法式洋红',
     },
 }

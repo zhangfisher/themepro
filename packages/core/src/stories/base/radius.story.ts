@@ -1,5 +1,4 @@
 import { html } from 'lit'
-import { sizeSelector, themeSelector } from '../_blocks'
 
 export const renderBorderRadiusStory = () => {
     return html`

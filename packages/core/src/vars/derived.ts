@@ -1,17 +1,19 @@
 export const derivedVars = {
-    /* 主题色 */
+    /* 主题前景色 */
     '--t-theme-color': 'var(--t-color-theme-8)',
+    '--t-theme-color-1': 'var(--t-color-theme-1)',
+    '--t-theme-color-2': 'var(--t-color-theme-2)',
+    '--t-theme-color-3': 'var(--t-color-theme-3)',
+    '--t-theme-color-4': 'var(--t-color-theme-4)',
+    '--t-theme-color-5': 'var(--t-color-theme-5)',
+    /* 主题背景色 */
     '--t-theme-bgcolor': 'var(--t-color-theme-0)',
     '--t-theme-bgcolor-1': 'var(--t-color-theme-1)',
     '--t-theme-bgcolor-2': 'var(--t-color-theme-2)',
     '--t-theme-bgcolor-3': 'var(--t-color-theme-3)',
     '--t-theme-bgcolor-4': 'var(--t-color-theme-4)',
     '--t-theme-bgcolor-5': 'var(--t-color-theme-5)',
-    '--t-theme-bgcolor-6': 'var(--t-color-theme-6)',
-    '--t-theme-bgcolor-7': 'var(--t-color-theme-7)',
-    '--t-theme-bgcolor-8': 'var(--t-color-theme-8)',
-    '--t-theme-bgcolor-9': 'var(--t-color-theme-9)',
-    /** 主题背景色 */
+
     /* 语义色调 */
     '--auto-primary-color': 'var(--t-color-primary)',
     '--auto-success-color': 'var(--t-color-success)',
@@ -30,7 +32,7 @@ export const derivedVars = {
 
     /* 背景颜色: 用于面板/对话框/组件的背景 */
     '--auto-bgcolor': 'var(--t-theme-bgcolor)',
-    '--auto-workspace-bgcolor': 'var(--t-color-theme-2)',
+    '--auto-workspace-bgcolor': 'var(--t-theme-bgcolor-1)',
     /* 亮色: 相对于背景的亮色*/
     '--auto-light-bgcolor': 'color-mix(in hsl, var(--auto-bgcolor), white 20%)',
     /* 暗色: 相对于背景的暗色背景*/
@@ -42,7 +44,7 @@ export const derivedVars = {
 
     /* 边框 */
     '--auto-border': '1px solid var(--auto-border-color)',
-    '--auto-border-color': 'var(--t-color-theme-2)',
+    '--auto-border-color': 'var(--t-theme-color-1)',
     '--auto-selected-border': '1px solid var(--t-color-theme-6)',
     '--auto-active-border': '1px solid var(--t-color-theme-6)',
     '--auto-disable-border': '1px solid var(--auto-disable-color)',
@@ -59,11 +61,11 @@ export const derivedVars = {
     '--auto-title-font':
         'calc(var(--auto-font-weight) + 200) calc(var(--auto-font-size) * 1.1)/1.5 var(--auto-font-family)',
     /* 面板: 用于导航/标题栏/标签页标题 */
-    '--auto-panel-title-color': 'var(--t-theme-color-6)',
+    '--auto-panel-header-color': 'var(--t-color-theme-8)',
     /** 标题背景颜色：用于标题/标题栏的背景颜色*/
-    '--auto-panel-title-bgcolor': 'color-mix(in hsl, var(--auto-bgcolor), black 5%)',
+    '--auto-panel-header-bgcolor': 'color-mix(in hsl, var(--auto-bgcolor), black 5%)',
     /* 面板背景颜色：用于面板/区块/Drawer等背景颜色*/
-    '--auto-panel-bgcolor': 'var(--auto-light-bgcolor)',
+    '--auto-panel-bgcolor': 'var(--auto-bgcolor)',
 
     /* 边框/间距 */
     '--auto-border-radius': 'var(--t-border-radius-medium)',
