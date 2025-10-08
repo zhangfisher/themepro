@@ -33,6 +33,15 @@ export type ThemeOptions = {
      * 面板按钮等的阴影大小
      */
     shadow?: ThemeSize
+    /**
+     * 是否创建共享的公共变量
+     *
+     * false: 则不创建，只会创建主题颜色变量和语义变量
+     *
+     * 当ThemeScope作用于某个独立的元素时，应该设为false，以共享公共主题变量
+     *
+     */
+    share?: boolean
     selectors?: string[]
     /**
      * 圆角大小

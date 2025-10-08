@@ -1,3 +1,14 @@
+/**
+ *
+ *
+ *  区域主题
+ *
+ *
+ *  const scope = ThemeManager.scope()
+ *
+ *
+ *
+ */
 import { ThemeAttrObserver } from './observer'
 import { presetThemes } from './presets'
 import type { ThemeOptions, ThemeSize } from './types'
@@ -26,6 +37,7 @@ export class ThemeScope {
                 themeColor: 'light',
                 selectors: [':host', ':root'],
                 size: 'medium',
+                share: false,
                 dark: false,
                 colorized: false,
                 radius: 'medium',
@@ -158,11 +170,14 @@ export class ThemeScope {
         this.shadow = shadow
         this.dark = dark
         this.colorized = colorized
+        this._createThemeColorStyles(themeColor)
+    }
 
-        const style = `${this.selectors}[data-theme='${themeColor}'],[data-theme='${themeColor}']{
+    private _createThemeColorStyles(themeColor: string) {
+        const style = `${this.selectors}[data-theme='${themeColor}']{
             color-scheme: light;
             ${toVarStyles(this._createThemeColorVars(themeColor))};\n}
-            ${this.selectors}[data-theme='${themeColor}'][dark],[data-theme-scope][dark]{
+            ${this.selectors}[data-theme='${themeColor}'][dark]{
             color-scheme: dark;
             ${toVarStyles(this._createThemeColorVars(themeColor, true))};\n}`
 
@@ -242,7 +257,8 @@ export class ThemeScope {
      * @returns {string} 生成的CSS样式字符串
      * @private
      */
-    private _injectBaseStyles(inject: boolean = true) {
+    private _injectShareStyles(inject: boolean = true) {
+        if (this.options.share) return
         const baseStyles = `${this.selectors}{\n${toVarStyles(baseVars)}\n${toVarStyles(derivedVars)}\n}\n`
         const sizeStyles = getVarsStyles(sizeVars, this.selectors, 'data-size')
         const radiusStyles = getVarsStyles(radiusVars, this.selectors, 'data-radius')
@@ -251,7 +267,6 @@ export class ThemeScope {
         const lightStyles = this._getDefaultThemeColorStyles(presetThemes.light.color)
         const styleId = `themepro-${this.id}-vars`
         const css = `${baseStyles}\n${sizeStyles}\n${radiusStyles}\n${spacingStyles}\n${shadowStyles}\n${lightStyles}`
-        console.log('css=', css)
         if (inject) {
             injectStylesheet(css, {
                 id: styleId,
@@ -263,7 +278,7 @@ export class ThemeScope {
     connect() {
         if (this.connected) return
         this._addThemeAttrListener()
-        this._injectBaseStyles()
+        this._injectShareStyles()
         this._createSemanticColorStyles()
         this.update()
         this.connected = true
