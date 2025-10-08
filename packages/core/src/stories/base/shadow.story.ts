@@ -1,4 +1,5 @@
 import { html } from 'lit'
+import { sizeSelector, themeSelector } from '../_components'
 
 export const renderShadowStory = () => {
     return html`

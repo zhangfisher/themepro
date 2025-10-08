@@ -33,7 +33,7 @@ export type ThemeOptions = {
      * 面板按钮等的阴影大小
      */
     shadow?: ThemeSize
-    selector?: string
+    selectors?: string[]
     /**
      * 圆角大小
      */

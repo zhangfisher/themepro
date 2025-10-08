@@ -1,8 +1,8 @@
 import { repeat } from 'lit/directives/repeat.js'
-import { html, type TemplateResult } from 'lit' // 导入 html 函数
-import { presetThemes } from '../src/presets'
+import { html } from 'lit' // 导入 html 函数
+import { presetThemes } from '../presets'
 
-export function ThemeSelector() {
+export function themeSelector() {
     return html`
         <style>    
             .theme-color{
@@ -25,9 +25,9 @@ export function ThemeSelector() {
             <span class="auto-btn colorized" data-value="">多彩模式</span>
         </div>  
         <script > 
-                if(typeof themeSelector=== 'undefined'){
-                const themeSelector = document.getElementById('themeSelector')
-                themeSelector.addEventListener('click', (e) => {
+            if(typeof selectTheme=== 'undefined'){
+                const selectTheme = document.getElementById('themeSelector')
+                selectTheme.addEventListener('click', (e) => {
                     const target = e.target  
                     if (target.classList.contains('theme-color')) {
                         ThemePro.themeColor=target.dataset.color                    
@@ -52,7 +52,7 @@ export function ThemeSelector() {
         </script> 
     `
 }
-export function SizeSelector(attr: 'size' | 'radius' | 'shadow' | 'spacing' = 'size') {
+export function sizeSelector(attr: 'size' | 'radius' | 'shadow' | 'spacing' = 'size') {
     return html` 
         <div id="sizeSelector" style="display: flex; gap: 0.5rem;align-items: center;" >
             ${repeat(['x-small', 'small', 'medium', 'large', 'x-large'], (size) => {
@@ -60,9 +60,9 @@ export function SizeSelector(attr: 'size' | 'radius' | 'shadow' | 'spacing' = 's
             })}        
         </div>   
         <script> 
-            if(typeof sizeSelector=== 'undefined'){
-            const sizeSelector = document.getElementById('sizeSelector')
-                sizeSelector.addEventListener('click', (e) => {
+            if(typeof selectSize=== 'undefined'){
+            const selectSize = document.getElementById('sizeSelector')
+                selectSize.addEventListener('click', (e) => {
                     const target = e.target  
                     if (target.classList.contains('${attr}-size')) { 
                         ThemePro['${attr}']=target.dataset.sizeValue
@@ -72,7 +72,7 @@ export function SizeSelector(attr: 'size' | 'radius' | 'shadow' | 'spacing' = 's
         </script> 
     `
 }
-export function BorderRadiusSelector() {
+export function borderRadiusSelector() {
     return html`
         <style>    
             .radius-size{
@@ -88,9 +88,9 @@ export function BorderRadiusSelector() {
             })}        
         </div>   
         <script > 
-            if(typeof radiusSelector=== 'undefined'){
-                const radiusSelector = document.getElementById('radiusSelector')            
-                radiusSelector.addEventListener('click', (e) => {
+            if(typeof selectRadius=== 'undefined'){
+                const selectRadius = document.getElementById('radiusSelector')            
+                selectRadius.addEventListener('click', (e) => {
                     const target = e.target  
                     if (target.classList.contains('radius-size')) {
                         ThemePro.radius=target.dataset.radiusSize

@@ -9,7 +9,8 @@ export class ThemeManager {
     constructor(scope?: string | HTMLElement, options?: ThemeOptions) {
         this.options = Object.assign(
             {
-                selector: ':host,:root',
+                id: 'root',
+                selectors: [':host', ':root'],
                 themeColor: 'light',
                 size: 'medium',
                 dark: false,

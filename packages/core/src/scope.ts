@@ -1,17 +1,19 @@
 import { ThemeAttrObserver } from './observer'
 import { presetThemes } from './presets'
 import type { ThemeOptions, ThemeSize } from './types'
+import { getId } from './utils'
 import { generateThemeGradientColorVars } from './utils/generateGradientVars'
 import { getVarsStyles } from './utils/getVarsStyles'
 import { injectStylesheet } from './utils/injectStylesheet'
 import { toRGBString } from './utils/toRGBString'
 import { toVarStyles } from './utils/toVarStyles'
 import { baseVars, radiusVars, derivedVars, shadowVars, spacingVars, sizeVars } from './vars'
+import { mapCssSelector } from './utils/mapSelector'
 
 export class ThemeScope {
     options: Required<ThemeOptions>
     attrObserver!: ThemeAttrObserver
-    selector: string = ':host,:root'
+    selectors: string[]
     stylesheets: string[] = []
     connected: boolean = false
     constructor(
@@ -20,9 +22,9 @@ export class ThemeScope {
     ) {
         this.options = Object.assign(
             {
-                id: 'root',
-                selector: ':host,:root',
+                id: getId(),
                 themeColor: 'light',
+                selectors: [':host', ':root'],
                 size: 'medium',
                 dark: false,
                 colorized: false,
@@ -38,7 +40,7 @@ export class ThemeScope {
             },
             options,
         ) as Required<ThemeOptions>
-        this.selector = this.options.selector
+        this.selectors = this.options.selectors
         this.connect()
     }
     get id() {
@@ -157,12 +159,13 @@ export class ThemeScope {
         this.dark = dark
         this.colorized = colorized
 
-        const style = `${this.selector}[data-theme='${themeColor}'],[data-theme='${themeColor}']{
+        const style = `${this.selectors}[data-theme='${themeColor}'],[data-theme='${themeColor}']{
             color-scheme: light;
             ${toVarStyles(this._createThemeColorVars(themeColor))};\n}
-            ${this.selector}[data-theme='${themeColor}'][dark],[data-theme='${themeColor}'][dark]{
+            ${this.selectors}[data-theme='${themeColor}'][dark],[data-theme='${themeColor}'][dark]{
             color-scheme: dark;
             ${toVarStyles(this._createThemeColorVars(themeColor, true))};\n}`
+
         const styleId: string = `themepro-${this.id}-theme-colors`
         injectStylesheet(style, {
             id: styleId,
@@ -174,9 +177,14 @@ export class ThemeScope {
      * @returns {string} 包含CSS变量和颜色模式的主题样式字符串
      * @private
      */
-    private _getThemeColorStyles(themeColor: string) {
-        return `${this.selector}{\ncolor-scheme: light;\n${toVarStyles(this._createThemeColorVars(themeColor))}\n}\n
-        ${this.selector}[dark],[dark]{\ncolor-scheme: dark;\n${toVarStyles(this._createThemeColorVars(themeColor, true))}\n}\n`
+    private _getThemeColorStyles(
+        themeColor: string,
+        attrs: Record<string, string> = {},
+        includeEmpty: boolean = false,
+    ) {
+        const dd = mapCssSelector(this.selectors, attrs, includeEmpty)
+        return `${this.selectors}{\ncolor-scheme: light;\n${toVarStyles(this._createThemeColorVars(themeColor))}\n}\n
+        ${this.selectors}[dark],[dark]{\ncolor-scheme: dark;\n${toVarStyles(this._createThemeColorVars(themeColor, true))}\n}\n`
     }
     private _createThemeColorVars(color: string = this.themeColor, reverse: boolean = false) {
         const themeColor = color in presetThemes ? presetThemes[color].color : color
@@ -186,7 +194,7 @@ export class ThemeScope {
         })
         return vars
     }
-    private _createSemanticColorStyles() {
+    private _createSemanticColorStyles(inject: boolean = true) {
         const vars: Record<string, string> = {
             '--t-color-primary': this.options.primary,
             '--t-color-success': this.options.success,
@@ -203,31 +211,38 @@ export class ThemeScope {
         )
         if (!isOverride) return
         const styleId = `themepro-${this.id}-semantics`
-        injectStylesheet(`${this.selector}{\n${toVarStyles(vars)}}\n}\n`, {
-            id: styleId,
-        })
-        this._addStyleheetId(styleId)
+        const css = `${this.selectors}{\n${toVarStyles(vars)}}\n}\n`
+        if (inject) {
+            injectStylesheet(css, {
+                id: styleId,
+            })
+            this._addStyleheetId(styleId)
+        }
+        return css
     }
     private _addStyleheetId(id: string) {
         if (!this.stylesheets.includes(id)) {
             this.stylesheets.push(id)
         }
     }
-    private _injectBaseStyles() {
-        const baseStyles = `${this.selector}{\n${toVarStyles(baseVars)}\n${toVarStyles(derivedVars)}\n}\n`
-        const sizeStyles = getVarsStyles(sizeVars, this.selector, 'data-size')
-        const radiusStyles = getVarsStyles(radiusVars, this.selector, 'data-radius')
-        const spacingStyles = getVarsStyles(spacingVars, this.selector, 'data-spacing')
-        const shadowStyles = getVarsStyles(shadowVars, this.selector, 'data-shadow')
+    private _injectBaseStyles(inject: boolean = true) {
+        const baseStyles = `${this.selectors}{\n${toVarStyles(baseVars)}\n${toVarStyles(derivedVars)}\n}\n`
+        const sizeStyles = getVarsStyles(sizeVars, this.selectors, 'data-size')
+        const radiusStyles = getVarsStyles(radiusVars, this.selectors, 'data-radius')
+        const spacingStyles = getVarsStyles(spacingVars, this.selectors, 'data-spacing')
+        const shadowStyles = getVarsStyles(shadowVars, this.selectors, 'data-shadow')
         const lightStyles = this._getThemeColorStyles(presetThemes.light.color)
+        console.log('lightStyles=', lightStyles)
         const styleId = `themepro-${this.id}-vars`
-        injectStylesheet(
-            `${baseStyles}\n${sizeStyles}\n${radiusStyles}\n${spacingStyles}\n${shadowStyles}\n${lightStyles}`,
-            {
+        const css = `${baseStyles}\n${sizeStyles}\n${radiusStyles}\n${spacingStyles}\n${shadowStyles}\n${lightStyles}`
+        console.log('css=', css)
+        if (inject) {
+            injectStylesheet(css, {
                 id: styleId,
-            },
-        )
-        this._addStyleheetId(styleId)
+            })
+            this._addStyleheetId(styleId)
+        }
+        return css
     }
     connect() {
         if (this.connected) return
@@ -246,4 +261,8 @@ export class ThemeScope {
             }
         })
     }
+    /**
+     * 返回css样式
+     */
+    toCss() {}
 }
