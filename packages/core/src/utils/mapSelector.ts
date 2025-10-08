@@ -21,7 +21,7 @@
 export function mapCssSelector(selectors: string[], attrs: Record<string, string>, includeEmpty: boolean = false) {
     const attrMap = Object.entries(attrs)
         .map(([name, value]) => {
-            return `[${name}='${value}']`
+            return !value || (typeof value === 'string' && value.trim() === '') ? `[${name}]` : `[${name}='${value}']`
         })
         .join('')
     const results: string[] = []

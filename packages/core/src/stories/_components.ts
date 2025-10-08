@@ -13,7 +13,7 @@ export function themeSelector() {
             }        
         </style>
         <div id="themeSelector" style="display: flex; gap: 0.5rem;align-items:  stretch;justify-content: space-between;" >
-            <span id="colorpicker" class="theme-color" style="width:4em;border:var(--auto-border);"></span>
+            <span id="colorpicker" class="theme-color" style="width:4em;border:var(--auto-border);border:var(--auto-border);">选择</span>
             ${repeat(Object.values(presetThemes), (theme) => {
                 return html`<span class="theme-color" data-color="${theme.color}" style="padding:0.5em;background-color:${theme.color};">${theme.title}</span>`
             })}                    

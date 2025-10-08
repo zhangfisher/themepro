@@ -162,7 +162,7 @@ export class ThemeScope {
         const style = `${this.selectors}[data-theme='${themeColor}'],[data-theme='${themeColor}']{
             color-scheme: light;
             ${toVarStyles(this._createThemeColorVars(themeColor))};\n}
-            ${this.selectors}[data-theme='${themeColor}'][dark],[data-theme='${themeColor}'][dark]{
+            ${this.selectors}[data-theme='${themeColor}'][dark],[data-theme-scope][dark]{
             color-scheme: dark;
             ${toVarStyles(this._createThemeColorVars(themeColor, true))};\n}`
 
@@ -177,15 +177,20 @@ export class ThemeScope {
      * @returns {string} 包含CSS变量和颜色模式的主题样式字符串
      * @private
      */
-    private _getThemeColorStyles(
-        themeColor: string,
-        attrs: Record<string, string> = {},
-        includeEmpty: boolean = false,
-    ) {
-        const dd = mapCssSelector(this.selectors, attrs, includeEmpty)
-        return `${this.selectors}{\ncolor-scheme: light;\n${toVarStyles(this._createThemeColorVars(themeColor))}\n}\n
-        ${this.selectors}[dark],[dark]{\ncolor-scheme: dark;\n${toVarStyles(this._createThemeColorVars(themeColor, true))}\n}\n`
+    private _getDefaultThemeColorStyles(themeColor: string) {
+        const lightSelector = mapCssSelector(this.selectors, { light: '' }, true)
+        const darkSelector = mapCssSelector(this.selectors, { light: '', dark: '' })
+        const darkSelector2 = mapCssSelector(this.selectors, { dark: '' })
+        return `${darkSelector2},${darkSelector}{\ncolor-scheme: dark;\n${toVarStyles(this._createThemeColorVars(themeColor, true))}\n}\n
+        ${lightSelector}{\ncolor-scheme: light;\n${toVarStyles(this._createThemeColorVars(themeColor))}\n}\n
+        `
     }
+    /**
+     * 生成主题颜色相关的CSS变量
+     * @param {string} [color=this.themeColor] - 主题颜色值，可以是预设主题名或自定义颜色值
+     * @param {boolean} [reverse=false] - 是否反转渐变颜色顺序
+     * @returns {Record<string, string>} 包含主题颜色CSS变量的对象
+     */
     private _createThemeColorVars(color: string = this.themeColor, reverse: boolean = false) {
         const themeColor = color in presetThemes ? presetThemes[color].color : color
         const vars: Record<string, string> = generateThemeGradientColorVars(themeColor, {
@@ -194,6 +199,12 @@ export class ThemeScope {
         })
         return vars
     }
+    /**
+     * 创建语义化颜色样式并注入到页面中
+     * @param {boolean} [inject=true] - 是否立即将样式注入到页面
+     * @returns {string|undefined} 生成的CSS样式字符串，如果未覆盖默认颜色则返回undefined
+     * @private
+     */
     private _createSemanticColorStyles(inject: boolean = true) {
         const vars: Record<string, string> = {
             '--t-color-primary': this.options.primary,
@@ -225,14 +236,19 @@ export class ThemeScope {
             this.stylesheets.push(id)
         }
     }
+    /**
+     * 注入主题基础样式到页面中
+     * @param {boolean} [inject=true] - 是否立即将样式注入到页面中
+     * @returns {string} 生成的CSS样式字符串
+     * @private
+     */
     private _injectBaseStyles(inject: boolean = true) {
         const baseStyles = `${this.selectors}{\n${toVarStyles(baseVars)}\n${toVarStyles(derivedVars)}\n}\n`
         const sizeStyles = getVarsStyles(sizeVars, this.selectors, 'data-size')
         const radiusStyles = getVarsStyles(radiusVars, this.selectors, 'data-radius')
         const spacingStyles = getVarsStyles(spacingVars, this.selectors, 'data-spacing')
         const shadowStyles = getVarsStyles(shadowVars, this.selectors, 'data-shadow')
-        const lightStyles = this._getThemeColorStyles(presetThemes.light.color)
-        console.log('lightStyles=', lightStyles)
+        const lightStyles = this._getDefaultThemeColorStyles(presetThemes.light.color)
         const styleId = `themepro-${this.id}-vars`
         const css = `${baseStyles}\n${sizeStyles}\n${radiusStyles}\n${spacingStyles}\n${shadowStyles}\n${lightStyles}`
         console.log('css=', css)

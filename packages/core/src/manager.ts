@@ -77,13 +77,18 @@ export class ThemeManager {
     update(options?: ThemeOptions) {
         this.root.update(options)
     }
+    hasScope(el: any) {
+        return el instanceof HTMLElement && this.scopes.has(el)
+    }
     addScope(el: string | HTMLElement, options?: ThemeOptions) {
+        if (this.hasScope(el)) return
         if (typeof el === 'string') {
             window.addEventListener('DOMContentLoaded', () => {
                 const scopeEle = (document.querySelector(el) || document.documentElement) as HTMLElement
                 if (!scopeEle) {
                     throw new Error(`${el} is not a valid selector or element`)
                 }
+                if (this.hasScope(el)) return
                 const scope = new ThemeScope(scopeEle, Object.assign({}, this.options, options))
                 this.scopes.set(scopeEle, scope)
             })

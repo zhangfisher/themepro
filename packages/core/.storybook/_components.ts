@@ -1,5 +1,5 @@
 import { repeat } from 'lit/directives/repeat.js'
-import { html, type TemplateResult } from 'lit' // 导入 html 函数
+import { html } from 'lit' // 导入 html 函数
 import { presetThemes } from '../src/presets'
 
 export function ThemeSelector() {
@@ -13,7 +13,7 @@ export function ThemeSelector() {
             }        
         </style>
         <div id="themeSelector" style="display: flex; gap: 0.5rem;align-items:  stretch;justify-content: space-between;" >
-            <span id="colorpicker" class="theme-color" style="width:4em;border:var(--auto-border);"></span>
+            <span id="colorpicker" class="theme-color" style="width:4em;border:var(--auto-border);border:var(--auto-border);">选择</span>
             ${repeat(Object.values(presetThemes), (theme) => {
                 return html`<span class="theme-color" data-color="${theme.color}" style="padding:0.5em;background-color:${theme.color};">${theme.title}</span>`
             })}                    
