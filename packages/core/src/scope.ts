@@ -27,10 +27,8 @@ export class ThemeScope {
     selectors: string[]
     stylesheets: string[] = []
     connected: boolean = false
-    constructor(
-        public el: HTMLElement = document.documentElement,
-        options?: ThemeOptions,
-    ) {
+    _elRef: WeakRef<HTMLElement>
+    constructor(el: HTMLElement, options?: ThemeOptions) {
         this.options = Object.assign(
             {
                 id: getId(),
@@ -52,84 +50,91 @@ export class ThemeScope {
             },
             options,
         ) as Required<ThemeOptions>
+        this._elRef = new WeakRef(el)
         this.selectors = this.options.selectors
         this.connect()
+    }
+    get el() {
+        const el = this._elRef.deref()
+        if (el === undefined) {
+        }
+        return el
     }
     get id() {
         return this.options.id
     }
     get size() {
-        return (this.el.dataset.size || this.options.size) as ThemeSize
+        return (this.el?.dataset.size || this.options.size) as ThemeSize
     }
     set size(value: ThemeSize) {
         if (value === 'medium') {
-            this.el.removeAttribute('data-size')
-        } else {
+            this.el?.removeAttribute('data-size')
+        } else if (this.el) {
             this.el.dataset.size = value
         }
     }
     get dark() {
-        return !!(this.el.getAttribute('dark') || this.options.dark)
+        return !!(this.el?.getAttribute('dark') || this.options.dark)
     }
     set dark(value: boolean) {
         if (value === false) {
-            this.el.removeAttribute('dark')
+            this.el?.removeAttribute('dark')
         } else {
-            this.el.setAttribute('dark', '')
+            this.el?.setAttribute('dark', '')
         }
         this.options.dark = value
     }
     get spacing(): ThemeSize {
-        return (this.el.dataset.spacing || this.options.spacing) as ThemeSize
+        return (this.el?.dataset.spacing || this.options.spacing) as ThemeSize
     }
     set spacing(value: ThemeSize) {
         if (value === 'medium') {
-            this.el.removeAttribute('data-spacing')
-        } else {
+            this.el?.removeAttribute('data-spacing')
+        } else if (this.el) {
             this.el.dataset.spacing = value
         }
         this.options.spacing = value
     }
     get shadow() {
-        return (this.el.dataset.shadow || this.options.shadow) as ThemeSize
+        return (this.el?.dataset.shadow || this.options.shadow) as ThemeSize
     }
     set shadow(value: ThemeSize) {
         if (value === 'medium') {
-            this.el.removeAttribute('data-shadow')
-        } else {
+            this.el?.removeAttribute('data-shadow')
+        } else if (this.el) {
             this.el.dataset.shadow = value
         }
         this.options.shadow = value
     }
     get colorized() {
-        return !!(this.el.getAttribute('colorized') || this.options.colorized)
+        return !!(this.el?.getAttribute('colorized') || this.options.colorized)
     }
     set colorized(value: boolean) {
         if (value === false) {
-            this.el.removeAttribute('colorized')
+            this.el?.removeAttribute('colorized')
         } else {
-            this.el.setAttribute('colorized', '')
+            this.el?.setAttribute('colorized', '')
         }
         this.options.colorized = value
     }
     get radius(): ThemeSize {
-        return (this.el.dataset.radius || this.options.radius || 'medium') as ThemeSize
+        return (this.el?.dataset.radius || this.options.radius || 'medium') as ThemeSize
     }
     set radius(value: ThemeSize) {
         if (value === 'medium') {
-            this.el.removeAttribute('data-radius')
-        } else {
+            this.el?.removeAttribute('data-radius')
+        } else if (this.el) {
             this.el.dataset.radius = value
         }
         this.options.radius = value
     }
     get themeColor(): string {
-        return (this.el.dataset.theme || this.options.themeColor || 'light') as string
+        return (this.el?.dataset.theme || this.options.themeColor || 'light') as string
     }
     set themeColor(value: string) {
         if (value === 'light') {
-            this.el.removeAttribute('data-theme')
-        } else {
+            this.el?.removeAttribute('data-theme')
+        } else if (this.el) {
             this.el.dataset.theme = value in presetThemes ? presetThemes[value].color : toRGBString(value)
         }
         this.options.themeColor = value
@@ -140,7 +145,8 @@ export class ThemeScope {
      * @param attrName
      * @param attrValue
      */
-    private _addThemeAttrListener() {
+    private _onThemeAttrChange() {
+        if (!this.el) return
         this.attrObserver = new ThemeAttrObserver(
             this.el,
             ['data-theme', 'data-primary', 'data-success', 'data-warning', 'data-danger', 'data-info'],
@@ -159,6 +165,7 @@ export class ThemeScope {
      * 更新主题
      */
     update(options?: ThemeOptions) {
+        if (!this.el) throw new Error(`ThemeScope<${this.id}> is not connect to HTMLElement`)
         Object.assign(this.options, options)
         const { themeColor, size, radius, spacing, shadow, dark, colorized } = this.options
         if (themeColor in presetThemes) {
@@ -170,22 +177,25 @@ export class ThemeScope {
         this.shadow = shadow
         this.dark = dark
         this.colorized = colorized
-        this._createThemeColorStyles(themeColor)
+        this._injectThemeColorStyles()
     }
 
-    private _createThemeColorStyles(themeColor: string) {
-        const style = `${this.selectors}[data-theme='${themeColor}']{
+    private _injectThemeColorStyles(inject: boolean = true) {
+        const themeColor = this.options.themeColor
+        const css = `${this.selectors}[data-theme='${themeColor}']{
             color-scheme: light;
             ${toVarStyles(this._createThemeColorVars(themeColor))};\n}
             ${this.selectors}[data-theme='${themeColor}'][dark]{
             color-scheme: dark;
             ${toVarStyles(this._createThemeColorVars(themeColor, true))};\n}`
-
-        const styleId: string = `themepro-${this.id}-theme-colors`
-        injectStylesheet(style, {
-            id: styleId,
-        })
-        this._addStyleheetId(styleId)
+        if (inject) {
+            const styleId: string = `themepro-${this.id}-theme-colors`
+            injectStylesheet(css, {
+                id: styleId,
+            })
+            this._addStyleheetId(styleId)
+        }
+        return css
     }
     /**
      * 获取默认主题的样式字符串
@@ -220,7 +230,7 @@ export class ThemeScope {
      * @returns {string|undefined} 生成的CSS样式字符串，如果未覆盖默认颜色则返回undefined
      * @private
      */
-    private _createSemanticColorStyles(inject: boolean = true) {
+    private _injectSemanticColorStyles(inject: boolean = true) {
         const vars: Record<string, string> = {
             '--t-color-primary': this.options.primary,
             '--t-color-success': this.options.success,
@@ -257,8 +267,7 @@ export class ThemeScope {
      * @returns {string} 生成的CSS样式字符串
      * @private
      */
-    private _injectShareStyles(inject: boolean = true) {
-        if (this.options.share) return
+    private _injectBaseStyles(inject: boolean = true) {
         const baseStyles = `${this.selectors}{\n${toVarStyles(baseVars)}\n${toVarStyles(derivedVars)}\n}\n`
         const sizeStyles = getVarsStyles(sizeVars, this.selectors, 'data-size')
         const radiusStyles = getVarsStyles(radiusVars, this.selectors, 'data-radius')
@@ -276,15 +285,17 @@ export class ThemeScope {
         return css
     }
     connect() {
+        if (!this.el) return
         if (this.connected) return
-        this._addThemeAttrListener()
-        this._injectShareStyles()
-        this._createSemanticColorStyles()
+        this._onThemeAttrChange()
+        this._injectBaseStyles()
+        this._injectSemanticColorStyles()
         this.update()
         this.connected = true
     }
     disconnect() {
         this.attrObserver.disconnect()
+        // 移除所有注入的样式
         this.stylesheets.forEach((id) => {
             const style = document.getElementById(id)
             if (style) {
@@ -296,4 +307,5 @@ export class ThemeScope {
      * 返回css样式
      */
     toCss() {}
+    download() {}
 }

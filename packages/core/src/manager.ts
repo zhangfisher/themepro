@@ -80,22 +80,22 @@ export class ThemeManager {
     hasScope(el: any) {
         return el instanceof HTMLElement && this.scopes.has(el)
     }
-    addScope(el: string | HTMLElement, options?: ThemeOptions) {
-        if (this.hasScope(el)) return
-        if (typeof el === 'string') {
+    addScope(elementOrSelector: string | HTMLElement, options?: ThemeOptions) {
+        if (this.hasScope(elementOrSelector)) return
+        if (typeof elementOrSelector === 'string') {
             window.addEventListener('DOMContentLoaded', () => {
-                const scopeEle = (document.querySelector(el) || document.documentElement) as HTMLElement
+                const scopeEle = (document.querySelector(elementOrSelector) || document.documentElement) as HTMLElement
                 if (!scopeEle) {
-                    throw new Error(`${el} is not a valid selector or element`)
+                    throw new Error(`${elementOrSelector} is not a valid selector or element`)
                 }
-                if (this.hasScope(el)) return
+                if (this.hasScope(elementOrSelector)) return
                 const scope = new ThemeScope(scopeEle, Object.assign({}, this.options, options))
                 this.scopes.set(scopeEle, scope)
             })
-        } else if (el instanceof HTMLElement) {
-            const scope = new ThemeScope(el, Object.assign({}, this.options, options))
-            this.scopes.set(el, scope)
-            if (el === document.documentElement) {
+        } else if (elementOrSelector instanceof HTMLElement) {
+            const scope = new ThemeScope(elementOrSelector, Object.assign({}, this.options, options))
+            this.scopes.set(elementOrSelector, scope)
+            if (elementOrSelector === document.documentElement) {
                 this.root = scope
             }
         }
@@ -103,6 +103,7 @@ export class ThemeManager {
     removeScope(el: HTMLElement) {
         const scope = this.scopes.get(el)
         if (scope) {
+            scope.disconnect()
             this.scopes.delete(el)
         }
     }
