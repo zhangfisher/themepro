@@ -1,4 +1,4 @@
-import { ThemeScope } from './scope'
+import { ThemeScope } from './scopes/scope'
 import type { ThemeOptions, ThemeSize } from './types'
 
 export class ThemeManager {
