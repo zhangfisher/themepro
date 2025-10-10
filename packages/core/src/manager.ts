@@ -1,33 +1,23 @@
+import { ThemeProError } from './errors'
+import { AttachedThemeScope } from './scopes'
 import { ThemeScope } from './scopes/scope'
 import type { ThemeOptions, ThemeSize } from './types'
 
+export type ThemeManagerOptions = {
+    storageKey?: string
+    scopes?: ThemeOptions[]
+}
 export class ThemeManager {
-    options: Required<ThemeOptions>
     vars: Record<string, string> = {}
-    scopes: WeakMap<HTMLElement, ThemeScope> = new WeakMap()
-    root!: ThemeScope
-    constructor(scope?: string | HTMLElement, options?: ThemeOptions) {
-        this.options = Object.assign(
-            {
-                id: 'root',
-                selectors: [':host', ':root'],
-                themeColor: 'light',
-                size: 'medium',
-                dark: false,
-                colorized: false,
-                radius: 'medium',
-                spacing: 'medium',
-                shadow: 'medium',
-                border: '1px',
-                primary: '#2f54eb',
-                success: '#22c55e',
-                warning: '#f59e0b',
-                danger: '#ef4444',
-                info: '#71717a',
-            },
-            options,
-        ) as Required<ThemeOptions>
-        this.addScope(scope || document.documentElement, this.options)
+    scopes?: Map<string, ThemeScope>
+    root: AttachedThemeScope
+    options: Required<ThemeManagerOptions>
+    constructor(options?: ThemeManagerOptions) {
+        this.options = Object.assign({}, options) as Required<ThemeManagerOptions>
+        this.root = this._createRootScope()
+    }
+    get id() {
+        return this.root.id
     }
     get size() {
         return this.root.size
@@ -77,34 +67,41 @@ export class ThemeManager {
     update(options?: ThemeOptions) {
         this.root.update(options)
     }
-    hasScope(el: any) {
-        return el instanceof HTMLElement && this.scopes.has(el)
+    private _createRootScope() {
+        return new AttachedThemeScope(document.documentElement, {
+            id: 'root',
+            cssSelectors: [':host', ':root'],
+        })
     }
-    addScope(elementOrSelector: string | HTMLElement, options?: ThemeOptions) {
-        if (this.hasScope(elementOrSelector)) return
-        if (typeof elementOrSelector === 'string') {
-            window.addEventListener('DOMContentLoaded', () => {
-                const scopeEle = (document.querySelector(elementOrSelector) || document.documentElement) as HTMLElement
-                if (!scopeEle) {
-                    throw new Error(`${elementOrSelector} is not a valid selector or element`)
-                }
-                if (this.hasScope(elementOrSelector)) return
-                const scope = new ThemeScope(scopeEle, Object.assign({}, this.options, options))
-                this.scopes.set(scopeEle, scope)
-            })
-        } else if (elementOrSelector instanceof HTMLElement) {
-            const scope = new ThemeScope(elementOrSelector, Object.assign({}, this.options, options))
-            this.scopes.set(elementOrSelector, scope)
-            if (elementOrSelector === document.documentElement) {
-                this.root = scope
-            }
-        }
+    hasScope(id: string) {
+        return this.scopes?.has(id)
     }
-    removeScope(el: HTMLElement) {
-        const scope = this.scopes.get(el)
+    /**
+     * 创建主题作用域
+     *
+     * addScope("#sidebar",{
+     *     id:'sidebar',
+     *     selectors:["data-theme-scope='sidebar'"]
+     * })
+     *
+     *
+     * @param elementSelector
+     * @param options
+     * @returns
+     */
+    addScope(options: ThemeOptions) {
+        const { id } = options
+        if (this.hasScope(id)) throw new ThemeProError(`Scope<${id}> already exists`)
+        if (!this.scopes) this.scopes = new Map()
+        const scope = new ThemeScope(options)
+        this.scopes.set(id, scope)
+        return scope
+    }
+    removeScope(id: string) {
+        const scope = this.scopes?.get(id)
         if (scope) {
             scope.disconnect()
-            this.scopes.delete(el)
+            this.scopes?.delete(id)
         }
     }
 }

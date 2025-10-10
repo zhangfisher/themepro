@@ -135,7 +135,7 @@ export class AttachedThemeScope extends ThemeScope {
     /**
      * 更新主题
      */
-    update(options?: ThemeOptions) {
+    update(options?: Partial<ThemeOptions>) {
         if (!this.el) throw new Error(`ThemeScope<${this.id}> is not connect to HTMLElement`)
         super.update(options)
         const { size, radius, spacing, shadow, dark, colorized } = this.options

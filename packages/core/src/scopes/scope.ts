@@ -21,7 +21,7 @@ import { mapCssSelector } from '../utils/mapSelector'
 
 export class ThemeScope {
     options: Required<ThemeOptions>
-    selectors: string[]
+    selectors: string[] = []
     stylesheets: string[] = [] //
     connected: boolean = false
     constructor(options?: ThemeOptions) {
@@ -29,9 +29,8 @@ export class ThemeScope {
             {
                 id: getId(),
                 themeColor: 'light',
-                selectors: [':host', ':root'],
+                cssSelectors: [],
                 size: 'medium',
-                share: false,
                 dark: false,
                 colorized: false,
                 radius: 'medium',
@@ -46,7 +45,10 @@ export class ThemeScope {
             },
             options,
         ) as Required<ThemeOptions>
-        this.selectors = this.options.selectors
+        if (this.options.cssSelectors.length === 0) {
+            this.options.cssSelectors.push(`[data-theme-scope='${this.id}']`)
+        }
+        this.selectors = this.options.cssSelectors
         this.connect()
     }
     get id() {
@@ -173,7 +175,7 @@ export class ThemeScope {
     /**
      * 更新主题
      */
-    update(options?: ThemeOptions) {
+    update(options?: Partial<ThemeOptions>) {
         Object.assign(this.options, options)
         const { themeColor } = this.options
         if (themeColor in presetThemes) {

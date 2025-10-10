@@ -3,11 +3,18 @@ export type ThemeRadius = 'none' | ThemeSize
 export type ThemeVariantType = 'primary' | 'success' | 'warning' | 'danger' | 'info'
 
 export type ThemeOptions = {
-    id?: string
+    id: string
+    /**
+     * 用于生成主题样式的CSS选择器
+     *
+     * 如果没有提供，则默认为`[data-theme-scope='${id}']`
+     *
+     */
+    cssSelectors?: string[]
     /**
      * 主题颜色
      */
-    themeColor: string
+    themeColor?: string
     /**
      * 深色模式
      */
@@ -33,7 +40,6 @@ export type ThemeOptions = {
      * 面板按钮等的阴影大小
      */
     shadow?: ThemeSize
-    selectors?: string[]
     /**
      * 圆角大小
      */
