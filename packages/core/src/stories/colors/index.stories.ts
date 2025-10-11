@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/web-components-vite'
 import { renderThemeStory } from './theme.story'
 import { renderSemanticsColorStory } from './semantics.story'
+import { renderThemeScopeStory } from './theme.scope.story'
 
 const meta: Meta = {
     title: '主题颜色',
@@ -16,4 +17,8 @@ export const ThemeColorPalette: Story = {
 export const SemanticsColors: Story = {
     name: '语义颜色',
     render: renderSemanticsColorStory,
+}
+export const scopeThemeColors: Story = {
+    name: '局部主题',
+    render: renderThemeScopeStory,
 }

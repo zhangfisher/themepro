@@ -1,12 +1,8 @@
 /**
  *
- *
  *  区域主题
  *
- *
  *  const scope = ThemeManager.scope()
- *
- *
  *
  */
 import { ThemeAttrObserver } from '../observer'
@@ -25,8 +21,13 @@ export class AttachedThemeScope extends ThemeScope {
     attrObserver!: ThemeAttrObserver
     _elRef: WeakRef<HTMLElement>
     constructor(el: HTMLElement, options?: ThemeOptions) {
-        super(options)
+        super(
+            Object.assign({}, options, {
+                autoConnect: false,
+            }),
+        )
         this._elRef = new WeakRef(el || document.documentElement)
+        this.connect()
     }
     get el() {
         const el = this._elRef.deref()
@@ -151,7 +152,7 @@ export class AttachedThemeScope extends ThemeScope {
         super.connect()
     }
     disconnect() {
-        super.disconnect()
         this.attrObserver.disconnect()
+        super.disconnect()
     }
 }

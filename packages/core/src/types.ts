@@ -57,4 +57,8 @@ export type ThemeOptions = {
     warning?: string
     danger?: string
     info?: string
+    /**
+     * 自动注入
+     */
+    autoConnect?: boolean
 }

@@ -42,6 +42,7 @@ export class ThemeScope {
                 warning: '#f59e0b',
                 danger: '#ef4444',
                 info: '#71717a',
+                autoConnect: true,
             },
             options,
         ) as Required<ThemeOptions>
@@ -49,7 +50,7 @@ export class ThemeScope {
             this.options.cssSelectors.push(`[data-theme-scope='${this.id}']`)
         }
         this.selectors = this.options.cssSelectors
-        this.connect()
+        if (this.options.autoConnect) this.connect()
     }
     get id() {
         return this.options.id
@@ -129,7 +130,7 @@ export class ThemeScope {
             this.options.info
         )
         if (!isOverride) return
-        return `${this.selectors}{\n${toVarStyles(vars)}}\n}\n`
+        return `${this.selectors}{\n${toVarStyles(vars)}}\n`
     }
     /**
      * 生成主题颜色相关的CSS变量
@@ -198,6 +199,14 @@ export class ThemeScope {
         })
         this.connected = false
     }
+    isConnected() {
+        const styleIds: string[] = [
+            `themepro-${this.id}-vars`,
+            `themepro-${this.id}-semantics`,
+            `themepro-${this.id}-theme-colors`,
+        ]
+        return styleIds.some((id) => document.getElementById(id) !== null)
+    }
     /**
      * 生成所有需要注入的css样式
      */
@@ -227,5 +236,8 @@ export class ThemeScope {
     }
     apply(selector: string | HTMLElement) {
         const el = typeof selector === 'string' ? document.querySelector(selector) : selector
+        if (el && el instanceof HTMLElement) {
+            el.setAttribute('data-theme-scope', this.id)
+        }
     }
 }

@@ -9,7 +9,7 @@ export type ThemeManagerOptions = {
 }
 export class ThemeManager {
     vars: Record<string, string> = {}
-    scopes?: Map<string, ThemeScope>
+    scopes?: Record<string, ThemeScope>
     root: AttachedThemeScope
     options: Required<ThemeManagerOptions>
     constructor(options?: ThemeManagerOptions) {
@@ -74,17 +74,13 @@ export class ThemeManager {
         })
     }
     hasScope(id: string) {
-        return this.scopes?.has(id)
+        return id in (this.scopes || {})
     }
     /**
      * 创建主题作用域
-     *
      * addScope("#sidebar",{
      *     id:'sidebar',
-     *     selectors:["data-theme-scope='sidebar'"]
      * })
-     *
-     *
      * @param elementSelector
      * @param options
      * @returns
@@ -92,25 +88,25 @@ export class ThemeManager {
     addScope(options: ThemeOptions) {
         const { id } = options
         if (this.hasScope(id)) throw new ThemeProError(`Scope<${id}> already exists`)
-        if (!this.scopes) this.scopes = new Map()
+        if (!this.scopes) this.scopes = {}
         const scope = new ThemeScope(options)
-        this.scopes.set(id, scope)
+        this.scopes[id] = scope
         return scope
     }
     removeScope(id: string) {
-        const scope = this.scopes?.get(id)
+        const scope = this.scopes?.[id]
         if (scope) {
             scope.disconnect()
-            this.scopes?.delete(id)
+            delete this.scopes?.[id]
         }
     }
 }
 
 // 创建默认的主题应用
-export const themePro = new ThemeManager()
+export const themeManager = new ThemeManager()
 
-globalThis.ThemePro = themePro
+globalThis.ThemePro = themeManager
 
 declare global {
-    var ThemePro: typeof themePro
+    var ThemePro: typeof themeManager
 }
