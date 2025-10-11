@@ -11,7 +11,7 @@
  */
 import { presetThemes } from '../presets'
 import type { ThemeOptions } from '../types'
-import { getId } from '../utils'
+import { getId, toRGBString } from '../utils'
 import { generateThemeGradientColorVars } from '../utils/generateGradientVars'
 import { getVarsStyles } from '../utils/getVarsStyles'
 import { injectStylesheet } from '../utils/injectStylesheet'
@@ -131,6 +131,16 @@ export class ThemeScope {
         )
         if (!isOverride) return
         return `${this.selectors}{\n${toVarStyles(vars)}}\n`
+    }
+
+    get themeColor(): string {
+        return this.options.themeColor || 'light'
+    }
+    set themeColor(value: string) {
+        this.options.themeColor = value in presetThemes ? presetThemes[value].color : toRGBString(value)
+        this.update({
+            themeColor: this.options.themeColor,
+        })
     }
     /**
      * 生成主题颜色相关的CSS变量

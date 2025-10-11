@@ -79,13 +79,15 @@ export function scopeThemeSelector(scopeSelector: string) {
         <script >  
             //debugger
             if(typeof selectScopeTheme=== 'undefined'){                
+                const scopeEl = document.getElementById('${scopeSelector}');
                 const scope = ThemePro.addScope({id:'${scopeSelector}'});
                 const selectScopeTheme = document.getElementById('scopeThemeSelector');
                 scope.apply('#${scopeSelector}');
-                selectScopeTheme.addEventListener('click', (e) => {
+                selectScopeTheme.addEventListener('click', (e) => { 
                     const target = e.target  
-                    if (target.classList.contains('theme-color')) {                        
-                        
+                    if (target.classList.contains('theme-color')) { 
+                        scope.themeColor = target.dataset.color       
+                        scopeEl.setAttribute('data-theme', target.dataset.color)
                     }
                 })
                 const darkMode = document.getElementById('scopeDarkMode')
