@@ -10,7 +10,7 @@ export type ThemeOptions = {
      * 如果没有提供，则默认为`[data-theme-scope='${id}']`
      *
      */
-    cssSelectors?: string[]
+    cssSelector?: string[]
     /**
      * 主题颜色
      */
@@ -54,9 +54,16 @@ export type ThemeOptions = {
     danger?: string
     info?: string
     /**
-     * 自动注入
+     * 实例化时自动将样式注入文档中，即docRoot
      */
     autoConnect?: boolean
+    /**
+     *
+     *
+     * 当=true时会自动查找所有具有data-theme-scope=`${this.id}`的元素
+     *
+     */
+    autoAttach?: boolean
     /**
      * 应用范围
      * 提供DOM选择器，将当前ThemeScope应用于到elements所在的元素
@@ -72,3 +79,8 @@ export type ThemeOptions = {
      */
     docRoot?: HTMLElement
 }
+
+export type DynamicThemeOptions = Pick<
+    ThemeOptions,
+    'themeColor' | 'primary' | 'success' | 'warning' | 'danger' | 'info'
+>

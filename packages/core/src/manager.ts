@@ -1,20 +1,21 @@
 import { ThemeProError } from './errors'
-import { AttachedThemeScope } from './scopes'
-import { ThemeScope } from './scopes/scope'
-import type { ThemeOptions, ThemeSize } from './types'
+import { ThemeScope } from './scope'
+import type { DynamicThemeOptions, ThemeOptions, ThemeSize } from './types'
+import { ThemeObserver } from './observer'
 
 export type ThemeManagerOptions = {
     storageKey?: string
-    scopes?: ThemeOptions[]
 }
 export class ThemeManager {
     vars: Record<string, string> = {}
     scopes?: Record<string, ThemeScope>
-    root: AttachedThemeScope
+    root: ThemeScope
     options: Required<ThemeManagerOptions>
+    observer!: ThemeObserver
     constructor(options?: ThemeManagerOptions) {
         this.options = Object.assign({}, options) as Required<ThemeManagerOptions>
         this.root = this._createRootScope()
+        this.observer = new ThemeObserver(this.root, document.documentElement)
     }
     get id() {
         return this.root.id
@@ -64,14 +65,17 @@ export class ThemeManager {
     /**
      * 更新主题
      */
-    update(options?: ThemeOptions) {
+    update(options: Partial<DynamicThemeOptions>) {
         this.root.update(options)
     }
     private _createRootScope() {
-        return new AttachedThemeScope(document.documentElement, {
+        const scope = new ThemeScope({
             id: 'root',
-            cssSelectors: [':host', ':root'],
+            cssSelector: [':host', ':root'],
+            autoAttach: false,
         })
+        scope.attach(document.documentElement)
+        return scope
     }
     hasScope(id: string) {
         return id in (this.scopes || {})

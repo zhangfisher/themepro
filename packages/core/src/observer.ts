@@ -1,24 +1,36 @@
-import { ThemeProError } from './errors'
+import type { ThemeScope } from './scope'
+
+const themeAttrs: string[] = [
+    'data-theme',
+    'data-border',
+    'data-primary',
+    'data-success',
+    'data-warning',
+    'data-danger',
+    'data-info',
+]
 
 /**
  *
- * 监听DOM元素的指定属性变化，并执行回调函数
+ * 监听DOM元素的指定属性变化，并在属性变化时重新生成主题
+ *
+ * const observer = new ThemeObserver(scope, el)
  *
  */
-export class AttrObserver {
+export class ThemeObserver {
     observer: MutationObserver | null = null
     connected: boolean = false
     constructor(
+        public scope: ThemeScope,
         public el: HTMLElement,
-        public attrs: string[],
-        public callback: (attrName: string, attrValue: string | null, target: HTMLElement) => void,
     ) {
-        if (!el || !(el instanceof HTMLElement)) {
-            throw new ThemeProError('AttrObserver: el must be a valid HTMLElement')
-        }
         this.connect()
     }
-
+    private _onThemeAttrChange(attrName: string, attrValue: string | null) {
+        if (!attrValue) return
+        const themeAttr = attrName.replace('data-', '')
+        this.scope.update({ [themeAttr]: attrValue })
+    }
     connect() {
         if (this.connected) return
         this.observer = new MutationObserver((mutations) => {
@@ -26,16 +38,16 @@ export class AttrObserver {
                 if (
                     mutation.type === 'attributes' &&
                     mutation.attributeName &&
-                    this.attrs.includes(mutation.attributeName)
+                    themeAttrs.includes(mutation.attributeName)
                 ) {
                     const newValue = this.el.getAttribute(mutation.attributeName)
-                    this.callback(mutation.attributeName, newValue, this.el)
+                    this._onThemeAttrChange(mutation.attributeName, newValue)
                 }
             })
         })
         this.observer.observe(this.el, {
             attributes: true,
-            attributeFilter: this.attrs,
+            attributeFilter: themeAttrs,
         })
         this.connected = true
     }

@@ -9,13 +9,13 @@
  *
  *
  */
-import { presetThemes } from '../presets'
-import type { ThemeOptions, ThemeSize } from '../types'
-import { getId, toRGBString } from '../utils'
-import { generateThemeGradientColorVars } from '../utils/generateGradientVars'
-import { getVarsStyles } from '../utils/getVarsStyles'
-import { injectStylesheet } from '../utils/injectStylesheet'
-import { toVarStyles } from '../utils/toVarStyles'
+import { presetThemes } from './presets'
+import type { DynamicThemeOptions, ThemeOptions, ThemeSize } from './types'
+import { getId, toRGBString } from './utils'
+import { generateThemeGradientColorVars } from './utils/generateGradientVars'
+import { getVarsStyles } from './utils/getVarsStyles'
+import { injectStylesheet } from './utils/injectStylesheet'
+import { toVarStyles } from './utils/toVarStyles'
 import {
     baseVars,
     radiusVars,
@@ -25,14 +25,12 @@ import {
     sizeVars,
     lightThemeVars,
     darkThemeVars,
-} from '../vars'
-import { mapCssSelector } from '../utils/mapSelector'
-import { ThemeAttrObserver } from '../observer'
+} from './vars'
+import { mapCssSelector } from './utils/mapSelector'
 
 export class ThemeScope {
-    attrObservers: ThemeAttrObserver
     options: Required<ThemeOptions>
-    selectors: string[] = []
+    private _selectors: string[] = []
     stylesheets: string[] = [] //
     connected: boolean = false
     elements: WeakRef<HTMLElement>[] = []
@@ -41,7 +39,7 @@ export class ThemeScope {
             {
                 id: getId(),
                 themeColor: 'light',
-                cssSelectors: [],
+                cssSelector: [],
                 size: 'medium',
                 dark: false,
                 colorized: false,
@@ -55,15 +53,17 @@ export class ThemeScope {
                 danger: '#ef4444',
                 info: '#71717a',
                 autoConnect: true,
-                docRoot: document.doctype,
+                autoAttach: true,
+                docRoot: document.documentElement,
             },
             options,
         ) as Required<ThemeOptions>
-        if (this.options.cssSelectors.length === 0) {
-            this.options.cssSelectors.push(`[data-theme-scope='${this.id}']`)
+        this._selectors = this.options.cssSelector
+        if (this.options.cssSelector && this.options.cssSelector.length === 0) {
+            this.options.cssSelector.push(`[data-theme-scope='${this.id}']`)
         }
-        this.selectors = this.options.cssSelectors
         if (this.options.autoConnect) this.connect()
+        if (this.options.autoAttach) this.autoAttach()
     }
     get id() {
         return this.options.id
@@ -135,7 +135,7 @@ export class ThemeScope {
         return this.options.colorized
     }
     set colorized(value: boolean) {
-        this.options.colorized = false
+        this.options.colorized = value
         if (value === false) {
             this._forEachElements((el) => {
                 el.removeAttribute('colorized')
@@ -194,10 +194,10 @@ export class ThemeScope {
      */
     protected _generateThemeColorStyles() {
         const themeColor = this.options.themeColor
-        return `${this.selectors}[data-theme='${themeColor}']{
+        return `${this._selectors}[data-theme='${themeColor}']{
             color-scheme: light;
             ${toVarStyles(this._createThemeColorVars(themeColor))};\n}
-            ${this.selectors}[data-theme='${themeColor}'][dark]{
+            ${this._selectors}[data-theme='${themeColor}'][dark]{
             color-scheme: dark;
             ${toVarStyles(this._createThemeColorVars(themeColor, true))};\n}`
     }
@@ -214,8 +214,8 @@ export class ThemeScope {
     }
 
     protected _generateLightDarkModeStyles() {
-        const lightStyles = `${this.selectors}:not([colorized]){\n${toVarStyles(lightThemeVars)}\n}\n`
-        const darkStyles = `${this.selectors}[dark]:not([colorized]){\n${toVarStyles(darkThemeVars)}\n}\n`
+        const lightStyles = `${this._selectors}:not([colorized]){\n${toVarStyles(lightThemeVars)}\n}\n`
+        const darkStyles = `${this._selectors}[dark]:not([colorized]){\n${toVarStyles(darkThemeVars)}\n}\n`
         return lightStyles + darkStyles
     }
     protected _injectLightDarkModeStyles() {
@@ -233,9 +233,9 @@ export class ThemeScope {
      * @private
      */
     protected _generateDefaultThemeColorStyles(themeColor: string) {
-        const lightSelector = mapCssSelector(this.selectors, { light: '' }, true)
-        const darkSelector = mapCssSelector(this.selectors, { light: '', dark: '' })
-        const darkSelector2 = mapCssSelector(this.selectors, { dark: '' })
+        const lightSelector = mapCssSelector(this._selectors, { light: '' }, true)
+        const darkSelector = mapCssSelector(this._selectors, { light: '', dark: '' })
+        const darkSelector2 = mapCssSelector(this._selectors, { dark: '' })
         return `${darkSelector2},${darkSelector}{\ncolor-scheme: dark;\n${toVarStyles(this._createThemeColorVars(themeColor, true))}\n}\n
         ${lightSelector}{\ncolor-scheme: light;\n${toVarStyles(this._createThemeColorVars(themeColor))}\n}\n
         `
@@ -279,7 +279,7 @@ export class ThemeScope {
             this.options.info
         )
         if (!isOverride) return
-        return `${this.selectors}{\n${toVarStyles(vars)}}\n`
+        return `${this._selectors}{\n${toVarStyles(vars)}}\n`
     }
 
     /**
@@ -302,11 +302,11 @@ export class ThemeScope {
         }
     }
     protected _generateBaseStyles() {
-        const baseStyles = `${this.selectors}{\n${toVarStyles(baseVars)}\n${toVarStyles(derivedVars)}\n}\n`
-        const sizeStyles = getVarsStyles(sizeVars, this.selectors, 'data-size')
-        const radiusStyles = getVarsStyles(radiusVars, this.selectors, 'data-radius')
-        const spacingStyles = getVarsStyles(spacingVars, this.selectors, 'data-spacing')
-        const shadowStyles = getVarsStyles(shadowVars, this.selectors, 'data-shadow')
+        const baseStyles = `${this._selectors}{\n${toVarStyles(baseVars)}\n${toVarStyles(derivedVars)}\n}\n`
+        const sizeStyles = getVarsStyles(sizeVars, this._selectors, 'data-size')
+        const radiusStyles = getVarsStyles(radiusVars, this._selectors, 'data-radius')
+        const spacingStyles = getVarsStyles(spacingVars, this._selectors, 'data-spacing')
+        const shadowStyles = getVarsStyles(shadowVars, this._selectors, 'data-shadow')
         const defaultThemeStyles = this._generateDefaultThemeColorStyles(presetThemes.light.color)
         return `${baseStyles}\n${sizeStyles}\n${radiusStyles}\n${spacingStyles}\n${shadowStyles}\n${defaultThemeStyles}`
     }
@@ -326,21 +326,16 @@ export class ThemeScope {
     /**
      * 更新主题
      */
-    update(options?: Partial<ThemeOptions>) {
-        const opts = Object.assign({}, options) as ThemeOptions
-        const { themeColor } = opts
-        if (themeColor && themeColor in presetThemes) {
-            this.options.themeColor = presetThemes[themeColor].color
-            this.themeColor = presetThemes[themeColor].color
+    update(options: Partial<DynamicThemeOptions>) {
+        const { themeColor } = options
+        if (themeColor) {
+            this.options.themeColor =
+                themeColor in presetThemes ? presetThemes[themeColor].color : toRGBString(themeColor)
+            this._injectThemeColorStyles()
+        } else if (options.primary || options.success || options.warning || options.danger || options.info) {
+            Object.assign(this.options, options)
+            this._injectSemanticColorStyles()
         }
-        const { size, radius, spacing, shadow, dark, colorized } = this.options
-        this.size = size
-        this.radius = radius
-        this.spacing = spacing
-        this.shadow = shadow
-        this.dark = dark
-        this.colorized = colorized
-        this._injectThemeColorStyles()
     }
     connect() {
         if (this.connected) return
@@ -407,6 +402,13 @@ export class ThemeScope {
         document.body.removeChild(a)
         URL.revokeObjectURL(url)
     }
+    autoAttach() {
+        const scopeEls = this.docRoot.querySelectorAll(`[data-theme-scope='${this.id}']`)
+        for (const el of scopeEls) {
+            if (!(el instanceof HTMLElement)) continue
+            this.attach(el)
+        }
+    }
     /**
      * 将主题作用域应用到指定的DOM元素上
      * @param {string | HTMLElement} selector - CSS选择器字符串或HTMLElement元素
@@ -415,8 +417,10 @@ export class ThemeScope {
         const els = typeof selector === 'string' ? document.querySelectorAll(selector) : [selector]
         for (const el of els) {
             if (el && el instanceof HTMLElement) {
-                el.setAttribute('data-theme-scope', this.id)
-                if (!this.elements.every((elRef) => elRef.deref() === el)) {
+                if (el !== document.documentElement) {
+                    el.setAttribute('data-theme-scope', this.id)
+                }
+                if (this.elements.length === 0 || !this.elements.every((elRef) => elRef.deref() === el)) {
                     this.elements.push(new WeakRef(el))
                 }
             }
@@ -435,28 +439,5 @@ export class ThemeScope {
                 this.elements = this.elements.filter((ref) => ref.deref() !== el)
             }
         }
-    }
-
-    /**
-     * 当属性变化时，更新主题颜色变量
-     *
-     * @param attrName
-     * @param attrValue
-     */
-    private _onThemeAttrChange() {
-        if (!this.el) return
-        this.attrObserver = new ThemeAttrObserver(
-            this.el,
-            ['data-theme', 'data-primary', 'data-success', 'data-warning', 'data-danger', 'data-info'],
-            (attrName, attrValue) => {
-                if (attrName === 'data-theme') {
-                    this.update({ themeColor: attrValue || 'light' })
-                } else if (
-                    ['data-primary', 'data-success', 'data-warning', 'data-danger', 'data-info'].includes(attrName)
-                ) {
-                    this._createThemeColorVars()
-                }
-            },
-        )
     }
 }

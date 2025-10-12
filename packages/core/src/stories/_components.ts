@@ -80,21 +80,21 @@ export function scopeThemeSelector(scopeSelector: string) {
                 const scopeEl = document.getElementById('${scopeSelector}');
                 const scope = ThemePro.addScope({id:'${scopeSelector}'});
                 const selectScopeTheme = document.getElementById('scopeThemeSelector');
-                scope.apply('#${scopeSelector}');
+                scope.attach('#${scopeSelector}');
                 selectScopeTheme.addEventListener('click', (e) => { 
                     const target = e.target  
                     if (target.classList.contains('theme-color')) { 
                         scope.themeColor = target.dataset.color       
-                        scopeEl.setAttribute('data-theme', target.dataset.color)
+                     
                     }
                 })
                 const darkMode = document.getElementById('scopeDarkMode')
                 darkMode.addEventListener('click', (e) => {
                     const target = e.target  
                     if (target.classList.contains('mode')) {         
-                        scopeEl.toggleAttribute('dark')
+                        scope.dark = !scopeEl.hasAttribute('dark')                        
                     }else if(target.classList.contains('colorized')){
-                        scopeEl.toggleAttribute('colorized')
+                        scope.colorized = !scopeEl.hasAttribute('colorized')                        
                     }
                 })
                 var colorpicker = document.querySelector('#colorpicker');

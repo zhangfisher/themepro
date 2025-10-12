@@ -51,7 +51,8 @@ export const derivedVars = {
     '--auto-hover-bgcolor': 'color-mix(in srgb, var(--t-color-theme-5), transparent 85%)',
 
     /* 边框 */
-    '--auto-border': '1px solid var(--auto-border-color)',
+    '--auto-border-size': '1px',
+    '--auto-border': 'var(--auto-border-size) solid var(--auto-border-color)',
     '--auto-border-color': 'var(--t-theme-color-2)',
     '--auto-selected-border': '1px solid var(--t-color-theme-6)',
     '--auto-active-border': '1px solid var(--t-color-theme-6)',
