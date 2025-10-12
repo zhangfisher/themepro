@@ -20,10 +20,6 @@ export type ThemeOptions = {
      */
     dark?: boolean
     /**
-     * 主题背景颜色
-     */
-    themeBgcolor?: string
-    /**
      * 多彩模式
      */
     colorized?: boolean
@@ -61,4 +57,18 @@ export type ThemeOptions = {
      * 自动注入
      */
     autoConnect?: boolean
+    /**
+     * 应用范围
+     * 提供DOM选择器，将当前ThemeScope应用于到elements所在的元素
+     */
+    elements?: string[]
+    /**
+     * 文档根元素
+     *
+     * 默认是document.documentElement
+     *
+     * 当在WebComponent使用时，应设置为WebComponent的根元素,即shadowRoot
+     *
+     */
+    docRoot?: HTMLElement
 }

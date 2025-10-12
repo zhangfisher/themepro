@@ -1,0 +1,23 @@
+export const lightThemeVars = {
+    '--t-theme-color': 'var(--t-color-gray-8) !important',
+    '--t-theme-color-1': 'var(--t-color-gray-1) !important',
+    '--t-theme-color-2': 'var(--t-color-gray-2) !important',
+    '--t-theme-color-3': 'var(--t-color-gray-3) !important',
+    '--t-theme-color-4': 'var(--t-color-gray-4) !important',
+    '--t-theme-color-5': 'var(--t-color-gray-5) !important',
+    '--t-theme-color-6': 'var(--t-color-gray-6) !important',
+    '--t-theme-color-7': 'var(--t-color-gray-7) !important',
+    '--t-theme-color-8': 'var(--t-color-gray-8) !important',
+    '--t-theme-color-9': 'var(--t-color-gray-9) !important',
+
+    '--t-theme-bgcolor': 'var(--t-color-gray-0) !important',
+    '--t-theme-bgcolor-1': 'var(--t-color-gray-1) !important',
+    '--t-theme-bgcolor-2': 'var(--t-color-gray-2) !important',
+    '--t-theme-bgcolor-3': 'var(--t-color-gray-3) !important',
+    '--t-theme-bgcolor-4': 'var(--t-color-gray-4) !important',
+    '--t-theme-bgcolor-5': 'var(--t-color-gray-5) !important',
+    '--t-theme-bgcolor-6': 'var(--t-color-gray-6) !important',
+    '--t-theme-bgcolor-7': 'var(--t-color-gray-7) !important',
+    '--t-theme-bgcolor-8': 'var(--t-color-gray-8) !important',
+    '--t-theme-bgcolor-9': 'var(--t-color-gray-9) !important',
+}

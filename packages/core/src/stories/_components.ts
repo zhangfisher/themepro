@@ -71,13 +71,11 @@ export function scopeThemeSelector(scopeSelector: string) {
         </div>   
         
         <div id="scopeDarkMode" style="display: flex; padding:0.5em;gap: 0.5rem;align-items: center;" >            
-            <span class="auto-btn mode" data-value="light">Light</span>
-            <span class="auto-btn mode" data-value="dark">Dark</span> 
+            <span class="auto-btn mode">Light/Dark</span>
             <span class="auto-btn colorized" data-value="">多彩模式</span>
             
         </div>  
-        <script >  
-            //debugger
+        <script >   
             if(typeof selectScopeTheme=== 'undefined'){                
                 const scopeEl = document.getElementById('${scopeSelector}');
                 const scope = ThemePro.addScope({id:'${scopeSelector}'});
@@ -93,17 +91,17 @@ export function scopeThemeSelector(scopeSelector: string) {
                 const darkMode = document.getElementById('scopeDarkMode')
                 darkMode.addEventListener('click', (e) => {
                     const target = e.target  
-                    if (target.classList.contains('mode')) {                    
-                        ThemePro.dark = target.dataset.value==='dark'
+                    if (target.classList.contains('mode')) {         
+                        scopeEl.toggleAttribute('dark')
                     }else if(target.classList.contains('colorized')){
-                        ThemePro.colorized=!ThemePro.colorized
+                        scopeEl.toggleAttribute('colorized')
                     }
                 })
                 var colorpicker = document.querySelector('#colorpicker');
                 var picker = new Picker(colorpicker);
                 picker.onChange = function(color) {
-                    colorpicker.style.background = color.rgbaString;
-                    document.documentElement.dataset.theme = color.rgbaString
+                    colorpicker.style.background = color.rgbaString; 
+                    scopeEl.dataset.theme = color.rgbaString
                 };           
             }
         </script> 

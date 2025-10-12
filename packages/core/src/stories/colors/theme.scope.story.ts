@@ -1,5 +1,4 @@
 import { html } from 'lit'
-import { repeat } from 'lit/directives/repeat.js'
 import { scopeThemeSelector, themeSelector } from '../_components'
 
 export const renderThemeScopeStory = () => {
@@ -7,16 +6,39 @@ export const renderThemeScopeStory = () => {
             <div style="padding: 1em;">${themeSelector()}</div>
             <div class="auto-card">
                 <div class="auto-card-header">主题梯度颜色</div>
-                <div class="auto-card-body">                    
-                      <div id="themeSelector" style="padding:1em;display: flex; gap: 0.5rem;align-items: center;" >
-                        ${repeat(Array.from({ length: 10 }), (_, i) => {
-                            return html`<span class="theme-color" style="width: 100%;height: 2em;background-color:var(--t-color-theme-${i});">${i}</span>`
-                        })}        
-                    </div>   
-                </div>                
-                <div class="auto-card-footer">
-                        主题色调明暗调节梯度方向
-                </div>
+                    <div class="auto-card-body row">                    
+                        <div class="auto-card">
+                            <div class="auto-card-header">主题梯度颜色</div>
+                            <div class="auto-card-body">                    
+                                道可道，非常道；名可名，非常名。无名天地之始；有名万物之母。故常无，欲以观其妙；常有，欲以观其徼（jiào)
+                            </div>
+                        </div> 
+                        <div class="auto-card" data-theme-scope="scopeCard">
+                            <div class="auto-card-header">主题梯度颜色</div>
+                            <div class="auto-card-body">                    
+                                道可道，非常道；名可名，非常名。无名天地之始；有名万物之母。故常无，欲以观其妙；常有，欲以观其徼（jiào)
+                            </div>
+                        </div> 
+                        <div class="auto-card" data-theme-scope="scopeCard" dark>
+                            <div class="auto-card-header">主题梯度颜色</div>
+                            <div class="auto-card-body">                    
+                                道可道，非常道；名可名，非常名。无名天地之始；有名万物之母。故常无，欲以观其妙；常有，欲以观其徼（jiào)
+                            </div>
+                        </div> 
+                        <div class="auto-card" data-theme-scope="scopeCard" colorized>
+                            <div class="auto-card-header">主题梯度颜色</div>
+                            <div class="auto-card-body">                    
+                                道可道，非常道；名可名，非常名。无名天地之始；有名万物之母。故常无，欲以观其妙；常有，欲以观其徼（jiào)
+                            </div>
+                        </div> 
+                        <div class="auto-card">
+                            <div class="auto-card-header">主题梯度颜色</div>
+                            <div class="auto-card-body">                    
+                                道可道，非常道；名可名，非常名。无名天地之始；有名万物之母。故常无，欲以观其妙；常有，欲以观其徼（jiào)
+                            </div>
+                        </div> 
+                    </div>
+                </div>  
             </div> 
             <div class="auto-card" id="scopeCard">
                 <div class="auto-card-header">局部主题色</div>

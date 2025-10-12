@@ -1,9 +1,11 @@
+import { ThemeProError } from './errors'
+
 /**
  *
  * 监听DOM元素的指定属性变化，并执行回调函数
  *
  */
-export class ThemeAttrObserver {
+export class AttrObserver {
     observer: MutationObserver | null = null
     connected: boolean = false
     constructor(
@@ -11,16 +13,8 @@ export class ThemeAttrObserver {
         public attrs: string[],
         public callback: (attrName: string, attrValue: string | null, target: HTMLElement) => void,
     ) {
-        if (!el || !(el instanceof Element)) {
-            throw new Error('第一个参数必须是一个DOM元素')
-        }
-
-        if (!Array.isArray(attrs)) {
-            throw new Error('第二个参数必须是一个属性名称数组')
-        }
-
-        if (typeof callback !== 'function') {
-            throw new Error('第三个参数必须是一个回调函数')
+        if (!el || !(el instanceof HTMLElement)) {
+            throw new ThemeProError('AttrObserver: el must be a valid HTMLElement')
         }
         this.connect()
     }
