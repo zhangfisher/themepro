@@ -1,4 +1,3 @@
-import { ThemeProError } from './errors'
 import { ThemeScope } from './scope'
 import type { DynamicThemeOptions, ThemeOptions, ThemeSize } from './types'
 import { ThemeObserver } from './observer'
@@ -91,7 +90,7 @@ export class ThemeManager {
      */
     addScope(options: ThemeOptions) {
         const { id } = options
-        if (this.hasScope(id)) throw new ThemeProError(`Scope<${id}> already exists`)
+        if (this.hasScope(id)) return
         if (!this.scopes) this.scopes = {}
         const scope = new ThemeScope(options)
         this.scopes[id] = scope

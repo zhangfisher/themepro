@@ -52,10 +52,45 @@
     vertical-align: text-bottom;
     position: relative;
     stroke-width: 1;
-    width: 1em;
-    height: 1em;
+    width: var(--auto-icon-size);
+    height: var(--auto-icon-size);
+    box-sizing: border-box;
+
+    /** 图标尺寸 */
+    &[x-small] {
+        width: var(--t-icon-x-small);
+        height: var(--t-icon-x-small);
+    }
+
+    &[small] {
+        width: var(--t-icon-small);
+        height: var(--t-icon-small);
+    }
+
+    &[medium] {
+        width: var(--t-icon-medium);
+        height: var(--t-icon-medium);
+    }
+
+    &[large] {
+        width: var(--t-icon-large);
+        height: var(--t-icon-large);
+    }
+
+    &[x-large] {
+        width: var(--t-icon-x-large);
+        height: var(--t-icon-x-large);
+    }
+
+    /** 图标颜色 */
+    &[circle] {
+        background-color: var(--t-color-theme-4);
+        padding: var(--auto-padding);
+    }
 
 
+
+    /** 图标 */
     &.home {
         mask-image: var(--auto-icon-home);
         -webkit-mask-image: var(--auto-icon-home);

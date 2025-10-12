@@ -10,6 +10,7 @@ export default defineConfig([
         dts: true,
         sourcemap: true,
         clean: false,
+        noExternal: [],
         // esbuildPlugins: [
         //     copy({
         //         source: 'dist/',

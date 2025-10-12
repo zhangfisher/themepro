@@ -18,12 +18,15 @@ export function themeSelector() {
                 return html`<span class="theme-color" data-color="${theme.color}" style="padding:0.5em;background-color:${theme.color};">${theme.title}</span>`
             })}                    
         </div>   
+        <div class="row">
+            <div id="darkMode" style="display: flex; padding:0.5em;gap: 0.5rem;align-items: center;" >            
+                <span class="auto-btn mode" data-value="light">Light</span>
+                <span class="auto-btn mode" data-value="dark">Dark</span> 
+                <span class="auto-btn colorized" data-value="">多彩模式</span>
+            </div>  
+            <div>${sizeSelector()}</div>
+        </div>
         
-        <div id="darkMode" style="display: flex; padding:0.5em;gap: 0.5rem;align-items: center;" >            
-            <span class="auto-btn mode" data-value="light">Light</span>
-            <span class="auto-btn mode" data-value="dark">Dark</span> 
-            <span class="auto-btn colorized" data-value="">多彩模式</span>
-        </div>  
         <script > 
             if(typeof selectTheme=== 'undefined'){
                 const selectTheme = document.getElementById('themeSelector')

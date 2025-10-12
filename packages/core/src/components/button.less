@@ -74,68 +74,68 @@
         border: 1px solid var(--auto-primary-color);
 
         &:hover {
-            background-color: var(--t-color-primary-4);
+            background-color: color-mix(in srgb, var(--t-color-primary), white 20%);
         }
 
         &:active {
-            background-color: var(--auto-primary-color);
+            background-color: color-mix(in srgb, var(--t-color-primary), white 30%);
         }
     }
 
     &.success {
-        background-color: var(--t-color-success-5);
-        color: color-mix(in srgb, var(--t-color-success-5) 0%, white 100%);
-        border: 1px solid var(--t-color-success-5);
+        background-color: var(--t-color-success);
+        color: color-mix(in srgb, var(--t-color-success) 0%, white 100%);
+        border: 1px solid var(--t-color-success);
 
         &:hover {
-            background-color: var(--t-color-success-4);
+            background-color: color-mix(in srgb, var(--t-color-success), white 10%);
         }
 
         &:active {
-            background-color: var(--auto-success-color);
+            background-color: color-mix(in srgb, var(--t-color-success), white 20%);
         }
     }
 
     &.warning {
-        background-color: var(--t-color-warning-5);
-        color: color-mix(in srgb, var(--t-color-warning-5) 0%, white 100%);
-        border: 1px solid var(--t-color-warning-5);
+        background-color: var(--t-color-warning);
+        color: color-mix(in srgb, var(--t-color-warning) 0%, white 100%);
+        border: 1px solid var(--t-color-warning);
 
         &:hover {
-            background-color: var(--t-color-warning-4);
+            background-color: color-mix(in srgb, var(--t-color-warning), white 10%);
         }
 
         &:active {
-            background-color: var(--auto-warning-color);
+            background-color: color-mix(in srgb, var(--t-color-warning), white 20%);
         }
     }
 
     &.error,
     &.danger {
-        background-color: var(--t-color-danger-5);
-        color: color-mix(in srgb, var(--t-color-danger-5) 0%, white 100%);
-        border: 1px solid var(--t-color-danger-5);
+        background-color: var(--t-color-danger);
+        color: color-mix(in srgb, var(--t-color-danger) 0%, white 100%);
+        border: 1px solid var(--t-color-danger);
 
         &:hover {
-            background-color: var(--t-color-danger-4);
+            background-color: color-mix(in srgb, var(--t-color-danger), white 10%);
         }
 
         &:active {
-            background-color: var(--auto-danger-color);
+            background-color: color-mix(in srgb, var(--t-color-danger), white 20%);
         }
     }
 
     &.info {
-        background-color: var(--t-color-info-4);
-        color: color-mix(in srgb, var(--t-color-info-4) 0%, white 100%);
+        background-color: var(--t-color-info);
+        color: color-mix(in srgb, var(--t-color-info) 0%, white 100%);
         border: 1px solid var(--t-color-info-4);
 
         &:hover {
-            background-color: var(--t-color-info-3);
+            background-color: color-mix(in srgb, var(--t-color-info), white 10%);
         }
 
         &:active {
-            background-color: var(--auto-info-color);
+            background-color: color-mix(in srgb, var(--t-color-info), white 20%);
         }
     }
 }

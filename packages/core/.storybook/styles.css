@@ -192,3 +192,22 @@ code {
     padding: calc(0.2 * var(--auto-padding));
     box-sizing: border-box;
 }
+
+
+.field {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border: var(--auto-border);
+}
+
+.field>.label {
+    width: 25%;
+    flex-shrink: 0;
+}
+
+.field>.value {
+    flex-grow: 1;
+}

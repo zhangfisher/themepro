@@ -4,7 +4,7 @@
  *
  */
 export const colors = {
-    '--t-color-primary': '#2f54eb',
+    '--t-color-primary': '#3292ff',
     '--t-color-success': '#22c55e',
     '--t-color-danger': '#ef4444',
     '--t-color-warning': '#f59e0b',
