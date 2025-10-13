@@ -32,6 +32,33 @@ export const renderIconStory = () => {
                 </div>                
             </div>
             <div class="auto-card" data-size="large">
+                <div class="auto-card-header">主题颜色图标</div>
+                <div class="auto-card-body col">            
+                     <div>
+                    <span class="auto-icon home" colorized></span>
+                    <span class="auto-icon info" colorized ></span>
+                    <span class="auto-icon close"  colorized></span>
+                    <span class="auto-icon settings"  colorized></span>
+                    <span class="auto-icon star" colorized></span>
+                    <span class="auto-icon tag"  colorized></span>
+                    <span class="auto-icon checked" colorized></span>
+                    <span class="auto-icon unchecked"  colorized></span>
+                    <span class="auto-icon yes" colorized></span>
+                    <span class="auto-icon no" colorized></span>
+                    <span class="auto-icon important" colorized></span>
+                    <span class="auto-icon file" colorized></span>
+                    <span class="auto-icon folder" colorized></span>
+                    <span class="auto-icon folder-open" colorized></span>
+                    <span class="auto-icon triangle" colorized></span>
+                    <span class="auto-icon save" colorized></span>
+                    <span class="auto-icon loading" colorized></span>
+                    <span class="auto-icon alert" colorized></span>
+                    <span class="auto-icon bell" colorized></span>
+                    <span class="auto-icon arrow" colorized></span>                    
+                    </div>  
+                </div>                
+            </div>
+            <div class="auto-card" data-size="large">
                 <div class="auto-card-header">彩色图标</div>
                 <div class="auto-card-body col">            
                      <div>

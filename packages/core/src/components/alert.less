@@ -10,7 +10,21 @@
     padding: var(--auto-spacing);
     background: var(--auto-panel-bgcolor);
     border: var(--auto-border);
-    color: var(--t-color-info-5);
+    color: var(--auto-color);
+    padding-left: calc(3em + var(--auto-spacing));
+
+    &:after {
+        content: ' ';
+        left: var(--auto-spacing);
+        top: 50%;
+        transform: translateY(-50%);
+        mask-image: var(--auto-icon-info);
+        mask-size: cover;
+        width: 2em;
+        height: 2em;
+        position: absolute;
+        background-color: var(--auto-color);
+    }
 
     &>.title {
         font: var(--auto-title-font);
@@ -37,29 +51,61 @@
     }
 
     &.warning {
-        background: var(--t-color-warning-0);
-        border: 1px solid var(--t-color-warning-3);
-        color: var(--t-color-warning-6);
+        background: color-mix(in srgb, var(--t-color-warning), white 90%);
+        border: 1px solid color-mix(in srgb, var(--t-color-warning), white 50%);
+        color: var(--t-color-warning);
     }
 
     &.success {
-        background: var(--t-color-success-0);
-        border: 1px solid var(--t-color-success-3);
-        color: var(--t-color-success-6);
+        background: color-mix(in srgb, var(--t-color-success), white 90%);
+        border: 1px solid color-mix(in srgb, var(--t-color-success), white 50%);
+        color: var(--t-color-success);
     }
 
     &.primary {
-        background: var(--t-color-primary-9);
-        border: 1px solid var(--t-color-primary-6);
-        color: var(--t-color-primary-6);
+        background: color-mix(in srgb, var(--t-color-primary), white 90%);
+        border: 1px solid color-mix(in srgb, var(--t-color-primary), white 50%);
+        color: var(--t-color-primary);
     }
 
     &.error,
     &.danger {
-        background: var(--t-color-danger-9);
-        border: 1px solid var(--t-color-danger-7);
-        color: var(--t-color-danger-5);
+        background: color-mix(in srgb, var(--t-color-danger), white 90%);
+        border: 1px solid color-mix(in srgb, var(--t-color-danger), white 50%);
+        color: var(--t-color-danger);
     }
+}
 
+:host([dark]),
+[dark] {
+    .auto-alert {
+        background: var(--auto-panel-bgcolor);
+        border: var(--auto-border);
+        color: var(--auto-color);
 
+        &.success {
+            background: var(--t-color-success);
+            border: 1px solid var(--t-color-success);
+            color: 1px solid color-mix(in srgb, var(--t-color-success), white 70%);
+        }
+
+        &.warning {
+            background: var(--t-color-warning);
+            border: 1px solid var(--t-color-warning);
+            color: color-mix(in srgb, var(--t-color-warning), white 70%);
+        }
+
+        &.primary {
+            background: var(--t-color-primary);
+            border: 1px solid var(--t-color-primary);
+            color: color-mix(in srgb, var(--t-color-primary), white 70%);
+        }
+
+        &.error,
+        &.danger {
+            background: var(--t-color-danger);
+            border: 1px solid var(--t-color-danger);
+            color: color-mix(in srgb, var(--t-color-danger), white 70%);
+        }
+    }
 }

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/web-components-vite'
 import { renderCardStory } from './card.story.ts'
 import { renderButtonStory } from './button.story.ts'
 import { renderIconStory } from './icon.story.ts'
+import { renderAlertStory } from './alert.story.ts'
 
 const meta: Meta = {
     title: '组件',
@@ -23,4 +24,9 @@ export const ButtonRadius: Story = {
 export const CardRadius: Story = {
     name: '卡片 Card',
     render: renderCardStory,
+}
+
+export const AlertStory: Story = {
+    name: '提示 Alert',
+    render: renderAlertStory,
 }
