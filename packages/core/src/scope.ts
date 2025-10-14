@@ -196,8 +196,8 @@ export class ThemeScope {
         const themeColor = this.options.themeColor
 
         const darkStyleFix = toVarStyles({
-            '--t-theme-bgcolor': 'var(--t-color-theme-1) !important',
-            '--t-theme-bgcolor-1': 'var(--t-color-theme-0) !important',
+            '--t-theme-bgcolor': 'var(--t-color-theme-1)',
+            '--t-theme-bgcolor-1': 'var(--t-color-theme-0)',
         })
 
         return `${this._selectors}[data-theme='${themeColor}']{
