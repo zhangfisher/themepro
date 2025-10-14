@@ -10,8 +10,8 @@ export const darkThemeVars = {
     '--t-theme-color-8': 'var(--t-color-gray-2) !important',
     '--t-theme-color-9': 'var(--t-color-gray-1) !important',
 
-    '--t-theme-bgcolor': 'var(--t-color-gray-9) !important',
-    '--t-theme-bgcolor-1': 'var(--t-color-gray-8) !important',
+    '--t-theme-bgcolor': 'var(--t-color-gray-8) !important',
+    '--t-theme-bgcolor-1': 'var(--t-color-gray-9) !important',
     '--t-theme-bgcolor-2': 'var(--t-color-gray-7) !important',
     '--t-theme-bgcolor-3': 'var(--t-color-gray-6) !important',
     '--t-theme-bgcolor-4': 'var(--t-color-gray-5) !important',

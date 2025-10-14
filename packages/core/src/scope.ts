@@ -12,7 +12,7 @@
 import { presetThemes } from './presets'
 import type { DynamicThemeOptions, ThemeOptions, ThemeSize } from './types'
 import { getId, toRGBString } from './utils'
-import { generateThemeGradientColorVars } from './utils/generateGradientVars'
+import { generateThemeColorVars } from './utils/generateThemeColorVars'
 import { getVarsStyles } from './utils/getVarsStyles'
 import { injectStylesheet } from './utils/injectStylesheet'
 import { toVarStyles } from './utils/toVarStyles'
@@ -194,12 +194,18 @@ export class ThemeScope {
      */
     protected _generateThemeColorStyles() {
         const themeColor = this.options.themeColor
+
+        const darkStyleFix = toVarStyles({
+            '--t-theme-bgcolor': 'var(--t-color-theme-1) !important',
+            '--t-theme-bgcolor-1': 'var(--t-color-theme-0) !important',
+        })
+
         return `${this._selectors}[data-theme='${themeColor}']{
             color-scheme: light;
             ${toVarStyles(this._createThemeColorVars(themeColor))};\n}
             ${this._selectors}[data-theme='${themeColor}'][dark]{
             color-scheme: dark;
-            ${toVarStyles(this._createThemeColorVars(themeColor, true))};\n}`
+            ${toVarStyles(this._createThemeColorVars(themeColor, true))};\n${darkStyleFix}}`
     }
 
     protected _injectThemeColorStyles() {
@@ -290,7 +296,7 @@ export class ThemeScope {
      */
     protected _createThemeColorVars(color: string = this.options.themeColor, reverse: boolean = false) {
         const themeColor = color in presetThemes ? presetThemes[color].color : color
-        const vars: Record<string, string> = generateThemeGradientColorVars(themeColor, {
+        const vars: Record<string, string> = generateThemeColorVars(themeColor, {
             prefix: '--t-color-theme-',
             reverse,
         })

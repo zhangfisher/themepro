@@ -28,19 +28,18 @@ export const renderAlertStory = () => {
                 <div class="auto-card-header">提示信息- 包含关闭按钮</div>
                 <div class="auto-card-body col">                                
                     <div class="auto-alert">
-                        <span class="auto-icon info" x-large ></span>这是一条提示信息<span class="closeable"></span>
+                         </span>这是一条提示信息<span class="closeable"></span>
                     </div> 
                     <div class="auto-alert success">
                         这是一条成功信息 success<span class="closeable"></span>
                     </div>
                     <div class="auto-alert warning">
-                        <span class="auto-icon info"></span>这是一条成功信息 warning<span class="closeable"></span>
+                         </span>这是一条成功信息 warning<span class="closeable"></span>
                     </div>
                     <div class="auto-alert primary">
-                        <span class="auto-icon info"></span>这是一条关会键信息 primary<span class="closeable"></span>
+                         这是一条关会键信息 primary<span class="closeable"></span>
                     </div>                    
-                    <div class="auto-alert danger">
-                        <span class="auto-icon error"></span>这是一条错误信息 danger<span class="closeable"></span>
+                    <div class="auto-alert danger"> 这是一条错误信息 danger<span class="closeable"></span>
                     </div>
                 </div>                
             </div>

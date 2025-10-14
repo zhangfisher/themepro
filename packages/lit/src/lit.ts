@@ -1,6 +1,6 @@
 import type { ThemeOptions } from 'packages/core/src/types'
 import { createTheme, injectStylesheet } from '@/utils'
-import { generateThemeGradientColorVars } from '@/utils/generateGradientVars'
+import { generateThemeColorVars } from '@/utils/generateThemeColorVars'
 import type { LitElement, ReactiveController } from 'lit'
 
 export class ThemeProController implements ReactiveController {
@@ -49,7 +49,7 @@ export class ThemeProController implements ReactiveController {
     _onVariantColorChange(variant: string) {
         const color = this.host.getAttribute(`data-${variant}-color`)
         if (color) {
-            const { vars } = generateThemeGradientColorVars(`--t-color-${variant}-`, {
+            const { vars } = generateThemeColorVars(`--t-color-${variant}-`, {
                 color,
             })
             injectStylesheet(

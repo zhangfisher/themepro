@@ -1,11 +1,11 @@
 import type { ThemeOptions } from '../types'
-import { generateThemeGradientColors } from '../algorithms/material'
+import { generateThemeGradientColors } from './generateThemeGradientColors'
 
 export type ThemeVariantOptions = {
     prefix: string
     reverse?: boolean
 }
-export function generateThemeGradientColorVars(color: string, options?: ThemeVariantOptions) {
+export function generateThemeColorVars(color: string, options?: ThemeVariantOptions) {
     const { prefix, reverse = false } = Object.assign({}, options) as ThemeVariantOptions
 
     const colors = generateThemeGradientColors(color)
@@ -18,3 +18,5 @@ export function generateThemeGradientColorVars(color: string, options?: ThemeVar
     }, {}) as Required<ThemeOptions>
     return vars
 }
+
+console.log(generateThemeColorVars('#f2f2f2', { prefix: '--t-color-gray-' }))
