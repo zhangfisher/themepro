@@ -49,7 +49,7 @@ export function themeSelector() {
                 var picker = new Picker(colorpicker);
                 picker.onChange = function(color) {
                     colorpicker.style.background = color.rgbaString;
-                    document.documentElement.dataset.theme = color.rgbaString
+                    document.documentElement.dataset.theme = color.hex
                 };           
             }
         </script> 

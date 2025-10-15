@@ -29,7 +29,7 @@ export class ThemeObserver {
     private _onThemeAttrChange(attrName: string, attrValue: string | null) {
         if (!attrValue) return
         const themeAttr = attrName.replace('data-', '')
-        this.scope.update({ [themeAttr]: attrValue })
+        this.scope.update({ [themeAttr === 'theme' ? 'themeColor' : themeAttr]: attrValue })
     }
     connect() {
         if (this.connected) return

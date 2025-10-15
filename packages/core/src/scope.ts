@@ -242,8 +242,14 @@ export class ThemeScope {
         const lightSelector = mapCssSelector(this._selectors, { light: '' }, true)
         const darkSelector = mapCssSelector(this._selectors, { light: '', dark: '' })
         const darkSelector2 = mapCssSelector(this._selectors, { dark: '' })
-        return `${darkSelector2},${darkSelector}{\ncolor-scheme: dark;\n${toVarStyles(this._createThemeColorVars(themeColor, true))}\n}\n
-        ${lightSelector}{\ncolor-scheme: light;\n${toVarStyles(this._createThemeColorVars(themeColor))}\n}\n
+        const lightBorderFixs = `:host(:not([data-theme]):not([dark])),:root:not([data-theme]):not([dark]){${toVarStyles(
+            {
+                '--auto-border-color': 'var(--t-theme-color-3)',
+            },
+        )}}\n`
+        return `${lightSelector}{\ncolor-scheme: light;\n${toVarStyles(this._createThemeColorVars(themeColor))}\n}\n
+        ${darkSelector2},${darkSelector}{\ncolor-scheme: dark;\n${toVarStyles(this._createThemeColorVars(themeColor, true))}\n}\n          
+        ${lightBorderFixs}      
         `
     }
 
