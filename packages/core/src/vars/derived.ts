@@ -85,9 +85,11 @@ export const derivedVars = {
 
     /* 输入框 */
     /** 输入框背景颜色：用于输入框背景颜色*/
+    '--auto-input-border': '1px solid var(--t-theme-color-3)',
     '--auto-input-bgcolor': 'var(--t-theme-bgcolor)',
     '--auto-input-padding': 'calc(0.5 * var(--auto-padding))',
+    '--auto-input-radius': 'var(--auto-border-radius)',
     '--auto-input-height': 'var(--t-line-height-medium)',
     /** 其他 */
-    '--auto-icon-size': 'var(--icon-size-medium)',
+    '--auto-icon-size': 'var(--t-icon-size-medium)',
 }

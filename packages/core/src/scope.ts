@@ -199,13 +199,22 @@ export class ThemeScope {
             '--t-theme-bgcolor': 'var(--t-color-theme-1)',
             '--t-theme-bgcolor-1': 'var(--t-color-theme-0)',
         })
-
+        const lightBorderFix = `:host(:not([dark])[data-theme='${themeColor}']),:root:not([dark])[data-theme='${themeColor}']{${toVarStyles(
+            {
+                '--auto-border-color': 'var(--t-theme-color-3)',
+            },
+        )}}\n:host(:not([dark])[data-theme='${themeColor}'][colorized]),:root:not([dark])[data-theme='${themeColor}'][colorized]{${toVarStyles(
+            {
+                '--auto-border-color': 'var(--t-theme-color-1)',
+            },
+        )}}`
         return `${this._selectors}[data-theme='${themeColor}']{
             color-scheme: light;
             ${toVarStyles(this._createThemeColorVars(themeColor))};\n}
             ${this._selectors}[data-theme='${themeColor}'][dark]{
             color-scheme: dark;
-            ${toVarStyles(this._createThemeColorVars(themeColor, true))};\n${darkStyleFix}}`
+            ${toVarStyles(this._createThemeColorVars(themeColor, true))};\n${darkStyleFix}\n
+            }${lightBorderFix}`
     }
 
     protected _injectThemeColorStyles() {

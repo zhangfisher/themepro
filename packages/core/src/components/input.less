@@ -1,6 +1,6 @@
 .auto-input {
     background: var(--auto-input-bgcolor);
-    border: var(--auto-border);
+    border: var(--auto-input-border);
     padding: var(--auto-input-padding);
     border-radius: var(--auto-border-radius);
     accent-color: var(--auto-primary-color);
@@ -8,11 +8,14 @@
 
     &:hover {
         border: var(--auto-active-border);
+        transition: all 0.5s ease-in;
     }
 
     &:focus {
         outline: none;
+        background: var(--t-theme-bgcolor-1);
     }
+
 
     &::placeholder {
         color: var(--auto-border-color);
@@ -20,7 +23,6 @@
 
     &[type=checkbox] {
         cursor: pointer;
-
     }
 }
 
@@ -28,12 +30,13 @@
 .auto-input-wrapper {
     display: flex;
     background: var(--auto-input-bgcolor);
-    border: var(--auto-border);
+    border: var(--auto-input-border);
     padding: var(--auto-input-padding);
     border-radius: var(--auto-border-radius);
 
     &:hover {
         border: var(--auto-active-border);
+        transition: all 0.5s ease-in;
     }
 
     &:focus {
