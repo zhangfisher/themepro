@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/web-components-vite";
-import "../layouts/Flex";
+import "../components/Flex";
 import { html } from "lit";
 
 // 通用子项渲染，便于观察布局效果
@@ -34,13 +34,29 @@ const renderFlex = (args: any) => html`
         ?equal=${args.equal}
         border=${args.border}
         ?fit=${args.fit}
-        grow=${typeof args.grow === "number" ? String(args.grow) : args.grow}
+        ?radius=${args.radius}
+        grow=${args.grow}
         shrink=${typeof args.shrink === "number"
             ? String(args.shrink)
             : args.shrink}
         style="width:100%;max-width:960px;padding:12px;"
     >
         ${Boxes(8)}
+    </auto-flex>
+    <br />
+    <auto-flex
+        justify=${args.justify}
+        direction=${args.direction}
+        align=${args.align}
+        gap=${args.gap}
+        border=${args.border}
+        ?fit=${args.fit}
+        ?radius=${args.radius}
+        grow="last"
+        equal
+        style="width:100%;max-width:960px;padding:12px;"
+    >
+        ${Boxes(5)}
     </auto-flex>
 `;
 
@@ -49,6 +65,7 @@ const meta = {
     tags: ["autodocs"],
     render: renderFlex,
     argTypes: {
+        radius: { control: "boolean", description: "是否显示圆角" },
         wrap: { control: "boolean", description: "是否自动换行" },
         equal: { control: "boolean", description: "是否等高或等宽" },
         border: {
@@ -87,12 +104,14 @@ const meta = {
         gap: { control: "text", description: "项目间距，如 '8px'" },
         fit: { control: "boolean", description: "充满父容器" },
         grow: {
-            control: { type: "number", min: 0, max: 10, step: 1 },
-            description: "flex-grow 值",
+            control: { type: "text" },
+            description:
+                "指定哪个子元素 flex-grow:1，可填 'first' | 'last' | CSS 选择器字符串",
         },
         shrink: {
-            control: { type: "number", min: 0, max: 10, step: 1 },
-            description: "flex-shrink 值",
+            control: { type: "text" },
+            description:
+                "指定哪个子元素 flex-shrink:1，可填 'first' | 'last' | CSS 选择器字符串",
         },
     },
     args: {
@@ -105,6 +124,7 @@ const meta = {
         fit: false,
         grow: undefined,
         shrink: undefined,
+        radius: undefined,
     },
 } satisfies Meta;
 

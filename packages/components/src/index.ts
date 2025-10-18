@@ -1,3 +1,3 @@
-export * from "./Button";
-export * from "./Icon";
-export * from "./Loading";
+export * from './components/Button'
+export * from './components/Icon'
+export * from './components/Loading'

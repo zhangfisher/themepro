@@ -1,0 +1,79 @@
+/**
+ *
+ * <auto-button>确定</auto-button>
+ * <auto-button type="primary">取消</auto-button>
+ * <auto-button type="success">确定</auto-button>
+ * <auto-button type="warning">确定</auto-button>
+ * <auto-button type="d">确定</auto-button>
+ * <auto-button type="info">确定</auto-button>
+ *
+ *
+ */
+import { LitElement, type TemplateResult, html } from 'lit'
+import { property } from 'lit/decorators.js'
+import { customElement } from 'lit/decorators/custom-element.js'
+import { styleMap } from 'lit/directives/style-map.js'
+import { classMap } from 'lit/directives/class-map.js'
+import { when } from 'lit/directives/when.js'
+import { styles } from './styles'
+import { toggleWrapper } from '../../utils/toggleWrapper'
+
+@customElement('auto-icon')
+export class AutoIcon extends LitElement {
+    static styles = styles
+
+    @property({ type: String })
+    size?: string
+
+    @property({ type: String })
+    name: string = 'star'
+
+    @property({ type: String })
+    color?: string
+
+    @property({ type: String })
+    rotate?: string
+
+    @property({ type: Number })
+    strokeWidth?: number
+
+    @property({ type: String })
+    shape?: 'circle' | 'square' | 'round'
+
+    private _renderIcon() {
+        return html`
+            <div class="${classMap({
+                'auto-icon': true,
+            })} " 
+            style="${styleMap({
+                'mask-image': `var(--auto-icon-${this.name})`,
+                color: this.color ? this.color : undefined,
+                'font-size': this.size,
+                '--stroke-width': this.strokeWidth,
+                transform: this.rotate ? `rotate(${this.rotate}deg)` : undefined,
+            })}">                
+            </div>
+        `
+    }
+    private _renderShape(content: TemplateResult) {
+        return html`<div class="shape ${this.shape}">
+			${content}
+		</div>`
+    }
+
+    render() {
+        return toggleWrapper(!!this.shape, this._renderIcon(), (content) => {
+            return html`${when(
+                this.shape,
+                () => this._renderShape(content),
+                () => content,
+            )}`
+        })
+    }
+}
+
+declare global {
+    interface HTMLElementTagNameMap {
+        'auto-icon': AutoIcon
+    }
+}

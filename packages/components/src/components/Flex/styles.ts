@@ -46,32 +46,35 @@ export const styles = css`
   }
 
   /* When auto-flex is used as flex item */
-  :host([grow]) { flex-grow: var(--flex-grow, 0); }
+  /* grow 改为子元素选择语义，不再作用于宿主 */
   :host([shrink]) { flex-shrink: var(--flex-shrink, 1); }
 
   :host([equal]) { align-items: stretch; }
+  :host([radius]) { border-radius: var(--auto-border-radius); }
+
 
   /* border: 1 => host border */
   :host([border="1"]) {
-    border: 1px solid var(--border-color, #dcdfe6); 
+    border: var(--auto-border);
   }
 
   /* border: 2 => child grid borders without double lines */
   :host([border="2"]) { 
     gap:0; 
-    border: 1px solid red; 
-    padding: 0px !important;;
+    align-items: stretch;
+    border-top: var(--auto-border);
+    border-left: var(--auto-border);
+    padding: 0px !important;
   }  
   :host([border="2"]) ::slotted(*) {
     box-sizing: border-box; 
-    border-right:  1px solid red;; 
-    border-radius: 0px !important;
-    &>:first-child {
-      border-top:none !important;
-      border-left:none !important;
-    }
-    &:last-child {
-      border-bottom-right-radius: 4px;
-    }
+    border-right:  var(--auto-border); 
+    border-bottom:  var(--auto-border);
+    border-radius: 0px ;
+  }
+
+  :host ::slotted(*){
+    min-width: 0px;
+    min-height: 0px;
   }
 `
