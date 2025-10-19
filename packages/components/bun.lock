@@ -9,6 +9,8 @@
       },
       "devDependencies": {
         "@storybook/addon-docs": "^9.1.10",
+        "@storybook/components": "^8.6.14",
+        "@storybook/manager-api": "^8.6.14",
         "@storybook/web-components-vite": "^9.1.10",
         "@types/bun": "1.2.22",
         "csstype": "^3.1.3",
@@ -234,11 +236,15 @@
 
     "@storybook/builder-vite": ["@storybook/builder-vite@9.1.10", "https://registry.npmmirror.com/@storybook/builder-vite/-/builder-vite-9.1.10.tgz", { "dependencies": { "@storybook/csf-plugin": "9.1.10", "ts-dedent": "^2.0.0" }, "peerDependencies": { "storybook": "^9.1.10", "vite": "^5.0.0 || ^6.0.0 || ^7.0.0" } }, "sha512-0ogI+toZJYaFptcFpRcRPOZ9/NrFUYhiaI09ggeEB1FF9ygHMVsobp4eaj4HjZI6V3x7cQwkd2ZmxAMQDBQuMA=="],
 
+    "@storybook/components": ["@storybook/components@8.6.14", "", { "peerDependencies": { "storybook": "^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0" } }, "sha512-HNR2mC5I4Z5ek8kTrVZlIY/B8gJGs5b3XdZPBPBopTIN6U/YHXiDyOjY3JlaS4fSG1fVhp/Qp1TpMn1w/9m1pw=="],
+
     "@storybook/csf-plugin": ["@storybook/csf-plugin@9.1.10", "https://registry.npmmirror.com/@storybook/csf-plugin/-/csf-plugin-9.1.10.tgz", { "dependencies": { "unplugin": "^1.3.1" }, "peerDependencies": { "storybook": "^9.1.10" } }, "sha512-247F/JU0Naxm/RIUnQYpqXeCL0wG8UNJkZe+/GkLjdqzsyML0lb+8OwBsWFfG8zfj6fkjmRU2mF44TnNkzoQcg=="],
 
     "@storybook/global": ["@storybook/global@5.0.0", "https://registry.npmmirror.com/@storybook/global/-/global-5.0.0.tgz", {}, "sha512-FcOqPAXACP0I3oJ/ws6/rrPT9WGhu915Cg8D02a9YxLo0DE9zI+a9A5gRGvmQ09fiWPukqI8ZAEoQEdWUKMQdQ=="],
 
     "@storybook/icons": ["@storybook/icons@1.6.0", "https://registry.npmmirror.com/@storybook/icons/-/icons-1.6.0.tgz", { "peerDependencies": { "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta", "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta" } }, "sha512-hcFZIjW8yQz8O8//2WTIXylm5Xsgc+lW9ISLgUk1xGmptIJQRdlhVIXCpSyLrQaaRiyhQRaVg7l3BD9S216BHw=="],
+
+    "@storybook/manager-api": ["@storybook/manager-api@8.6.14", "", { "peerDependencies": { "storybook": "^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0" } }, "sha512-ez0Zihuy17udLbfHZQXkGqwtep0mSGgHcNzGN7iZrMP1m+VmNo+7aGCJJdvXi7+iU3yq8weXSQFWg5DqWgLS7g=="],
 
     "@storybook/react-dom-shim": ["@storybook/react-dom-shim@9.1.10", "https://registry.npmmirror.com/@storybook/react-dom-shim/-/react-dom-shim-9.1.10.tgz", { "peerDependencies": { "react": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta", "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta", "storybook": "^9.1.10" } }, "sha512-cxy8GTj73RMJIFPrgqdnMXePGX5iFohM5pDCZ63Te5m5GtzKqsILRXtBBLO6Ouexm/ZYRVznkKiwNKX/Fu24fQ=="],
 

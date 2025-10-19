@@ -1,6 +1,7 @@
 import { ThemeScope } from './scope'
 import type { DynamicThemeOptions, ThemeOptions, ThemeSize } from './types'
 import { ThemeObserver } from './observer'
+import { presetThemes } from './presets'
 
 export type ThemeManagerOptions = {
     storageKey?: string
@@ -60,6 +61,9 @@ export class ThemeManager {
     }
     set themeColor(value: string) {
         this.root.themeColor = value
+    }
+    get presets() {
+        return presetThemes
     }
     /**
      * 更新主题

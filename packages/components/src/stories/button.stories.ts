@@ -185,7 +185,3 @@ export const ButtonDisabled: Story = {
         `
     },
 }
-export const PropBlock: Story = { args: { block: true, label: '块级按钮' } }
-export const PropGhost: Story = { args: { ghost: true } }
-export const PropIcon: Story = { args: { icon: 'settings', label: '带图标' } }
-export const PropVariant: Story = { args: { variant: 'outline' } }
