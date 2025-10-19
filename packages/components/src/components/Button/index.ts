@@ -10,12 +10,19 @@ import { when } from 'lit/directives/when.js'
 
 import { styles } from './styles'
 import { AutoElementBase } from '../../elements/base'
+import { ifDefined } from 'lit/directives/if-defined.js'
+import { styleMap } from 'lit/directives/style-map.js'
 
 export interface AutoButtonProps {
     /**
      * 按钮文字
      */
     label?: string
+
+    /**
+     * 按钮文字最大宽度
+     */
+    labelWidth?: string
     /**
      * 垂直布局显示图标和文字
      */
@@ -81,6 +88,9 @@ export class AutoButton extends AutoElementBase {
 
     @property({ type: String })
     label?: string
+
+    @property({ type: String })
+    labelWidth?: string
 
     @property({ type: String })
     icon?: string
@@ -178,7 +188,13 @@ export class AutoButton extends AutoElementBase {
     render() {
         return html`
             ${when(this.icon, () => html`<auto-icon name="${this.icon!}"></auto-icon>`)}
-            ${this.label}<slot></slot>            
+            ${when(
+                this.label,
+                () =>
+                    html`<span class='label' style=${styleMap({
+                        '--label-width': this.labelWidth,
+                    })}>${this.label}</span>`,
+            )}
             ${when(this.loading, () => html`<auto-icon name="loading"></auto-icon>`)}
         `
     }

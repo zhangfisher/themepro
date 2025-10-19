@@ -27,6 +27,15 @@ export const styles = css`
     :host(:active) {
         background: var(--t-color-theme-2);
     }
+    /**
+    * 按钮文本
+     */
+    :host > .label {
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        width: var(--label-width);
+    }
     /* 禁用态：不响应 hover/active */
     :host([disabled]:hover),
     :host([disabled]:active) {
@@ -44,11 +53,10 @@ export const styles = css`
         flex-direction: column!important;
         padding: var(--auto-padding);
         gap:0;
-        &>auto-icon{
-            font-size:2em;
-        }
     }
-
+    :host([shape='circle']){
+       --auto-icon-size:2em;
+    }
     :host([shape='pill']) {
         border-radius: 9999px!important;
     }

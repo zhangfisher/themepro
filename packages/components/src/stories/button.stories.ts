@@ -185,3 +185,18 @@ export const ButtonDisabled: Story = {
         `
     },
 }
+export const ButtonVeriDisabled: Story = {
+    name: '垂直布局按钮',
+    render: () => {
+        return html`
+          <auto-flex gap="1em">
+            <auto-button vertical icon="home" label="主页"></auto-button>
+              <auto-button vertical icon="settings"  type="primary" label="系统设置系统设置系统设置系统设置" labelWidth="5em"></auto-button>
+              <auto-button vertical icon="tag" type="success" label="标签"></auto-button>
+              <auto-button vertical icon="star" type="danger" label="加星"></auto-button>
+              <auto-button vertical icon="folder" type="warning" label="文件夹"></auto-button>
+              <auto-button vertical icon="file"  type="info" label="文件"></auto-button>
+          </auto-flex>
+        `
+    },
+}
