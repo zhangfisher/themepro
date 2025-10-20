@@ -200,3 +200,28 @@ export const ButtonVeriDisabled: Story = {
         `
     },
 }
+export const ButtonLoading: Story = {
+    name: '加载中',
+    render: () => {
+        return html`
+        <auto-flex direction='column' gap="1em">
+          <auto-flex gap="1em">
+            <auto-button loading label="默认"></auto-button>
+            <auto-button type="primary" loading label="关健按钮"></auto-button>
+            <auto-button type="success" loading label="成功按钮"></auto-button>
+            <auto-button type="danger" loading label="危险按钮"></auto-button>
+            <auto-button type="warning" loading label="警告按钮"></auto-button>
+            <auto-button type="info" loading label="信息按钮"></auto-button>
+          </auto-flex>
+          <auto-flex gap="1em">
+            <auto-button size="x-small" loading label="默认"></auto-button>
+            <auto-button size="x-small"  type="primary" loading label="关健按钮"></auto-button>
+            <auto-button size="x-small"  type="success" loading label="成功按钮"></auto-button>
+            <auto-button size="x-small" type="danger" loading label="危险按钮"></auto-button>
+            <auto-button size="x-small" type="warning" loading label="警告按钮"></auto-button>
+            <auto-button size="x-small" type="info" loading label="信息按钮"></auto-button>
+          </auto-flex>
+          </auto-flex>
+        `
+    },
+}

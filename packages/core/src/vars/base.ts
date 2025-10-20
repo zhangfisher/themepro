@@ -47,9 +47,9 @@ export const baseVars = {
     '--t-line-height-large': 'calc(var(--t-spacing-medium) * 1.8)',
     '--t-line-height-x-large': 'calc(var(--t-spacing-medium) * 2)',
 
-    '--t-icon-size-x-small': 'calc(1.5 * var(--t-font-size-x-small))',
-    '--t-icon-size-small': 'calc(1.5 * var(--t-font-size-small))',
-    '--t-icon-size-medium': 'calc(1.5 * var(--t-font-size-medium))',
-    '--t-icon-size-large': 'calc(1.5 * var(--t-font-size-large))',
-    '--t-icon-size-x-large': 'calc(1.5 * var(--t-font-size-x-large))',
+    '--t-icon-size-x-small': 'calc(1.2 * var(--t-font-size-x-small))',
+    '--t-icon-size-small': 'calc(1.2 * var(--t-font-size-small))',
+    '--t-icon-size-medium': 'calc(1.2 * var(--t-font-size-medium))',
+    '--t-icon-size-large': 'calc(1.2 * var(--t-font-size-large))',
+    '--t-icon-size-x-large': 'calc(1.2 * var(--t-font-size-x-large))',
 }
