@@ -175,12 +175,12 @@ export const ButtonDisabled: Story = {
     render: () => {
         return html`
           <auto-flex gap="1em">
-            <auto-button disabled>默认</auto-button>
-            <auto-button type="primary" disabled>关健按钮</auto-button>
-            <auto-button type="success" disabled>成功按钮</auto-button>
-            <auto-button type="danger" disabled>危险按钮</auto-button>
-            <auto-button type="warning" disabled>警告按钮</auto-button>
-            <auto-button type="info" disabled>信息按钮</auto-button>
+            <auto-button disabled label="默认"></auto-button>
+            <auto-button type="primary" disabled label="关健按钮"></auto-button>
+            <auto-button type="success" disabled label="成功按钮"></auto-button>
+            <auto-button type="danger" disabled label="危险按钮"></auto-button>
+            <auto-button type="warning" disabled label="警告按钮"></auto-button>
+            <auto-button type="info" disabled label="信息按钮"></auto-button>
           </auto-flex>
         `
     },
