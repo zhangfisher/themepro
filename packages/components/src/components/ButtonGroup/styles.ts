@@ -19,23 +19,14 @@ export const styles = css`
         user-select: none;
     } 
     :host(:hover) {
-        border: 1px solid color-mix(in srgb, var(--t-color-theme-1), black 10%);
+        border: var(--auto-active-border);
         background-color: var(--t-color-theme-1);
+        color: var(--auto-active-border-color);
+        outline: 4px solid var(--auto-active-border);
     }
     :host(:active) {
         background: var(--t-color-theme-2);
     }
-    /**
-     * 幽灵按钮
-     */
-    :host([ghost]:hover) {
-        background-color: color-mix(in srgb, var(--t-color-theme-1), black 5%)!important;
-    }
-    :host([ghost]:active) {
-        background-color: color-mix(in srgb, var(--t-color-theme-1), white 20%)!important;
-    }
-
-
     /**
     * 按钮文本
      */
@@ -99,46 +90,22 @@ export const styles = css`
     :host([type='primary']:active) {
         background-color: color-mix(in srgb, var(--t-color-primary), white 20%);
     }
-
-    /*  */
-    :host([ghost][type='primary']){
-        color: var(--t-color-primary); 
-    }
-    :host([ghost][type='primary']:hover){
-        background-color:color-mix(in srgb, var(--t-color-primary) 15%, white 5%)!important;
-        
-    }
-    :host([ghost][type='primary']:active) {
-        background-color: color-mix(in srgb, var(--t-color-primary), white 80%)!important;
-    }
-
-
     /**
      * 语义按钮类型
      */
     :host([type='success']) {
         background-color: var(--t-color-success);
         color: color-mix(in srgb, var(--t-color-success) 0%, white 100%);
-        border: 1px solid var(--t-color-success);box-sizing: border-box;
+        border: 1px solid var(--t-color-success);
     }
-    :host([type='success']:hover){ 
+    :host([type='success']:hover){
         background-color: color-mix(in srgb, var(--t-color-success), white 10%);
     }
 
     :host([type='success']:active) {
-        background-color: color-mix(in srgb, var(--t-color-success), white 30%)!important;;
+        background-color: color-mix(in srgb, var(--t-color-success), white 20%);
     }
-    :host([ghost][type='success']){
-        color: var(--t-color-success); 
-    }
-    :host([ghost][type='success']:hover){
-        background-color:color-mix(in srgb, var(--t-color-success) 15%, white 5%)!important;
-        
-    }
-    :host([ghost][type='success']:active) {
-        background-color: color-mix(in srgb, var(--t-color-success), white 80%)!important;
-    }
-
+    
     :host([type='warning'])  {
         background-color: var(--t-color-warning);
         color: color-mix(in srgb, var(--t-color-warning) 0%, white 100%);
@@ -152,20 +119,6 @@ export const styles = css`
         background-color: color-mix(in srgb, var(--t-color-warning), white 20%);
     }
 
-    :host([ghost][type='warning']){
-        color: var(--t-color-warning); 
-    }
-    :host([ghost][type='warning']:hover){
-        background-color:color-mix(in srgb, var(--t-color-warning) 15%, white 5%)!important;
-        
-    }
-    :host([ghost][type='warning']:active) {
-        background-color: color-mix(in srgb, var(--t-color-warning), white 80%)!important;
-    }
-
-
-
-
     :host([type='error']),
     :host([type='danger']){
             background-color: var(--t-color-danger);
@@ -178,20 +131,6 @@ export const styles = css`
     :host([type='error']:active),:host([type='danger']:active) {
         background-color: color-mix(in srgb, var(--t-color-danger), white 20%);
     }
-
-    :host([ghost][type='danger']),:host([ghost][type='error']){
-        color: var(--t-color-danger); 
-    }
-    :host([ghost][type='danger']:hover),:host([ghost][type='error']:hover){
-        background-color:color-mix(in srgb, var(--t-color-danger) 15%, white 5%)!important;
-        
-    }
-    :host([ghost][type='danger']:active),:host([ghost][type='error']:active) {
-        background-color: color-mix(in srgb, var(--t-color-danger), white 80%)!important;
-    }
-
-
-
 
     :host([type='info']) {
         background-color: var(--t-color-info);
@@ -211,7 +150,12 @@ export const styles = css`
     :host([ghost]){
         background-color: transparent;
         border: none;
+        color: var(--auto-color);
     }
+    :host([ghost]) .label{
+        color: var(--auto-color);
+    }
+
     :host([vertical]){
         flex-direction: column;
     }

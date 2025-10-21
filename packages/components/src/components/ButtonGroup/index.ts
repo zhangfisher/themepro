@@ -1,6 +1,8 @@
 /**
  *
  *
+ *  按钮组
+ *
  *
  */
 import { html } from 'lit'
@@ -13,96 +15,36 @@ import { AutoElementBase } from '../../elements/base'
 import { ifDefined } from 'lit/directives/if-defined.js'
 import { styleMap } from 'lit/directives/style-map.js'
 
-export interface AutoButtonProps {
-    /**
-     * 按钮文字
-     */
-    label?: string
-
-    /**
-     * 按钮文字最大宽度
-     */
-    labelWidth?: string
+export interface AutoButtonGroupProps {
     /**
      * 垂直布局显示图标和文字
      */
     vertical?: boolean
-    /**
-     *
-     */
-    /**
-     * 按钮类型
-     */
-    type?: 'default' | 'primary' | 'info' | 'danger' | 'warning' | 'success'
-    /**
-     * 按钮样式
-     *
-     * - default: 同时显示图标和文字
-     * - icon: 只显示图标
-     * - text: 只显示文字
-     * - ghost: 背景透明
-     * - link: 链接样式
-     * - outline:
-     *
-     */
-    variant?: 'default' | 'outline' | 'text' | 'ghost' | 'link' | 'icon'
-    /**
-     * 按钮尺寸
-     */
-    size?: 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
-    /**
-     * 图标名称
-     */
-    icon?: string
-    /**
-     * 形状
-     */
-    shape?: 'default' | 'circle' | 'pill'
-    /**
-     * 在按钮文字后面显示
-     */
-    loading?: boolean
-    /**
-     * 是否禁用
-     */
-    disabled?: boolean
-    /**
-     * 是否显示块级按钮
-     */
-    block?: boolean
-    /**
-     * 是否背景透明
-     */
-    ghost?: boolean
+
+    gap?: string | number
 }
 
-@customElement('auto-button')
-export class AutoButton extends AutoElementBase {
+@customElement('auto-button-group')
+export class AutoButtonGroup extends AutoElementBase {
     static styles = styles
-
-    @property({ type: String, reflect: true })
-    type?: 'default' | 'primary' | 'info' | 'danger' | 'warning' | 'success' | 'link' = 'default'
 
     @property({ type: String })
     size?: 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
-
-    @property({ type: String })
-    label?: string
 
     @property({ type: String })
     labelWidth?: string
 
     @property({ type: String })
     icon?: string
+
+    @property({ type: String })
+    gap?: string
 
     @property({ type: String })
     variant?: 'outline' | 'text' | 'ghost'
 
     @property({ type: String, reflect: true })
-    shape?: 'circle' | 'round' | 'pill'
-
-    @property({ type: Boolean, reflect: true })
-    loading?: boolean
+    pill?: boolean
 
     @property({ type: Boolean, reflect: true })
     disabled?: boolean
@@ -113,8 +55,8 @@ export class AutoButton extends AutoElementBase {
     @property({ type: Boolean })
     ghost?: boolean
 
-    @property()
-    value?: any
+    @property({ type: Boolean })
+    checkgroup?: boolean
 
     protected firstUpdated(): void {
         this.setAttribute('role', 'button')
@@ -170,16 +112,7 @@ export class AutoButton extends AutoElementBase {
         if (this.disabled || this.loading) {
             e.stopImmediatePropagation()
             e.preventDefault()
-            return
         }
-        // 触发组件自定义点击事件，便于外部监听（如 Storybook actions）
-        this.dispatchEvent(
-            new CustomEvent('autoclick', {
-                detail: this.value,
-                bubbles: true,
-                composed: true,
-            }),
-        )
     }
 
     private onKeyDown = (e: KeyboardEvent) => {
@@ -214,6 +147,6 @@ export class AutoButton extends AutoElementBase {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'auto-button': AutoButton
+        'auto-button-group': AutoButtonGroup
     }
 }

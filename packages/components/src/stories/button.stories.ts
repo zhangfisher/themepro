@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/web-components'
 import { html } from 'lit'
 import { ifDefined } from 'lit/directives/if-defined.js'
 import '../components/Button/index'
+import { fn } from 'storybook/test'
 
 const meta: Meta = {
     title: '通用/AutoButton',
@@ -16,6 +17,8 @@ const meta: Meta = {
         ghost: false,
         icon: undefined,
         variant: undefined,
+        onClick: fn(),
+        onAutoClick: fn(),
     },
     argTypes: {
         label: { control: 'text' },
@@ -69,8 +72,8 @@ export const ButtonSize: Story = {
     render: (args: any) => {
         return html`
         <auto-flex gap="1em">
-          <auto-button label=${args.label}>默认</auto-button>
-          <auto-button size="x-small" label="微小按钮"></auto-button>
+          <auto-button label=${args.label}  @click=${args.onClick}>默认</auto-button>
+          <auto-button size="x-small" label="微小按钮" @autoclick=${args.onAutoClick}></auto-button>
           <auto-button size="small" label="小按钮"></auto-button>
           <auto-button size="medium" label="默认尺寸按钮"></auto-button>
           <auto-button size="large" label="大按钮"></auto-button>
@@ -220,6 +223,31 @@ export const ButtonLoading: Story = {
             <auto-button size="x-small" type="danger" loading label="危险按钮"></auto-button>
             <auto-button size="x-small" type="warning" loading label="警告按钮"></auto-button>
             <auto-button size="x-small" type="info" loading label="信息按钮"></auto-button>
+          </auto-flex>
+          </auto-flex>
+        `
+    },
+}
+export const ButtonGHost: Story = {
+    name: '幽灵按钮',
+    render: () => {
+        return html`
+        <auto-flex direction='column' gap="1em">
+          <auto-flex gap="1em">
+            <auto-button  icon="home" ghost label="默认"></auto-button>
+            <auto-button  icon="settings" type="primary" ghost label="关健按钮"></auto-button>
+            <auto-button  icon="tag" type="success" ghost label="成功按钮"></auto-button>
+            <auto-button  icon="star" type="danger" ghost label="危险按钮"></auto-button>
+            <auto-button  icon="folder" type="warning" ghost label="警告按钮"></auto-button>
+            <auto-button  icon="file" type="info" ghost label="信息按钮"></auto-button>
+          </auto-flex>
+          <auto-flex gap="1em">
+            <auto-button icon="home"  size="x-small" ghost label="默认"></auto-button>
+            <auto-button icon="settings" size="x-small"  type="primary" ghost label="关健按钮"></auto-button>
+            <auto-button icon="tag" size="x-small"  type="success" ghost label="成功按钮"></auto-button>
+            <auto-button icon="star" size="x-small" type="danger" ghost label="危险按钮"></auto-button>
+            <auto-button icon="folder" size="x-small" type="warning" ghost label="警告按钮"></auto-button>
+            <auto-button icon="file" size="x-small" type="info" ghost label="信息按钮"></auto-button>
           </auto-flex>
           </auto-flex>
         `
