@@ -12,30 +12,18 @@ export const styles = css`
         cursor: pointer;
         color: var(--auto-color);
         background: var(--auto-bgcolor);
-        border: var(--auto-border);
         box-sizing: border-box;
         vertical-align: bottom;
         gap: 0.3em;
         user-select: none;
     } 
-    :host(:hover) {
-        border: 1px solid color-mix(in srgb, var(--t-color-theme-1), black 10%);
-        background-color: var(--t-color-theme-1);
+    :host(:hover),:host([variant='ghost']:hover) {
+        background-color:  var(--auto-hover-color);
     }
-    :host(:active) {
-        background: var(--t-color-theme-2);
+    :host(:active),:host([variant='ghost']:active) {
+        background-color: var(--auto-active-color);
     }
-    /**
-     * 幽灵按钮
-     */
-    :host([ghost]:hover) {
-        background-color: color-mix(in srgb, var(--t-color-theme-1), black 5%)!important;
-    }
-    :host([ghost]:active) {
-        background-color: color-mix(in srgb, var(--t-color-theme-1), white 20%)!important;
-    }
-
-
+     
     /**
     * 按钮文本
      */
@@ -101,14 +89,14 @@ export const styles = css`
     }
 
     /*  */
-    :host([ghost][type='primary']){
+    :host([variant='ghost'][type='primary']){
         color: var(--t-color-primary); 
     }
-    :host([ghost][type='primary']:hover){
+    :host([variant='ghost'][type='primary']:hover){
         background-color:color-mix(in srgb, var(--t-color-primary) 15%, white 5%)!important;
         
     }
-    :host([ghost][type='primary']:active) {
+    :host([variant='ghost'][type='primary']:active) {
         background-color: color-mix(in srgb, var(--t-color-primary), white 80%)!important;
     }
 
@@ -128,14 +116,14 @@ export const styles = css`
     :host([type='success']:active) {
         background-color: color-mix(in srgb, var(--t-color-success), white 30%)!important;;
     }
-    :host([ghost][type='success']){
+    :host([variant='ghost'][type='success']){
         color: var(--t-color-success); 
     }
-    :host([ghost][type='success']:hover){
+    :host([variant='ghost'][type='success']:hover){
         background-color:color-mix(in srgb, var(--t-color-success) 15%, white 5%)!important;
         
     }
-    :host([ghost][type='success']:active) {
+    :host([variant='ghost'][type='success']:active) {
         background-color: color-mix(in srgb, var(--t-color-success), white 80%)!important;
     }
 
@@ -152,20 +140,18 @@ export const styles = css`
         background-color: color-mix(in srgb, var(--t-color-warning), white 20%);
     }
 
-    :host([ghost][type='warning']){
+    :host([variant='ghost'][type='warning']){
         color: var(--t-color-warning); 
     }
-    :host([ghost][type='warning']:hover){
+    :host([variant='ghost'][type='warning']:hover){
         background-color:color-mix(in srgb, var(--t-color-warning) 15%, white 5%)!important;
         
     }
-    :host([ghost][type='warning']:active) {
+    :host([variant='ghost'][type='warning']:active) {
         background-color: color-mix(in srgb, var(--t-color-warning), white 80%)!important;
     }
 
-
-
-
+ 
     :host([type='error']),
     :host([type='danger']){
             background-color: var(--t-color-danger);
@@ -179,18 +165,16 @@ export const styles = css`
         background-color: color-mix(in srgb, var(--t-color-danger), white 20%);
     }
 
-    :host([ghost][type='danger']),:host([ghost][type='error']){
+    :host([variant='ghost'][type='danger']),:host([variant='ghost'][type='error']){
         color: var(--t-color-danger); 
     }
-    :host([ghost][type='danger']:hover),:host([ghost][type='error']:hover){
+    :host([variant='ghost'][type='danger']:hover),:host([variant='ghost'][type='error']:hover){
         background-color:color-mix(in srgb, var(--t-color-danger) 15%, white 5%)!important;
         
     }
-    :host([ghost][type='danger']:active),:host([ghost][type='error']:active) {
+    :host([variant='ghost'][type='danger']:active),:host([variant='ghost'][type='error']:active) {
         background-color: color-mix(in srgb, var(--t-color-danger), white 80%)!important;
     }
-
-
 
 
     :host([type='info']) {
@@ -205,10 +189,7 @@ export const styles = css`
     :host([type='info']:active) {
         background-color: color-mix(in srgb, var(--t-color-info), white 20%);
     }
-    :host([block]){
-        width: 100%;
-    }
-    :host([ghost]){
+    :host([variant='ghost']){
         background-color: transparent;
         border: none;
     }
@@ -221,6 +202,16 @@ export const styles = css`
         pointer-events: none;
         filter: grayscale(50%) opacity(0.6);
     }
+    :host([block]){
+        width: 100%;
+    } 
 
+    :host([variant='outline']){        
+        border: var(--auto-border);
+    }
+    :host([checked]){        
+        background-color: var(--t-theme-color-8);
+        color: var(--t-theme-color-1);
+    }
 
 `

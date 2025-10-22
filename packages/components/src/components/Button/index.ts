@@ -10,7 +10,6 @@ import { when } from 'lit/directives/when.js'
 
 import { styles } from './styles'
 import { AutoElementBase } from '../../elements/base'
-import { ifDefined } from 'lit/directives/if-defined.js'
 import { styleMap } from 'lit/directives/style-map.js'
 
 export interface AutoButtonProps {
@@ -45,7 +44,7 @@ export interface AutoButtonProps {
      * - outline:
      *
      */
-    variant?: 'default' | 'outline' | 'text' | 'ghost' | 'link' | 'icon'
+    variant?: 'default' | 'outline' | 'ghost' | 'link'
     /**
      * 按钮尺寸
      */
@@ -67,13 +66,13 @@ export interface AutoButtonProps {
      */
     disabled?: boolean
     /**
+     * 是否选中
+     */
+    checked?: boolean
+    /**
      * 是否显示块级按钮
      */
     block?: boolean
-    /**
-     * 是否背景透明
-     */
-    ghost?: boolean
 }
 
 @customElement('auto-button')
@@ -95,8 +94,8 @@ export class AutoButton extends AutoElementBase {
     @property({ type: String })
     icon?: string
 
-    @property({ type: String })
-    variant?: 'outline' | 'text' | 'ghost'
+    @property({ type: String, reflect: true })
+    variant?: 'default' | 'outline' | 'ghost' | 'link'
 
     @property({ type: String, reflect: true })
     shape?: 'circle' | 'round' | 'pill'
@@ -108,10 +107,13 @@ export class AutoButton extends AutoElementBase {
     disabled?: boolean
 
     @property({ type: Boolean, reflect: true })
+    checked?: boolean
+
+    @property({ type: Boolean, reflect: true })
     block?: boolean
 
-    @property({ type: Boolean })
-    ghost?: boolean
+    @property({ type: Boolean, reflect: true })
+    vertical?: boolean
 
     @property()
     value?: any

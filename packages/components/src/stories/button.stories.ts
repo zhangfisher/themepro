@@ -14,7 +14,6 @@ const meta: Meta = {
         loading: false,
         disabled: false,
         block: false,
-        ghost: false,
         icon: undefined,
         variant: undefined,
         onClick: fn(),
@@ -28,9 +27,8 @@ const meta: Meta = {
         loading: { control: 'boolean' },
         disabled: { control: 'boolean' },
         block: { control: 'boolean' },
-        ghost: { control: 'boolean' },
+        variant: { control: 'select', options: [undefined, 'default', 'ghost', 'link', 'outline'] },
         icon: { control: 'text' },
-        variant: { control: 'select', options: ['outline', 'text', 'ghost', undefined] },
     },
     render: (args: any) => html`
       <auto-button
@@ -42,7 +40,7 @@ const meta: Meta = {
         ?loading=${args.loading}
         ?disabled=${args.disabled}
         ?block=${args.block}
-        ?ghost=${args.ghost}
+        variant=${args.variant}
       >    
       </auto-button>
   `,
@@ -234,20 +232,86 @@ export const ButtonGHost: Story = {
         return html`
         <auto-flex direction='column' gap="1em">
           <auto-flex gap="1em">
-            <auto-button  icon="home" ghost label="默认"></auto-button>
-            <auto-button  icon="settings" type="primary" ghost label="关健按钮"></auto-button>
-            <auto-button  icon="tag" type="success" ghost label="成功按钮"></auto-button>
-            <auto-button  icon="star" type="danger" ghost label="危险按钮"></auto-button>
-            <auto-button  icon="folder" type="warning" ghost label="警告按钮"></auto-button>
-            <auto-button  icon="file" type="info" ghost label="信息按钮"></auto-button>
+            <auto-button  icon="home" variant='ghost' label="默认"></auto-button>
+            <auto-button  icon="settings" type="primary" variant='ghost' label="关健按钮"></auto-button>
+            <auto-button  icon="tag" type="success" variant='ghost' label="成功按钮"></auto-button>
+            <auto-button  icon="star" type="danger" variant='ghost' label="危险按钮"></auto-button>
+            <auto-button  icon="folder" type="warning" variant='ghost' label="警告按钮"></auto-button>
+            <auto-button  icon="file" type="info" variant='ghost' label="信息按钮"></auto-button>
           </auto-flex>
           <auto-flex gap="1em">
-            <auto-button icon="home"  size="x-small" ghost label="默认"></auto-button>
-            <auto-button icon="settings" size="x-small"  type="primary" ghost label="关健按钮"></auto-button>
-            <auto-button icon="tag" size="x-small"  type="success" ghost label="成功按钮"></auto-button>
-            <auto-button icon="star" size="x-small" type="danger" ghost label="危险按钮"></auto-button>
-            <auto-button icon="folder" size="x-small" type="warning" ghost label="警告按钮"></auto-button>
-            <auto-button icon="file" size="x-small" type="info" ghost label="信息按钮"></auto-button>
+            <auto-button icon="home"  size="x-small" variant='ghost' label="默认"></auto-button>
+            <auto-button icon="settings" size="x-small"  type="primary" variant='ghost' label="关健按钮"></auto-button>
+            <auto-button icon="tag" size="x-small"  type="success" variant='ghost' label="成功按钮"></auto-button>
+            <auto-button icon="star" size="x-small" type="danger" variant='ghost' label="危险按钮"></auto-button>
+            <auto-button icon="folder" size="x-small" type="warning" variant='ghost' label="警告按钮"></auto-button>
+            <auto-button icon="file" size="x-small" type="info" variant='ghost' label="信息按钮"></auto-button>
+          </auto-flex>
+          </auto-flex>
+        `
+    },
+}
+export const ButtonOutline: Story = {
+    name: '边框按钮',
+    render: () => {
+        return html`
+        <auto-flex direction='column' gap="1em">
+          <auto-flex gap="1em">
+            <auto-button  icon="home" variant='outline' label="默认"></auto-button>
+            <auto-button  icon="settings" type="primary" variant='outline' label="关健按钮"></auto-button>
+            <auto-button  icon="tag" type="success" variant='outline' label="成功按钮"></auto-button>
+            <auto-button  icon="star" type="danger" variant='outline' label="危险按钮"></auto-button>
+            <auto-button  icon="folder" type="warning" variant='outline' label="警告按钮"></auto-button>
+            <auto-button  icon="file" type="info" variant='outline' label="信息按钮"></auto-button>
+          </auto-flex> 
+          <auto-flex gap="1em">
+            <auto-button icon="home"  size="small" variant='outline' label="默认"></auto-button>
+            <auto-button icon="settings" size="small"  type="primary" variant='outline' label="关健按钮"></auto-button>
+            <auto-button icon="tag" size="small"  type="success" variant='outline' label="成功按钮"></auto-button>
+            <auto-button icon="star" size="small" type="danger" variant='outline' label="危险按钮"></auto-button>
+            <auto-button icon="folder" size="small" type="warning" variant='outline' label="警告按钮"></auto-button>
+            <auto-button icon="file" size="small" type="info" variant='outline' label="信息按钮"></auto-button>
+          </auto-flex>
+          <auto-flex gap="1em">
+            <auto-button icon="home"  size="x-small" variant='outline' label="默认"></auto-button>
+            <auto-button icon="settings" size="x-small"  type="primary" variant='outline' label="关健按钮"></auto-button>
+            <auto-button icon="tag" size="x-small"  type="success" variant='outline' label="成功按钮"></auto-button>
+            <auto-button icon="star" size="x-small" type="danger" variant='outline' label="危险按钮"></auto-button>
+            <auto-button icon="folder" size="x-small" type="warning" variant='outline' label="警告按钮"></auto-button>
+            <auto-button icon="file" size="x-small" type="info" variant='outline' label="信息按钮"></auto-button>
+          </auto-flex>
+          </auto-flex>
+        `
+    },
+}
+export const ButtonChecked: Story = {
+    name: '复选按钮',
+    render: () => {
+        return html`
+        <auto-flex direction='column' gap="1em">
+          <auto-flex gap="1em">
+            <auto-button .props=${{ label: 'aaaa' }}  icon="home" variant='outline' checked label="默认"></auto-button>
+            <auto-button  icon="settings" type="primary" variant='outline' checked label="关健按钮"></auto-button>
+            <auto-button  icon="tag" type="success" variant='outline' checked label="成功按钮"></auto-button>
+            <auto-button  icon="star" type="danger" variant='outline' checked label="危险按钮"></auto-button>
+            <auto-button  icon="folder" type="warning" variant='outline' checked label="警告按钮"></auto-button>
+            <auto-button  icon="file" type="info" variant='outline' checked label="信息按钮"></auto-button>
+          </auto-flex> 
+          <auto-flex gap="1em">
+            <auto-button icon="home"  size="small" variant='outline' checked label="默认"></auto-button>
+            <auto-button icon="settings" size="small"  type="primary" variant='outline' checked label="关健按钮"></auto-button>
+            <auto-button icon="tag" size="small"  type="success" variant='outline' checked label="成功按钮"></auto-button>
+            <auto-button icon="star" size="small" type="danger" variant='outline' checked label="危险按钮"></auto-button>
+            <auto-button icon="folder" size="small" type="warning" variant='outline' checked label="警告按钮"></auto-button>
+            <auto-button icon="file" size="small" type="info" variant='outline' checked label="信息按钮"></auto-button>
+          </auto-flex>
+          <auto-flex gap="1em">
+            <auto-button icon="home"  size="x-small" variant='outline' checked label="默认"></auto-button>
+            <auto-button icon="settings" size="x-small"  type="primary" variant='outline' checked label="关健按钮"></auto-button>
+            <auto-button icon="tag" size="x-small"  type="success" variant='outline' checked label="成功按钮"></auto-button>
+            <auto-button icon="star" size="x-small" type="danger" variant='outline' checked label="危险按钮"></auto-button>
+            <auto-button icon="folder" size="x-small" type="warning" variant='outline' checked label="警告按钮"></auto-button>
+            <auto-button icon="file" size="x-small" type="info" variant='outline' checked label="信息按钮"></auto-button>
           </auto-flex>
           </auto-flex>
         `

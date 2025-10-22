@@ -1,9 +1,9 @@
 import type { Primitive } from '@/types'
 import { LitElement } from 'lit'
-import { state } from 'lit/decorators.js'
+import { property } from 'lit/decorators.js'
 
-export class AutoElementBase<Props extends Record<string, Primitive> = Record<string, Primitive>> extends LitElement {
-    @state()
+export class AutoElementBase<Props extends Record<string, any> = Record<string, any>> extends LitElement {
+    @property({ type: Object })
     props: Props = {} as Props
 
     getSlots() {
