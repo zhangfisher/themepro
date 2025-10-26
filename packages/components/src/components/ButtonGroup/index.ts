@@ -67,21 +67,24 @@ export class AutoButtonGroup extends AutoElementBase<AutoButtonGroupProps> {
             return item
         })
     }
+    private _renderButton(btn: AutoButtonProps, i: number) {
+        return html`<auto-button
+            label="${btn.label!}"
+            icon="${btn.icon!}"
+            size="${this.size!}"
+            .disabled=${this.disabled!}
+            .block=${this.block!}
+            .vertical=${btn.vertical!}
+            labelWidth="${this.labelWidth!}"
+            variant="${this.variant!}"                    
+        ></auto-button>`
+    }
     render() {
         const buttons = this._getButtons()
         return html`
             <auto-flex direction="${this.direction!}" gap="${this.gap!}">
                 ${repeat(buttons, (btn, i) => {
-                    return html`<auto-button
-                        label="${btn.label!}"
-                        icon="${btn.icon!}"
-                        size="${this.size!}"
-                        .disabled=${this.disabled!}
-                        .block=${this.block!}
-                        .vertical=${btn.vertical!}
-                        labelWidth="${this.labelWidth!}"
-                        variant="${this.variant!}"                    
-                    ></auto-button>`
+                    return this._renderButton(btn, i)
                 })}
             </auto-flex>
         `

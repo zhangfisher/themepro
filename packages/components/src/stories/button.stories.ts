@@ -298,7 +298,7 @@ export const ButtonChecked: Story = {
             <auto-button  icon="file" type="info" variant='outline' checked label="信息按钮"></auto-button>
           </auto-flex> 
           <auto-flex gap="1em">
-            <auto-button icon="home"  size="small" variant='outline' checked label="默认"></auto-button>
+            <auto-button icon="home"  size="small" variant='outline'  label="默认"></auto-button>
             <auto-button icon="settings" size="small"  type="primary" variant='outline' checked label="关健按钮"></auto-button>
             <auto-button icon="tag" size="small"  type="success" variant='outline' checked label="成功按钮"></auto-button>
             <auto-button icon="star" size="small" type="danger" variant='outline' checked label="危险按钮"></auto-button>

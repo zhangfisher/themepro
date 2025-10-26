@@ -1,10 +1,20 @@
-import type { Primitive } from '@/types'
+import { consume } from '@lit/context'
+import { ThemeProContext, type ThemeProStore } from '../context'
 import { LitElement } from 'lit'
 import { property } from 'lit/decorators.js'
 
-export class AutoElementBase<Props extends Record<string, any> = Record<string, any>> extends LitElement {
+export class AutoElementBase<State extends Record<string, any> = Record<string, any>> extends LitElement {
+    @consume({ context: ThemeProContext })
+    @property({ attribute: false })
+    store!: ThemeProStore
+
     @property({ type: Object })
-    props: Props = {} as Props
+    props: State = {} as State
+
+    @property({ type: String })
+    stateKey?: string
+    @property({ type: Object })
+    state?: State
 
     getSlots() {
         const slot = this.renderRoot.querySelector('slot')

@@ -52,11 +52,13 @@
 		"vitepress-demo-plugin": "^1.4.7"
 	},
 	"peerDependencies": {
+		"autostore": "^3.2.7",
 		"typescript": "^5"
 	},
 	"dependencies": {
 		"@ant-design/colors": "^7.2.1",
-		"@ant-design/fast-color": "^3.0.0"
+		"@ant-design/fast-color": "^3.0.0",
+		"@lit/context": "^1.1.6"
 	},
 	"packageManager": "bun@1.2.23"
 }
