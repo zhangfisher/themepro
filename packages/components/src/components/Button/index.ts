@@ -11,6 +11,7 @@ import { when } from 'lit/directives/when.js'
 import { styles } from './styles'
 import { AutoElementBase } from '../../elements/base'
 import { styleMap } from 'lit/directives/style-map.js'
+import { Ripple } from '@/controllers/ripple'
 
 export interface AutoButtonProps {
     /**
@@ -78,6 +79,8 @@ export interface AutoButtonProps {
 @customElement('auto-button')
 export class AutoButton extends AutoElementBase {
     static styles = styles
+
+    ripple = new Ripple(this)
 
     @property({ type: String, reflect: true })
     type?: 'default' | 'primary' | 'info' | 'danger' | 'warning' | 'success' | 'link' = 'default'
@@ -201,15 +204,15 @@ export class AutoButton extends AutoElementBase {
 
     render() {
         return html`
-            ${when(this.icon, () => html`<auto-icon name="${this.icon!}"></auto-icon>`)}
-            ${when(
-                this.label,
-                () =>
-                    html`<span class='label' style=${styleMap({
-                        '--label-width': this.labelWidth,
-                    })}>${this.label}</span>`,
-            )}
-            ${when(this.loading, () => html`<auto-icon name="loading"></auto-icon>`)}
+                ${when(this.icon, () => html`<auto-icon name="${this.icon!}"></auto-icon>`)}
+                ${when(
+                    this.label,
+                    () =>
+                        html`<span class='label' style=${styleMap({
+                            '--label-width': this.labelWidth,
+                        })}>${this.label}</span>`,
+                )}
+                ${when(this.loading, () => html`<auto-icon name="loading"></auto-icon>`)} 
         `
     }
 }

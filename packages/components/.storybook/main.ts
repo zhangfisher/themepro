@@ -7,5 +7,14 @@ const config: StorybookConfig = {
         name: '@storybook/web-components-vite',
         options: {},
     },
+    viteFinal: async (config) => {
+        const path = await import('path')
+        config.resolve = config.resolve || {}
+        config.resolve.alias = {
+            ...(config.resolve.alias || {}),
+            '@': path.resolve(__dirname, '../src'),
+        }
+        return config
+    },
 }
 export default config
