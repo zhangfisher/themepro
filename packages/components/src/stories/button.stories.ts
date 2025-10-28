@@ -290,28 +290,28 @@ export const ButtonChecked: Story = {
         return html`
         <auto-flex direction='column' gap="1em">
           <auto-flex gap="1em">
-            <auto-button .props=${{ label: 'aaaa' }}  icon="home" variant='outline' checked label="默认"></auto-button>
-            <auto-button  icon="settings" type="primary" variant='outline' checked label="关健按钮"></auto-button>
-            <auto-button  icon="tag" type="success" variant='outline' checked label="成功按钮"></auto-button>
-            <auto-button  icon="star" type="danger" variant='outline' checked label="危险按钮"></auto-button>
-            <auto-button  icon="folder" type="warning" variant='outline' checked label="警告按钮"></auto-button>
-            <auto-button  icon="file" type="info" variant='outline' checked label="信息按钮"></auto-button>
+            <auto-button .props=${{ label: 'aaaa' }}  icon="home" checked label="默认"></auto-button>
+            <auto-button  icon="settings" type="primary" checked label="关健按钮"></auto-button>
+            <auto-button  icon="tag" type="success" checked label="成功按钮"></auto-button>
+            <auto-button  icon="star" type="danger" checked label="危险按钮"></auto-button>
+            <auto-button  icon="folder" type="warning" checked label="警告按钮"></auto-button>
+            <auto-button  icon="file" type="info" checked label="信息按钮"></auto-button>
           </auto-flex> 
           <auto-flex gap="1em">
-            <auto-button icon="home"  size="small" variant='outline'  label="默认"></auto-button>
-            <auto-button icon="settings" size="small"  type="primary" variant='outline' checked label="关健按钮"></auto-button>
-            <auto-button icon="tag" size="small"  type="success" variant='outline' checked label="成功按钮"></auto-button>
-            <auto-button icon="star" size="small" type="danger" variant='outline' checked label="危险按钮"></auto-button>
-            <auto-button icon="folder" size="small" type="warning" variant='outline' checked label="警告按钮"></auto-button>
-            <auto-button icon="file" size="small" type="info" variant='outline' checked label="信息按钮"></auto-button>
+            <auto-button icon="home"  size="small" checked  label="默认"></auto-button>
+            <auto-button icon="settings" size="small"  type="primary" checked label="关健按钮"></auto-button>
+            <auto-button icon="tag" size="small"  type="success" checked label="成功按钮"></auto-button>
+            <auto-button icon="star" size="small" type="danger" checked label="危险按钮"></auto-button>
+            <auto-button icon="folder" size="small" type="warning" checked label="警告按钮"></auto-button>
+            <auto-button icon="file" size="small" type="info" checked label="信息按钮"></auto-button>
           </auto-flex>
           <auto-flex gap="1em">
-            <auto-button icon="home"  size="x-small" variant='outline' checked label="默认"></auto-button>
-            <auto-button icon="settings" size="x-small"  type="primary" variant='outline' checked label="关健按钮"></auto-button>
-            <auto-button icon="tag" size="x-small"  type="success" variant='outline' checked label="成功按钮"></auto-button>
-            <auto-button icon="star" size="x-small" type="danger" variant='outline' checked label="危险按钮"></auto-button>
-            <auto-button icon="folder" size="x-small" type="warning" variant='outline' checked label="警告按钮"></auto-button>
-            <auto-button icon="file" size="x-small" type="info" variant='outline' checked label="信息按钮"></auto-button>
+            <auto-button icon="home"  size="x-small" checked value="true,false" label="默认"></auto-button>
+            <auto-button icon="settings" size="x-small"  type="primary" checked label="关健按钮"></auto-button>
+            <auto-button icon="tag" size="x-small"  type="success" checked label="成功按钮"></auto-button>
+            <auto-button icon="star" size="x-small" type="danger" checked label="危险按钮"></auto-button>
+            <auto-button icon="folder" size="x-small" type="warning" checked label="警告按钮"></auto-button>
+            <auto-button icon="file" size="x-small" type="info" checked label="信息按钮"></auto-button>
           </auto-flex>
           </auto-flex>
         `

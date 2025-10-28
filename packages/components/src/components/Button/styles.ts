@@ -20,10 +20,14 @@ export const styles = css`
     :host(:hover),:host([variant='ghost']:hover) {
         background-color:  var(--auto-hover-color);
     }
-    :host(:active),:host([variant='ghost']:active) {
-        background-color: var(--auto-active-color);
+    :host(:not(.label)){
+        flex-grow: 0;
+        flex-shrink: 0;
     }
-     
+    :host([variant='outline']){        
+        border: 1px solid color-mix(in srgb, var(--t-theme-color) 30%, white 10%);
+    }
+
     /**
     * 按钮文本
      */
@@ -31,12 +35,18 @@ export const styles = css`
         white-space:nowrap;
         overflow:hidden;
         text-overflow:ellipsis;
-        width: var(--label-width);
+        width: var(--label-width);        
+        flex-grow: 1;
+        min-width: 0;
     }
+    :host(:not([circle])) > .label{
+        flex-grow: 0;
+    }
+
+    
     /* 禁用态：不响应 hover/active */
     :host([disabled]:hover),
-    :host([disabled]:active) {
-        border: var(--auto-border);
+    :host([disabled]:active) { 
         background: var(--auto-bgcolor);
         color: var(--auto-color);
         outline: none;
@@ -50,13 +60,15 @@ export const styles = css`
         flex-direction: column!important;
         padding: var(--auto-padding);
         gap:0;
-    }
-    :host([shape='circle']){
-       --auto-icon-size:2em;
-    }
+        --auto-icon-size:2em;
+    } 
     :host([shape='pill']) {
         border-radius: 9999px!important;
+    }    
+    :host([shape='rect']),:host([shape='rectangle'])  {
+        border-radius: 0xp!important;
     }
+
     /* 按钮尺寸 */
     :host([x-small]){
         font-size: var(--t-font-size-x-small);
@@ -74,18 +86,23 @@ export const styles = css`
         font-size: var(--t-font-size-x-large);
         padding: calc(0.5* var(--t-spacing-x-large)) var(--t-spacing-x-large);
     }
+    
+
+    /**
+     * 语义按钮类型
+     */
+
+
     /**按钮类型 */
     :host([type='primary']) {
         background-color: var(--t-color-primary);
         color: color-mix(in srgb, var(--t-color-primary) 0%, white 100%);
-        border: 1px solid var(--t-color-primary);
-
     }        
     :host([type='primary']:hover) {
         background-color: color-mix(in srgb, var(--t-color-primary), white 10%);
-    }
-    :host([type='primary']:active) {
-        background-color: color-mix(in srgb, var(--t-color-primary), white 20%);
+    } 
+    :host([type='primary'][variant='outline']) {
+        border-color: color-mix(in srgb, var(--t-color-primary), black 10%);
     }
 
     /*  */
@@ -93,102 +110,67 @@ export const styles = css`
         color: var(--t-color-primary); 
     }
     :host([variant='ghost'][type='primary']:hover){
-        background-color:color-mix(in srgb, var(--t-color-primary) 15%, white 5%)!important;
-        
-    }
-    :host([variant='ghost'][type='primary']:active) {
-        background-color: color-mix(in srgb, var(--t-color-primary), white 80%)!important;
-    }
+        background-color:color-mix(in srgb, var(--t-color-primary) 15%, white 5%)!important;        
+    } 
 
-
-    /**
-     * 语义按钮类型
-     */
     :host([type='success']) {
         background-color: var(--t-color-success);
         color: color-mix(in srgb, var(--t-color-success) 0%, white 100%);
-        border: 1px solid var(--t-color-success);box-sizing: border-box;
+        
     }
     :host([type='success']:hover){ 
         background-color: color-mix(in srgb, var(--t-color-success), white 10%);
     }
-
-    :host([type='success']:active) {
-        background-color: color-mix(in srgb, var(--t-color-success), white 30%)!important;;
-    }
+ 
     :host([variant='ghost'][type='success']){
         color: var(--t-color-success); 
     }
     :host([variant='ghost'][type='success']:hover){
         background-color:color-mix(in srgb, var(--t-color-success) 15%, white 5%)!important;
         
-    }
-    :host([variant='ghost'][type='success']:active) {
-        background-color: color-mix(in srgb, var(--t-color-success), white 80%)!important;
-    }
+    } 
 
     :host([type='warning'])  {
         background-color: var(--t-color-warning);
         color: color-mix(in srgb, var(--t-color-warning) 0%, white 100%);
-        border: 1px solid var(--t-color-warning);
 
     }
     :host([type='warning']:hover) {
         background-color: color-mix(in srgb, var(--t-color-warning), white 10%);
-    }
-    :host([type='warning']:active) {
-        background-color: color-mix(in srgb, var(--t-color-warning), white 20%);
-    }
+    } 
 
     :host([variant='ghost'][type='warning']){
         color: var(--t-color-warning); 
     }
     :host([variant='ghost'][type='warning']:hover){
-        background-color:color-mix(in srgb, var(--t-color-warning) 15%, white 5%)!important;
-        
-    }
-    :host([variant='ghost'][type='warning']:active) {
-        background-color: color-mix(in srgb, var(--t-color-warning), white 80%)!important;
-    }
-
+        background-color:color-mix(in srgb, var(--t-color-warning) 15%, white 5%)!important;        
+    } 
  
     :host([type='error']),
     :host([type='danger']){
             background-color: var(--t-color-danger);
             color: color-mix(in srgb, var(--t-color-danger) 0%, white 100%);
-            border: 1px solid var(--t-color-danger);
     }
     :host([type='error']:hover),:host([type='danger']:hover) {
         background-color: color-mix(in srgb, var(--t-color-danger), white 10%);
-    }
-    :host([type='error']:active),:host([type='danger']:active) {
-        background-color: color-mix(in srgb, var(--t-color-danger), white 20%);
-    }
+    } 
 
     :host([variant='ghost'][type='danger']),:host([variant='ghost'][type='error']){
         color: var(--t-color-danger); 
     }
     :host([variant='ghost'][type='danger']:hover),:host([variant='ghost'][type='error']:hover){
-        background-color:color-mix(in srgb, var(--t-color-danger) 15%, white 5%)!important;
-        
-    }
-    :host([variant='ghost'][type='danger']:active),:host([variant='ghost'][type='error']:active) {
-        background-color: color-mix(in srgb, var(--t-color-danger), white 80%)!important;
-    }
+        background-color:color-mix(in srgb, var(--t-color-danger) 15%, white 5%)!important;        
+    } 
 
 
     :host([type='info']) {
         background-color: var(--t-color-info);
         color: color-mix(in srgb, var(--t-color-info) 0%, white 100%);
-        border: 1px solid var(--t-color-info-4);
     }
     :host([type='info']:hover) {
         background-color: color-mix(in srgb, var(--t-color-info), white 10%);
-    }
+    } 
 
-    :host([type='info']:active) {
-        background-color: color-mix(in srgb, var(--t-color-info), white 20%);
-    }
     :host([variant='ghost']){
         background-color: transparent;
         border: none;
@@ -196,6 +178,7 @@ export const styles = css`
     :host([vertical]){
         flex-direction: column;
     }
+
     :host([disabled]){
         user-select: none;
         cursor: not-allowed;
@@ -206,12 +189,9 @@ export const styles = css`
         width: 100%;
     } 
 
-    :host([variant='outline']){        
-        border: var(--auto-border);
-    }
     :host([checked]){        
-        background-color: var(--t-theme-color-8);
-        color: var(--t-theme-color-1);
+        background-color: var(--t-theme-color);
+        color: color-mix(in srgb, var(--t-color-theme-1), white 5%);
     }
 
 `

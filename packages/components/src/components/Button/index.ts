@@ -11,7 +11,7 @@ import { when } from 'lit/directives/when.js'
 import { styles } from './styles'
 import { AutoElementBase } from '../../elements/base'
 import { styleMap } from 'lit/directives/style-map.js'
-import { Ripple } from '@/controllers/ripple'
+import { Ripple, rippleStyles } from '@/controllers/ripple'
 
 export interface AutoButtonProps {
     /**
@@ -27,6 +27,10 @@ export interface AutoButtonProps {
      * 垂直布局显示图标和文字
      */
     vertical?: boolean
+    /**
+     * 当按钮为checked时
+     */
+    value?: any
     /**
      *
      */
@@ -78,7 +82,7 @@ export interface AutoButtonProps {
 
 @customElement('auto-button')
 export class AutoButton extends AutoElementBase {
-    static styles = styles
+    static styles = [styles, rippleStyles]
 
     ripple = new Ripple(this)
 
@@ -101,7 +105,7 @@ export class AutoButton extends AutoElementBase {
     variant?: 'default' | 'outline' | 'ghost' | 'link'
 
     @property({ type: String, reflect: true })
-    shape?: 'circle' | 'round' | 'pill'
+    shape?: 'default' | 'circle' | 'pill' | 'rectangle' | 'rect'
 
     @property({ type: Boolean, reflect: true })
     loading?: boolean
@@ -110,16 +114,13 @@ export class AutoButton extends AutoElementBase {
     disabled?: boolean
 
     @property({ type: Boolean, reflect: true })
-    checked?: boolean
-
-    @property({ type: Boolean, reflect: true })
     block?: boolean
 
     @property({ type: Boolean, reflect: true })
     vertical?: boolean
 
-    @property()
-    value?: any
+    @property({ type: Boolean, reflect: true })
+    value: boolean = false
 
     protected firstUpdated(): void {
         this.setAttribute('role', 'button')
@@ -203,7 +204,9 @@ export class AutoButton extends AutoElementBase {
     }
 
     render() {
+        if (this.shape === 'circle') this.ripple.center = true
         return html`
+                ${when(this.loading, () => html`<auto-icon name="loading"></auto-icon>`)} 
                 ${when(this.icon, () => html`<auto-icon name="${this.icon!}"></auto-icon>`)}
                 ${when(
                     this.label,
@@ -212,7 +215,6 @@ export class AutoButton extends AutoElementBase {
                             '--label-width': this.labelWidth,
                         })}>${this.label}</span>`,
                 )}
-                ${when(this.loading, () => html`<auto-icon name="loading"></auto-icon>`)} 
         `
     }
 }
