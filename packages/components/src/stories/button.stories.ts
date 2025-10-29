@@ -290,29 +290,81 @@ export const ButtonChecked: Story = {
         return html`
         <auto-flex direction='column' gap="1em">
           <auto-flex gap="1em">
-            <auto-button .props=${{ label: 'aaaa' }}  icon="home" checked label="默认"></auto-button>
-            <auto-button  icon="settings" type="primary" checked label="关健按钮"></auto-button>
-            <auto-button  icon="tag" type="success" checked label="成功按钮"></auto-button>
-            <auto-button  icon="star" type="danger" checked label="危险按钮"></auto-button>
-            <auto-button  icon="folder" type="warning" checked label="警告按钮"></auto-button>
-            <auto-button  icon="file" type="info" checked label="信息按钮"></auto-button>
+            <auto-button .props=${{ label: 'aaaa' }}  icon="home" checkable label="默认"></auto-button>
+            <auto-button  icon="settings" type="primary" checkable label="关健按钮"></auto-button>
+            <auto-button  icon="tag" type="success" checkable label="成功按钮"></auto-button>
+            <auto-button  icon="star" type="danger" checkable label="危险按钮"></auto-button>
+            <auto-button  icon="folder" type="warning" checkable label="警告按钮"></auto-button>
+            <auto-button  icon="file" type="info" checkable label="信息按钮"></auto-button>
           </auto-flex> 
           <auto-flex gap="1em">
-            <auto-button icon="home"  size="small" checked  label="默认"></auto-button>
-            <auto-button icon="settings" size="small"  type="primary" checked label="关健按钮"></auto-button>
-            <auto-button icon="tag" size="small"  type="success" checked label="成功按钮"></auto-button>
-            <auto-button icon="star" size="small" type="danger" checked label="危险按钮"></auto-button>
-            <auto-button icon="folder" size="small" type="warning" checked label="警告按钮"></auto-button>
-            <auto-button icon="file" size="small" type="info" checked label="信息按钮"></auto-button>
+            <auto-button icon="home"  size="small" checkable  label="默认"></auto-button>
+            <auto-button icon="settings" size="small"  type="primary" checkable label="关健按钮"></auto-button>
+            <auto-button icon="tag" size="small"  type="success" checkable label="成功按钮"></auto-button>
+            <auto-button icon="star" size="small" type="danger" checkable label="危险按钮"></auto-button>
+            <auto-button icon="folder" size="small" type="warning" checkable label="警告按钮"></auto-button>
+            <auto-button icon="file" size="small" type="info" checkable label="信息按钮"></auto-button>
           </auto-flex>
           <auto-flex gap="1em">
-            <auto-button icon="home"  size="x-small" checked value="true,false" label="默认"></auto-button>
-            <auto-button icon="settings" size="x-small"  type="primary" checked label="关健按钮"></auto-button>
-            <auto-button icon="tag" size="x-small"  type="success" checked label="成功按钮"></auto-button>
-            <auto-button icon="star" size="x-small" type="danger" checked label="危险按钮"></auto-button>
-            <auto-button icon="folder" size="x-small" type="warning" checked label="警告按钮"></auto-button>
-            <auto-button icon="file" size="x-small" type="info" checked label="信息按钮"></auto-button>
+            <auto-button icon="home"  size="x-small" checkable label="默认"></auto-button>
+            <auto-button icon="settings" size="x-small"  type="primary" checkable label="关健按钮"></auto-button>
+            <auto-button icon="tag" size="x-small"  type="success" checkable label="成功按钮"></auto-button>
+            <auto-button icon="star" size="x-small" type="danger" checkable label="危险按钮"></auto-button>
+            <auto-button icon="folder" size="x-small" type="warning" checkable label="警告按钮"></auto-button>
+            <auto-button icon="file" size="x-small" type="info" checkable label="信息按钮"></auto-button>
           </auto-flex>
+          </auto-flex>
+        `
+    },
+}
+export const ButtonBadge: Story = {
+    name: '带Badge按钮',
+    render: () => {
+        return html`
+        <auto-flex direction='column' gap="1em">          
+          <auto-flex gap="1em">
+            <auto-button badge="8" style="width: 200px;" icon="home"  size="x-small" label="默认"></auto-button>
+            <auto-button badge="8" style="width: 200px;" icon="settings" size="x-small"  type="primary" label="关健按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;" icon="tag" size="x-small"  type="success" label="成功按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;" icon="star" size="x-small" type="danger" label="危险按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;" icon="folder" size="x-small" type="warning" label="警告按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;" icon="file" size="x-small" type="info" label="信息按钮"></auto-button>
+          </auto-flex>
+          <auto-flex gap="1em">
+            <auto-button badge="8" style="width: 200px;" icon="home"  size="small"  label="默认"></auto-button>
+            <auto-button badge="8" style="width: 200px;" icon="settings" size="small"  type="primary" label="关健按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;" icon="tag" size="small"  type="success" label="成功按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;" icon="star" size="small" type="danger" label="危险按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;" icon="folder" size="small" type="warning" label="警告按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;" icon="file" size="small" type="info" label="信息按钮"></auto-button>
+          </auto-flex>
+          
+          <auto-flex gap="1em">
+            <auto-button badge="8" style="width: 200px;" .props=${{ label: 'aaaa' }}  icon="home" label="默认"></auto-button>
+            <auto-button badge="8" style="width: 200px;"  icon="settings" type="primary" label="关健按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;"  icon="tag" type="success" label="成功按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;"  icon="star" type="danger" label="危险按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;"  icon="folder" type="warning" label="警告按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;"  icon="file" type="info" label="信息按钮"></auto-button>
+          </auto-flex> 
+          
+          <auto-flex gap="1em">
+            <auto-button badge="8" style="width: 200px;"  size="large"  icon="home" label="默认"></auto-button>
+            <auto-button badge="8" style="width: 200px;"  size="large"  icon="settings" type="primary" label="关健按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;"  size="large" icon="tag" type="success" label="成功按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;"  size="large"  icon="star" type="danger" label="危险按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;"  size="large"  icon="folder" type="warning" label="警告按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;"  size="large"  icon="file" type="info" label="信息按钮"></auto-button>
+          </auto-flex> 
+          
+          <auto-flex gap="1em">
+            <auto-button badge="8" style="width: 200px;"  size="x-large"  icon="home" label="默认"></auto-button>
+            <auto-button badge="8" style="width: 200px;"  size="x-large"  icon="settings" type="primary" label="关健按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;"  size="x-large" icon="tag" type="success" label="成功按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;"  size="x-large"  icon="star" type="danger" label="危险按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;"  size="x-large"  icon="folder" type="warning" label="警告按钮"></auto-button>
+            <auto-button badge="8" style="width: 200px;"  size="x-large"  icon="file" type="info" label="信息按钮"></auto-button>
+          </auto-flex> 
           </auto-flex>
         `
     },

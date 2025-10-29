@@ -16,11 +16,11 @@ export const baseVars = {
     '--t-shadow-large': '0 2px 8px hsl(240 3.8% 46.1% / 12%)',
     '--t-shadow-x-large': '0 4px 16px hsl(240 3.8% 46.1% / 12%)',
 
-    '--t-font-size-x-small': '0.75rem',
-    '--t-font-size-small': '0.875rem',
+    '--t-font-size-x-small': '0.8rem',
+    '--t-font-size-small': '0.9rem',
     '--t-font-size-medium': '1rem',
-    '--t-font-size-large': '1.25rem',
-    '--t-font-size-x-large': '1.5rem',
+    '--t-font-size-large': '1.1rem',
+    '--t-font-size-x-large': '1.2rem',
 
     '--t-font-weight-x-small': '100',
     '--t-font-weight-small': '200',
@@ -29,11 +29,11 @@ export const baseVars = {
     '--t-font-weight-x-large': '600',
 
     /* 间距 */
-    '--t-spacing-x-small': '0.5rem',
-    '--t-spacing-small': '0.75rem',
+    '--t-spacing-x-small': '0.8rem',
+    '--t-spacing-small': '0.9rem',
     '--t-spacing-medium': '1rem',
-    '--t-spacing-large': '1.25rem',
-    '--t-spacing-x-large': '1.5rem',
+    '--t-spacing-large': '1.1rem',
+    '--t-spacing-x-large': '1.2rem',
 
     '--t-letter-spacing-x-small': 'calc(var(--t-spacing-medium) * 0.01)',
     '--t-letter-spacing-small': 'calc(var(--t-spacing-medium) * 0.02)',

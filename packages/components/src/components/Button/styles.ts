@@ -6,7 +6,7 @@ export const styles = css`
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: calc(0.8 * var(--auto-input-padding)) calc(1.2 * var(--auto-input-padding));
+        padding: calc(0.5 * var(--t-spacing-medium)) var(--t-spacing-medium);;
         border-radius: var(--auto-border-radius);
         font: var(--auto-font);
         cursor: pointer;
@@ -38,8 +38,9 @@ export const styles = css`
         width: var(--label-width);        
         flex-grow: 1;
         min-width: 0;
+        text-align: left;
     }
-    :host(:not([circle])) > .label{
+    :host([shape='circle']) > .label{
         flex-grow: 0;
     }
 
@@ -189,9 +190,18 @@ export const styles = css`
         width: 100%;
     } 
 
-    :host([checked]){        
+    :host([checkable][value]){        
         background-color: var(--t-theme-color);
         color: color-mix(in srgb, var(--t-color-theme-1), white 5%);
+    }
+
+    :host  .badge{
+        border-radius: 4px;
+        padding: 2px 4px;
+        font-size: calc( 0.8 * var(--auto-font-size));
+        line-height: 100%;
+        color:white;
+        background-color: red;
     }
 
 `

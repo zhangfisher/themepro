@@ -120,7 +120,13 @@ export class AutoButton extends AutoElementBase {
     vertical?: boolean
 
     @property({ type: Boolean, reflect: true })
+    checkable: boolean = false
+
+    @property({ type: Boolean, reflect: true })
     value: boolean = false
+
+    @property({ type: Number })
+    badge: number = 0
 
     protected firstUpdated(): void {
         this.setAttribute('role', 'button')
@@ -178,10 +184,23 @@ export class AutoButton extends AutoElementBase {
             e.preventDefault()
             return
         }
+        if (this.checkable) {
+            this.value = !this.value
+            // 触发组件自定义点击事件，便于外部监听（如 Storybook actions）
+            this.dispatchEvent(
+                new CustomEvent('change', {
+                    detail: this.value,
+                    bubbles: true,
+                    composed: true,
+                }),
+            )
+        }
         // 触发组件自定义点击事件，便于外部监听（如 Storybook actions）
         this.dispatchEvent(
             new CustomEvent('autoclick', {
-                detail: this.value,
+                detail: {
+                    checked: this.value,
+                },
                 bubbles: true,
                 composed: true,
             }),
@@ -203,6 +222,10 @@ export class AutoButton extends AutoElementBase {
         }
     }
 
+    private _renderBadge() {
+        return html`${when(this.badge > 0, () => html`<span class="badge">${this.badge}</span>`)}`
+    }
+
     render() {
         if (this.shape === 'circle') this.ripple.center = true
         return html`
@@ -215,6 +238,8 @@ export class AutoButton extends AutoElementBase {
                             '--label-width': this.labelWidth,
                         })}>${this.label}</span>`,
                 )}
+                ${this._renderBadge()}
+                
         `
     }
 }
