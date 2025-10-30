@@ -223,7 +223,7 @@ export class AutoButton extends AutoElementBase {
     }
 
     private _renderBadge() {
-        return html`${when(this.badge > 0, () => html`<span class="badge">${this.badge}</span>`)}`
+        return html`${when(this.badge > 0, () => html`<span class="badge"></span>`)}`
     }
 
     render() {

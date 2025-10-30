@@ -3,6 +3,7 @@ import { css } from 'lit'
 export const styles = css`
     :host {
         display: inline-flex;
+        position: relative;
         align-items: center;
         justify-content: center;
         text-align: center;
@@ -195,13 +196,49 @@ export const styles = css`
         color: color-mix(in srgb, var(--t-color-theme-1), white 5%);
     }
 
-    :host  .badge{
-        border-radius: 4px;
-        padding: 2px 4px;
-        font-size: calc( 0.8 * var(--auto-font-size));
-        line-height: 100%;
+    :host .badge{
+        position: absolute;
+        left: 100%;
+        top: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        aspect-ratio: 1;
+        width: 8px;
+        height: 8px; 
         color:white;
         background-color: red;
-    }
+        border: 1px solid white;
+    }  
+/* 使用伪元素创建涟漪效果 */
+:host .badge::before,
+:host .badge::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 1px solid red;
+    background-color: red;
+    opacity: 0.2;
+    border: 1px solid white;
+    animation: ripple-wave 0.8s ease-out infinite;
+ }
 
+:host .badge::after {
+    animation-delay: 1s;
+}
+
+@keyframes ripple-wave {
+    0% {
+        outline: 1px solid red ;
+        opacity: 0.3;
+    }
+    100% {
+        outline: 10px solid red ;
+        opacity: 0;
+    }
+}
 `

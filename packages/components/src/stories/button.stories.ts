@@ -323,48 +323,33 @@ export const ButtonBadge: Story = {
         return html`
         <auto-flex direction='column' gap="1em">          
           <auto-flex gap="1em">
-            <auto-button badge="8" style="width: 200px;" icon="home"  size="x-small" label="默认"></auto-button>
-            <auto-button badge="8" style="width: 200px;" icon="settings" size="x-small"  type="primary" label="关健按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;" icon="tag" size="x-small"  type="success" label="成功按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;" icon="star" size="x-small" type="danger" label="危险按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;" icon="folder" size="x-small" type="warning" label="警告按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;" icon="file" size="x-small" type="info" label="信息按钮"></auto-button>
+            <auto-button badge="18" style="width: 200px;" icon="home"  size="x-small" label="默认"></auto-button>
+            <auto-button badge="18" style="width: 200px;" icon="settings" size="x-small"  type="primary" label="关健按钮"></auto-button>
+            <auto-button badge="18" style="width: 200px;" icon="tag" size="x-small"  type="success" label="成功按钮"></auto-button>                      
           </auto-flex>
           <auto-flex gap="1em">
             <auto-button badge="8" style="width: 200px;" icon="home"  size="small"  label="默认"></auto-button>
             <auto-button badge="8" style="width: 200px;" icon="settings" size="small"  type="primary" label="关健按钮"></auto-button>
             <auto-button badge="8" style="width: 200px;" icon="tag" size="small"  type="success" label="成功按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;" icon="star" size="small" type="danger" label="危险按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;" icon="folder" size="small" type="warning" label="警告按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;" icon="file" size="small" type="info" label="信息按钮"></auto-button>
           </auto-flex>
           
           <auto-flex gap="1em">
-            <auto-button badge="8" style="width: 200px;" .props=${{ label: 'aaaa' }}  icon="home" label="默认"></auto-button>
-            <auto-button badge="8" style="width: 200px;"  icon="settings" type="primary" label="关健按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;"  icon="tag" type="success" label="成功按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;"  icon="star" type="danger" label="危险按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;"  icon="folder" type="warning" label="警告按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;"  icon="file" type="info" label="信息按钮"></auto-button>
+            <auto-button badge="8999" style="width: 200px;" .props=${{ label: 'aaaa' }}  icon="home" label="默认"></auto-button>
+            <auto-button badge="8999" style="width: 200px;"  icon="settings" type="primary" label="关健按钮"></auto-button>
+            <auto-button badge="8999" style="width: 200px;"  icon="tag" type="success" label="成功按钮"></auto-button>
           </auto-flex> 
           
           <auto-flex gap="1em">
             <auto-button badge="8" style="width: 200px;"  size="large"  icon="home" label="默认"></auto-button>
             <auto-button badge="8" style="width: 200px;"  size="large"  icon="settings" type="primary" label="关健按钮"></auto-button>
             <auto-button badge="8" style="width: 200px;"  size="large" icon="tag" type="success" label="成功按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;"  size="large"  icon="star" type="danger" label="危险按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;"  size="large"  icon="folder" type="warning" label="警告按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;"  size="large"  icon="file" type="info" label="信息按钮"></auto-button>
           </auto-flex> 
           
           <auto-flex gap="1em">
             <auto-button badge="8" style="width: 200px;"  size="x-large"  icon="home" label="默认"></auto-button>
             <auto-button badge="8" style="width: 200px;"  size="x-large"  icon="settings" type="primary" label="关健按钮"></auto-button>
             <auto-button badge="8" style="width: 200px;"  size="x-large" icon="tag" type="success" label="成功按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;"  size="x-large"  icon="star" type="danger" label="危险按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;"  size="x-large"  icon="folder" type="warning" label="警告按钮"></auto-button>
-            <auto-button badge="8" style="width: 200px;"  size="x-large"  icon="file" type="info" label="信息按钮"></auto-button>
-          </auto-flex> 
+            </auto-flex> 
           </auto-flex>
         `
     },
