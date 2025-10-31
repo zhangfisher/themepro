@@ -58,7 +58,7 @@ const renderIcon = (args: any) => html`
         style="border: var(--auto-border);padding:1em;font-size:2em"
     >
         ${repeat(icons, (name) => {
-            return html`<auto-icon size="12px" name=${name}></auto-icon>`;
+            return html`<auto-icon ze="12px" name=${name}></auto-icon>`;
         })}
     </auto-flex>
     <h3>圆形</h3>

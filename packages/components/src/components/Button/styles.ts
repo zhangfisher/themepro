@@ -19,7 +19,8 @@ export const styles = css`
         user-select: none;
     } 
     :host(:hover),:host([variant='ghost']:hover) {
-        background-color:  var(--auto-hover-color);
+        background-color:  var(--auto-hover-bgcolor);
+        color:  var(--auto-hover-color);
     }
     :host(:not(.label)){
         flex-grow: 0;
