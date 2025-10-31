@@ -51,6 +51,16 @@ const renderIcon = (args: any) => html`
             return html`<auto-icon inherit name=${name}></auto-icon>`;
         })}
     </auto-flex>
+    <h3>指定尺寸: 通过size属性指定</h3>
+    <auto-flex
+        wrap
+        gap="1em"
+        style="border: var(--auto-border);padding:1em;font-size:2em"
+    >
+        ${repeat(icons, (name) => {
+            return html`<auto-icon size="12px" name=${name}></auto-icon>`;
+        })}
+    </auto-flex>
     <h3>圆形</h3>
     <auto-flex wrap gap="1em" style="border: var(--auto-border);padding:1em;">
         ${repeat(icons, (name) => {

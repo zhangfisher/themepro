@@ -70,7 +70,7 @@ export const ButtonSize: Story = {
     render: (args: any) => {
         return html`
         <auto-flex gap="1em">
-          <auto-button label=${args.label}  @click=${args.onClick}>默认</auto-button>
+          <auto-button label="默认自动按钮"  @click=${args.onClick}></auto-button>
           <auto-button size="x-small" label="微小按钮" @autoclick=${args.onAutoClick}></auto-button>
           <auto-button size="small" label="小按钮"></auto-button>
           <auto-button size="medium" label="默认尺寸按钮"></auto-button>
