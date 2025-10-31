@@ -1,6 +1,28 @@
+/**
+ *
+ * 在元素点击时显示涟漪动画
+ *
+ *
+ * 使用方法：
+ *
+ * - 标准用法
+ *
+ * import {rippleStyles, Ripple } from './ripple'
+ *
+ * class MyComponent extends LitElement{
+ *     static styles= [
+ *          rippleStyles
+ *     ]
+ *     ripple = new Ripple(this)
+ * }
+ *
+ *  重点：需要引入rippleStyles，并将其添加到组件的样式中，之所以如此的方式是为了避免在每次点击时都重新生成，节约资源
+ *
+ *
+ */
 import { css, type ReactiveController } from 'lit'
 
-export const rippleStyles = css`
+export const clickRippleStyles = css`
     /* 涟漪容器：充满目标元素，裁剪越界内容 */
     .ripple-container {
         position: absolute;
@@ -34,9 +56,11 @@ export const rippleStyles = css`
 /**
  * 点击时显示波纹效果
  */
-export class Ripple implements ReactiveController {
+export class ClickRipple implements ReactiveController {
+    static styles = clickRippleStyles
     host: any
     color?: string
+    selector?: string
     center: boolean = false
     private clickHandler: (event: MouseEvent) => void
 
@@ -46,7 +70,6 @@ export class Ripple implements ReactiveController {
         this.color = color
         this.clickHandler = this.handleClick.bind(this)
     }
-
     /**
      * 处理点击事件
      */
@@ -91,7 +114,6 @@ export class Ripple implements ReactiveController {
         // 将涟漪添加到容器中
         container.appendChild(ripple)
     }
-
     /**
      * 当宿主元素连接到DOM时调用的生命周期方法
      */

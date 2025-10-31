@@ -7,6 +7,12 @@
  * <auto-button type="d">确定</auto-button>
  * <auto-button type="info">确定</auto-button>
  *
+ * - 图标默认尺寸
+ * <auto-icon auto></auto-icon>
+ * - inherit
+ * 由图标容器的font-size
+ * - 指定尺寸
+ * <auto-icon size="32px"></auto-icon>
  *
  */
 import { LitElement, type TemplateResult, html } from 'lit'
@@ -22,8 +28,16 @@ import { toggleWrapper } from '../../utils/toggleWrapper'
 export class AutoIcon extends LitElement {
     static styles = styles
 
+    /**
+     * 指定尺寸
+     */
     @property({ type: String })
     size?: string
+    /**
+     * 图标尺寸继承父元素的font-size
+     */
+    @property({ type: Boolean, reflect: true })
+    inherit?: boolean
 
     @property({ type: String })
     name: string = 'star'

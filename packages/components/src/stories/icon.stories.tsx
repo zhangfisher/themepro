@@ -31,22 +31,28 @@ const icons: string[] = [
 ];
 
 const renderIcon = (args: any) => html`
-    <auto-flex wrap gap="1em">
+    <h3>默认自动尺寸: 由var(--auto-icon-size)控制</h3>
+    <auto-flex
+        wrap
+        gap="1em"
+        style="border: var(--auto-border);padding:1em;font-size:2em"
+    >
         ${repeat(icons, (name) => {
-            return html`<auto-icon
-                size=${args.size}
-                name=${name}
-                title="${name}"
-                color=${args.color}
-                rotate=${args.rotate}
-                .strokeWidth=${typeof args.strokeWidth === "number"
-                    ? args.strokeWidth
-                    : undefined}
-            ></auto-icon>`;
+            return html`<auto-icon name=${name}></auto-icon>`;
+        })}
+    </auto-flex>
+    <h3>继承尺寸: 继承容器字体尺寸</h3>
+    <auto-flex
+        wrap
+        gap="1em"
+        style="border: var(--auto-border);padding:1em;font-size:2em"
+    >
+        ${repeat(icons, (name) => {
+            return html`<auto-icon inherit name=${name}></auto-icon>`;
         })}
     </auto-flex>
     <h3>圆形</h3>
-    <auto-flex wrap gap="1em">
+    <auto-flex wrap gap="1em" style="border: var(--auto-border);padding:1em;">
         ${repeat(icons, (name) => {
             return html`<auto-icon
                 size=${args.size}
@@ -62,7 +68,7 @@ const renderIcon = (args: any) => html`
         })}
     </auto-flex>
     <h3>圆角矩形</h3>
-    <auto-flex wrap gap="1em">
+    <auto-flex wrap gap="1em" style="border: var(--auto-border);padding:1em;">
         ${repeat(icons, (name) => {
             return html`<auto-icon
                 size=${args.size}

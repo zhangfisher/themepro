@@ -27,4 +27,7 @@ export const styles = css`
             border-radius: var(--auto-border-radius);            
         }
     }
+    :host([inherit]) .auto-icon{
+        font-size: inherit;
+    }
 `

@@ -11,7 +11,7 @@ import { when } from 'lit/directives/when.js'
 import { styles } from './styles'
 import { AutoElementBase } from '../../elements/base'
 import { styleMap } from 'lit/directives/style-map.js'
-import { Ripple, rippleStyles } from '@/controllers/ripple'
+import { ClickRipple } from '@/controllers/clickRipple'
 
 export interface AutoButtonProps {
     /**
@@ -23,6 +23,10 @@ export interface AutoButtonProps {
      * 按钮文字最大宽度
      */
     labelWidth?: string
+    /**
+     * 指定label的flex-grow=1
+     */
+    labelGrow?: boolean
     /**
      * 垂直布局显示图标和文字
      */
@@ -82,9 +86,9 @@ export interface AutoButtonProps {
 
 @customElement('auto-button')
 export class AutoButton extends AutoElementBase {
-    static styles = [styles, rippleStyles]
+    static styles = [styles, ClickRipple.styles]
 
-    ripple = new Ripple(this)
+    ripple = new ClickRipple(this)
 
     @property({ type: String, reflect: true })
     type?: 'default' | 'primary' | 'info' | 'danger' | 'warning' | 'success' | 'link' = 'default'

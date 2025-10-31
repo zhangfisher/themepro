@@ -37,12 +37,15 @@ export const styles = css`
         overflow:hidden;
         text-overflow:ellipsis;
         width: var(--label-width);        
-        flex-grow: 1;
         min-width: 0;
         text-align: left;
     }
     :host([shape='circle']) > .label{
         flex-grow: 0;
+    }
+
+    :host([labelGrow]){        
+        flex-grow: 1;
     }
 
     
