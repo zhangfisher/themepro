@@ -12,13 +12,46 @@ import { styles } from './styles'
 import { AutoElementBase } from '../../elements/base'
 import { styleMap } from 'lit/directives/style-map.js'
 import { ClickRipple } from '@/controllers/clickRipple'
+import { ifDefined } from 'lit/directives/if-defined.js'
+import { repeat } from 'lit/directives/repeat.js'
+
+export type AutoButtonTag = {
+    id: string
+    icon?: string
+    label?: string
+    checkable?: boolean
+    tips?: string
+    /**
+     * 默认是圆角矩形，circle=true时显示为圆形
+     */
+    circle?: boolean
+    /**
+     *  复选值
+     * 当为可复选时，表示当前选中状态的值
+     * 默认是[true,false]
+     * 比如：values:[1,2]，则表示选中时是1，否则是2
+     */
+    checkValues?: any[]
+    onClick?: (e: MouseEvent) => void
+    /**
+     * 可复选时
+     * @param e
+     * @returns
+     */
+    onChange?: (e: MouseEvent) => void
+}
+
+export type AutoButtonTags = AutoButtonTag[]
 
 export interface AutoButtonProps {
+    /**
+     * 按钮尺寸
+     */
+    size?: 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
     /**
      * 按钮文字
      */
     label?: string
-
     /**
      * 按钮文字最大宽度
      */
@@ -36,12 +69,9 @@ export interface AutoButtonProps {
      */
     value?: any
     /**
-     *
-     */
-    /**
      * 按钮类型
      */
-    type?: 'default' | 'primary' | 'info' | 'danger' | 'warning' | 'success'
+    type?: 'default' | 'primary' | 'info' | 'danger' | 'warning' | 'success' | 'error'
     /**
      * 按钮样式
      *
@@ -51,13 +81,8 @@ export interface AutoButtonProps {
      * - ghost: 背景透明
      * - link: 链接样式
      * - outline:
-     *
      */
     variant?: 'default' | 'outline' | 'ghost' | 'link'
-    /**
-     * 按钮尺寸
-     */
-    size?: 'x-small' | 'small' | 'medium' | 'large' | 'x-large'
     /**
      * 图标名称
      */
@@ -75,6 +100,10 @@ export interface AutoButtonProps {
      */
     disabled?: boolean
     /**
+     *  复选值
+     */
+    checkValues?: any[]
+    /**
      * 是否选中
      */
     checked?: boolean
@@ -82,10 +111,21 @@ export interface AutoButtonProps {
      * 是否显示块级按钮
      */
     block?: boolean
+    /**
+     * 显示额外的标签,标签可以是:
+     * - 图标:
+     * - 文字:
+     *
+     */
+    tags: string | string[] | AutoButtonTags
+
+    onClick?: (e: MouseEvent) => void
+
+    onChange?: (e: MouseEvent) => void
 }
 
 @customElement('auto-button')
-export class AutoButton extends AutoElementBase {
+export class AutoButton extends AutoElementBase<AutoButtonProps> {
     static styles = [styles, ClickRipple.styles]
 
     ripple = new ClickRipple(this)
@@ -126,11 +166,20 @@ export class AutoButton extends AutoElementBase {
     @property({ type: Boolean, reflect: true })
     checkable: boolean = false
 
+    @property()
+    value?: any
+
     @property({ type: Boolean, reflect: true })
-    value: boolean = false
+    checked: boolean = false
+
+    @property({ type: Boolean, reflect: true })
+    labelGrow: boolean = false
 
     @property({ type: Number })
     badge: number = 0
+
+    @property({ type: String })
+    tags?: string | string[] | AutoButtonTags
 
     protected firstUpdated(): void {
         this.setAttribute('role', 'button')
@@ -182,23 +231,26 @@ export class AutoButton extends AutoElementBase {
         super.disconnectedCallback()
     }
 
+    private _handleCheckEvent(e: MouseEvent) {
+        const checkValues = this.state?.checkValues || [true, false]
+        if (checkValues.length < 2) checkValues.push(false)
+        // 触发组件自定义点击事件，便于外部监听（如 Storybook actions）
+        this.dispatchEvent(
+            new CustomEvent('change', {
+                detail: this.value,
+                bubbles: true,
+                composed: true,
+            }),
+        )
+    }
+
     private onClick = (e: MouseEvent) => {
         if (this.disabled || this.loading) {
             e.stopImmediatePropagation()
             e.preventDefault()
             return
         }
-        if (this.checkable) {
-            this.value = !this.value
-            // 触发组件自定义点击事件，便于外部监听（如 Storybook actions）
-            this.dispatchEvent(
-                new CustomEvent('change', {
-                    detail: this.value,
-                    bubbles: true,
-                    composed: true,
-                }),
-            )
-        }
+        this._handleCheckEvent(e)
         // 触发组件自定义点击事件，便于外部监听（如 Storybook actions）
         this.dispatchEvent(
             new CustomEvent('autoclick', {
@@ -229,12 +281,39 @@ export class AutoButton extends AutoElementBase {
     private _renderBadge() {
         return html`${when(this.badge > 0, () => html`<span class="badge"></span>`)}`
     }
-
+    private _getTags(): AutoButtonTags {
+        const tags = (typeof this.tags === 'string' ? this.tags.split(',') : this.tags || []) as any[]
+        return tags
+            .map((tag) => {
+                return Object.assign(
+                    {},
+                    typeof tag === 'string' ? (tag.startsWith('@') ? { label: tag.substring(1) } : { icon: tag }) : tag,
+                )
+            })
+            .filter((tag) => tag) as AutoButtonTags
+    }
+    private _renderTag(tag: AutoButtonTag) {
+        return html`<span class="tag">
+                ${when(tag.icon, () => html`<auto-icon inherit name="${tag.icon!}"></auto-icon>`)}
+                ${tag.label}
+            </span>`
+    }
+    private _renderTags() {
+        const tags = this._getTags()
+        if (tags.length === 0) return
+        return html`${when(this.tags, () => {
+            return html`<auto-flex class="tags" gap="0.1em">
+                ${repeat(tags, (tag) => {
+                    return html`${this._renderTag(tag)}`
+                })}
+            </auto-flex>`
+        })}`
+    }
     render() {
         if (this.shape === 'circle') this.ripple.center = true
         return html`
-                ${when(this.loading, () => html`<auto-icon name="loading"></auto-icon>`)} 
-                ${when(this.icon, () => html`<auto-icon name="${this.icon!}"></auto-icon>`)}
+                ${when(this.loading, () => html`<auto-icon inherit name="loading"></auto-icon>`)} 
+                ${when(this.icon, () => html`<auto-icon inherit size=${ifDefined(this.vertical || this.shape === 'circle' ? '1.5em' : undefined)} name="${this.icon!}"></auto-icon>`)}
                 ${when(
                     this.label,
                     () =>
@@ -243,6 +322,7 @@ export class AutoButton extends AutoElementBase {
                         })}>${this.label}</span>`,
                 )}
                 ${this._renderBadge()}
+                ${this._renderTags()}
                 
         `
     }

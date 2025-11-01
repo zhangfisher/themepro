@@ -19,7 +19,7 @@ export class AutoFlex extends LitElement {
 
     /** 是否显示圆角 */
     @property({ type: Boolean, reflect: true })
-    radius: boolean = true
+    radius: boolean = false
 
     @property({ type: Boolean, reflect: true })
     equal: boolean = false

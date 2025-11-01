@@ -20,7 +20,6 @@ export const styles = css`
     } 
     :host(:hover),:host([variant='ghost']:hover) {
         background-color:  var(--auto-hover-bgcolor);
-        color:  var(--auto-hover-color);
     }
     :host(:not(.label)){
         flex-grow: 0;
@@ -45,7 +44,7 @@ export const styles = css`
         flex-grow: 0;
     }
 
-    :host([labelGrow]){        
+    :host([labelgrow]) > .label{        
         flex-grow: 1;
     }
 
@@ -213,36 +212,47 @@ export const styles = css`
         background-color: red;
         border: 1px solid white;
     }  
-/* 使用伪元素创建涟漪效果 */
-:host .badge::before,
-:host .badge::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 1px solid red;
-    background-color: red;
-    opacity: 0.2;
-    border: 1px solid white;
-    animation: ripple-wave 0.8s ease-out infinite;
- }
 
-:host .badge::after {
-    animation-delay: 1s;
-}
+    .tags > .tag{
+        padding: 4px;
+        border-radius: 4px;
+        background-color: var(--t-theme-color-1);
+        &:hover{
+            color: var(--auto-theme-color);
+        }
+    }
 
-@keyframes ripple-wave {
-    0% {
-        outline: 1px solid red ;
-        opacity: 0.3;
+
+    /* 使用伪元素创建涟漪效果 */
+    :host .badge::before,
+    :host .badge::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 1px solid red;
+        background-color: red;
+        opacity: 0.2;
+        border: 1px solid white;
+        animation: ripple-wave 0.8s ease-out infinite;
     }
-    100% {
-        outline: 10px solid red ;
-        opacity: 0;
+
+    :host .badge::after {
+        animation-delay: 1s;
     }
-}
+
+    @keyframes ripple-wave {
+        0% {
+            outline: 1px solid red ;
+            opacity: 0.3;
+        }
+        100% {
+            outline: 10px solid red ;
+            opacity: 0;
+        }
+    }
 `

@@ -16,6 +16,7 @@ const meta: Meta = {
         block: false,
         icon: undefined,
         variant: undefined,
+        labelGrow: undefined,
         onClick: fn(),
         onAutoClick: fn(),
     },
@@ -29,6 +30,7 @@ const meta: Meta = {
         block: { control: 'boolean' },
         variant: { control: 'select', options: [undefined, 'default', 'ghost', 'link', 'outline'] },
         icon: { control: 'text' },
+        labelGrow: { control: 'boolean' },
     },
     render: (args: any) => html`
       <auto-button
@@ -70,12 +72,12 @@ export const ButtonSize: Story = {
     render: (args: any) => {
         return html`
         <auto-flex gap="1em">
-          <auto-button label="默认自动按钮"  @click=${args.onClick}></auto-button>
-          <auto-button size="x-small" label="微小按钮" @autoclick=${args.onAutoClick}></auto-button>
-          <auto-button size="small" label="小按钮"></auto-button>
-          <auto-button size="medium" label="默认尺寸按钮"></auto-button>
-          <auto-button size="large" label="大按钮"></auto-button>
-          <auto-button size="x-large" label="超大按钮"></auto-button>
+          <auto-button icon="settings" label="默认自动按钮"  @click=${args.onClick}></auto-button>
+          <auto-button icon="settings" size="x-small" label="微小按钮" @autoclick=${args.onAutoClick}></auto-button>
+          <auto-button icon="home" size="small" label="小按钮"></auto-button>
+          <auto-button icon="tag" size="medium" label="默认尺寸按钮"></auto-button>
+          <auto-button icon="settings" size="large" label="大按钮"></auto-button>
+          <auto-button icon="settings" size="x-large" label="超大按钮"></auto-button>
         </auto-flex>
         `
     },
@@ -319,13 +321,13 @@ export const ButtonChecked: Story = {
 }
 export const ButtonBadge: Story = {
     name: '带Badge按钮',
-    render: () => {
+    render: (args: any) => {
         return html`
         <auto-flex direction='column' gap="1em">          
           <auto-flex gap="1em">
-            <auto-button badge="18" style="width: 200px;" icon="home"  size="x-small" label="默认"></auto-button>
-            <auto-button badge="18" style="width: 200px;" icon="settings" size="x-small"  type="primary" label="关健按钮"></auto-button>
-            <auto-button badge="18" style="width: 200px;" icon="tag" size="x-small"  type="success" label="成功按钮"></auto-button>                      
+            <auto-button badge="18" .labelGrow=${args.labelGrow}  style="width: 200px;" icon="home"  size="x-small" label="默认"></auto-button>
+            <auto-button badge="18" .labelGrow=${args.labelGrow} style="width: 200px;" icon="settings" size="x-small"  type="primary" label="关健按钮"></auto-button>
+            <auto-button badge="18" .labelGrow=${args.labelGrow} style="width: 200px;" icon="tag" size="x-small"  type="success" label="成功按钮"></auto-button>                      
           </auto-flex>
           <auto-flex gap="1em">
             <auto-button badge="8" style="width: 200px;" icon="home"  size="small"  label="默认"></auto-button>
@@ -351,6 +353,113 @@ export const ButtonBadge: Story = {
             <auto-button badge="8" style="width: 200px;"  size="x-large" icon="tag" type="success" label="成功按钮"></auto-button>
             </auto-flex> 
           </auto-flex>
+        `
+    },
+}
+export const LabelGrowButton: Story = {
+    name: '控制LabelGrow按钮',
+    render: (args: any) => {
+        return html`
+        <auto-flex direction='column' gap="1em">          
+          <auto-flex gap="1em">
+            <auto-button  .labelGrow=${args.labelGrow} style="width: 200px;" icon="home"  size="x-small" label="默认"></auto-button>
+            <auto-button  .labelGrow=${args.labelGrow} style="width: 200px;" icon="settings" size="x-small"  type="primary" label="关健按钮"></auto-button>
+            <auto-button  .labelGrow=${args.labelGrow} style="width: 200px;" icon="tag" size="x-small"  type="success" label="成功按钮"></auto-button>                      
+          </auto-flex>
+          <auto-flex gap="1em">
+            <auto-button  .labelGrow=${args.labelGrow} style="width: 200px;" icon="home"  size="small"  label="默认"></auto-button>
+            <auto-button  .labelGrow=${args.labelGrow} style="width: 200px;" icon="settings" size="small"  type="primary" label="关健按钮"></auto-button>
+            <auto-button  .labelGrow=${args.labelGrow} style="width: 200px;" icon="tag" size="small"  type="success" label="成功按钮"></auto-button>
+          </auto-flex>          
+          <auto-flex gap="1em">
+            <auto-button  .labelGrow=${args.labelGrow} style="width: 200px;" .props=${{ label: 'aaaa' }}  icon="home" label="默认"></auto-button>
+            <auto-button  .labelGrow=${args.labelGrow} style="width: 200px;"  icon="settings" type="primary" label="关健按钮"></auto-button>
+            <auto-button  .labelGrow=${args.labelGrow} style="width: 200px;"  icon="tag" type="success" label="成功按钮"></auto-button>
+          </auto-flex> 
+          
+          <auto-flex gap="1em">
+            <auto-button  .labelGrow=${args.labelGrow} style="width: 200px;"  size="large"  icon="home" label="默认"></auto-button>
+            <auto-button  .labelGrow=${args.labelGrow} style="width: 200px;"  size="large"  icon="settings" type="primary" label="关健按钮"></auto-button>
+            <auto-button  .labelGrow=${args.labelGrow} style="width: 200px;"  size="large" icon="tag" type="success" label="成功按钮"></auto-button>
+          </auto-flex> 
+          
+          <auto-flex gap="1em">
+            <auto-button  .labelGrow=${args.labelGrow} style="width: 200px;"  size="x-large"  icon="home" label="默认"></auto-button>
+            <auto-button  .labelGrow=${args.labelGrow} style="width: 200px;"  size="x-large"  icon="settings" type="primary" label="关健按钮"></auto-button>
+            <auto-button  .labelGrow=${args.labelGrow} style="width: 200px;"  size="x-large" icon="tag" type="success" label="成功按钮"></auto-button>
+            </auto-flex> 
+          </auto-flex>
+        `
+    },
+}
+
+export const TagButton: Story = {
+    name: '带Tag按钮',
+    args: {
+        //@ts-expect-error
+        labelGrow: true,
+    },
+    render: (args: any) => {
+        return html`
+        <auto-flex direction='column' gap="1em">          
+          <auto-flex gap="1em">
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="home"  size="x-small" label="默认"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="settings" size="x-small"  type="primary" label="关健按钮"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="tag" size="x-small"  type="success" label="成功按钮"></auto-button>                      
+          </auto-flex>
+          <auto-flex gap="1em">
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="home"  size="small"  label="默认"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="settings" size="small"  type="primary" label="关健按钮"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="tag" size="small"  type="success" label="成功按钮"></auto-button>
+          </auto-flex>          
+          <auto-flex gap="1em">
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" .props=${{ label: 'aaaa' }}  icon="home" label="默认"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;"  icon="settings" type="primary" label="关健按钮"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;"  icon="tag" type="success" label="成功按钮"></auto-button>
+          </auto-flex> 
+          
+          <auto-flex gap="1em">
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;"  size="large"  icon="home" label="默认"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;"  size="large"  icon="settings" type="primary" label="关健按钮"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;"  size="large" icon="tag" type="success" label="成功按钮"></auto-button>
+          </auto-flex> 
+        </auto-flex>
+        <auto-flex direction='column' gap="1em" style="margin-top:1em">          
+          <auto-flex gap="1em">
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="home"  size="x-small" label="默认"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="settings" size="x-small"  type="warning" label="关健按钮"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="tag" size="x-small"  type="danger" label="成功按钮"></auto-button>                      
+          </auto-flex>
+          <auto-flex gap="1em">
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="home"  size="small"  label="默认"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="settings" size="small"  type="warning" label="关健按钮"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="tag" size="small"  type="danger" label="成功按钮"></auto-button>
+          </auto-flex>          
+          <auto-flex gap="1em">
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" .props=${{ label: 'aaaa' }}  icon="home" label="默认"></auto-button>
+            <auto-button  tags="settings,@tag" .labelGrow=${args.labelGrow} style="width: 200px;"  icon="settings" type="warning" label="关健按钮"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;"  icon="tag" type="danger" label="成功按钮"></auto-button>
+          </auto-flex> 
+          
+          <auto-flex gap="1em">
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;"  size="large"  icon="home" label="默认"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;"  size="large"  icon="settings" type="warning" label="关健按钮"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;"  size="large" icon="tag" type="danger" label="成功按钮"></auto-button>
+          </auto-flex> 
+        </auto-flex>
+        <auto-flex direction='column' gap="1em" style="margin-top:1em">          
+          <auto-flex gap="1em">
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="home"  size="x-small" label="默认"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="settings" size="x-small"  type="info" label="关健按钮"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="settings" size="x-small"  type="info" label="关健按钮"></auto-button>
+          </auto-flex>
+          <auto-flex gap="1em">
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="home"  size="x-large"  label="默认"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="settings" size="x-large"  type="info" label="关健按钮"></auto-button>
+            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="tag" size="x-large"  type="info" label="成功按钮"></auto-button>
+          </auto-flex>           
+        </auto-flex>
+
         `
     },
 }

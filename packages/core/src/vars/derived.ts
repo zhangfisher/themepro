@@ -34,7 +34,7 @@ export const derivedVars = {
     '--auto-color': 'var(--t-theme-color)',
     '--auto-secondary-color': 'var(--t-color-theme-4)',
     '--auto-disable-color': 'var(--t-color-theme-3)',
-    '--auto-hover-color': 'color-mix(in srgb, var(--t-color-theme-5), white 85%)',
+    '--auto-hover-color': 'color-mix(in srgb, var(--t-color-theme-1), black 5%)!important;',
     '--auto-active-color': 'color-mix(in srgb, var(--t-color-theme-1), white 20%)!important',
     '--auto-dark-color': 'color-mix(in srgb, var(--auto-color), black 10%)',
     '--auto-light-color': 'color-mix(in srgb, var(--auto-color), white 10%)',
@@ -49,7 +49,7 @@ export const derivedVars = {
 
     /** 随随色背景颜色：用于自动选中颜色，或根据背景颜色自动匹配背景颜色*/
     '--auto-selected-bgcolor': 'var(--t-color-theme-5)',
-    '--auto-hover-bgcolor': 'color-mix(in srgb, var(--t-color-theme-5), white 10%)!important;',
+    '--auto-hover-bgcolor': 'color-mix(in srgb, var(--t-color-theme-5), transparent 85%)',
 
     /* 边框 */
     '--auto-border-size': '1px',
