@@ -221,13 +221,13 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
 
     connectedCallback(): void {
         super.connectedCallback()
-        this.addEventListener('click', this.onClick as EventListener)
-        this.addEventListener('keydown', this.onKeyDown as EventListener)
+        this.addEventListener('click', this._onClick as EventListener, true)
+        this.addEventListener('keydown', this._onKeyDown as EventListener)
     }
 
     disconnectedCallback(): void {
-        this.removeEventListener('click', this.onClick as EventListener)
-        this.removeEventListener('keydown', this.onKeyDown as EventListener)
+        this.removeEventListener('click', this._onClick as EventListener, true)
+        this.removeEventListener('keydown', this._onKeyDown as EventListener)
         super.disconnectedCallback()
     }
 
@@ -243,8 +243,26 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
             }),
         )
     }
+    private _isClickTag(e: MouseEvent) {
+        const path = e.composedPath()
+        for (const element of path) {
+            if (element instanceof HTMLElement && element.classList.contains('tag')) {
+                this._handleTagClick(element)
+                return true
+            }
+        }
+        return false
+    }
 
-    private onClick = (e: MouseEvent) => {
+    private _handleTagClick(el: HTMLElement) {
+        console.log('click tag', el)
+    }
+
+    private _onClick = (e: MouseEvent) => {
+        if (this._isClickTag(e)) {
+            e.stopPropagation()
+            return
+        }
         if (this.disabled || this.loading) {
             e.stopImmediatePropagation()
             e.preventDefault()
@@ -263,7 +281,7 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
         )
     }
 
-    private onKeyDown = (e: KeyboardEvent) => {
+    private _onKeyDown = (e: KeyboardEvent) => {
         if (this.disabled || this.loading) {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.stopImmediatePropagation()
