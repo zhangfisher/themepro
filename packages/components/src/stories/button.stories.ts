@@ -17,7 +17,9 @@ const meta: Meta = {
         icon: undefined,
         variant: undefined,
         labelGrow: undefined,
+        checked: undefined,
         onClick: fn(),
+        onChange: fn(),
         onAutoClick: fn(),
     },
     argTypes: {
@@ -27,6 +29,9 @@ const meta: Meta = {
         shape: { control: 'select', options: ['circle', 'pill', undefined] },
         loading: { control: 'boolean' },
         disabled: { control: 'boolean' },
+        value: { control: 'text' },
+        checked: { control: 'boolean' },
+        checkValues: { control: 'text' },
         block: { control: 'boolean' },
         variant: { control: 'select', options: [undefined, 'default', 'ghost', 'link', 'outline'] },
         icon: { control: 'text' },
@@ -288,32 +293,32 @@ export const ButtonOutline: Story = {
 }
 export const ButtonChecked: Story = {
     name: '复选按钮',
-    render: () => {
+    render: (args: any) => {
         return html`
         <auto-flex direction='column' gap="1em">
           <auto-flex gap="1em">
-            <auto-button .props=${{ label: 'aaaa' }}  icon="home" checkable label="默认"></auto-button>
-            <auto-button  icon="settings" type="primary" checkable label="关健按钮"></auto-button>
-            <auto-button  icon="tag" type="success" checkable label="成功按钮"></auto-button>
-            <auto-button  icon="star" type="danger" checkable label="危险按钮"></auto-button>
-            <auto-button  icon="folder" type="warning" checkable label="警告按钮"></auto-button>
-            <auto-button  icon="file" type="info" checkable label="信息按钮"></auto-button>
+            <auto-button @change=${args.onChange} icon="home" checkable label="默认"></auto-button>
+            <auto-button @change=${args.onChange} icon="settings" type="primary" checkable label="关健按钮"></auto-button>
+            <auto-button @change=${args.onChange} icon="tag" type="success" checkable label="成功按钮"></auto-button>
+            <auto-button @change=${args.onChange} icon="star" type="danger" checkable label="危险按钮"></auto-button>
+            <auto-button @change=${args.onChange} icon="folder" type="warning" checkable label="警告按钮"></auto-button>
+            <auto-button @change=${args.onChange} icon="file" type="info" checkable label="信息按钮"></auto-button>
           </auto-flex> 
           <auto-flex gap="1em">
-            <auto-button icon="home"  size="small" checkable  label="默认"></auto-button>
-            <auto-button icon="settings" size="small"  type="primary" checkable label="关健按钮"></auto-button>
-            <auto-button icon="tag" size="small"  type="success" checkable label="成功按钮"></auto-button>
-            <auto-button icon="star" size="small" type="danger" checkable label="危险按钮"></auto-button>
-            <auto-button icon="folder" size="small" type="warning" checkable label="警告按钮"></auto-button>
-            <auto-button icon="file" size="small" type="info" checkable label="信息按钮"></auto-button>
+            <auto-button @change=${args.onChange} icon="home"  size="small" checked checkable  label="默认"></auto-button>
+            <auto-button @change=${args.onChange} icon="settings" size="small" checked  type="primary" checkable label="关健按钮"></auto-button>
+            <auto-button @change=${args.onChange} icon="tag" size="small"   checked type="success" checkable label="成功按钮"></auto-button>
+            <auto-button @change=${args.onChange} icon="star" size="small" checked type="danger" checkable label="危险按钮"></auto-button>
+            <auto-button @change=${args.onChange} icon="folder" size="small" checked type="warning" checkable label="警告按钮"></auto-button>
+            <auto-button @change=${args.onChange} icon="file" size="small" checked type="info" checkable label="信息按钮"></auto-button>
           </auto-flex>
           <auto-flex gap="1em">
-            <auto-button icon="home"  size="x-small" checkable label="默认"></auto-button>
-            <auto-button icon="settings" size="x-small"  type="primary" checkable label="关健按钮"></auto-button>
-            <auto-button icon="tag" size="x-small"  type="success" checkable label="成功按钮"></auto-button>
-            <auto-button icon="star" size="x-small" type="danger" checkable label="危险按钮"></auto-button>
-            <auto-button icon="folder" size="x-small" type="warning" checkable label="警告按钮"></auto-button>
-            <auto-button icon="file" size="x-small" type="info" checkable label="信息按钮"></auto-button>
+            <auto-button @change=${args.onChange} icon="home"  size="x-small" checkable label="默认"></auto-button>
+            <auto-button @change=${args.onChange} icon="settings" size="x-small"  type="primary" checkable label="关健按钮"></auto-button>
+            <auto-button @change=${args.onChange} icon="tag" size="x-small"  type="success" checkable label="成功按钮"></auto-button>
+            <auto-button @change=${args.onChange} icon="star" size="x-small" type="danger" checkable label="危险按钮"></auto-button>
+            <auto-button @change=${args.onChange} icon="folder" size="x-small" type="warning" checkable label="警告按钮"></auto-button>
+            <auto-button @change=${args.onChange} icon="file" size="x-small" type="info" checkable label="信息按钮"></auto-button>
           </auto-flex>
           </auto-flex>
         `

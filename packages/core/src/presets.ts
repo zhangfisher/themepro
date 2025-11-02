@@ -57,6 +57,10 @@ export const presetThemes: Record<string, PresetTheme> = {
         color: '#2f54eb',
         title: '极客蓝',
     },
+    techblue: {
+        color: '#2980b9',
+        title: '科技蓝',
+    },
     purple: {
         color: '#722ed1',
         title: '酱紫',

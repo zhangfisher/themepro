@@ -4,7 +4,7 @@
  *
  */
 import { html } from 'lit'
-import { property } from 'lit/decorators.js'
+import { property, state } from 'lit/decorators.js'
 import { customElement } from 'lit/decorators/custom-element.js'
 import { when } from 'lit/directives/when.js'
 
@@ -17,14 +17,22 @@ import { repeat } from 'lit/directives/repeat.js'
 
 export type AutoButtonTag = {
     id: string
+    /**
+     * 如果checkable=true
+     * 可以使用多个图标，使用,分开，如：icon="icon1,icon2"
+     * 当checkable=true时，可以切换图标
+     */
     icon?: string
     label?: string
-    checkable?: boolean
     tips?: string
     /**
-     * 默认是圆角矩形，circle=true时显示为圆形
+     * 显示额外的形状
      */
-    circle?: boolean
+    shape?: 'none' | 'circle' | 'radius' | 'rectangle'
+    /**
+     * 可复选
+     */
+    checkable?: boolean
     /**
      *  复选值
      * 当为可复选时，表示当前选中状态的值
@@ -92,9 +100,10 @@ export interface AutoButtonProps {
      */
     shape?: 'default' | 'circle' | 'pill'
     /**
-     * 在按钮文字后面显示
+     * 显示加载中图标
+     * 如果是数字，则表示n毫秒后自动隐藏
      */
-    loading?: boolean
+    loading?: boolean | number
     /**
      * 是否禁用
      */
@@ -103,6 +112,20 @@ export interface AutoButtonProps {
      *  复选值
      */
     checkValues?: any[]
+    /**
+     * 复选样式
+
+     * - default: 默认样式,显示不一样的背景
+     * - before-check: 前置打勾
+     * - after-check: 后置打勾
+     * - corner-mark: 角标
+     * 
+     */
+    checkStyle?: 'default' | 'before-check' | 'after-check' | 'corner-mark'
+    /**
+     * 是否可以复选
+     */
+    checkable?: boolean
     /**
      * 是否选中
      */
@@ -142,6 +165,9 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
     @property({ type: String })
     labelWidth?: string
 
+    @property({ type: Boolean, reflect: true })
+    labelGrow: boolean = false
+
     @property({ type: String })
     icon?: string
 
@@ -165,21 +191,24 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
 
     @property({ type: Boolean, reflect: true })
     checkable: boolean = false
-
-    @property()
-    value?: any
+    /**
+     * 复选值，默认是[true,false]
+     * 点击时在checkValues中轮换
+     */
+    @property({ type: Array, reflect: true })
+    checkValues?: any[]
 
     @property({ type: Boolean, reflect: true })
     checked: boolean = false
-
-    @property({ type: Boolean, reflect: true })
-    labelGrow: boolean = false
 
     @property({ type: Number })
     badge: number = 0
 
     @property({ type: String })
     tags?: string | string[] | AutoButtonTags
+
+    @property()
+    value?: any = false
 
     protected firstUpdated(): void {
         this.setAttribute('role', 'button')
@@ -232,9 +261,11 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
     }
 
     private _handleCheckEvent(e: MouseEvent) {
-        const checkValues = this.state?.checkValues || [true, false]
+        const checkValues = this.state?.checkValues || this.checkValues || [true, false]
         if (checkValues.length < 2) checkValues.push(false)
+        this.value = this.value === checkValues[0] ? checkValues[1] : checkValues[0]
         // 触发组件自定义点击事件，便于外部监听（如 Storybook actions）
+        this.checked = this.value === checkValues[0]
         this.dispatchEvent(
             new CustomEvent('change', {
                 detail: this.value,
