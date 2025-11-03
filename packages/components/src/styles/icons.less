@@ -21,6 +21,7 @@
 @auto-icon-error: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="m15 9-6 6" /><path d="m9 9 6 6" /></svg>');
 @auto-icon-success: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><path d="M21.801 10A10 10 0 1 1 17 3.335" /><path d="m9 11 3 3L22 4" /></svg>');
 @auto-icon-focus: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><line x1="2" x2="5" y1="12" y2="12" /><line x1="19" x2="22" y1="12" y2="12" /><line x1="12" x2="12" y1="2" y2="5" /><line x1="12" x2="12" y1="19" y2="22" /><circle cx="12" cy="12" r="7" /><circle cx="12" cy="12" r="3" /></svg>');
+@auto-icon-empty: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"></svg>');
 
 
 :host,
@@ -48,6 +49,7 @@
     --auto-icon-error: @auto-icon-error;
     --auto-icon-success: @auto-icon-success;
     --auto-icon-focus: @auto-icon-focus;
+    --auto-icon-empty: @auto-icon-empty;
 }
 
 .auto-icon {
@@ -183,5 +185,9 @@
 
     &.focus {
         mask-image: var(--auto-icon-focus);
+    }
+
+    &.empty {
+        mask-image: var(--auto-icon-empty);
     }
 }

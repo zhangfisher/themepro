@@ -7,6 +7,7 @@ import { html } from 'lit'
 import { property, state } from 'lit/decorators.js'
 import { customElement } from 'lit/decorators/custom-element.js'
 import { when } from 'lit/directives/when.js'
+import { choose } from 'lit/directives/choose.js'
 
 import { styles } from './styles'
 import { AutoElementBase } from '../../elements/base'
@@ -113,15 +114,15 @@ export interface AutoButtonProps {
      */
     checkValues?: any[]
     /**
-     * 复选样式
+     * 复选标识位置
 
      * - default: 默认样式,显示不一样的背景
-     * - before-check: 前置打勾
-     * - after-check: 后置打勾
-     * - corner-mark: 角标
+     * - before: 前置打勾
+     * - after: 后置打勾
+     * - corner: 角标
      * 
      */
-    checkStyle?: 'default' | 'before-check' | 'after-check' | 'corner-mark'
+    checkPos?: 'default' | 'before' | 'after' | 'corner'
     /**
      * 是否可以复选
      */
@@ -200,6 +201,8 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
 
     @property({ type: Boolean, reflect: true })
     checked: boolean = false
+    @property({ type: String, reflect: true })
+    checkPos?: 'default' | 'before' | 'after' | 'corner'
 
     @property({ type: Number })
     badge: number = 0
@@ -358,10 +361,19 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
             </auto-flex>`
         })}`
     }
+    private _renderChecked(before: boolean = false) {
+        return html`<auto-icon class='checked ${before ? 'before' : 'after'}' inherit name="yes"></auto-icon>`
+    }
+    private _renderUnchecked(before: boolean = false) {
+        return html`<auto-icon class="checked ${before ? 'before' : 'after'}" inherit name="empty"></auto-icon>`
+    }
     render() {
         if (this.shape === 'circle') this.ripple.center = true
+        const isChecked = this.checkable && this.checked
         return html`
                 ${when(this.loading, () => html`<auto-icon inherit name="loading"></auto-icon>`)} 
+                ${when(!this.loading && !isChecked && this.checkPos === 'before', () => this._renderUnchecked())} 
+                ${when(!this.loading && isChecked && this.checkPos === 'before', () => this._renderChecked(true))} 
                 ${when(this.icon, () => html`<auto-icon inherit size=${ifDefined(this.vertical || this.shape === 'circle' ? '1.5em' : undefined)} name="${this.icon!}"></auto-icon>`)}
                 ${when(
                     this.label,
@@ -372,7 +384,7 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
                 )}
                 ${this._renderBadge()}
                 ${this._renderTags()}
-                
+                ${when(isChecked && this.checkPos === 'after', () => this._renderChecked())}          
         `
     }
 }

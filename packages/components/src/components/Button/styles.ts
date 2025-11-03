@@ -193,11 +193,18 @@ export const styles = css`
     :host([block]){
         width: 100%;
     } 
-
-    :host([checkable][checked]){        
+    /* Checkbox */
+    :host([checkable][checked]:not([checkPos="before"], [checkPos="after"], [checkPos="corner"])){        
         background-color: var(--t-theme-color);
-        color: color-mix(in srgb, var(--t-color-theme-1), white 5%);
+        color: color-mix(in srgb, var(--t-color-theme-1), white 5%);        
+        
     }
+    :host([checkable]) .checked{
+        color:green;
+    }
+    :host([checkable][checkPos="before"]) {
+        padding-left: calc(0.5 * var(--t-spacing-medium));        
+    } 
 
     :host .badge{
         position: absolute;
@@ -212,14 +219,47 @@ export const styles = css`
         background-color: red;
         border: 1px solid white;
     }  
-
+    /** 标签 */
     .tags > .tag{
         padding: 4px;
-        border-radius: 4px;
-        background-color: var(--t-theme-color-1);
+        border-radius: 4px;        
         &:hover{
             color: var(--auto-theme-color);
+            background-color: var(--t-theme-color-1);
         }
     }
 
+
+    /* 使用伪元素创建涟漪效果 */
+    :host .badge::before,
+    :host .badge::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 1px solid red;
+        background-color: red;
+        opacity: 0.2;
+        border: 1px solid white;
+        animation: ripple-wave 0.8s ease-out infinite;
+    }
+
+    :host .badge::after {
+        animation-delay: 1s;
+    }
+
+    @keyframes ripple-wave {
+        0% {
+            outline: 1px solid red ;
+            opacity: 0.3;
+        }
+        100% {
+            outline: 10px solid red ;
+            opacity: 0;
+        }
+    } 
 `

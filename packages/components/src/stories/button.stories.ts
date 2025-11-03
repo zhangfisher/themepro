@@ -24,6 +24,7 @@ const meta: Meta = {
     },
     argTypes: {
         label: { control: 'text' },
+        checkPos: { control: 'select', options: ['default', 'before', 'after', 'corner'] },
         type: { control: 'select', options: ['default', 'primary', 'info', 'danger', 'warning', 'success', 'link'] },
         size: { control: 'select', options: ['x-small', 'small', 'medium', 'large', 'x-large'] },
         shape: { control: 'select', options: ['circle', 'pill', undefined] },
@@ -297,28 +298,28 @@ export const ButtonChecked: Story = {
         return html`
         <auto-flex direction='column' gap="1em">
           <auto-flex gap="1em">
-            <auto-button @change=${args.onChange} icon="home" checkable label="默认"></auto-button>
-            <auto-button @change=${args.onChange} icon="settings" type="primary" checkable label="关健按钮"></auto-button>
-            <auto-button @change=${args.onChange} icon="tag" type="success" checkable label="成功按钮"></auto-button>
-            <auto-button @change=${args.onChange} icon="star" type="danger" checkable label="危险按钮"></auto-button>
-            <auto-button @change=${args.onChange} icon="folder" type="warning" checkable label="警告按钮"></auto-button>
-            <auto-button @change=${args.onChange} icon="file" type="info" checkable label="信息按钮"></auto-button>
+            <auto-button  labelGrow style="width:200px;" @change=${args.onChange} checkPos=${args.checkPos} icon="home" checkable label="默认"></auto-button>
+            <auto-button @change=${args.onChange}  checkPos=${args.checkPos} icon="settings" type="primary" checkable label="关健按钮"></auto-button>
+            <auto-button @change=${args.onChange}  checkPos=${args.checkPos} icon="tag" type="success" checkable label="成功按钮"></auto-button>
+            <auto-button @change=${args.onChange}  checkPos=${args.checkPos} icon="star" type="danger" checkable label="危险按钮"></auto-button>
+            <auto-button @change=${args.onChange}  checkPos=${args.checkPos} icon="folder" type="warning" checkable label="警告按钮"></auto-button>
+            <auto-button @change=${args.onChange}  checkPos=${args.checkPos} icon="file" type="info" checkable label="信息按钮"></auto-button>
           </auto-flex> 
           <auto-flex gap="1em">
-            <auto-button @change=${args.onChange} icon="home"  size="small" checked checkable  label="默认"></auto-button>
-            <auto-button @change=${args.onChange} icon="settings" size="small" checked  type="primary" checkable label="关健按钮"></auto-button>
-            <auto-button @change=${args.onChange} icon="tag" size="small"   checked type="success" checkable label="成功按钮"></auto-button>
-            <auto-button @change=${args.onChange} icon="star" size="small" checked type="danger" checkable label="危险按钮"></auto-button>
-            <auto-button @change=${args.onChange} icon="folder" size="small" checked type="warning" checkable label="警告按钮"></auto-button>
-            <auto-button @change=${args.onChange} icon="file" size="small" checked type="info" checkable label="信息按钮"></auto-button>
+            <auto-button  labelGrow style="width:200px;"  @change=${args.onChange}  checkPos="after" icon="home"  size="small" checked checkable  label="默认"></auto-button>
+            <auto-button @change=${args.onChange}  checkPos="after" icon="settings" size="small" checked  type="primary" checkable label="关健按钮"></auto-button>
+            <auto-button @change=${args.onChange}  checkPos=${args.checkPos} icon="tag" size="small"   checked type="success" checkable label="成功按钮"></auto-button>
+            <auto-button @change=${args.onChange}  checkPos=${args.checkPos} icon="star" size="small" checked type="danger" checkable label="危险按钮"></auto-button>
+            <auto-button @change=${args.onChange}  checkPos=${args.checkPos} icon="folder" size="small" checked type="warning" checkable label="警告按钮"></auto-button>
+            <auto-button @change=${args.onChange}  checkPos=${args.checkPos} icon="file" size="small" checked type="info" checkable label="信息按钮"></auto-button>
           </auto-flex>
           <auto-flex gap="1em">
-            <auto-button @change=${args.onChange} icon="home"  size="x-small" checkable label="默认"></auto-button>
-            <auto-button @change=${args.onChange} icon="settings" size="x-small"  type="primary" checkable label="关健按钮"></auto-button>
-            <auto-button @change=${args.onChange} icon="tag" size="x-small"  type="success" checkable label="成功按钮"></auto-button>
-            <auto-button @change=${args.onChange} icon="star" size="x-small" type="danger" checkable label="危险按钮"></auto-button>
-            <auto-button @change=${args.onChange} icon="folder" size="x-small" type="warning" checkable label="警告按钮"></auto-button>
-            <auto-button @change=${args.onChange} icon="file" size="x-small" type="info" checkable label="信息按钮"></auto-button>
+            <auto-button  labelGrow style="width:200px;"  @change=${args.onChange}  checkPos=${args.checkPos} icon="home"  size="x-small" checkable label="默认"></auto-button>
+            <auto-button @change=${args.onChange}  checkPos=${args.checkPos} icon="settings" size="x-small"  type="primary" checkable label="关健按钮"></auto-button>
+            <auto-button @change=${args.onChange}  checkPos=${args.checkPos} icon="tag" size="x-small"  type="success" checkable label="成功按钮"></auto-button>
+            <auto-button @change=${args.onChange}  checkPos=${args.checkPos} icon="star" size="x-small" type="danger" checkable label="危险按钮"></auto-button>
+            <auto-button @change=${args.onChange}  checkPos=${args.checkPos} icon="folder" size="x-small" type="warning" checkable label="警告按钮"></auto-button>
+            <auto-button @change=${args.onChange}  checkPos=${args.checkPos} icon="file" size="x-small" type="info" checkable label="信息按钮"></auto-button>
           </auto-flex>
           </auto-flex>
         `
