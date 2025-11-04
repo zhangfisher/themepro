@@ -4,10 +4,9 @@
  *
  */
 import { html } from 'lit'
-import { property, state } from 'lit/decorators.js'
+import { property } from 'lit/decorators.js'
 import { customElement } from 'lit/decorators/custom-element.js'
 import { when } from 'lit/directives/when.js'
-import { choose } from 'lit/directives/choose.js'
 
 import { styles } from './styles'
 import { AutoElementBase } from '../../elements/base'
@@ -213,6 +212,8 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
     @property()
     value?: any = false
 
+    _tags?: AutoButtonTags
+
     protected firstUpdated(): void {
         this.setAttribute('role', 'button')
         if (!this.hasAttribute('tabindex')) this.setAttribute('tabindex', '0')
@@ -345,8 +346,8 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
             .filter((tag) => tag) as AutoButtonTags
     }
     private _renderTag(tag: AutoButtonTag) {
-        return html`<span class="tag">
-                ${when(tag.icon, () => html`<auto-icon inherit name="${tag.icon!}"></auto-icon>`)}
+        return html`<span class="tag ${tag.shape ? tag.shape : ''}">
+                ${when(tag.icon, () => html`<auto-icon title=${ifDefined(tag.tips)} inherit name="${tag.icon!}"></auto-icon>`)}
                 ${tag.label}
             </span>`
     }
@@ -371,20 +372,20 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
         if (this.shape === 'circle') this.ripple.center = true
         const isChecked = this.checkable && this.checked
         return html`
-                ${when(this.loading, () => html`<auto-icon inherit name="loading"></auto-icon>`)} 
-                ${when(!this.loading && !isChecked && this.checkPos === 'before', () => this._renderUnchecked())} 
-                ${when(!this.loading && isChecked && this.checkPos === 'before', () => this._renderChecked(true))} 
-                ${when(this.icon, () => html`<auto-icon inherit size=${ifDefined(this.vertical || this.shape === 'circle' ? '1.5em' : undefined)} name="${this.icon!}"></auto-icon>`)}
-                ${when(
-                    this.label,
-                    () =>
-                        html`<span class='label' style=${styleMap({
-                            '--label-width': this.labelWidth,
-                        })}>${this.label}</span>`,
-                )}
-                ${this._renderBadge()}
-                ${this._renderTags()}
-                ${when(isChecked && this.checkPos === 'after', () => this._renderChecked())}          
+            ${when(this.loading, () => html`<auto-icon inherit name="loading"></auto-icon>`)} 
+            ${when(!this.loading && !isChecked && this.checkPos === 'before', () => this._renderUnchecked())} 
+            ${when(!this.loading && isChecked && this.checkPos === 'before', () => this._renderChecked(true))} 
+            ${when(this.icon, () => html`<auto-icon inherit size=${ifDefined(this.vertical || this.shape === 'circle' ? '1.5em' : undefined)} name="${this.icon!}"></auto-icon>`)}
+            ${when(
+                this.label,
+                () =>
+                    html`<span class='label' style=${styleMap({
+                        '--label-width': this.labelWidth,
+                    })}>${this.label}</span>`,
+            )}
+            ${this._renderBadge()}
+            ${this._renderTags()}
+            ${when(isChecked && this.checkPos === 'after', () => this._renderChecked())}          
         `
     }
 }
