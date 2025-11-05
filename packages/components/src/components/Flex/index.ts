@@ -1,7 +1,7 @@
 /**
  * AutoFlex - 基于 Web Components 的灵活布局容器
  */
-import { LitElement, html } from 'lit'
+import { LitElement, PropertyValues, html } from 'lit'
 import { property } from 'lit/decorators.js'
 import { customElement } from 'lit/decorators/custom-element.js'
 import { styles } from './styles'
@@ -74,6 +74,13 @@ export class AutoFlex extends LitElement {
             target.style[attr === 'grow' ? 'flexGrow' : 'flexShrink'] = '1'
         }
     }
+    protected firstUpdated(_changedProperties: PropertyValues): void {
+        this._updateGap()
+        this._updateGap()
+        this._updateFlexGrowShrink('grow')
+        this._updateFlexGrowShrink('shrink')
+        this._updateRadius()
+    }
     private _getChildren() {
         const slot = this.renderRoot.querySelector('slot')
         return Array.from(slot ? (slot as HTMLSlotElement).assignedElements({ flatten: true }) : []) as HTMLElement[]
@@ -101,12 +108,6 @@ export class AutoFlex extends LitElement {
             children[children.length - 1].style.borderBottomLeftRadius = 'var(--auto-border-radius)'
             children[children.length - 1].style.borderBottomRightRadius = 'var(--auto-border-radius)'
         }
-    }
-    protected updated(): void {
-        this._updateGap()
-        this._updateFlexGrowShrink('grow')
-        this._updateFlexGrowShrink('shrink')
-        this._updateRadius()
     }
     render() {
         return html`<slot></slot>`
