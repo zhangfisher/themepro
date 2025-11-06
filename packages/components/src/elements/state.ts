@@ -1,30 +1,15 @@
 import { consume } from '@lit/context'
 import { ThemeProContext, type ThemeProStore } from '../context'
-import { LitElement } from 'lit'
 import { property } from 'lit/decorators.js'
-import { toKebabCase } from '@/utils/toKebabCase'
 import { getVal, type StateOperate } from 'autostore'
-
-export class AutoStateElement<State extends Record<string, any> = Record<string, any>> extends LitElement {
+import { AutoElementBase } from './base'
+export class AutoStateElement<State extends Record<string, any> = Record<string, any>> extends AutoElementBase<State> {
     @consume({ context: ThemeProContext })
     @property({ attribute: false })
     store!: ThemeProStore
 
     @property({ type: String })
     stateKey?: string
-    /**
-     * 反射属性，用于将state中的值反射到元素的属性中
-     *
-     * - 全部反射：reflectAttrs="all"
-     * - 指定反射：reflectAttrs="path1,path2,a.b.c,fromPath:attrName"
-     */
-    reflectAttrs?: string
-
-    /**
-     * 当前组件的
-     */
-    @property({ type: Object })
-    state?: State
 
     // 监听状态额外的属性，如['sidebar.collapsed']
     watchKeys: string[] = []
@@ -34,56 +19,18 @@ export class AutoStateElement<State extends Record<string, any> = Record<string,
     get shadow() {
         return this.shadowRoot!
     }
-
-    private applyValueToElement(key: string, value: unknown) {
-        const attr = toKebabCase(key)
-        // 布尔与空值优先处理：布尔用存在性表示，空值删除属性
-        if (typeof value === 'boolean') {
-            if (value) {
-                this.setAttribute(attr, '')
-            } else {
-                this.removeAttribute(attr)
-            }
-        } else if (value === null || value === undefined) {
-            this.removeAttribute(attr)
-        } else if (typeof value === 'string' || typeof value === 'number') {
-            this.setAttribute(attr, String(value))
-        }
-    }
-
-    private syncStateToAttrs() {
-        if (!this.renderRoot) return
-        Object.entries(this.state ?? {}).forEach(([key, value]) => {
-            this.applyValueToElement(key, value)
-        })
-    }
-
-    protected firstUpdated(): void {
-        // 初次渲染后同步
-        this.syncStateToAttrs()
-    }
-
-    protected updated(changed: Map<string | number | symbol, unknown>): void {
-        // 当 props 引用发生变化时，同步到具有同名属性的元素
-        if (changed.has('state')) {
-            this.syncStateToAttrs()
-        }
-    }
-
     connectedCallback(): void {
-        super.connectedCallback()
         this._watchStates()
-        // 在已连接阶段确保存在时也进行一次兜底同步（如自定义渲染时机不同步）
-        queueMicrotask(() => this.syncStateToAttrs())
+        super.connectedCallback()
     }
     disconnectedCallback(): void {
-        super.disconnectedCallback()
         this._offWatchState()
+        super.disconnectedCallback()
     }
     refresh() {
+        super.refresh()
         this._offWatchState()
         this._watchStates()
-        this.requestUpdate()
     }
     /**
      * 监听状态变化并设置初始状态值

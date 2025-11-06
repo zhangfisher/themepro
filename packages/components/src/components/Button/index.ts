@@ -1,3 +1,4 @@
+import { classMap } from 'lit/directives/class-map.js'
 /**
  *
  *
@@ -14,6 +15,7 @@ import { styleMap } from 'lit/directives/style-map.js'
 import { ClickRipple } from '@/controllers/clickRipple'
 import { ifDefined } from 'lit/directives/if-defined.js'
 import { repeat } from 'lit/directives/repeat.js'
+import { getId } from '@/utils/getId'
 
 export type AutoButtonTag = {
     id: string
@@ -40,6 +42,10 @@ export type AutoButtonTag = {
      * 比如：values:[1,2]，则表示选中时是1，否则是2
      */
     checkValues?: any[]
+    /**
+     * 当checkable=true时，表示当前选中状态的值
+     */
+    value?: any
     onClick?: (e: MouseEvent) => void
     /**
      * 可复选时
@@ -334,19 +340,37 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
     private _renderBadge() {
         return html`${when(this.badge > 0, () => html`<span class="badge"></span>`)}`
     }
+
     private _getTags(): AutoButtonTags {
+        // 如果是字符串，则以逗号分隔
         const tags = (typeof this.tags === 'string' ? this.tags.split(',') : this.tags || []) as any[]
-        return tags
+        const tagList = tags
             .map((tag) => {
-                return Object.assign(
-                    {},
+                const tagData = Object.assign(
+                    {
+                        id: getId(),
+                        checkValues: [true, false],
+                        checkable: false,
+                        value: false,
+                    },
                     typeof tag === 'string' ? (tag.startsWith('@') ? { label: tag.substring(1) } : { icon: tag }) : tag,
-                )
+                ) as AutoButtonTag
+                return tagData
             })
             .filter((tag) => tag) as AutoButtonTags
+        this._tags
+        return tagList
     }
+
     private _renderTag(tag: AutoButtonTag) {
-        return html`<span class="tag ${tag.shape ? tag.shape : ''}">
+        const [checkedIcon, uncheckedIcon] = tag.icon!.split(',')
+        const tagClasss: Record<string, any> = {}
+        if (tag.checkable) {
+            tagClasss.checkable = true
+            tagClasss.checked = tag.value === tag.checkValues![0]
+        }
+
+        return html`<span class="tag ${classMap(tagClasss)}" data-id="${tag.id}">
                 ${when(tag.icon, () => html`<auto-icon title=${ifDefined(tag.tips)} inherit name="${tag.icon!}"></auto-icon>`)}
                 ${tag.label}
             </span>`
