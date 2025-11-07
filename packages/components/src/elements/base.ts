@@ -28,6 +28,10 @@ export class AutoElementBase<State extends Record<string, any> = Record<string, 
         return this.shadowRoot!
     }
 
+    trigger(eventName: string, detail?: any) {
+        this.dispatchEvent(new CustomEvent(eventName, { detail, bubbles: true, composed: true }))
+    }
+
     private applyValueToElement(key: string, value: unknown) {
         const attr = toKebabCase(key)
         // 布尔与空值优先处理：布尔用存在性表示，空值删除属性

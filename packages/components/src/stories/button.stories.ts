@@ -409,7 +409,12 @@ export const TagButton: Story = {
         return html`
         <auto-flex direction='column' gap="1em">          
           <auto-flex gap="1em">
-            <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="home"  size="x-small" label="默认"></auto-button>
+            <auto-button  .tags=${
+                [
+                    { icon: 'settings', checkable: true },
+                    { icon: 'tag', checkable: true, value: true },
+                ] as any
+            } .labelGrow=${args.labelGrow} style="width: 200px;" icon="home"  size="x-small" label="默认"></auto-button>
             <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="settings" size="x-small"  type="primary" label="关健按钮"></auto-button>
             <auto-button  tags="settings,tag" .labelGrow=${args.labelGrow} style="width: 200px;" icon="tag" size="x-small"  type="success" label="成功按钮"></auto-button>                      
           </auto-flex>

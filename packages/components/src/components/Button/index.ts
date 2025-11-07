@@ -16,6 +16,7 @@ import { ClickRipple } from '@/controllers/clickRipple'
 import { ifDefined } from 'lit/directives/if-defined.js'
 import { repeat } from 'lit/directives/repeat.js'
 import { getId } from '@/utils/getId'
+import { isFunction } from '@/utils/isFunction'
 
 export type AutoButtonTag = {
     id: string
@@ -46,13 +47,13 @@ export type AutoButtonTag = {
      * 当checkable=true时，表示当前选中状态的值
      */
     value?: any
-    onClick?: (e: MouseEvent) => void
+    onClick?: (args: { tag: AutoButtonTag; button: AutoButton; event: MouseEvent }) => void
     /**
      * 可复选时
      * @param e
      * @returns
      */
-    onChange?: (e: MouseEvent) => void
+    onChange?: (args: { tag: AutoButtonTag; button: AutoButton; event: MouseEvent }) => void
 }
 
 export type AutoButtonTags = AutoButtonTag[]
@@ -144,13 +145,12 @@ export interface AutoButtonProps {
      * 显示额外的标签,标签可以是:
      * - 图标:
      * - 文字:
-     *
      */
     tags: string | string[] | AutoButtonTags
 
-    onClick?: (e: MouseEvent) => void
+    onClick?: (args: AutoButton) => void
 
-    onChange?: (e: MouseEvent) => void
+    onChange?: (args: AutoButton) => void
 }
 
 @customElement('auto-button')
@@ -288,15 +288,37 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
         const path = e.composedPath()
         for (const element of path) {
             if (element instanceof HTMLElement && element.classList.contains('tag')) {
-                this._handleTagClick(element)
+                this._handleTagClick(element, e)
                 return true
             }
         }
         return false
     }
 
-    private _handleTagClick(el: HTMLElement) {
-        console.log('click tag', el)
+    private _execCallback(callback: undefined | ((...args: any[]) => any), args: any) {
+        if (isFunction(callback)) {
+            callback(args)
+        }
+    }
+    private _handleTagClick(el: HTMLElement, e: MouseEvent) {
+        const tagId = el.dataset.id
+        if (this._tags) {
+            const tag = this._tags.find((tag) => tag.id === tagId)
+            if (tag) {
+                const args = { tag, button: this, event: e }
+                this._execCallback(tag.onClick, args)
+                this.trigger('tag/Click', tag)
+                if (tag.checkable) {
+                    const checkValues = tag.checkValues!
+                    const newVal = tag.value === checkValues[0] ? checkValues[1] : checkValues[0]
+                    this.checked = newVal === checkValues[0]
+                    tag.value = newVal
+                    this._execCallback(tag.onChange, args)
+                    this.trigger('tag/change', tag)
+                    this.requestUpdate()
+                }
+            }
+        }
     }
 
     private _onClick = (e: MouseEvent) => {
@@ -345,36 +367,52 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
         // 如果是字符串，则以逗号分隔
         const tags = (typeof this.tags === 'string' ? this.tags.split(',') : this.tags || []) as any[]
         const tagList = tags
-            .map((tag) => {
-                const tagData = Object.assign(
+            .filter((tag) => tag)
+            .map((tagArgs) => {
+                const tag = Object.assign(
                     {
                         id: getId(),
                         checkValues: [true, false],
                         checkable: false,
                         value: false,
                     },
-                    typeof tag === 'string' ? (tag.startsWith('@') ? { label: tag.substring(1) } : { icon: tag }) : tag,
-                ) as AutoButtonTag
-                return tagData
+                    typeof tagArgs === 'string'
+                        ? tagArgs.startsWith('@')
+                            ? { label: tagArgs.substring(1) }
+                            : { icon: tagArgs }
+                        : tagArgs,
+                ) as Required<AutoButtonTag>
+                if (tag.checkValues.length === 0) tag.checkValues.push(true, false)
+                if (tag.checkValues.length === 1) tag.checkValues.push(tag.checkValues[0])
+                return tag
             })
-            .filter((tag) => tag) as AutoButtonTags
-        this._tags
+        this._tags = tagList
         return tagList
     }
 
     private _renderTag(tag: AutoButtonTag) {
-        const [checkedIcon, uncheckedIcon] = tag.icon!.split(',')
+        const icons = tag.icon!.split(',')
+
+        if (icons.length < 2) icons.push(icons[0])
+
         const tagClasss: Record<string, any> = {}
         if (tag.checkable) {
             tagClasss.checkable = true
             tagClasss.checked = tag.value === tag.checkValues![0]
         }
+        const icon = tag.checkable ? (tag.value === tag.checkValues![0] ? icons[0] : icons[1]) : tag.icon
 
         return html`<span class="tag ${classMap(tagClasss)}" data-id="${tag.id}">
-                ${when(tag.icon, () => html`<auto-icon title=${ifDefined(tag.tips)} inherit name="${tag.icon!}"></auto-icon>`)}
+                ${when(
+                    tag.icon,
+                    () => html`<auto-icon inherit title=${ifDefined(tag.tips)} 
+                        name="${icon!}">
+                    </auto-icon>`,
+                )}
                 ${tag.label}
             </span>`
     }
+
     private _renderTags() {
         const tags = this._getTags()
         if (tags.length === 0) return
