@@ -146,7 +146,7 @@ export interface AutoButtonProps {
      * - 图标:
      * - 文字:
      */
-    tags: string | string[] | AutoButtonTags
+    tags?: AutoButtonTags
 
     onClick?: (args: AutoButton) => void
 
@@ -218,8 +218,6 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
     @property()
     value?: any = false
 
-    _tags?: AutoButtonTags
-
     protected firstUpdated(): void {
         this.setAttribute('role', 'button')
         if (!this.hasAttribute('tabindex')) this.setAttribute('tabindex', '0')
@@ -255,6 +253,12 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
             this.setAttribute('aria-busy', 'true')
         } else {
             this.removeAttribute('aria-busy')
+        }
+    }
+    onInitState(): void {
+        if (!this.state) this.state = {}
+        if (this.state) {
+            if (!this.state.tags) this.state.tags = this._getTags()
         }
     }
 
@@ -302,8 +306,8 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
     }
     private _handleTagClick(el: HTMLElement, e: MouseEvent) {
         const tagId = el.dataset.id
-        if (this._tags) {
-            const tag = this._tags.find((tag) => tag.id === tagId)
+        if (this.state?.tags) {
+            const tag = this.state.tags.find((tag) => tag.id === tagId)
             if (tag) {
                 const args = { tag, button: this, event: e }
                 this._execCallback(tag.onClick, args)
@@ -311,7 +315,7 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
                 if (tag.checkable) {
                     const checkValues = tag.checkValues!
                     const newVal = tag.value === checkValues[0] ? checkValues[1] : checkValues[0]
-                    this.checked = newVal === checkValues[0]
+                    this.checked = newVal
                     tag.value = newVal
                     this._execCallback(tag.onChange, args)
                     this.trigger('tag/change', tag)
@@ -366,7 +370,7 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
     private _getTags(): AutoButtonTags {
         // 如果是字符串，则以逗号分隔
         const tags = (typeof this.tags === 'string' ? this.tags.split(',') : this.tags || []) as any[]
-        const tagList = tags
+        return tags
             .filter((tag) => tag)
             .map((tagArgs) => {
                 const tag = Object.assign(
@@ -386,8 +390,6 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
                 if (tag.checkValues.length === 1) tag.checkValues.push(tag.checkValues[0])
                 return tag
             })
-        this._tags = tagList
-        return tagList
     }
 
     private _renderTag(tag: AutoButtonTag) {
@@ -414,7 +416,7 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
     }
 
     private _renderTags() {
-        const tags = this._getTags()
+        const tags = this.state?.tags || []
         if (tags.length === 0) return
         return html`${when(this.tags, () => {
             return html`<auto-flex class="tags" gap="0.1em">

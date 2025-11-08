@@ -252,6 +252,10 @@ export const styles = css`
         animation-delay: 1s;
     }
 
+    .tag.checkable.checked{
+        background-color: var(--auto-theme-bgcolor);
+    }
+
     @keyframes ripple-wave {
         0% {
             outline: 1px solid red ;
