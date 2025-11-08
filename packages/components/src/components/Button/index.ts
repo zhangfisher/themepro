@@ -418,13 +418,11 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
     private _renderTags() {
         const tags = this.state?.tags || []
         if (tags.length === 0) return
-        return html`${when(this.tags, () => {
-            return html`<auto-flex class="tags" gap="0.1em">
+        return html`<auto-flex class="tags" gap="0.1em">
                 ${repeat(tags, (tag) => {
                     return html`${this._renderTag(tag)}`
                 })}
             </auto-flex>`
-        })}`
     }
     private _renderChecked(before: boolean = false) {
         return html`<auto-icon class='checked ${before ? 'before' : 'after'}' inherit name="yes"></auto-icon>`
