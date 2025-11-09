@@ -229,6 +229,16 @@ export const styles = css`
         }
     }
 
+    :host([type='primary']) .tags > .tag {
+        &:hover{
+            color: var(--auto-theme-bgcolor);
+            background-color: color-mix(in srgb, var(--auto-primary-color), white 10%)!important
+        }
+        &.checked{
+            color: var(--auto-theme-bgcolor);
+            background-color: color-mix(in srgb, var(--auto-primary-color), black 10%)!important
+        }
+    }
 
     /* 使用伪元素创建涟漪效果 */
     :host .badge::before,
@@ -253,7 +263,8 @@ export const styles = css`
     }
 
     .tag.checkable.checked{
-        background-color: var(--auto-theme-bgcolor);
+        color: var(--auto-selected-color);
+        background-color: var(--auto-selected-bgcolor);        
     }
 
     @keyframes ripple-wave {

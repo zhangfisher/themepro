@@ -47,7 +47,7 @@ export class ThemeScope {
                 spacing: 'medium',
                 shadow: 'medium',
                 border: '1px',
-                primary: '#029cfd', //
+                primary: 'var(--auto-theme-color)', //#029cfd
                 success: '#22c55e',
                 warning: '#f59e0b',
                 danger: '#ef4444',

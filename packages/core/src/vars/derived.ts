@@ -30,12 +30,23 @@ export const derivedVars = {
     '--auto-info-color': 'var(--t-color-info)',
     '--auto-theme-color': 'var(--t-color-theme-5)',
 
+    /** 活动颜色 */
+    '--auto-selected-color': 'var(--t-color-theme-8)!important',
+    '--auto-selected-bgcolor': 'color-mix(in srgb, var(--t-theme-bgcolor-1), transparent 15%)!important',
+
+    '--auto-hover-color': 'var(--t-color-theme-6)!important',
+    '--auto-hover-bgcolor': 'color-mix(in srgb, var(--t-theme-bgcolor-1) 50%, transparent 5%)!important',
+
+    '--auto-disable-color': 'color-mix(in srgb, var(--t-color-theme-3), transparent 50%)!important',
+    '--auto-disable-bgcolor': 'color-mix(in srgb, var(--auto-selected-bgcolor), transparent 60%)!important',
+
+    '--auto-active-color': 'color-mix(in srgb, var(--auto-selected-color), transparent 20%)!important',
+    '--auto-active-bgcolor': 'color-mix(in srgb, var(--auto-selected-bgcolor), black 5%)!important',
+
     /* 字体颜色 */
     '--auto-color': 'var(--t-theme-color)',
     '--auto-secondary-color': 'var(--t-color-theme-4)',
-    '--auto-disable-color': 'var(--t-color-theme-3)',
-    '--auto-hover-color': 'color-mix(in srgb, var(--t-color-theme-1), black 5%)!important;',
-    '--auto-active-color': 'color-mix(in srgb, var(--t-color-theme-1), white 20%)!important',
+
     '--auto-dark-color': 'color-mix(in srgb, var(--auto-color), black 10%)',
     '--auto-light-color': 'color-mix(in srgb, var(--auto-color), white 10%)',
 
@@ -46,10 +57,6 @@ export const derivedVars = {
     '--auto-light-bgcolor': 'color-mix(in hsl, var(--auto-bgcolor), white 20%)',
     /* 暗色: 相对于背景的暗色背景*/
     '--auto-dark-bgcolor': 'color-mix(in hsl, var(--auto-bgcolor), black 10%)',
-
-    /** 随随色背景颜色：用于自动选中颜色，或根据背景颜色自动匹配背景颜色*/
-    '--auto-selected-bgcolor': 'var(--t-color-theme-5)',
-    '--auto-hover-bgcolor': 'color-mix(in srgb, var(--t-color-theme-5), transparent 85%)',
 
     /* 边框 */
     '--auto-border-size': '1px',

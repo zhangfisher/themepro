@@ -3,6 +3,7 @@ import { renderThemeStory } from './theme.story'
 import { renderSemanticsColorStory } from './semantics.story'
 import { renderThemeScopeStory } from './theme.scope.story'
 import { renderFormStory } from './form.story'
+import { renderAutoColorStory } from './theme.autocolor.story'
 
 const meta: Meta = {
     title: '主题颜色',
@@ -15,6 +16,11 @@ export const ThemeColorPalette: Story = {
     name: '主题调色板',
     render: renderThemeStory,
 }
+export const AutoColorPalette: Story = {
+    name: '自动颜色变量',
+    render: renderAutoColorStory,
+}
+
 export const SemanticsColors: Story = {
     name: '语义颜色',
     render: renderSemanticsColorStory,
