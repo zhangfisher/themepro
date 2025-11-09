@@ -40,8 +40,8 @@ export const derivedVars = {
     '--auto-disable-color': 'color-mix(in srgb, var(--t-color-theme-3), transparent 50%)!important',
     '--auto-disable-bgcolor': 'color-mix(in srgb, var(--auto-selected-bgcolor), transparent 60%)!important',
 
-    '--auto-active-color': 'color-mix(in srgb, var(--auto-selected-color), transparent 20%)!important',
-    '--auto-active-bgcolor': 'color-mix(in srgb, var(--auto-selected-bgcolor), black 5%)!important',
+    '--auto-active-color': 'var(--auto-color)!important',
+    '--auto-active-bgcolor': 'var(--t-color-theme-2)!important',
 
     /* 字体颜色 */
     '--auto-color': 'var(--t-theme-color)',

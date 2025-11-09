@@ -19,7 +19,7 @@ export const styles = css`
         user-select: none;
     } 
     :host(:hover),:host([variant='ghost']:hover) {
-        background-color:  var(--auto-hover-bgcolor);
+        background-color:  var(--t-color-theme-1);
     }
     :host(:not(.label)){
         flex-grow: 0;
@@ -194,13 +194,12 @@ export const styles = css`
         width: 100%;
     } 
     /* Checkbox */
-    :host([checkable][checked]:not([checkPos="before"], [checkPos="after"], [checkPos="corner"])){        
-        background-color: var(--t-theme-color);
-        color: color-mix(in srgb, var(--t-color-theme-1), white 5%);        
-        
+    :host([checkable][checked]:not([checkPos="before"], [checkPos="after"], [checkPos="corner"])){    
+        background-color: var(--t-color-primary);
+        color: color-mix(in srgb, var(--t-color-primary) 0%, white 100%);
     }
     :host([checkable]) .checked{
-        color:green;
+        color:var(--t-color-primary);
     }
     :host([checkable][checkPos="before"]) {
         padding-left: calc(0.5 * var(--t-spacing-medium));        
@@ -221,25 +220,47 @@ export const styles = css`
     }  
     /** 标签 */
     .tags > .tag{
-        padding: 4px;
-        border-radius: 4px;        
+        padding: 5px;
+        border-radius: 50%;        
+        border:1px solid transparent;
+        aspect-ratio: 1;
         &:hover{
-            color: var(--auto-theme-color);
-            background-color: var(--t-theme-color-1);
+            color: var(--auto-primary-color); 
+        }
+        &.checkable{
+            &.checked{
+                border-radius: 50%;
+                aspect-ratio: 1;
+                padding: 5px;
+                color: var(--auto-selected-color);
+                background-color: var(--auto-selected-bgcolor);                
+                &[shape='circle']{
+                    border-radius: 50%;
+                    aspect-ratio: 1;
+                    padding: 5px;
+                }
+                &[shape='rectangle']{
+                    border-radius: 5px;
+                    padding: 5px;
+                }
+            }
         }
     }
+      
 
     :host([type='primary']) .tags > .tag {
-        &:hover{
-            color: var(--auto-theme-bgcolor);
-            background-color: color-mix(in srgb, var(--auto-primary-color), white 10%)!important
-        }
         &.checked{
             color: var(--auto-theme-bgcolor);
             background-color: color-mix(in srgb, var(--auto-primary-color), black 10%)!important
         }
     }
 
+    :host([type='success']) .tags > .tag {
+        &.checked{
+            color: var(--auto-theme-bgcolor);
+            background-color: color-mix(in srgb, var(--auto-success-color), black 10%)!important
+        }
+    }
     /* 使用伪元素创建涟漪效果 */
     :host .badge::before,
     :host .badge::after {
@@ -260,11 +281,6 @@ export const styles = css`
 
     :host .badge::after {
         animation-delay: 1s;
-    }
-
-    .tag.checkable.checked{
-        color: var(--auto-selected-color);
-        background-color: var(--auto-selected-bgcolor);        
     }
 
     @keyframes ripple-wave {
