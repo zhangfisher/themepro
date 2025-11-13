@@ -13,7 +13,7 @@ import type { AutoButtonProps } from '../Button'
 import { repeat } from 'lit/directives/repeat.js'
 
 export interface AutoButtonGroupProps {
-    items: AutoButtonProps[]
+    items: (AutoButtonProps | string)[]
     gap?: number
     pill?: boolean
     variant?: 'outline' | 'text' | 'ghost'
@@ -24,8 +24,8 @@ export interface AutoButtonGroupProps {
     block?: boolean
 }
 
-@customElement('auto-button-group')
-export class AutoButtonGroup extends AutoElementBase<AutoButtonGroupProps> {
+@customElement('auto-toolbar')
+export class AutoToolbar extends AutoElementBase<AutoButtonGroupProps> {
     static styles = styles
 
     @property({ type: String })
@@ -59,6 +59,10 @@ export class AutoButtonGroup extends AutoElementBase<AutoButtonGroupProps> {
         if (!this.state?.items) this.state!.items = []
     }
 
+    getItems() {
+        return this.state?.items || []
+    }
+
     connectedCallback(): void {
         super.connectedCallback()
     }
@@ -79,11 +83,11 @@ export class AutoButtonGroup extends AutoElementBase<AutoButtonGroupProps> {
         ></auto-button>`
     }
     render() {
-        const buttons = this._getButtons()
+        const items = this.getItems()
         return html`
             <auto-flex direction="${this.direction!}" gap="${this.gap!}">
-                ${repeat(buttons, (btn, i) => {
-                    return this._renderButton(btn, i)
+                ${repeat(items, (item, i) => {
+                    return this._renderButton(item, i)
                 })}
             </auto-flex>
         `
@@ -92,6 +96,6 @@ export class AutoButtonGroup extends AutoElementBase<AutoButtonGroupProps> {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'auto-button-group': AutoButtonGroup
+        'auto-toolbar': AutoToolbar
     }
 }

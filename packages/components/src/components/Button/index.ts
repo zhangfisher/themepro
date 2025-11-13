@@ -274,7 +274,7 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
         super.disconnectedCallback()
     }
 
-    private _handleCheckEvent(e: MouseEvent) {
+    private _handleCheckEvent(_e: MouseEvent) {
         const checkValues = this.state?.checkValues || this.checkValues || [true, false]
         if (checkValues.length < 2) checkValues.push(false)
         this.value = this.value === checkValues[0] ? checkValues[1] : checkValues[0]

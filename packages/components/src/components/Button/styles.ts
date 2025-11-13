@@ -63,7 +63,6 @@ export const styles = css`
         border-radius: 50%!important;
         aspect-ratio: 1;
         flex-direction: column!important;
-        padding: var(--auto-padding);
         gap:0;
         --auto-icon-size:2em;
     } 
@@ -225,7 +224,7 @@ export const styles = css`
         border:1px solid transparent;
         aspect-ratio: 1;
         &:hover{
-            color: var(--auto-primary-color); 
+            color: var(--auto-theme-color); 
         }
         &.checkable{
             &.checked{
@@ -248,17 +247,53 @@ export const styles = css`
     }
       
 
+    :host([type='primary']) .tags > .tag,
+    :host([type='success']) .tags > .tag,
+    :host([type='warning']) .tags > .tag,
+    :host([type='danger']) .tags > .tag,
+    :host([type='error']) .tags > .tag,
+    :host([type='info']) .tags > .tag {
+        color: color-mix(in srgb, var(--t-color-primary) 0%, white 100%);                
+    }
     :host([type='primary']) .tags > .tag {
+        &:hover{
+            background-color: color-mix(in srgb, var(--auto-primary-color), white 20%)!important;
+        }
         &.checked{
-            color: var(--auto-theme-bgcolor);
-            background-color: color-mix(in srgb, var(--auto-primary-color), black 10%)!important
+            background-color: color-mix(in srgb, var(--auto-primary-color), black 10%)!important;            
         }
     }
-
     :host([type='success']) .tags > .tag {
+        &:hover{
+            background-color: color-mix(in srgb, var(--auto-success-color), white 20%)!important;
+        }
         &.checked{
-            color: var(--auto-theme-bgcolor);
-            background-color: color-mix(in srgb, var(--auto-success-color), black 10%)!important
+            background-color: color-mix(in srgb, var(--auto-success-color), black 10%)!important;            
+        }
+    }
+    :host([type='warning']) .tags > .tag {
+        &:hover{
+            background-color: color-mix(in srgb, var(--auto-warning-color), white 20%)!important;
+        }
+        &.checked{
+            background-color: color-mix(in srgb, var(--auto-warning-color), black 10%)!important;            
+        }
+    }
+    :host([type='danger']) .tags > .tag,
+    :host([type='error']) .tags > .tag {
+        &:hover{
+            background-color: color-mix(in srgb, var(--auto-danger-color), white 20%)!important;
+        }
+        &.checked{
+            background-color: color-mix(in srgb, var(--auto-danger-color), black 10%)!important;            
+        }
+    }
+    :host([type='info']) .tags > .tag {
+        &:hover{
+            background-color: color-mix(in srgb, var(--auto-info-color), white 20%)!important;
+        }
+        &.checked{
+            background-color: color-mix(in srgb, var(--auto-info-color), black 10%)!important;            
         }
     }
     /* 使用伪元素创建涟漪效果 */

@@ -1,6 +1,7 @@
-import type { ThemeOptions } from 'packages/core/src/types'
-import { createTheme, injectStylesheet } from '@/utils'
-import { generateThemeColorVars } from '@/utils/generateThemeColorVars'
+import type { ThemeOptions } from '../../core/src/types'
+import { injectStylesheet } from '../../core/src/utils'
+import { generateThemeColorVars } from '../../core/src/utils/generateThemeColorVars'
+import { ThemeManager, createTheme } from '../../core/src/manager'
 import type { LitElement, ReactiveController } from 'lit'
 
 export class ThemeProController implements ReactiveController {
@@ -40,8 +41,7 @@ export class ThemeProController implements ReactiveController {
     _onThemeChange() {
         const theme = this.host.getAttribute('data-theme')
         if (theme) {
-            this.create({
-                name: theme,
+            ThemeManager.create({
                 theme,
             })
         }
@@ -49,15 +49,13 @@ export class ThemeProController implements ReactiveController {
     _onVariantColorChange(variant: string) {
         const color = this.host.getAttribute(`data-${variant}-color`)
         if (color) {
-            const { vars } = generateThemeColorVars(`--t-color-${variant}-`, {
-                color,
-            })
+            const { vars } = generateThemeColorVars(`--t-color-${variant}-`, color)
             injectStylesheet(
                 `:host{
 				${Object.entries(vars)
                     .map(([key, value]) => `${key}:${value}`)
                     .join(';\n')}`,
-                { el: this.host },
+                this.host,
             )
         }
     }
@@ -74,8 +72,7 @@ export class ThemeProController implements ReactiveController {
 
         const theme = this.host.getAttribute('data-theme')
         if (theme) {
-            this.create({
-                name: theme,
+            ThemeManager.create({
                 theme,
             })
         }
