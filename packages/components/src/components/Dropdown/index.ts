@@ -205,8 +205,8 @@ export class AutoDropdown extends AutoButton {
             this._dropdownContainer = undefined;
         }
         this._cleanup?.();
-        this._showAnimation?.cancel();
-        this._hideAnimation?.cancel();
+        this._showAnimation?.pause();
+        this._hideAnimation?.pause();
     }
 
     private _onTriggerClick = (e: MouseEvent) => {
@@ -246,34 +246,23 @@ export class AutoDropdown extends AutoButton {
         this._isAnimating = true;
 
         // 停止任何正在进行的隐藏动画
-        this._hideAnimation?.cancel();
+        this._hideAnimation?.pause();
 
         // 设置初始状态
         this._dropdownContainer.style.visibility = "visible";
         this._dropdownContainer.style.pointerEvents = "auto";
 
-        // 使用Web Animations API创建显示动画
-        const keyframes = [
-            {
-                opacity: 0,
-                transform: 'scale(0.9) translateY(-10px)'
-            },
-            {
-                opacity: 1,
-                transform: 'scale(1) translateY(0)'
-            }
-        ];
-
-        const options = {
+        // 使用animejs创建显示动画
+        this._showAnimation = animate(this._dropdownContainer, {
+            opacity: [0, 1],
+            scale: [0.9, 1],
+            translateY: [-10, 0],
             duration: this.animationDuration,
-            easing: this.animationEasing || 'ease-out',
-            fill: 'forwards' as FillMode
-        };
-
-        this._showAnimation = this._dropdownContainer.animate(keyframes, options);
+            easing: this.animationEasing || 'easeOutQuart',
+        });
 
         // 设置动画回调
-        this._showAnimation.addEventListener('finish', () => {
+        this._showAnimation.finished.then(() => {
             this._isAnimating = false;
             this._showAnimation = undefined;
         });
@@ -295,30 +284,19 @@ export class AutoDropdown extends AutoButton {
         this._isAnimating = true;
 
         // 停止任何正在进行的显示动画
-        this._showAnimation?.cancel();
+        this._showAnimation?.pause();
 
-        // 使用Web Animations API创建隐藏动画
-        const keyframes = [
-            {
-                opacity: 1,
-                transform: 'scale(1) translateY(0)'
-            },
-            {
-                opacity: 0,
-                transform: 'scale(0.9) translateY(-10px)'
-            }
-        ];
-
-        const options = {
+        // 使用animejs创建隐藏动画
+        this._hideAnimation = animate(this._dropdownContainer, {
+            opacity: [1, 0],
+            scale: [1, 0.9],
+            translateY: [0, -10],
             duration: this.animationDuration,
-            easing: this.animationEasing || 'ease-in',
-            fill: 'forwards' as FillMode
-        };
-
-        this._hideAnimation = this._dropdownContainer.animate(keyframes, options);
+            easing: this.animationEasing || 'easeInQuart',
+        });
 
         // 设置动画回调
-        this._hideAnimation.addEventListener('finish', () => {
+        this._hideAnimation.finished.then(() => {
             this._isAnimating = false;
             this._dropdownContainer!.style.visibility = "hidden";
             this._dropdownContainer!.style.pointerEvents = "none";
