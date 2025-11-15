@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown 重构验证测试</title>
+    <script type="module" src="../dist/index.js"></script>
+</head>
+<body>
+    <div style="padding: 20px; font-family: Arial, sans-serif;">
+        <h1>Dropdown 重构验证测试</h1>
+
+        <h2>重构后的功能验证</h2>
+        <p>验证容器创建和slot内容处理是否正确分离</p>
+
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
+            <auto-dropdown label="测试1" type="primary">
+                <div class="dropdown" style="padding: 8px 0; min-width: 160px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                    <div style="padding: 8px 16px; cursor: pointer;">选项 1-1</div>
+                    <div style="padding: 8px 16px; cursor: pointer;">选项 1-2</div>
+                </div>
+            </auto-dropdown>
+
+            <auto-dropdown label="测试2" type="info">
+                <div class="dropdown" style="padding: 8px 0; min-width: 160px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                    <div style="padding: 8px 16px; cursor: pointer;">选项 2-1</div>
+                    <div style="padding: 8px 16px; cursor: pointer;">选项 2-2</div>
+                    <div style="padding: 8px 16px; cursor: pointer;">选项 2-3</div>
+                </div>
+            </auto-dropdown>
+        </div>
+
+        <script>
+            // 监听组件初始化事件来验证重构逻辑
+            document.addEventListener('DOMContentLoaded', () => {
+                console.log('🔍 开始验证重构后的Dropdown逻辑...');
+
+                // 立即检查容器是否已创建（应该存在）
+                setTimeout(() => {
+                    const themeproContainer = document.querySelector('.themepro-container');
+                    if (themeproContainer) {
+                        console.log('✅ .themepro-container 在connectedCallback时已创建');
+                        console.log('📦 container children count:', themeproContainer.children.length);
+
+                        // 检查dropdown容器数量
+                        const dropdownPopups = themeproContainer.querySelectorAll('.auto-dropdown-popup');
+                        console.log('🎯 .auto-dropdown-popup 数量:', dropdownPopups.length);
+
+                        if (dropdownPopups.length === 2) {
+                            console.log('✅ 两个dropdown容器都已创建（不依赖slot内容）');
+                        }
+                    } else {
+                        console.log('❌ .themepro-container 未创建');
+                    }
+                }, 100);
+
+                // 延迟检查slot内容是否正确克隆
+                setTimeout(() => {
+                    const dropdownPopups = document.querySelectorAll('.auto-dropdown-popup');
+                    let allContentCloned = true;
+
+                    dropdownPopups.forEach((popup, index) => {
+                        const childCount = popup.children.length;
+                        console.log(`📋 Dropdown ${index + 1} 内容数量:`, childCount);
+
+                        if (childCount === 0) {
+                            allContentCloned = false;
+                        }
+                    });
+
+                    if (allContentCloned) {
+                        console.log('✅ slot内容已正确克隆到容器中');
+                    } else {
+                        console.log('❌ slot内容克隆失败');
+                    }
+
+                    // 验证原始dropdown-content是否隐藏
+                    const originalContents = document.querySelectorAll('.dropdown-content');
+                    let allOriginalHidden = true;
+
+                    originalContents.forEach((content) => {
+                        if (content.style.display !== 'none') {
+                            allOriginalHidden = false;
+                        }
+                    });
+
+                    if (allOriginalHidden) {
+                        console.log('✅ 原始dropdown-content容器已隐藏');
+                    } else {
+                        console.log('❌ 原始dropdown-content容器未隐藏');
+                    }
+                }, 1000);
+            });
+        </script>
+    </div>
+</body>
+</html>

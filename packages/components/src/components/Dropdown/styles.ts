@@ -24,6 +24,17 @@ export const styles = css`
         will-change: transform, opacity;
     }
 
+    /* ThemePro 全局容器样式 */
+    .themepro-container {
+        pointer-events: none;
+        z-index: 9999;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
     /* 响应式调整 */
     @media (max-width: 768px) {
         .auto-dropdown-popup {

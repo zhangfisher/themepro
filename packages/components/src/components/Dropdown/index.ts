@@ -4,10 +4,9 @@
  *
  */
 import { html } from "lit";
-import { property, state } from "lit/decorators.js";
+import { property } from "lit/decorators.js";
 import { customElement } from "lit/decorators/custom-element.js";
 import { styles } from "./styles";
-import { AutoElementBase } from "../../elements/base";
 import {
     computePosition,
     flip,
@@ -19,6 +18,8 @@ import {
 import { animate } from "animejs";
 
 import { AutoButton, type AutoButtonProps } from "../Button";
+import { createThemeproContainer } from "../../utils/createThemeproContainer";
+import { getSlots } from "@/utils/getSlots";
 
 export interface AutoDropdownProps extends AutoButtonProps {
     /**
@@ -95,13 +96,10 @@ export class AutoDropdown extends AutoButton {
     persistent?: boolean = false;
 
     @property({ type: Number })
-    animationDuration?: number = 300;
+    animationDuration: number = 50;
 
     @property({ type: String })
     animationEasing?: string = "easeOutQuart";
-
-    @state()
-    private _isAnimating: boolean = false;
 
     private _dropdownContainer?: HTMLElement;
     private _cleanup?: () => void;
@@ -109,6 +107,8 @@ export class AutoDropdown extends AutoButton {
     private _escapeHandler?: (e: KeyboardEvent) => void;
     private _showAnimation?: any;
     private _hideAnimation?: any;
+    private _containerInitialized?: boolean;
+
     onInitState(): void {
         if (!this.state) this.state = {};
     }
@@ -117,10 +117,9 @@ export class AutoDropdown extends AutoButton {
         super.connectedCallback();
         this.addEventListener("click", this._onTriggerClick as EventListener);
         this.addEventListener("keydown", this._onKeydown as EventListener);
-        // 延迟初始化dropdown内容，确保DOM已完全加载
-        requestAnimationFrame(() => {
-            this._initializeDropdown();
-        });
+
+        // 创建容器和弹窗容器（不依赖slot内容）
+        this._createDropdownContainer();
     }
 
     disconnectedCallback(): void {
@@ -130,7 +129,7 @@ export class AutoDropdown extends AutoButton {
         );
         this.removeEventListener("keydown", this._onKeydown as EventListener);
         this._cleanup?.();
-        this._destroyDropdown();
+        this._destroyDropdownContainer();
         super.disconnectedCallback();
     }
 
@@ -155,32 +154,17 @@ export class AutoDropdown extends AutoButton {
     }
 
     /**
-     * 初始化dropdown：移动内容到body中的auto-container
+     * 创建dropdown容器（不依赖slot内容）
      */
-    private _initializeDropdown(): void {
-        const dropdownElement = this.querySelector(".dropdown") as HTMLElement;
-        if (!dropdownElement) return;
+    private _createDropdownContainer(): void {
+        if (this._containerInitialized) return;
 
-        // 确保auto-container存在
-        let container = this.ownerDocument.querySelector(
-            ".auto-container"
-        ) as HTMLElement;
-        if (!container) {
-            container = this.ownerDocument.createElement("div");
-            container.className = "auto-container";
-            container.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                pointer-events: none;
-                z-index: 9999;
-            `;
-            this.ownerDocument.body.appendChild(container);
-        }
+        // 使用工具函数创建全局.themepro-container
+        const container = createThemeproContainer(this);
 
         // 创建dropdown容器
         this._dropdownContainer = this.ownerDocument.createElement("div");
-        this._dropdownContainer.className = "auto-dropdown-popup";
+        this._dropdownContainer.className = "dropdown";
         this._dropdownContainer.style.cssText = `
             position: absolute;
             pointer-events: auto;
@@ -189,15 +173,33 @@ export class AutoDropdown extends AutoButton {
             visibility: hidden;
         `;
 
-        // 克隆dropdown内容
-        const clone = dropdownElement.cloneNode(true) as HTMLElement;
-        clone.style.display = "block";
-        this._dropdownContainer.appendChild(clone);
-
         container.appendChild(this._dropdownContainer);
+        this._containerInitialized = true;
     }
 
-    private _destroyDropdown(): void {
+    /**
+     * 初始化slot内容：将slot内容克隆到容器中
+     */
+    private _updateDropdownContent(): void {
+        if (!this._dropdownContainer) {
+            console.error("Dropdown container not initialized");
+            return;
+        }
+        if (this._dropdownContainer.children.length !== 0) return;
+
+        // 克隆Slots元素
+        const childNodes = getSlots(this);
+
+        childNodes.forEach((child) => {
+            const clonedChild = child.cloneNode(true);
+            this._dropdownContainer!.appendChild(clonedChild);
+        });
+    }
+
+    /**
+     * 销毁dropdown容器
+     */
+    private _destroyDropdownContainer(): void {
         if (this._dropdownContainer?.parentNode) {
             this._dropdownContainer.parentNode.removeChild(
                 this._dropdownContainer
@@ -207,6 +209,7 @@ export class AutoDropdown extends AutoButton {
         this._cleanup?.();
         this._showAnimation?.pause();
         this._hideAnimation?.pause();
+        this._containerInitialized = false;
     }
 
     private _onTriggerClick = (e: MouseEvent) => {
@@ -240,10 +243,11 @@ export class AutoDropdown extends AutoButton {
         }
     };
 
-    private _showDropdown(): void {
-        if (!this._dropdownContainer) return;
+    private async _showDropdown(): Promise<void> {
+        // 确保slot内容已初始化
+        this._updateDropdownContent();
 
-        this._isAnimating = true;
+        if (!this._dropdownContainer) return;
 
         // 停止任何正在进行的隐藏动画
         this._hideAnimation?.pause();
@@ -252,23 +256,28 @@ export class AutoDropdown extends AutoButton {
         this._dropdownContainer.style.visibility = "visible";
         this._dropdownContainer.style.pointerEvents = "auto";
 
+        // 设置外部事件监听器
+        this._setupExternalListeners();
+
+        // 先同步计算显示位置，确保定位准确
+        await this._updatePositionSync();
+
+        // 位置计算完成后再开始显示动画
         // 使用animejs创建显示动画
         this._showAnimation = animate(this._dropdownContainer, {
             opacity: [0, 1],
             scale: [0.9, 1],
             translateY: [-10, 0],
             duration: this.animationDuration,
-            easing: this.animationEasing || 'easeOutQuart',
+            easing: this.animationEasing || "easeOutQuart",
         });
 
         // 设置动画回调
-        this._showAnimation.finished.then(() => {
-            this._isAnimating = false;
-            this._showAnimation = undefined;
-        });
-
-        this._updatePosition();
-        this._setupExternalListeners();
+        if (this._showAnimation?.finished) {
+            this._showAnimation.finished.then(() => {
+                this._showAnimation = undefined;
+            });
+        }
 
         this.dispatchEvent(
             new CustomEvent("dropdown-show", {
@@ -281,8 +290,6 @@ export class AutoDropdown extends AutoButton {
     private _hideDropdown(): void {
         if (!this._dropdownContainer) return;
 
-        this._isAnimating = true;
-
         // 停止任何正在进行的显示动画
         this._showAnimation?.pause();
 
@@ -291,18 +298,29 @@ export class AutoDropdown extends AutoButton {
             opacity: [1, 0],
             scale: [1, 0.9],
             translateY: [0, -10],
-            duration: this.animationDuration,
-            easing: this.animationEasing || 'easeInQuart',
+            duration: this.animationDuration || 300,
+            easing: this.animationEasing || "easeInQuart",
         });
 
         // 设置动画回调
-        this._hideAnimation.finished.then(() => {
-            this._isAnimating = false;
-            this._dropdownContainer!.style.visibility = "hidden";
-            this._dropdownContainer!.style.pointerEvents = "none";
-            this._hideAnimation = undefined;
-            this._removeExternalListeners();
-        });
+        if (this._hideAnimation?.finished) {
+            this._hideAnimation.finished.then(() => {
+                this._dropdownContainer!.style.visibility = "hidden";
+                this._dropdownContainer!.style.pointerEvents = "none";
+                this._hideAnimation = undefined;
+                this._removeExternalListeners();
+            });
+        } else {
+            // 如果动画对象异常，直接执行完成逻辑
+            setTimeout(() => {
+                if (this._dropdownContainer) {
+                    this._dropdownContainer.style.visibility = "hidden";
+                    this._dropdownContainer.style.pointerEvents = "none";
+                }
+                this._hideAnimation = undefined;
+                this._removeExternalListeners();
+            }, this.animationDuration || 300);
+        }
 
         this.dispatchEvent(
             new CustomEvent("dropdown-hide", {
@@ -312,9 +330,126 @@ export class AutoDropdown extends AutoButton {
         );
     }
 
+    private async _updatePositionSync(): Promise<void> {
+        if (!this._dropdownContainer) return;
+
+        // 同步计算位置，确保首次显示时的定位准确
+        const { x, y, middlewareData } = await computePosition(
+            this,
+            this._dropdownContainer,
+            {
+                placement: this.placement,
+                middleware: [
+                    offset({
+                        mainAxis: this.offset?.[1] || 4,
+                        crossAxis: this.offset?.[0] || 0,
+                    }),
+                    flip(),
+                    shift({
+                        padding: 8,
+                    }),
+                    hide({
+                        strategy: "referenceHidden",
+                    }),
+                ],
+            }
+        );
+
+        if (this._dropdownContainer) {
+            const { referenceHidden } = middlewareData.hide || {};
+
+            Object.assign(this._dropdownContainer.style, {
+                left: `${x}px`,
+                top: `${y}px`,
+                visibility: referenceHidden ? "hidden" : "visible",
+            });
+
+            // 处理宽度适配
+            if (this.fitWidth) {
+                const triggerWidth = this.getBoundingClientRect().width;
+                this._dropdownContainer.style.width = `${triggerWidth}px`;
+            }
+        }
+
+        // 设置自动更新，用于响应后续的位置变化
+        this._cleanup = autoUpdate(this, this._dropdownContainer, () => {
+            computePosition(this, this._dropdownContainer!, {
+                placement: this.placement,
+                middleware: [
+                    offset({
+                        mainAxis: this.offset?.[1] || 4,
+                        crossAxis: this.offset?.[0] || 0,
+                    }),
+                    flip({
+                        fallbackAxisSideDirection: "start",
+                    }),
+                    shift({
+                        padding: 8,
+                    }),
+                    hide({
+                        strategy: "referenceHidden",
+                    }),
+                ],
+            }).then(({ x, y, middlewareData }) => {
+                if (this._dropdownContainer) {
+                    const { referenceHidden } = middlewareData.hide || {};
+
+                    Object.assign(this._dropdownContainer.style, {
+                        left: `${x}px`,
+                        top: `${y}px`,
+                        visibility: referenceHidden ? "hidden" : "visible",
+                    });
+
+                    // 处理宽度适配
+                    if (this.fitWidth) {
+                        const triggerWidth = this.getBoundingClientRect().width;
+                        this._dropdownContainer.style.width = `${triggerWidth}px`;
+                    }
+                }
+            });
+        });
+    }
+
     private _updatePosition(): void {
         if (!this._dropdownContainer) return;
 
+        // 立即计算一次位置，确保首次显示时的定位准确
+        computePosition(this, this._dropdownContainer, {
+            placement: this.placement,
+            middleware: [
+                offset({
+                    mainAxis: this.offset?.[1] || 4,
+                    crossAxis: this.offset?.[0] || 0,
+                }),
+                flip({
+                    fallbackAxisSideDirection: "start",
+                }),
+                shift({
+                    padding: 8,
+                }),
+                hide({
+                    strategy: "referenceHidden",
+                }),
+            ],
+        }).then(({ x, y, middlewareData }) => {
+            if (this._dropdownContainer) {
+                const { referenceHidden } = middlewareData.hide || {};
+
+                Object.assign(this._dropdownContainer.style, {
+                    left: `${x}px`,
+                    top: `${y}px`,
+                    visibility: referenceHidden ? "hidden" : "visible",
+                });
+
+                // 处理宽度适配
+                if (this.fitWidth) {
+                    const triggerWidth = this.getBoundingClientRect().width;
+                    this._dropdownContainer.style.width = `${triggerWidth}px`;
+                }
+            }
+        });
+
+        // 设置自动更新，用于响应后续的位置变化
         this._cleanup = autoUpdate(this, this._dropdownContainer, () => {
             computePosition(this, this._dropdownContainer!, {
                 placement: this.placement,
@@ -378,7 +513,13 @@ export class AutoDropdown extends AutoButton {
                 handleDocumentClick,
                 true
             );
-            this.ownerDocument.addEventListener("keydown", this._escapeHandler);
+
+            if (this._escapeHandler) {
+                this.ownerDocument.addEventListener(
+                    "keydown",
+                    this._escapeHandler
+                );
+            }
 
             this._externalClickHandler = () => {
                 this.ownerDocument.removeEventListener(
@@ -386,10 +527,12 @@ export class AutoDropdown extends AutoButton {
                     handleDocumentClick,
                     true
                 );
-                this.ownerDocument.removeEventListener(
-                    "keydown",
-                    this._escapeHandler!
-                );
+                if (this._escapeHandler) {
+                    this.ownerDocument.removeEventListener(
+                        "keydown",
+                        this._escapeHandler
+                    );
+                }
             };
         }, 0);
     }
@@ -403,9 +546,7 @@ export class AutoDropdown extends AutoButton {
     render() {
         return html`
             ${super.render()}
-            <div class="dropdown" style="display: none;">
-                <slot name="dropdown"></slot>
-            </div>
+            <slot style="display:none"></slot>
         `;
     }
 }
