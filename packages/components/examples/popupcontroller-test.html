@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PopupController 重构测试</title>
+    <script type="module" src="../dist/index.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        test-container {
+            display: block;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>PopupController 重构测试</h1>
+
+    <div style="margin: 20px 0;">
+        <h3>基础功能测试</h3>
+        <auto-dropdown id="basic-dropdown" label="基础下拉菜单" type="primary">
+            <div style="padding: 8px 0; min-width: 160px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <div style="padding: 8px 16px; cursor: pointer;">选项 1</div>
+                <div style="padding: 8px 16px; cursor: pointer;">选项 2</div>
+                <div style="padding: 8px 16px; cursor: pointer;">选项 3</div>
+            </div>
+        </auto-dropdown>
+
+        <auto-dropdown id="fit-width-dropdown" label="宽度适配" type="success">
+            <div style="padding: 8px 0; min-width: 200px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <div style="padding: 8px 16px; cursor: pointer;">这是一个较长的选项</div>
+                <div style="padding: 8px 16px; cursor: pointer;">另一个选项</div>
+            </div>
+        </auto-dropdown>
+
+        <auto-dropdown id="position-dropdown" label="位置测试" type="warning" placement="top-end">
+            <div style="padding: 8px 0; min-width: 120px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <div style="padding: 8px 16px; cursor: pointer;">上</div>
+                <div style="padding: 8px 16px; cursor: pointer;">右</div>
+            </div>
+        </auto-dropdown>
+    </div>
+
+    <div id="test-results" style="margin-top: 20px; padding: 10px; background: #f5f5f5; border-radius: 4px;">
+        <h3>测试结果</h3>
+        <div id="results-content">点击下拉菜单进行测试...</div>
+    </div>
+
+    <script>
+        let testResults = [];
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
+            testResults.push(logEntry);
+
+            const resultsContent = document.getElementById('results-content');
+            resultsContent.innerHTML = testResults.join('<br>');
+            console.log(logEntry);
+        }
+
+        function testContainerCreation() {
+            log('🔍 测试容器创建...', 'test');
+
+            // 检查是否创建了 .themepro-container
+            const themeproContainer = document.querySelector('.themepro-container');
+            if (themeproContainer) {
+                log('✅ .themepro-container 创建成功');
+            } else {
+                log('❌ .themepro-container 未找到');
+                return false;
+            }
+
+            // 检查是否有 .popup 容器
+            const popupContainers = document.querySelectorAll('.themepro-container .popup');
+            if (popupContainers.length > 0) {
+                log(`✅ 找到 ${popupContainers.length} 个 .popup 容器`);
+            } else {
+                log('⚠️  暂无 .popup 容器（点击下拉菜单后会创建）');
+            }
+
+            return true;
+        }
+
+        function testEventHandling() {
+            log('🔍 测试事件处理...', 'test');
+
+            const dropdowns = document.querySelectorAll('auto-dropdown');
+            dropdowns.forEach((dropdown, index) => {
+                // 监听 dropdown-show 事件
+                dropdown.addEventListener('dropdown-show', (e) => {
+                    log(`✅ Dropdown ${index + 1}: 显示事件触发`);
+                });
+
+                // 监听 dropdown-hide 事件
+                dropdown.addEventListener('dropdown-hide', (e) => {
+                    log(`✅ Dropdown ${index + 1}: 隐藏事件触发`);
+                });
+
+                // 监听 dropdown-toggle 事件
+                dropdown.addEventListener('dropdown-toggle', (e) => {
+                    log(`✅ Dropdown ${index + 1}: 切换事件触发，状态: ${e.detail.open}`);
+                });
+            });
+
+            log('✅ 事件监听器设置完成');
+        }
+
+        function testContentCloning() {
+            log('🔍 测试内容克隆...', 'test');
+
+            setTimeout(() => {
+                const popupContainers = document.querySelectorAll('.themepro-container .popup');
+
+                popupContainers.forEach((popup, index) => {
+                    const childCount = popup.children.length;
+                    if (childCount > 0) {
+                        log(`✅ Popup ${index + 1}: 包含 ${childCount} 个克隆元素`);
+                    } else {
+                        log(`❌ Popup ${index + 1}: 没有克隆内容`);
+                    }
+                });
+            }, 100);
+        }
+
+        // 页面加载完成后运行测试
+        document.addEventListener('DOMContentLoaded', () => {
+            log('🚀 页面加载完成，开始初始化测试');
+
+            // 延迟执行测试，等待组件初始化
+            setTimeout(() => {
+                testContainerCreation();
+                testEventHandling();
+
+                log('📝 测试说明：');
+                log('1. 点击任意下拉菜单按钮');
+                log('2. 检查容器是否正确创建');
+                log('3. 验证内容是否正确克隆');
+                log('4. 测试事件是否正常触发');
+                log('5. 验证动画和定位是否正常');
+                log('💡 点击下拉菜单开始功能测试');
+            }, 500);
+        });
+
+        // 监听点击事件来触发内容克隆测试
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('auto-dropdown')) {
+                setTimeout(testContentCloning, 50);
+            }
+        });
+    </script>
+</body>
+</html>

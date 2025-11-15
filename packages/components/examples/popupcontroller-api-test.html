@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PopupController API 测试</title>
+    <script type="module" src="../dist/index.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .log {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .controls {
+            margin: 20px 0;
+        }
+        .controls button {
+            margin: 5px;
+            padding: 8px 16px;
+            background: #1890ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .controls button:hover {
+            background: #40a9ff;
+        }
+    </style>
+</head>
+<body>
+    <h1>PopupController API 测试</h1>
+
+    <div class="test-section">
+        <h2>基础功能测试</h2>
+        <p>验证 PopupController 是否正确从 host 属性读取配置</p>
+
+        <auto-dropdown id="basic-test" label="基础测试" type="primary" placement="top" animationDuration="200">
+            <div style="padding: 12px; background: white; border: 1px solid #d9d9d9; border-radius: 6px;">
+                <p>这是基础测试内容</p>
+                <p>placement: top</p>
+                <p>animationDuration: 200ms</p>
+            </div>
+        </auto-dropdown>
+    </div>
+
+    <div class="test-section">
+        <h2>动态配置测试</h2>
+        <p>测试运行时修改配置是否生效</p>
+
+        <div class="controls">
+            <auto-dropdown id="dynamic-test" label="动态测试" type="success" placement="bottom">
+                <div style="padding: 12px; background: white; border: 1px solid #d9d9d9; border-radius: 6px;">
+                    <p>当前 placement: <span id="current-placement">bottom</span></p>
+                    <p>当前 offset: <span id="current-offset">[0, 4]</span></p>
+                </div>
+            </auto-dropdown>
+        </div>
+        <div class="controls">
+            <button onclick="changePlacement('top')">改为 top</button>
+            <button onclick="changePlacement('right')">改为 right</button>
+            <button onclick="changeOffset([10, 10])">偏移 [10, 10]</button>
+            <button onclick="changeOffset([0, 20])">偏移 [0, 20]</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>事件处理测试</h2>
+        <p>验证 onShow/onHide 事件是否正常工作</p>
+
+        <auto-dropdown id="event-test" label="事件测试" type="warning">
+            <div style="padding: 12px; background: white; border: 1px solid #d9d9d9; border-radius: 6px;">
+                <p>打开控制台查看事件日志</p>
+            </div>
+        </auto-dropdown>
+    </div>
+
+    <div id="test-log" class="log">
+        <strong>测试日志:</strong><br>
+    </div>
+
+    <script>
+        const log = document.getElementById('test-log');
+
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+            log.innerHTML += `[${timestamp}] ${icon} ${message}<br>`;
+            log.scrollTop = log.scrollHeight;
+            console.log(message);
+        }
+
+        // 动态配置测试函数
+        function changePlacement(placement) {
+            const dropdown = document.getElementById('dynamic-test');
+            const span = document.getElementById('current-placement');
+
+            dropdown.placement = placement;
+            span.textContent = placement;
+
+            addLog(`placement 更改为: ${placement}`, 'success');
+        }
+
+        function changeOffset(offset) {
+            const dropdown = document.getElementById('dynamic-test');
+            const span = document.getElementById('current-offset');
+
+            dropdown.offset = offset;
+            span.textContent = JSON.stringify(offset);
+
+            addLog(`offset 更改为: ${JSON.stringify(offset)}`, 'success');
+        }
+
+        // 监听事件
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdowns = document.querySelectorAll('auto-dropdown');
+
+            dropdowns.forEach((dropdown, index) => {
+                const dropdownId = dropdown.id || `dropdown-${index + 1}`;
+
+                dropdown.addEventListener('dropdown-show', () => {
+                    addLog(`${dropdownId} 显示事件触发`, 'success');
+                });
+
+                dropdown.addEventListener('dropdown-hide', () => {
+                    addLog(`${dropdownId} 隐藏事件触发`, 'success');
+                });
+
+                dropdown.addEventListener('dropdown-toggle', (e) => {
+                    addLog(`${dropdownId} 切换事件: ${e.detail.open ? '打开' : '关闭'}`);
+                });
+            });
+
+            // 验证初始配置
+            setTimeout(() => {
+                const basicTest = document.getElementById('basic-test');
+                addLog(`基础测试初始配置: placement=${basicTest.placement}, animationDuration=${basicTest.animationDuration}`);
+
+                const dynamicTest = document.getElementById('dynamic-test');
+                addLog(`动态测试初始配置: placement=${dynamicTest.placement}, offset=${JSON.stringify(dynamicTest.offset)}`);
+
+                addLog('🚀 所有测试初始化完成');
+                addLog('💡 请尝试点击各个下拉菜单和配置按钮');
+            }, 500);
+        });
+    </script>
+</body>
+</html>

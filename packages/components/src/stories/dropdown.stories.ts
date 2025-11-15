@@ -335,6 +335,7 @@ export const ComplexContent: Story = {
                 <h3>包含表单的复杂下拉内容</h3>
                 <div style="margin-top: 20px;">
                     <auto-dropdown
+                        label="包含表单的复杂下拉内容"
                         placement="bottom-start"
                         fitWidth
                         type="primary"
@@ -411,7 +412,10 @@ export const ComplexContent: Story = {
 };
 
 export const PersistentDropdown: Story = {
+    args: {},
+
     name: "持久化菜单",
+
     render: () => {
         return html`
             <div style="padding: 20px;">
@@ -420,28 +424,264 @@ export const PersistentDropdown: Story = {
                     需要通过按钮或按ESC键手动关闭
                 </p>
                 <div style="margin-top: 20px;">
-                    <auto-dropdown persistent type="danger">
-                        <div
-                            class="dropdown"
-                            style="padding: 20px; min-width: 300px; background: white; border: 1px solid #d9d9d9; border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,0.12);"
+                    <auto-dropdown
+                        label="持久化下拉菜单（点击外部不关闭）"
+                        persistent
+                        type="danger"
+                    >
+                        <p
+                            style="margin: 0 0 16px 0; color: #666; line-height: 1.5;"
                         >
-                            <p
-                                style="margin: 0 0 16px 0; color: #666; line-height: 1.5;"
+                            这是一个持久化下拉菜单，点击外部区域不会关闭它。您需要手动点击关闭按钮或按ESC键来关闭。
+                        </p>
+                        <div
+                            style="display: flex; gap: 8px; justify-content: flex-end;"
+                        >
+                            <button
+                                style="padding: 8px 16px; border: 1px solid #d9d9d9; background: #fff; cursor: pointer; border-radius: 4px;"
+                                onclick="this.dispatchEvent(new CustomEvent('dropdown-close', { bubbles: true, composed: true }))"
                             >
-                                这是一个持久化下拉菜单，点击外部区域不会关闭它。您需要手动点击关闭按钮或按ESC键来关闭。
-                            </p>
-                            <div
-                                style="display: flex; gap: 8px; justify-content: flex-end;"
-                            >
-                                <button
-                                    style="padding: 8px 16px; border: 1px solid #d9d9d9; background: #fff; cursor: pointer; border-radius: 4px;"
-                                    onclick="this.closest('auto-dropdown').open = false"
-                                >
-                                    手动关闭
-                                </button>
-                            </div>
+                                手动关闭
+                            </button>
                         </div>
                     </auto-dropdown>
+                </div>
+            </div>
+        `;
+    },
+};
+
+export const FitWidthDemo: Story = {
+    name: "宽度适配演示",
+    render: () => {
+        return html`
+            <div style="padding: 20px;">
+                <h3>fitWidth 属性演示</h3>
+                <p style="color: #666; margin: 10px 0;">
+                    fitWidth 属性控制下拉内容宽度是否匹配触发按钮的宽度
+                </p>
+
+                <div style="margin-top: 30px;">
+                    <h4>不使用 fitWidth (默认行为)</h4>
+                    <p
+                        style="color: #666; font-size: 14px; margin-bottom: 15px;"
+                    >
+                        下拉内容使用内容的自然宽度（min-width 或内容宽度）
+                    </p>
+                    <div
+                        style="display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap;"
+                    >
+                        <auto-dropdown label="短按钮" type="primary">
+                            <div
+                                style="padding: 12px; min-width: 200px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+                            >
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    这是一个较长的选项内容
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    另一个长内容选项
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    短选项
+                                </div>
+                            </div>
+                        </auto-dropdown>
+
+                        <auto-dropdown
+                            label="这是一个很长的按钮文本"
+                            type="success"
+                        >
+                            <div
+                                style="padding: 12px; min-width: 180px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+                            >
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    选项 1
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    选项 2
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    选项 3
+                                </div>
+                            </div>
+                        </auto-dropdown>
+                    </div>
+
+                    <h4>使用 fitWidth="true"</h4>
+                    <p
+                        style="color: #666; font-size: 14px; margin-bottom: 15px;"
+                    >
+                        下拉内容宽度强制匹配触发按钮的宽度
+                    </p>
+                    <div
+                        style="display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap;"
+                    >
+                        <auto-dropdown label="短按钮" type="primary" fitWidth>
+                            <div
+                                style="padding: 12px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+                            >
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    这是一个较长的选项内容
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    另一个长内容选项
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    短选项
+                                </div>
+                            </div>
+                        </auto-dropdown>
+
+                        <auto-dropdown
+                            label="这是一个很长的按钮文本"
+                            type="success"
+                            fitWidth
+                        >
+                            <div
+                                style="padding: 12px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+                            >
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    选项 1
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    选项 2
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    选项 3
+                                </div>
+                            </div>
+                        </auto-dropdown>
+                    </div>
+
+                    <h4>对比演示</h4>
+                    <p
+                        style="color: #666; font-size: 14px; margin-bottom: 15px;"
+                    >
+                        相同内容，不同 fitWidth 设置的对比效果
+                    </p>
+                    <div
+                        style="display: flex; gap: 20px; flex-direction: column; max-width: 500px;"
+                    >
+                        <auto-dropdown
+                            label="fitWidth=false (默认)"
+                            type="warning"
+                        >
+                            <div
+                                style="padding: 12px; min-width: 250px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+                            >
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    这是一个具有相当长度内容的菜单项
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    另一个很长的菜单内容示例
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    短
+                                </div>
+                            </div>
+                        </auto-dropdown>
+
+                        <auto-dropdown
+                            label="fitWidth=true"
+                            type="info"
+                            fitWidth
+                        >
+                            <div
+                                style="padding: 12px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+                            >
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    这是一个具有相当长度内容的菜单项
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    另一个很长的菜单内容示例
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    短
+                                </div>
+                            </div>
+                        </auto-dropdown>
+                    </div>
+
+                    <h4>在表单中的应用示例</h4>
+                    <div style="margin-top: 30px; max-width: 400px;">
+                        <auto-dropdown
+                            label="选择用户角色"
+                            type="primary"
+                            fitWidth
+                            block
+                        >
+                            <div
+                                style="padding: 16px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+                            >
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer; border-radius: 4px;"
+                                >
+                                    <strong>系统管理员</strong>
+                                    <div
+                                        style="font-size: 12px; color: #666; margin-top: 2px;"
+                                    >
+                                        拥有所有系统权限
+                                    </div>
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer; border-radius: 4px;"
+                                >
+                                    <strong>普通用户</strong>
+                                    <div
+                                        style="font-size: 12px; color: #666; margin-top: 2px;"
+                                    >
+                                        基础使用权限
+                                    </div>
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer; border-radius: 4px;"
+                                >
+                                    <strong>访客</strong>
+                                    <div
+                                        style="font-size: 12px; color: #666; margin-top: 2px;"
+                                    >
+                                        只读权限
+                                    </div>
+                                </div>
+                            </div>
+                        </auto-dropdown>
+                    </div>
                 </div>
             </div>
         `;
