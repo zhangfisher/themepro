@@ -109,7 +109,7 @@ export class AutoDropdown extends AutoButton {
         this.addEventListener("click", this._onTriggerClick as EventListener);
         this.addEventListener("keydown", this._onKeydown as EventListener);
         this.addEventListener(
-            "dropdown-close",
+            "popup:close",
             this._onCloseEvent as EventListener
         );
 
@@ -124,7 +124,7 @@ export class AutoDropdown extends AutoButton {
         );
         this.removeEventListener("keydown", this._onKeydown as EventListener);
         this.removeEventListener(
-            "dropdown-close",
+            "popup:close",
             this._onCloseEvent as EventListener
         );
         this._popupController = undefined;

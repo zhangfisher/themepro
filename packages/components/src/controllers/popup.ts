@@ -17,23 +17,24 @@ import { createThemeproContainer } from "../utils/createThemeproContainer";
 import { getSlots } from "../utils/getSlots";
 import type { LitElement } from "lit";
 
+export type PopupPlacement =
+    | "top"
+    | "bottom"
+    | "left"
+    | "right"
+    | "top-start"
+    | "top-end"
+    | "bottom-start"
+    | "bottom-end"
+    | "left-start"
+    | "left-end"
+    | "right-start"
+    | "right-end";
 export interface PopupControllerOptions {
     /**
-     * 弹出位置偏好
+     * 弹出位置
      */
-    placement?:
-        | "top"
-        | "bottom"
-        | "left"
-        | "right"
-        | "top-start"
-        | "top-end"
-        | "bottom-start"
-        | "bottom-end"
-        | "left-start"
-        | "left-end"
-        | "right-start"
-        | "right-end";
+    placement?: PopupPlacement;
     /**
      * 弹出偏移量 [crossAxis, mainAxis]
      */
@@ -118,7 +119,7 @@ export class PopupController implements ReactiveController {
         // 从 host 属性中读取默认配置（如果存在）
         const defaultOptions = {
             placement: hostElement.placement ?? "bottom-start",
-            offset: hostElement.offset ?? [0, 4],
+            offset: hostElement.offset ?? [0, 8],
             fitWidth: hostElement.fitWidth ?? false,
             persistent: hostElement.persistent ?? false,
             animationDuration: hostElement.animationDuration ?? 100,
@@ -199,16 +200,18 @@ export class PopupController implements ReactiveController {
         const hostElement = this.host as unknown as LitElement;
         const arrowElement = hostElement.ownerDocument!.createElement("div");
         arrowElement.className = "popup-arrow";
-
         arrowElement.style.cssText = `
             position: absolute;
-            width: 8px;
-            height: 8px;
+            width: 12px;
+            height: 12px;
             z-index: 1;
             pointer-events: none;
-            opacity: 0;
             transform: rotate(45deg);
+            display: ${this.options.arrow ? "block" : "none"};
         `;
+
+        arrowElement.style.backgroundColor =
+            this._container!.style.backgroundColor;
         return arrowElement;
     }
 
@@ -216,21 +219,30 @@ export class PopupController implements ReactiveController {
      * 更新箭头位置和样式
      */
     private _updateArrowPosition(
-        middlewareData: ComputePositionReturn["middlewareData"]
+        middlewareData: ComputePositionReturn["middlewareData"],
+        placement?: string
     ): void {
         if (
             !this.options.arrow ||
             !this._arrowElement ||
             !middlewareData.arrow ||
             !this._container
-        )
+        ) {
+            // 如果不需要箭头，隐藏箭头元素
+            if (this._arrowElement) {
+                this._arrowElement.style.display = "none";
+            }
             return;
+        }
+
+        // 确保箭头元素可见
+        this._arrowElement.style.display = "block";
 
         const { x, y } = middlewareData.arrow;
+        const currentPlacement =
+            placement || this.options.placement || "bottom-start";
 
-        const placement = this.options.placement || "bottom-start";
-
-        const side = placement.split("-")[0];
+        const side = currentPlacement.split("-")[0];
         const staticSide = {
             top: "bottom",
             right: "left",
@@ -238,18 +250,22 @@ export class PopupController implements ReactiveController {
             left: "right",
         }[side] as string;
 
-        // 应用基础样式
+        // 获取箭头元素的尺寸（参照floating-offset示例）
+        const arrowLen = this._arrowElement.offsetWidth;
+
+        // 应用基础样式 - 参照floating-offset示例的完整逻辑
         Object.assign(this._arrowElement.style, {
             left: x != null ? `${x}px` : "",
             top: y != null ? `${y}px` : "",
+            // 确保静态边在翻转时被重置（参照floating-offset示例）
             right: "",
             bottom: "",
-            [staticSide]: `${-this._arrowElement / 2}px`,
+            [staticSide]: `${-arrowLen / 2}px`,
             transform: "rotate(45deg)",
         });
 
         // 根据placement设置边框显示
-        this._setArrowBorderByPlacement(placement);
+        this._setArrowBorderByPlacement(currentPlacement);
     }
 
     /**
@@ -312,10 +328,11 @@ export class PopupController implements ReactiveController {
             transform: scale(0.9) translateY(-10px);
             visibility: hidden;
             z-index: 1000;
+            background-color: var(--auto-bgcolor);
         `;
 
         // 监听dropdown-close事件
-        this._container.addEventListener("dropdown-close", () => {
+        this._container.addEventListener("popup:close", () => {
             this.hide();
         });
 
@@ -515,15 +532,17 @@ export class PopupController implements ReactiveController {
     }
 
     /**
-     * 同步更新位置
+     * 创建浮层中间件配置
      */
-    private async _updatePositionSync(): Promise<void> {
+    private _createMiddleware(isAutoUpdate: boolean = false): any[] {
+        // 计算基础偏移量和箭头偏移量
+        const baseOffset = this.options.offset?.[1] || 4;
         const middleware = [
             offset({
-                mainAxis: this.options.offset?.[1] || 4,
                 crossAxis: this.options.offset?.[0] || 0,
+                mainAxis: baseOffset + 6,
             }),
-            flip(),
+            flip(isAutoUpdate ? { fallbackAxisSideDirection: "start" } : {}),
             shift({
                 padding: 8,
             }),
@@ -541,6 +560,17 @@ export class PopupController implements ReactiveController {
                 })
             );
         }
+
+        return middleware;
+    }
+
+    /**
+     * 计算并应用位置
+     */
+    private async _computeAndApplyPosition(
+        setupAutoUpdate: boolean = true
+    ): Promise<void> {
+        const middleware = this._createMiddleware();
 
         const position = await computePosition(
             this.host as unknown as HTMLElement,
@@ -552,38 +582,24 @@ export class PopupController implements ReactiveController {
         );
 
         this._applyPosition(position);
-        this._setupAutoUpdate();
+
+        if (setupAutoUpdate) {
+            this._setupAutoUpdate();
+        }
+    }
+
+    /**
+     * 同步更新位置
+     */
+    private async _updatePositionSync(): Promise<void> {
+        await this._computeAndApplyPosition();
     }
 
     /**
      * 更新位置
      */
     private _updatePosition(): void {
-        const middleware = [
-            offset({
-                mainAxis: this.options.offset?.[1] || 4,
-                crossAxis: this.options.offset?.[0] || 0,
-            }),
-            flip({
-                fallbackAxisSideDirection: "start",
-            }),
-            shift({
-                padding: 8,
-            }),
-            hide({
-                strategy: "referenceHidden",
-            }),
-        ];
-
-        // 如果需要箭头，添加arrow middleware
-        if (this.options.arrow && this._arrowElement) {
-            middleware.push(
-                arrow({
-                    element: this._arrowElement,
-                    padding: 4,
-                })
-            );
-        }
+        const middleware = this._createMiddleware(true);
 
         computePosition(this.host as unknown as HTMLElement, this.container, {
             placement: this.options.placement!,
@@ -599,7 +615,7 @@ export class PopupController implements ReactiveController {
      * 应用位置到容器
      */
     private _applyPosition(position: ComputePositionReturn): void {
-        const { x, y, middlewareData } = position;
+        const { x, y, placement, middlewareData } = position;
         const { referenceHidden } = middlewareData.hide || {};
         const container = this.container;
 
@@ -639,8 +655,8 @@ export class PopupController implements ReactiveController {
             container.style.height = `${this.options.popupHeight}px`;
         }
 
-        // 处理箭头位置
-        this._updateArrowPosition(middlewareData);
+        // 处理箭头位置，传递实际的placement（可能已翻转）
+        this._updateArrowPosition(middlewareData, placement);
 
         this.options.onPositionUpdate?.(position);
     }
@@ -657,31 +673,7 @@ export class PopupController implements ReactiveController {
             this.host as unknown as HTMLElement,
             this.container,
             () => {
-                const middleware = [
-                    offset({
-                        mainAxis: this.options.offset?.[1] || 4,
-                        crossAxis: this.options.offset?.[0] || 0,
-                    }),
-                    flip({
-                        fallbackAxisSideDirection: "start",
-                    }),
-                    shift({
-                        padding: 8,
-                    }),
-                    hide({
-                        strategy: "referenceHidden",
-                    }),
-                ];
-
-                // 如果需要箭头，添加arrow middleware
-                if (this.options.arrow && this._arrowElement) {
-                    middleware.push(
-                        arrow({
-                            element: this._arrowElement,
-                            padding: 4,
-                        })
-                    );
-                }
+                const middleware = this._createMiddleware(true);
 
                 computePosition(
                     this.host as unknown as HTMLElement,
@@ -847,7 +839,7 @@ export class PopupController implements ReactiveController {
         this._hideAnimation?.pause();
 
         // 清理箭头元素
-        if (this._arrowElement && this._arrowElement.parentNode) {
+        if (this._arrowElement?.parentNode) {
             this._arrowElement.parentNode.removeChild(this._arrowElement);
             this._arrowElement = undefined;
         }
