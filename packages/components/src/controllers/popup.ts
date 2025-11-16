@@ -8,6 +8,7 @@ import {
     shift,
     autoUpdate,
     hide,
+    arrow,
     type ComputePositionReturn,
 } from "@floating-ui/dom";
 import { animate } from "animejs";
@@ -17,10 +18,6 @@ import { getSlots } from "../utils/getSlots";
 import type { LitElement } from "lit";
 
 export interface PopupControllerOptions {
-    /**
-     * 弹出容器（可选，如果不提供则会自动创建）
-     */
-    container?: HTMLElement;
     /**
      * 弹出位置偏好
      */
@@ -62,6 +59,18 @@ export interface PopupControllerOptions {
      */
     className?: string;
     /**
+     * 弹出容器宽度，默认为null由内容决定
+     */
+    popupWidth?: number | null;
+    /**
+     * 弹出容器高度，默认为null由内容决定
+     */
+    popupHeight?: number | null;
+    /**
+     * 是否显示指示箭头，默认为false
+     */
+    arrow?: boolean;
+    /**
      * 弹出层显示时触发
      */
     onShow?: () => void;
@@ -78,6 +87,7 @@ export interface PopupControllerOptions {
 export class PopupController implements ReactiveController {
     private host: ReactiveControllerHost;
     private options: PopupControllerOptions;
+    private _container?: HTMLElement;
 
     // 内部状态
     private _isVisible: boolean = false;
@@ -86,7 +96,7 @@ export class PopupController implements ReactiveController {
     private _escapeHandler?: (e: KeyboardEvent) => void;
     private _showAnimation?: any;
     private _hideAnimation?: any;
-    private _containerInitialized: boolean = false;
+    private _arrowElement?: HTMLElement;
 
     constructor(
         host: ReactiveControllerHost,
@@ -100,7 +110,9 @@ export class PopupController implements ReactiveController {
     /**
      * 合并配置选项：从 host 属性读取默认值，与传入的 options 合并
      */
-    private _mergeOptions(userOptions: PopupControllerOptions): PopupControllerOptions {
+    private _mergeOptions(
+        userOptions: PopupControllerOptions
+    ): PopupControllerOptions {
         const hostElement = this.host as any;
 
         // 从 host 属性中读取默认配置（如果存在）
@@ -112,6 +124,9 @@ export class PopupController implements ReactiveController {
             animationDuration: hostElement.animationDuration ?? 100,
             animationEasing: hostElement.animationEasing ?? "easeOutQuart",
             className: hostElement.className ?? "popup",
+            popupWidth: hostElement.popupWidth ?? null,
+            popupHeight: hostElement.popupHeight ?? null,
+            arrow: hostElement.arrow ?? false,
         };
 
         // 用户传入的选项优先级最高
@@ -129,7 +144,6 @@ export class PopupController implements ReactiveController {
 
         // 保存用户传入的选项（不能被 host 属性覆盖）
         const userOptions = {
-            container: this.options.container,
             onShow: this.options.onShow,
             onHide: this.options.onHide,
             onPositionUpdate: this.options.onPositionUpdate,
@@ -143,6 +157,9 @@ export class PopupController implements ReactiveController {
             persistent: hostElement.persistent,
             animationDuration: hostElement.animationDuration,
             animationEasing: hostElement.animationEasing,
+            popupWidth: hostElement.popupWidth,
+            popupHeight: hostElement.popupHeight,
+            arrow: hostElement.arrow,
         };
 
         // 合并配置，用户选项优先级最高
@@ -154,7 +171,12 @@ export class PopupController implements ReactiveController {
         // 如果弹出层可见且更新了位置相关配置，重新计算位置
         if (
             this._isVisible &&
-            (hostOptions.placement || hostOptions.offset || hostOptions.fitWidth)
+            (hostOptions.placement ||
+                hostOptions.offset ||
+                hostOptions.fitWidth ||
+                hostOptions.popupWidth !== undefined ||
+                hostOptions.popupHeight !== undefined ||
+                hostOptions.arrow !== undefined)
         ) {
             this._updatePosition();
         }
@@ -164,33 +186,168 @@ export class PopupController implements ReactiveController {
      * 获取弹出容器
      */
     get container(): HTMLElement {
-        if (!this.options.container) {
+        if (!this._container) {
             this._createContainer();
         }
-        return this.options.container!;
+        return this._container!;
+    }
+
+    /**
+     * 创建箭头元素
+     */
+    private _createArrowElement(): HTMLElement {
+        const hostElement = this.host as unknown as LitElement;
+        const arrowElement = hostElement.ownerDocument!.createElement("div");
+        arrowElement.className = "popup-arrow";
+
+        arrowElement.style.cssText = `
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transform: rotate(45deg);
+        `;
+        return arrowElement;
+    }
+
+    /**
+     * 更新箭头位置和样式
+     */
+    private _updateArrowPosition(
+        middlewareData: ComputePositionReturn["middlewareData"]
+    ): void {
+        if (
+            !this.options.arrow ||
+            !this._arrowElement ||
+            !middlewareData.arrow ||
+            !this._container
+        )
+            return;
+
+        const { x, y } = middlewareData.arrow;
+
+        const placement = this.options.placement || "bottom-start";
+
+        const side = placement.split("-")[0];
+        const staticSide = {
+            top: "bottom",
+            right: "left",
+            bottom: "top",
+            left: "right",
+        }[side] as string;
+
+        // 应用基础样式
+        Object.assign(this._arrowElement.style, {
+            left: x != null ? `${x}px` : "",
+            top: y != null ? `${y}px` : "",
+            right: "",
+            bottom: "",
+            [staticSide]: `${-this._arrowElement / 2}px`,
+            transform: "rotate(45deg)",
+        });
+
+        // 根据placement设置边框显示
+        this._setArrowBorderByPlacement(placement);
+    }
+
+    /**
+     * 根据placement设置箭头边框显示
+     */
+    private _setArrowBorderByPlacement(placement: string): void {
+        if (!this._arrowElement || !this._container) return;
+
+        // 获取容器的计算样式
+        const containerStyle = window.getComputedStyle(this._container);
+
+        // 重置所有边框，使用容器的边框样式
+        this._arrowElement.style.border = containerStyle.border;
+
+        // 根据placement设置需要透明的边框，形成指向效果
+        if (placement.startsWith("bottom")) {
+            // 底部弹出：箭头在上方，上边框应该透明（与弹出内容背景融合）
+            Object.assign(this._arrowElement.style, {
+                borderBottomColor: "transparent",
+                borderRightColor: "transparent",
+            });
+        } else if (placement.startsWith("top")) {
+            // 顶部弹出：箭头在下方，下边框应该透明
+            Object.assign(this._arrowElement.style, {
+                borderLeftColor: "transparent",
+                borderTopColor: "transparent",
+            });
+        } else if (placement.startsWith("left")) {
+            // 左侧弹出：箭头在右侧，右边框应该透明
+            Object.assign(this._arrowElement.style, {
+                borderLeftColor: "transparent",
+                borderBottomColor: "transparent",
+            });
+        } else if (placement.startsWith("right")) {
+            // 右侧弹出：箭头在左侧，左边框应该透明
+            Object.assign(this._arrowElement.style, {
+                borderTopColor: "transparent",
+                borderRightColor: "transparent",
+            });
+        }
+    }
+
+    /**
+     * 创建弹窗容器
+     */
+    private _createPopupContainer(): void {
+        if (this._container) return;
+
+        const hostElement = this.host as unknown as LitElement;
+
+        // 创建dropdown容器
+        this._container = hostElement.ownerDocument!.createElement("div");
+        this._container.className = this.options.className || "popup";
+
+        // 设置容器初始样式
+        this._container.style.cssText = `
+            position: absolute;
+            pointer-events: auto;
+            opacity: 0;
+            transform: scale(0.9) translateY(-10px);
+            visibility: hidden;
+            z-index: 1000;
+        `;
+
+        // 监听dropdown-close事件
+        this._container.addEventListener("dropdown-close", () => {
+            this.hide();
+        });
+
+        // 创建并添加箭头元素到容器内部
+        if (this.options.arrow) {
+            this._arrowElement = this._createArrowElement();
+            if (this._arrowElement) {
+                this._container.appendChild(this._arrowElement);
+            }
+        }
+
+        // 添加自定义类名（额外类名）
+        if (this.options.className && this.options.className !== "popup") {
+            this._container.classList.add(this.options.className);
+        }
     }
 
     /**
      * 创建容器
      */
     private _createContainer(): void {
-        if (this.options.container) return;
+        if (this._container) return;
 
-        // 使用工具函数创建全局.themepro-container
-        const themeproContainer = createThemeproContainer(this.host as LitElement);
-        const hostElement = this.host as unknown as LitElement;
-
-        // 创建dropdown容器
-        this.options.container = hostElement.ownerDocument!.createElement("div");
-        this.options.container.className = this.options.className || "popup";
-
-        // 监听dropdown-close事件
-        this.options.container.addEventListener('dropdown-close', () => {
-            this.hide();
-        });
-
-        if (this.options.container && themeproContainer) {
-            themeproContainer.appendChild(this.options.container);
+        // 使用工具函数创建全局.themepro-container并添加弹窗容器
+        const themeproContainer = createThemeproContainer(
+            this.host as LitElement
+        );
+        if (!this._container) {
+            this._createPopupContainer();
+            if (this._container && themeproContainer) {
+                themeproContainer.appendChild(this._container);
+            }
         }
     }
 
@@ -198,7 +355,7 @@ export class PopupController implements ReactiveController {
      * ReactiveController 生命周期 - host 连接时调用
      */
     hostConnected(): void {
-        this._initializeContainer();
+        // 容器将在第一次show调用时创建
     }
 
     /**
@@ -232,36 +389,15 @@ export class PopupController implements ReactiveController {
         // 如果弹出层可见且更新了位置相关配置，重新计算位置
         if (
             this._isVisible &&
-            (newOptions.placement || newOptions.offset || newOptions.fitWidth)
+            (newOptions.placement ||
+                newOptions.offset ||
+                newOptions.fitWidth ||
+                newOptions.popupWidth !== undefined ||
+                newOptions.popupHeight !== undefined ||
+                newOptions.arrow !== undefined)
         ) {
             this._updatePosition();
         }
-    }
-
-    /**
-     * 初始化容器
-     */
-    private _initializeContainer(): void {
-        if (this._containerInitialized) return;
-
-        const container = this.container;
-
-        // 设置容器初始样式
-        container.style.cssText = `
-            position: absolute;
-            pointer-events: auto;
-            opacity: 0;
-            transform: scale(0.9) translateY(-10px);
-            visibility: hidden;
-            z-index: 1000;
-        `;
-
-        // 添加自定义类名（额外类名）
-        if (this.options.className && this.options.className !== "popup") {
-            container.classList.add(this.options.className);
-        }
-
-        this._containerInitialized = true;
     }
 
     /**
@@ -271,11 +407,6 @@ export class PopupController implements ReactiveController {
         if (this._isVisible) return;
 
         const container = this.container;
-
-        // 确保容器已初始化
-        if (!this._containerInitialized) {
-            this._initializeContainer();
-        }
 
         // 克隆内容到容器中（只在第一次显示时执行）
         this._cloneContent();
@@ -294,7 +425,12 @@ export class PopupController implements ReactiveController {
         await this._updatePositionSync();
 
         // 位置计算完成后再开始显示动画
-        this._showAnimation = animate(container, {
+        const targets = [container];
+        if (this.options.arrow && this._arrowElement) {
+            targets.push(this._arrowElement);
+        }
+
+        this._showAnimation = animate(targets, {
             opacity: [0, 1],
             scale: [0.9, 1],
             translateY: [-10, 0],
@@ -332,7 +468,12 @@ export class PopupController implements ReactiveController {
         this._triggerHideEvent(container);
 
         // 使用animejs创建隐藏动画
-        this._hideAnimation = animate(container, {
+        const targets = [container];
+        if (this.options.arrow && this._arrowElement) {
+            targets.push(this._arrowElement);
+        }
+
+        this._hideAnimation = animate(targets, {
             opacity: [1, 0],
             scale: [1, 0.9],
             translateY: [0, -10],
@@ -377,24 +518,36 @@ export class PopupController implements ReactiveController {
      * 同步更新位置
      */
     private async _updatePositionSync(): Promise<void> {
+        const middleware = [
+            offset({
+                mainAxis: this.options.offset?.[1] || 4,
+                crossAxis: this.options.offset?.[0] || 0,
+            }),
+            flip(),
+            shift({
+                padding: 8,
+            }),
+            hide({
+                strategy: "referenceHidden",
+            }),
+        ];
+
+        // 如果需要箭头，添加arrow middleware
+        if (this.options.arrow && this._arrowElement) {
+            middleware.push(
+                arrow({
+                    element: this._arrowElement,
+                    padding: 4,
+                })
+            );
+        }
+
         const position = await computePosition(
             this.host as unknown as HTMLElement,
             this.container,
             {
                 placement: this.options.placement!,
-                middleware: [
-                    offset({
-                        mainAxis: this.options.offset?.[1] || 4,
-                        crossAxis: this.options.offset?.[0] || 0,
-                    }),
-                    flip(),
-                    shift({
-                        padding: 8,
-                    }),
-                    hide({
-                        strategy: "referenceHidden",
-                    }),
-                ],
+                middleware,
             }
         );
 
@@ -406,28 +559,36 @@ export class PopupController implements ReactiveController {
      * 更新位置
      */
     private _updatePosition(): void {
-        computePosition(
-            this.host as unknown as HTMLElement,
-            this.container,
-            {
-                placement: this.options.placement!,
-                middleware: [
-                    offset({
-                        mainAxis: this.options.offset?.[1] || 4,
-                        crossAxis: this.options.offset?.[0] || 0,
-                    }),
-                    flip({
-                        fallbackAxisSideDirection: "start",
-                    }),
-                    shift({
-                        padding: 8,
-                    }),
-                    hide({
-                        strategy: "referenceHidden",
-                    }),
-                ],
-            }
-        ).then((position) => {
+        const middleware = [
+            offset({
+                mainAxis: this.options.offset?.[1] || 4,
+                crossAxis: this.options.offset?.[0] || 0,
+            }),
+            flip({
+                fallbackAxisSideDirection: "start",
+            }),
+            shift({
+                padding: 8,
+            }),
+            hide({
+                strategy: "referenceHidden",
+            }),
+        ];
+
+        // 如果需要箭头，添加arrow middleware
+        if (this.options.arrow && this._arrowElement) {
+            middleware.push(
+                arrow({
+                    element: this._arrowElement,
+                    padding: 4,
+                })
+            );
+        }
+
+        computePosition(this.host as unknown as HTMLElement, this.container, {
+            placement: this.options.placement!,
+            middleware,
+        }).then((position) => {
             this._applyPosition(position);
         });
 
@@ -454,7 +615,32 @@ export class PopupController implements ReactiveController {
                 this.host as unknown as HTMLElement
             ).getBoundingClientRect().width;
             container.style.width = `${triggerWidth}px`;
+
+            // 当指定fitWidth时，popupWidth表示minWidth
+            if (
+                this.options.popupWidth !== null &&
+                this.options.popupWidth !== undefined
+            ) {
+                container.style.minWidth = `${this.options.popupWidth}px`;
+            }
+        } else if (
+            this.options.popupWidth !== null &&
+            this.options.popupWidth !== undefined
+        ) {
+            // 非fitWidth模式下，popupWidth表示确切宽度
+            container.style.width = `${this.options.popupWidth}px`;
         }
+
+        // 处理高度控制
+        if (
+            this.options.popupHeight !== null &&
+            this.options.popupHeight !== undefined
+        ) {
+            container.style.height = `${this.options.popupHeight}px`;
+        }
+
+        // 处理箭头位置
+        this._updateArrowPosition(middlewareData);
 
         this.options.onPositionUpdate?.(position);
     }
@@ -471,26 +657,38 @@ export class PopupController implements ReactiveController {
             this.host as unknown as HTMLElement,
             this.container,
             () => {
+                const middleware = [
+                    offset({
+                        mainAxis: this.options.offset?.[1] || 4,
+                        crossAxis: this.options.offset?.[0] || 0,
+                    }),
+                    flip({
+                        fallbackAxisSideDirection: "start",
+                    }),
+                    shift({
+                        padding: 8,
+                    }),
+                    hide({
+                        strategy: "referenceHidden",
+                    }),
+                ];
+
+                // 如果需要箭头，添加arrow middleware
+                if (this.options.arrow && this._arrowElement) {
+                    middleware.push(
+                        arrow({
+                            element: this._arrowElement,
+                            padding: 4,
+                        })
+                    );
+                }
+
                 computePosition(
                     this.host as unknown as HTMLElement,
                     this.container,
                     {
                         placement: this.options.placement!,
-                        middleware: [
-                            offset({
-                                mainAxis: this.options.offset?.[1] || 4,
-                                crossAxis: this.options.offset?.[0] || 0,
-                            }),
-                            flip({
-                                fallbackAxisSideDirection: "start",
-                            }),
-                            shift({
-                                padding: 8,
-                            }),
-                            hide({
-                                strategy: "referenceHidden",
-                            }),
-                        ],
+                        middleware,
                     }
                 ).then((position) => {
                     if (this._isVisible) {
@@ -512,10 +710,7 @@ export class PopupController implements ReactiveController {
 
         const handleDocumentClick = (e: Event) => {
             const path = e.composedPath();
-            if (
-                !path.includes(hostElement) &&
-                !path.includes(container)
-            ) {
+            if (!path.includes(hostElement) && !path.includes(container)) {
                 this.hide();
             }
         };
@@ -565,7 +760,18 @@ export class PopupController implements ReactiveController {
      */
     private _cloneContent(): void {
         const container = this.container;
-        if (container.children.length !== 0) return; // 如果已经有内容，不重复克隆
+
+        // 清除之前的内容（保留箭头元素）
+        const nodesToRemove: Node[] = [];
+        container.childNodes.forEach((child) => {
+            if (child !== this._arrowElement) {
+                nodesToRemove.push(child);
+            }
+        });
+
+        nodesToRemove.forEach((node) => {
+            container.removeChild(node);
+        });
 
         // 获取host元素的slot内容
         const childNodes = getSlots(this.host as LitElement);
@@ -581,23 +787,32 @@ export class PopupController implements ReactiveController {
      */
     clearContent(): void {
         const container = this.container;
-        while (container.firstChild) {
-            container.removeChild(container.firstChild);
-        }
+
+        // 清除内容（保留箭头元素）
+        const nodesToRemove: Node[] = [];
+        container.childNodes.forEach((child) => {
+            if (child !== this._arrowElement) {
+                nodesToRemove.push(child);
+            }
+        });
+
+        nodesToRemove.forEach((node) => {
+            container.removeChild(node);
+        });
     }
 
     /**
      * 触发弹出层显示事件
      */
     private _triggerShowEvent(container: HTMLElement): void {
-        const event = new CustomEvent('popup:show', {
+        const event = new CustomEvent("popup:show", {
             bubbles: true,
             composed: true,
             detail: {
                 container: container,
                 controller: this,
-                timestamp: Date.now()
-            }
+                timestamp: Date.now(),
+            },
         });
 
         // 从host元素触发事件
@@ -608,14 +823,14 @@ export class PopupController implements ReactiveController {
      * 触发弹出层隐藏事件
      */
     private _triggerHideEvent(container: HTMLElement): void {
-        const event = new CustomEvent('popup:hide', {
+        const event = new CustomEvent("popup:hide", {
             bubbles: true,
             composed: true,
             detail: {
                 container: container,
                 controller: this,
-                timestamp: Date.now()
-            }
+                timestamp: Date.now(),
+            },
         });
 
         // 从host元素触发事件
@@ -630,6 +845,11 @@ export class PopupController implements ReactiveController {
         this._cleanup?.();
         this._showAnimation?.pause();
         this._hideAnimation?.pause();
-        this._containerInitialized = false;
+
+        // 清理箭头元素
+        if (this._arrowElement && this._arrowElement.parentNode) {
+            this._arrowElement.parentNode.removeChild(this._arrowElement);
+            this._arrowElement = undefined;
+        }
     }
 }

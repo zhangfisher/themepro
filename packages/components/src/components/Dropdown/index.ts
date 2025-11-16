@@ -52,6 +52,10 @@ export interface AutoDropdownProps extends AutoButtonProps {
      * 动画缓动函数
      */
     animationEasing?: string;
+    /**
+     * 是否显示指示箭头
+     */
+    arrow?: boolean;
 }
 
 @customElement("auto-dropdown")
@@ -91,6 +95,9 @@ export class AutoDropdown extends AutoButton {
     @property({ type: String })
     animationEasing?: string = "easeOutQuart";
 
+    @property({ type: Boolean })
+    arrow?: boolean = false;
+
     private _popupController?: PopupController;
 
     onInitState(): void {
@@ -101,7 +108,10 @@ export class AutoDropdown extends AutoButton {
         super.connectedCallback();
         this.addEventListener("click", this._onTriggerClick as EventListener);
         this.addEventListener("keydown", this._onKeydown as EventListener);
-        this.addEventListener("dropdown-close", this._onCloseEvent as EventListener);
+        this.addEventListener(
+            "dropdown-close",
+            this._onCloseEvent as EventListener
+        );
 
         // 初始化PopupController（会自动创建容器）
         this._initializePopupController();
@@ -113,7 +123,10 @@ export class AutoDropdown extends AutoButton {
             this._onTriggerClick as EventListener
         );
         this.removeEventListener("keydown", this._onKeydown as EventListener);
-        this.removeEventListener("dropdown-close", this._onCloseEvent as EventListener);
+        this.removeEventListener(
+            "dropdown-close",
+            this._onCloseEvent as EventListener
+        );
         this._popupController = undefined;
         super.disconnectedCallback();
     }
@@ -129,7 +142,6 @@ export class AutoDropdown extends AutoButton {
         super.updated(changed);
     }
 
-    
     /**
      * 初始化PopupController
      */
@@ -137,27 +149,25 @@ export class AutoDropdown extends AutoButton {
         if (this._popupController) return;
 
         this._popupController = new PopupController(this, {
-            className: "dropdown",
             onShow: () => {
-                this.dispatchEvent(
-                    new CustomEvent("dropdown-show", {
-                        bubbles: true,
-                        composed: true,
-                    })
-                );
+                // this.dispatchEvent(
+                //     new CustomEvent("dropdown-show", {
+                //         bubbles: true,
+                //         composed: true,
+                //     })
+                // );
             },
             onHide: () => {
-                this.dispatchEvent(
-                    new CustomEvent("dropdown-hide", {
-                        bubbles: true,
-                        composed: true,
-                    })
-                );
-            }
+                // this.dispatchEvent(
+                //     new CustomEvent("dropdown-hide", {
+                //         bubbles: true,
+                //         composed: true,
+                //     })
+                // );
+            },
         });
     }
 
-  
     private _onTriggerClick = (e: MouseEvent) => {
         if (this.disabled) {
             e.preventDefault();
@@ -211,7 +221,6 @@ export class AutoDropdown extends AutoButton {
         }
     }
 
-    
     render() {
         return html`
             ${super.render()}
