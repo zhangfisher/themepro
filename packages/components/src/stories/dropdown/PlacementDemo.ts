@@ -23,22 +23,20 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="顶部弹出"
                                 type="primary"
-                                placement="top"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "top",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 12px; min-width: 120px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); --popup-arrow-bg: #ffffff; --popup-arrow-border: #1890ff;"
+                                    style="padding: 8px 12px; cursor: pointer;"
                                 >
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        🎯 顶部内容
-                                    </div>
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        第二选项
-                                    </div>
+                                    🎯 顶部内容
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    第二选项
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -50,8 +48,10 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="底部弹出"
                                 type="success"
-                                placement="bottom"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "bottom",
+                                    arrow: true
+                                }}
                             >
                                 <div
                                     style="padding: 8px 12px; cursor: pointer;"
@@ -73,22 +73,20 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="左侧弹出"
                                 type="warning"
-                                placement="left"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "left",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 12px; min-width: 120px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); --popup-arrow-bg: #ffffff; --popup-arrow-border: #faad14;"
+                                    style="padding: 8px 12px; cursor: pointer;"
                                 >
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        ⬅️ 左侧内容
-                                    </div>
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        第二选项
-                                    </div>
+                                    ⬅️ 左侧内容
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    第二选项
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -100,22 +98,20 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="右侧弹出"
                                 type="info"
-                                placement="right"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "right",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 12px; min-width: 120px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); --popup-arrow-bg: #ffffff; --popup-arrow-border: #1890ff;"
+                                    style="padding: 8px 12px; cursor: pointer;"
                                 >
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        ➡️ 右侧内容
-                                    </div>
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        第二选项
-                                    </div>
+                                    ➡️ 右侧内容
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer;"
+                                >
+                                    第二选项
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -132,17 +128,15 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="左上角"
                                 type="primary"
-                                placement="top-start"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "top-start",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 12px; min-width: 120px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); --popup-arrow-bg: #ffffff; --popup-arrow-border: #1890ff;"
+                                    style="padding: 8px 12px; cursor: pointer;"
                                 >
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        📍 左上角对齐
-                                    </div>
+                                    📍 左上角对齐
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -154,17 +148,15 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="右上角"
                                 type="success"
-                                placement="top-end"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "top-end",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 12px; min-width: 120px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); --popup-arrow-bg: #ffffff; --popup-arrow-border: #52c41a;"
+                                    style="padding: 8px 12px; cursor: pointer;"
                                 >
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        🎯 右上角对齐
-                                    </div>
+                                    🎯 右上角对齐
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -176,17 +168,15 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="左下角"
                                 type="warning"
-                                placement="bottom-start"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "bottom-start",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 12px; min-width: 120px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); --popup-arrow-bg: #ffffff; --popup-arrow-border: #faad14;"
+                                    style="padding: 8px 12px; cursor: pointer;"
                                 >
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        ⬇️ 左下角对齐
-                                    </div>
+                                    ⬇️ 左下角对齐
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -198,17 +188,15 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="右下角"
                                 type="info"
-                                placement="bottom-end"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "bottom-end",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 12px; min-width: 120px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); --popup-arrow-bg: #ffffff; --popup-arrow-border: #1890ff;"
+                                    style="padding: 8px 12px; cursor: pointer;"
                                 >
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        ➡️ 右下角对齐
-                                    </div>
+                                    ➡️ 右下角对齐
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -220,17 +208,15 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="左上角"
                                 type="danger"
-                                placement="left-start"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "left-start",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 12px; min-width: 120px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); --popup-arrow-bg: #ffffff; --popup-arrow-border: #ff4d4f;"
+                                    style="padding: 8px 12px; cursor: pointer;"
                                 >
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        ⬅️ 左上角对齐
-                                    </div>
+                                    ⬅️ 左上角对齐
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -242,17 +228,15 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="左下角"
                                 type="primary"
-                                placement="left-end"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "left-end",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 12px; min-width: 120px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); --popup-arrow-bg: #ffffff; --popup-arrow-border: #1890ff;"
+                                    style="padding: 8px 12px; cursor: pointer;"
                                 >
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        ⬅️ 左下角对齐
-                                    </div>
+                                    ⬅️ 左下角对齐
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -264,17 +248,15 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="右上角"
                                 type="success"
-                                placement="right-start"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "right-start",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 12px; min-width: 120px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); --popup-arrow-bg: #ffffff; --popup-arrow-border: #52c41a;"
+                                    style="padding: 8px 12px; cursor: pointer;"
                                 >
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        ➡️ 右上角对齐
-                                    </div>
+                                    ➡️ 右上角对齐
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -286,17 +268,15 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="右下角"
                                 type="warning"
-                                placement="right-end"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "right-end",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 12px; min-width: 120px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); --popup-arrow-bg: #ffffff; --popup-arrow-border: #faad14;"
+                                    style="padding: 8px 12px; cursor: pointer;"
                                 >
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        ➡️ 右下角对齐
-                                    </div>
+                                    ➡️ 右下角对齐
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -311,19 +291,17 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="快速弹跳"
                                 type="primary"
-                                placement="top"
-                                animationDuration="200"
-                                animationEasing="easeOutBack"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "top",
+                                    animationDuration: 200,
+                                    animationEasing: "easeOutBack",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 12px; min-width: 100px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); --popup-arrow-bg: #ffffff; --popup-arrow-border: #1890ff;"
+                                    style="padding: 8px 12px; cursor: pointer;"
                                 >
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        ⚡ 快速弹出
-                                    </div>
+                                    ⚡ 快速弹出
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -335,19 +313,17 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="缓动弹出"
                                 type="success"
-                                placement="bottom"
-                                animationDuration="600"
-                                animationEasing="easeInOutQuint"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "bottom",
+                                    animationDuration: 600,
+                                    animationEasing: "easeInOutQuint",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 12px; min-width: 100px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); --popup-arrow-bg: #ffffff; --popup-arrow-border: #52c41a;"
+                                    style="padding: 8px 12px; cursor: pointer;"
                                 >
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        🌊 缓慢弹出
-                                    </div>
+                                    🌊 缓慢弹出
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -359,19 +335,17 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="弹性弹出"
                                 type="warning"
-                                placement="left"
-                                animationDuration="500"
-                                animationEasing="easeOutElastic(1, .5)"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "left",
+                                    animationDuration: 500,
+                                    animationEasing: "easeOutElastic(1, .5)",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 12px; min-width: 100px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); --popup-arrow-bg: #ffffff; --popup-arrow-border: #faad14;"
+                                    style="padding: 8px 12px; cursor: pointer;"
                                 >
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        🎈 弹性效果
-                                    </div>
+                                    🎈 弹性效果
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -383,19 +357,17 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="回弹弹出"
                                 type="info"
-                                placement="right"
-                                animationDuration="400"
-                                animationEasing="easeOutBack(1.7)"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "right",
+                                    animationDuration: 400,
+                                    animationEasing: "easeOutBack(1.7)",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 12px; min-width: 100px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); --popup-arrow-bg: #ffffff; --popup-arrow-border: #1890ff;"
+                                    style="padding: 8px 12px; cursor: pointer;"
                                 >
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer;"
-                                    >
-                                        🔄 回弹效果
-                                    </div>
+                                    🔄 回弹效果
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -412,41 +384,37 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="复杂菜单"
                                 type="primary"
-                                placement="bottom-start"
-                                fitWidth
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "bottom-start",
+                                    fitWidth: true,
+                                    arrow: true
+                                }}
                             >
+                                <h4 style="margin: 0 0 12px 0; color: #262626;">
+                                    菜单标题
+                                </h4>
                                 <div
-                                    style="padding: 16px; background: white; border: 1px solid #d9d9d9; border-radius: 8px; box-shadow: 0 6px 16px rgba(0,0,0,0.1); --popup-arrow-bg: #ffffff; --popup-arrow-border: #1890ff;"
+                                    style="padding: 8px 12px; cursor: pointer; border-radius: 4px;"
                                 >
-                                    <h4
-                                        style="margin: 0 0 12px 0; color: #262626;"
-                                    >
-                                        菜单标题
-                                    </h4>
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer; border-radius: 4px;"
-                                    >
-                                        📄 用户管理
-                                    </div>
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer; border-radius: 4px;"
-                                    >
-                                        ⚙️ 系统设置
-                                    </div>
-                                    <hr
-                                        style="margin: 8px 0; border: none; border-top: 1px solid #f0f0f0;"
-                                    />
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer; border-radius: 4px;"
-                                    >
-                                        📊 数据报表
-                                    </div>
-                                    <div
-                                        style="padding: 8px 12px; cursor: pointer; border-radius: 4px;"
-                                    >
-                                        🔒 退出登录
-                                    </div>
+                                    📄 用户管理
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer; border-radius: 4px;"
+                                >
+                                    ⚙️ 系统设置
+                                </div>
+                                <hr
+                                    style="margin: 8px 0; border: none; border-top: 1px solid #f0f0f0;"
+                                />
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer; border-radius: 4px;"
+                                >
+                                    📊 数据报表
+                                </div>
+                                <div
+                                    style="padding: 8px 12px; cursor: pointer; border-radius: 4px;"
+                                >
+                                    🔒 退出登录
                                 </div>
                             </auto-dropdown>
                         </div>
@@ -458,41 +426,39 @@ export const PlacementDemo: Story = {
                             <auto-dropdown
                                 label="侧边菜单"
                                 type="success"
-                                placement="right-start"
-                                ?arrow=${true}
+                                .popupOptions=${{
+                                    placement: "right-start",
+                                    arrow: true
+                                }}
                             >
                                 <div
-                                    style="padding: 0; background: white; border: 1px solid #d9d9d9; border-radius: 8px; box-shadow: 0 6px 16px rgba(0,0,0,0.1); --popup-arrow-bg: #ffffff; --popup-arrow-border: #52c41a;"
+                                    style="padding: 12px 16px; cursor: pointer; border-bottom: 1px solid #f0f0f0;"
                                 >
-                                    <div
-                                        style="padding: 12px 16px; cursor: pointer; border-bottom: 1px solid #f0f0f0;"
+                                    🏠 首页
+                                </div>
+                                <div
+                                    style="padding: 12px 16px; cursor: pointer; border-bottom: 1px solid #f0f0f0;"
+                                >
+                                    📧 个人中心
+                                </div>
+                                <div
+                                    style="padding: 12px 16px; cursor: pointer; border-bottom: 1px solid #f0f0f0;"
+                                >
+                                    📧 消息中心
+                                    <span
+                                        style="background: #ff4d4f; color: white; padding: 2px 8px; border-radius: 12px; margin-left: 8px;"
+                                        >3</span
                                     >
-                                        🏠 首页
-                                    </div>
-                                    <div
-                                        style="padding: 12px 16px; cursor: pointer; border-bottom: 1px solid #f0f0f0;"
-                                    >
-                                        📧 个人中心
-                                    </div>
-                                    <div
-                                        style="padding: 12px 16px; cursor: pointer; border-bottom: 1px solid #f0f0f0;"
-                                    >
-                                        📧 消息中心
-                                        <span
-                                            style="background: #ff4d4f; color: white; padding: 2px 8px; border-radius: 12px; margin-left: 8px;"
-                                            >3</span
-                                        >
-                                    </div>
-                                    <div
-                                        style="padding: 12px 16px; cursor: pointer; border-bottom: 1px solid #f0f0f0;"
-                                    >
-                                        🔔 通知设置
-                                    </div>
-                                    <div
-                                        style="padding: 12px 16px; cursor: pointer;"
-                                    >
-                                        ⚙️ 系统管理
-                                    </div>
+                                </div>
+                                <div
+                                    style="padding: 12px 16px; cursor: pointer; border-bottom: 1px solid #f0f0f0;"
+                                >
+                                    🔔 通知设置
+                                </div>
+                                <div
+                                    style="padding: 12px 16px; cursor: pointer;"
+                                >
+                                    ⚙️ 系统管理
                                 </div>
                             </auto-dropdown>
                         </div>

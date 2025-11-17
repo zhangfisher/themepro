@@ -16,6 +16,7 @@ import type { ReactiveController, ReactiveControllerHost } from "lit";
 import { createThemeproContainer } from "../utils/createThemeproContainer";
 import { getSlots } from "../utils/getSlots";
 import type { LitElement } from "lit";
+import { parseObjectFromAttr } from "@/utils/parseObjectFromAttr";
 
 export type PopupPlacement =
     | "top"
@@ -62,15 +63,19 @@ export interface PopupControllerOptions {
     /**
      * 弹出容器宽度，默认为null由内容决定
      */
-    popupWidth?: number | null;
+    width?: number | null;
     /**
      * 弹出容器高度，默认为null由内容决定
      */
-    popupHeight?: number | null;
+    height?: number | null;
     /**
      * 是否显示指示箭头，默认为false
      */
     arrow?: boolean;
+    /**
+     * 绑定属性名称，配置参数将从host的该属性中读取参数
+     */
+    optionAttr?: string;
     /**
      * 弹出层显示时触发
      */
@@ -79,10 +84,6 @@ export interface PopupControllerOptions {
      * 弹出层隐藏时触发
      */
     onHide?: () => void;
-    /**
-     * 位置更新时触发
-     */
-    onPositionUpdate?: (position: ComputePositionReturn) => void;
 }
 
 export class PopupController implements ReactiveController {
@@ -104,36 +105,40 @@ export class PopupController implements ReactiveController {
         options: PopupControllerOptions = {}
     ) {
         this.host = host;
-        this.options = this._mergeOptions(options);
+        this.options = this._initOptions(options);
         host.addController(this);
     }
 
     /**
      * 合并配置选项：从 host 属性读取默认值，与传入的 options 合并
      */
-    private _mergeOptions(
+    private _initOptions(
         userOptions: PopupControllerOptions
     ): PopupControllerOptions {
         const hostElement = this.host as any;
-
-        // 从 host 属性中读取默认配置（如果存在）
-        const defaultOptions = {
-            placement: hostElement.placement ?? "bottom-start",
-            offset: hostElement.offset ?? [0, 8],
-            fitWidth: hostElement.fitWidth ?? false,
-            persistent: hostElement.persistent ?? false,
-            animationDuration: hostElement.animationDuration ?? 100,
-            animationEasing: hostElement.animationEasing ?? "easeOutQuart",
-            className: hostElement.className ?? "popup",
-            popupWidth: hostElement.popupWidth ?? null,
-            popupHeight: hostElement.popupHeight ?? null,
-            arrow: hostElement.arrow ?? false,
+        const optionAttr = userOptions.optionAttr ?? "popup-options";
+        const defaultOptions: PopupControllerOptions = {
+            placement: "bottom-start" as PopupPlacement,
+            offset: [0, 8],
+            fitWidth: false,
+            persistent: false,
+            animationDuration: 100,
+            animationEasing: "easeOutQuart",
+            className: "popup",
+            width: null,
+            height: null,
+            arrow: false,
         };
-
-        // 用户传入的选项优先级最高
+        // 从绑定属性读取配置
+        const attrOptions = parseObjectFromAttr(
+            hostElement,
+            optionAttr,
+            defaultOptions
+        );
+        //
         return {
-            ...defaultOptions,
             ...userOptions,
+            ...attrOptions,
         };
     }
 
@@ -141,43 +146,18 @@ export class PopupController implements ReactiveController {
      * 从 host 属性中更新配置选项（用户传入的选项不会被覆盖）
      */
     private _updateOptionsFromHost(): void {
-        const hostElement = this.host as any;
-
-        // 保存用户传入的选项（不能被 host 属性覆盖）
-        const userOptions = {
-            onShow: this.options.onShow,
-            onHide: this.options.onHide,
-            onPositionUpdate: this.options.onPositionUpdate,
-        };
-
-        // 从 host 属性读取最新配置
-        const hostOptions = {
-            placement: hostElement.placement,
-            offset: hostElement.offset,
-            fitWidth: hostElement.fitWidth,
-            persistent: hostElement.persistent,
-            animationDuration: hostElement.animationDuration,
-            animationEasing: hostElement.animationEasing,
-            popupWidth: hostElement.popupWidth,
-            popupHeight: hostElement.popupHeight,
-            arrow: hostElement.arrow,
-        };
-
         // 合并配置，用户选项优先级最高
-        this.options = {
-            ...hostOptions,
-            ...userOptions,
-        };
+        this.options = this._initOptions({});
 
         // 如果弹出层可见且更新了位置相关配置，重新计算位置
         if (
             this._isVisible &&
-            (hostOptions.placement ||
-                hostOptions.offset ||
-                hostOptions.fitWidth ||
-                hostOptions.popupWidth !== undefined ||
-                hostOptions.popupHeight !== undefined ||
-                hostOptions.arrow !== undefined)
+            (this.options.placement ||
+                this.options.offset ||
+                this.options.fitWidth ||
+                this.options.width !== undefined ||
+                this.options.height !== undefined ||
+                this.options.arrow !== undefined)
         ) {
             this._updatePosition();
         }
@@ -409,8 +389,8 @@ export class PopupController implements ReactiveController {
             (newOptions.placement ||
                 newOptions.offset ||
                 newOptions.fitWidth ||
-                newOptions.popupWidth !== undefined ||
-                newOptions.popupHeight !== undefined ||
+                newOptions.width !== undefined ||
+                newOptions.height !== undefined ||
                 newOptions.arrow !== undefined)
         ) {
             this._updatePosition();
@@ -634,31 +614,26 @@ export class PopupController implements ReactiveController {
 
             // 当指定fitWidth时，popupWidth表示minWidth
             if (
-                this.options.popupWidth !== null &&
-                this.options.popupWidth !== undefined
+                this.options.width !== null &&
+                this.options.width !== undefined
             ) {
-                container.style.minWidth = `${this.options.popupWidth}px`;
+                container.style.minWidth = `${this.options.width}px`;
             }
         } else if (
-            this.options.popupWidth !== null &&
-            this.options.popupWidth !== undefined
+            this.options.width !== null &&
+            this.options.width !== undefined
         ) {
             // 非fitWidth模式下，popupWidth表示确切宽度
-            container.style.width = `${this.options.popupWidth}px`;
+            container.style.width = `${this.options.width}px`;
         }
 
         // 处理高度控制
-        if (
-            this.options.popupHeight !== null &&
-            this.options.popupHeight !== undefined
-        ) {
-            container.style.height = `${this.options.popupHeight}px`;
+        if (this.options.height !== null && this.options.height !== undefined) {
+            container.style.height = `${this.options.height}px`;
         }
 
         // 处理箭头位置，传递实际的placement（可能已翻转）
         this._updateArrowPosition(middlewareData, placement);
-
-        this.options.onPositionUpdate?.(position);
     }
 
     /**

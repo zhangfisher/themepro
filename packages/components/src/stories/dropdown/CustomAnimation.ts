@@ -12,8 +12,10 @@ export const CustomAnimation: Story = {
                 >
                     <auto-dropdown
                         label="弹性动画"
-                        animationDuration="500"
-                        animationEasing="easeInOutElastic(1, .5)"
+                        .popupOptions=${{
+                            animationDuration: 500,
+                            animationEasing: "easeInOutElastic(1, .5)"
+                        }}
                         type="primary"
                     >
                         <div
@@ -31,8 +33,10 @@ export const CustomAnimation: Story = {
 
                     <auto-dropdown
                         label="回弹动画"
-                        animationDuration="400"
-                        animationEasing="easeOutBack(1.7)"
+                        .popupOptions=${{
+                            animationDuration: 400,
+                            animationEasing: "easeOutBack(1.7)"
+                        }}
                         type="success"
                     >
                         <div
@@ -50,8 +54,10 @@ export const CustomAnimation: Story = {
 
                     <auto-dropdown
                         label="缓慢动画"
-                        animationDuration="800"
-                        animationEasing="easeInOutQuad"
+                        .popupOptions=${{
+                            animationDuration: 800,
+                            animationEasing: "easeInOutQuad"
+                        }}
                         type="warning"
                     >
                         <div

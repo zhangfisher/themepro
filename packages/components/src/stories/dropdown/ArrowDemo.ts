@@ -19,8 +19,10 @@ export const ArrowDemo: Story = {
                         <auto-dropdown
                             label="底部箭头"
                             type="primary"
-                            placement="bottom-start"
-                            ?arrow=${true}
+                            .popupOptions=${{
+                                placement: "bottom-start",
+                                arrow: true
+                            }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 📍 底部箭头指向按钮
@@ -33,8 +35,10 @@ export const ArrowDemo: Story = {
                         <auto-dropdown
                             label="顶部箭头"
                             type="success"
-                            placement="top-start"
-                            ?arrow=${true}
+                            .popupOptions=${{
+                                placement: "top-start",
+                                arrow: true
+                            }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 🎯 顶部箭头指向按钮
@@ -47,8 +51,10 @@ export const ArrowDemo: Story = {
                         <auto-dropdown
                             label="右侧箭头"
                             type="warning"
-                            placement="right-start"
-                            ?arrow=${true}
+                            .popupOptions=${{
+                                placement: "right-start",
+                                arrow: true
+                            }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 ➡️ 右侧箭头
@@ -61,8 +67,10 @@ export const ArrowDemo: Story = {
                         <auto-dropdown
                             label="左侧箭头"
                             type="info"
-                            placement="left-start"
-                            ?arrow=${true}
+                            .popupOptions=${{
+                                placement: "left-start",
+                                arrow: true
+                            }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 ⬅️ 左侧箭头
@@ -106,7 +114,7 @@ export const ArrowDemo: Story = {
                             <auto-dropdown
                                 label="有箭头菜单"
                                 type="default"
-                                ?arrow=${true}
+                                .popupOptions=${{ arrow: true }}
                             >
                                 <div
                                     style="padding: 8px 12px; cursor: pointer;"
@@ -134,7 +142,7 @@ export const ArrowDemo: Story = {
                         <auto-dropdown
                             label="蓝色箭头"
                             type="primary"
-                            ?arrow=${true}
+                            .popupOptions=${{ arrow: true }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 蓝色主题
@@ -144,7 +152,7 @@ export const ArrowDemo: Story = {
                         <auto-dropdown
                             label="绿色箭头"
                             type="success"
-                            ?arrow=${true}
+                            .popupOptions=${{ arrow: true }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 绿色主题
@@ -154,7 +162,7 @@ export const ArrowDemo: Story = {
                         <auto-dropdown
                             label="橙色箭头"
                             type="warning"
-                            ?arrow=${true}
+                            .popupOptions=${{ arrow: true }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 橙色主题
@@ -164,7 +172,7 @@ export const ArrowDemo: Story = {
                         <auto-dropdown
                             label="红色箭头"
                             type="danger"
-                            ?arrow=${true}
+                            .popupOptions=${{ arrow: true }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 红色主题
@@ -179,8 +187,10 @@ export const ArrowDemo: Story = {
                         <auto-dropdown
                             label="箭头 + fitWidth"
                             type="primary"
-                            ?arrow=${true}
-                            fitWidth
+                            .popupOptions=${{
+                                arrow: true,
+                                fitWidth: true
+                            }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 🎯 fitWidth + 箭头
@@ -196,9 +206,11 @@ export const ArrowDemo: Story = {
                         <auto-dropdown
                             label="箭头 + 自定义动画"
                             type="success"
-                            ?arrow=${true}
-                            animationDuration="500"
-                            animationEasing="easeOutBack(1.7)"
+                            .popupOptions=${{
+                                arrow: true,
+                                animationDuration: 500,
+                                animationEasing: "easeOutBack(1.7)"
+                            }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 ✨ 自定义动画效果

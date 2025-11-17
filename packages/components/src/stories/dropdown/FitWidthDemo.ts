@@ -78,7 +78,11 @@ export const FitWidthDemo: Story = {
                     <div
                         style="display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap;"
                     >
-                        <auto-dropdown label="短按钮" type="primary" fitWidth>
+                        <auto-dropdown
+                        label="短按钮"
+                        type="primary"
+                        .popupOptions=${{ fitWidth: true }}
+                    >
                             <div
                                 style="padding: 12px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
                             >
@@ -103,7 +107,7 @@ export const FitWidthDemo: Story = {
                         <auto-dropdown
                             label="这是一个很长的按钮文本"
                             type="success"
-                            fitWidth
+                            .popupOptions=${{ fitWidth: true }}
                         >
                             <div
                                 style="padding: 12px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
@@ -164,7 +168,7 @@ export const FitWidthDemo: Story = {
                         <auto-dropdown
                             label="fitWidth=true"
                             type="info"
-                            fitWidth
+                            .popupOptions=${{ fitWidth: true }}
                         >
                             <div
                                 style="padding: 12px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
@@ -193,7 +197,7 @@ export const FitWidthDemo: Story = {
                         <auto-dropdown
                             label="选择用户角色"
                             type="primary"
-                            fitWidth
+                            .popupOptions=${{ fitWidth: true }}
                             block
                         >
                             <div

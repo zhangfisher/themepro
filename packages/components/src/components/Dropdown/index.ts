@@ -7,96 +7,32 @@ import { html } from "lit";
 import { property } from "lit/decorators.js";
 import { customElement } from "lit/decorators/custom-element.js";
 import { styles } from "./styles";
-
 import { AutoButton, type AutoButtonProps } from "../Button";
-import { PopupController } from "../../controllers/popup";
+import {
+    PopupController,
+    type PopupControllerOptions,
+} from "../../controllers/popup";
 
 export interface AutoDropdownProps extends AutoButtonProps {
     /**
-     * 弹出内容宽度是否匹配触发按钮宽度
+     * 弹出层配置选项，所有弹出相关的配置都通过此属性设置
      */
-    fitWidth?: boolean;
-    /**
-     * 弹出位置偏好
-     */
-    placement?:
-        | "top"
-        | "bottom"
-        | "left"
-        | "right"
-        | "top-start"
-        | "top-end"
-        | "bottom-start"
-        | "bottom-end"
-        | "left-start"
-        | "left-end"
-        | "right-start"
-        | "right-end";
-    /**
-     * 弹出偏移量 [crossAxis, mainAxis]
-     */
-    offset?: [number, number];
+    popupOptions?: PopupControllerOptions;
     /**
      * 是否显示下拉内容
      */
     open?: boolean;
-    /**
-     * 禁止弹出内容自动关闭
-     */
-    persistent?: boolean;
-    /**
-     * 动画持续时间（毫秒）
-     */
-    animationDuration?: number;
-    /**
-     * 动画缓动函数
-     */
-    animationEasing?: string;
-    /**
-     * 是否显示指示箭头
-     */
-    arrow?: boolean;
 }
 
 @customElement("auto-dropdown")
 export class AutoDropdown extends AutoButton {
     static styles = [AutoButton.styles, styles] as any;
 
-    @property({ type: Boolean })
-    fitWidth?: boolean = false;
-
-    @property({ type: String })
-    placement:
-        | "top"
-        | "bottom"
-        | "left"
-        | "right"
-        | "top-start"
-        | "top-end"
-        | "bottom-start"
-        | "bottom-end"
-        | "left-start"
-        | "left-end"
-        | "right-start"
-        | "right-end" = "bottom-start";
-
-    @property({ type: Array })
-    offset?: [number, number] = [0, 4];
+    @property({ type: Object })
+    popupOptions?: Partial<PopupControllerOptions>;
 
     @property({ type: Boolean, reflect: true })
     open?: boolean = false;
-
-    @property({ type: Boolean })
-    persistent?: boolean = false;
-
-    @property({ type: Number })
-    animationDuration: number = 50;
-
-    @property({ type: String })
-    animationEasing?: string = "easeOutQuart";
-
-    @property({ type: Boolean })
-    arrow?: boolean = false;
 
     private _popupController?: PopupController;
 
@@ -139,6 +75,30 @@ export class AutoDropdown extends AutoButton {
                 this._hideDropdown();
             }
         }
+
+        // 如果 popupOptions 发生变化，更新控制器配置
+        if (changed.has("popupOptions") && this._popupController) {
+            this._popupController.updateOptions({
+                ...this.popupOptions,
+                onShow: () => {
+                    // this.dispatchEvent(
+                    //     new CustomEvent("dropdown-show", {
+                    //         bubbles: true,
+                    //         composed: true,
+                    //     })
+                    // );
+                },
+                onHide: () => {
+                    // this.dispatchEvent(
+                    //     new CustomEvent("dropdown-hide", {
+                    //         bubbles: true,
+                    //         composed: true,
+                    //     })
+                    // );
+                },
+            });
+        }
+
         super.updated(changed);
     }
 
@@ -149,6 +109,8 @@ export class AutoDropdown extends AutoButton {
         if (this._popupController) return;
 
         this._popupController = new PopupController(this, {
+            ...this.popupOptions,
+            optionAttr: "popup-options",
             onShow: () => {
                 // this.dispatchEvent(
                 //     new CustomEvent("dropdown-show", {

@@ -12,13 +12,15 @@ export const BaseDropdown: Story = {
                     label="点击我"
                     type="primary"
                     .open=${args.open}
-                    .fitWidth=${args.fitWidth}
-                    .placement=${args.placement}
-                    .offset=${args.offset}
-                    .persistent=${args.persistent}
-                    .arrow=${args.arrow}
-                    .animationDuration=${args.animationDuration}
-                    .animationEasing=${args.animationEasing}
+                    .popupOptions=${{
+                        fitWidth: args.popupOptions?.fitWidth || false,
+                        placement: args.popupOptions?.placement || "bottom-start",
+                        offset: args.popupOptions?.offset || [0, 4],
+                        persistent: args.popupOptions?.persistent || false,
+                        arrow: args.popupOptions?.arrow || false,
+                        animationDuration: args.popupOptions?.animationDuration || 300,
+                        animationEasing: args.popupOptions?.animationEasing || "easeOutQuart",
+                    }}
                 >
                     <div style="padding: 8px 16px; cursor: pointer; ">
                         选项 1
@@ -80,13 +82,15 @@ export const BaseDropdown: Story = {
                     label="点击我"
                     type="primary"
                     .open=${args.open}
-                    .fitWidth=${args.fitWidth}
-                    .placement=${args.placement}
-                    .offset=${args.offset}
-                    .persistent=${args.persistent}
-                    .arrow=${args.arrow}
-                    .animationDuration=${args.animationDuration}
-                    .animationEasing=${args.animationEasing}
+                    .popupOptions=${{
+                        fitWidth: args.popupOptions?.fitWidth || false,
+                        placement: args.popupOptions?.placement || "bottom-start",
+                        offset: args.popupOptions?.offset || [0, 4],
+                        persistent: args.popupOptions?.persistent || false,
+                        arrow: args.popupOptions?.arrow || false,
+                        animationDuration: args.popupOptions?.animationDuration || 300,
+                        animationEasing: args.popupOptions?.animationEasing || "easeOutQuart",
+                    }}
                 >
                     <div
                         class="dropdown"

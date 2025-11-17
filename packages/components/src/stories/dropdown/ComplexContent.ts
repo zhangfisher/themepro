@@ -10,8 +10,10 @@ export const ComplexContent: Story = {
                 <div style="margin-top: 20px;">
                     <auto-dropdown
                         label="包含表单的复杂下拉内容"
-                        placement="bottom-start"
-                        fitWidth
+                        .popupOptions=${{
+                            placement: "bottom-start",
+                            fitWidth: true
+                        }}
                         type="primary"
                         block
                     >
