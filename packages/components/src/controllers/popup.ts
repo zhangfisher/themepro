@@ -116,7 +116,7 @@ export class PopupController implements ReactiveController {
         userOptions: PopupControllerOptions
     ): PopupControllerOptions {
         const hostElement = this.host as any;
-        const optionAttr = userOptions.optionAttr ?? "popup-options";
+        const optionAttr = userOptions.optionAttr ?? "popupOptions";
         const defaultOptions: PopupControllerOptions = {
             placement: "bottom-start" as PopupPlacement,
             offset: [0, 8],
