@@ -31,6 +31,9 @@ export type PopupPlacement =
     | "left-end"
     | "right-start"
     | "right-end";
+
+export type PopupTriggerEvent = "click" | "mouseover";
+
 export interface PopupControllerOptions {
     /**
      * 弹出位置
@@ -77,6 +80,18 @@ export interface PopupControllerOptions {
      */
     optionAttr?: string;
     /**
+     * 指定要获取的slot名称，默认获取默认slot
+     */
+    slot?: string;
+    /**
+     * 延迟隐藏时间（毫秒），大于0的值将在指定时间后自动隐藏弹出内容
+     */
+    delayHide?: number;
+    /**
+     * 触发显示的事件类型，默认为'click'
+     */
+    on?: PopupTriggerEvent;
+    /**
      * 弹出层显示时触发
      */
     onShow?: () => void;
@@ -99,12 +114,19 @@ export class PopupController implements ReactiveController {
     private _showAnimation?: any;
     private _hideAnimation?: any;
     private _arrowElement?: HTMLElement;
+    private _refEl: HTMLElement;
+    private _delayHideTimer?: NodeJS.Timeout;
+    private _mouseEnterHandler?: (e: MouseEvent) => void;
+    private _mouseLeaveHandler?: (e: MouseEvent) => void;
+    private _mouseLeaveTimer?: NodeJS.Timeout;
+    private _shouldHideOnMouseLeave: boolean = false;
 
     constructor(
         host: ReactiveControllerHost,
         options: PopupControllerOptions = {}
     ) {
         this.host = host;
+        this._refEl = host as any;
         this.options = this._initOptions(options);
         host.addController(this);
     }
@@ -118,8 +140,8 @@ export class PopupController implements ReactiveController {
         const hostElement = this.host as any;
         const optionAttr = userOptions.optionAttr ?? "popupOptions";
         const defaultOptions: PopupControllerOptions = {
-            placement: "bottom-start" as PopupPlacement,
-            offset: [0, 8],
+            placement: "top" as PopupPlacement,
+            offset: [0, 4],
             fitWidth: false,
             persistent: false,
             animationDuration: 100,
@@ -128,6 +150,7 @@ export class PopupController implements ReactiveController {
             width: null,
             height: null,
             arrow: false,
+            on: "click",
         };
         // 从绑定属性读取配置
         const attrOptions = parseObjectFromAttr(
@@ -353,6 +376,7 @@ export class PopupController implements ReactiveController {
      */
     hostConnected(): void {
         // 容器将在第一次show调用时创建
+        this._setupTriggerEvents();
     }
 
     /**
@@ -361,12 +385,15 @@ export class PopupController implements ReactiveController {
     hostUpdate(): void {
         // 从 host 属性中读取最新的配置并更新
         this._updateOptionsFromHost();
+        // 重新设置触发事件
+        this._setupTriggerEvents();
     }
 
     /**
      * ReactiveController 生命周期 - host 断开连接时调用
      */
     hostDisconnected(): void {
+        this._removeTriggerEvents();
         this.destroy();
     }
 
@@ -411,12 +438,20 @@ export class PopupController implements ReactiveController {
         // 停止任何正在进行的隐藏动画
         this._hideAnimation?.pause();
 
+        // 清理之前的延迟隐藏定时器
+        this._clearDelayHideTimer();
+
         // 设置初始状态
         container.style.visibility = "visible";
         container.style.pointerEvents = "auto";
 
         // 设置外部事件监听器
         this._setupExternalListeners();
+
+        // 如果是mouseover触发模式，为容器设置鼠标事件
+        if (this.options.on === "mouseover") {
+            this._setupContainerMouseEvents();
+        }
 
         // 先同步计算显示位置，确保定位准确
         await this._updatePositionSync();
@@ -446,8 +481,19 @@ export class PopupController implements ReactiveController {
 
         // 触发自定义事件
         this._triggerShowEvent(container);
-
+        // 延迟隐藏
+        this._setDelayHide();
+        // 调用显示回调
         this.options.onShow?.();
+    }
+
+    private _setDelayHide() {
+        // 如果配置了延迟隐藏，设置定时器
+        if (this.options.delayHide && this.options.delayHide > 0) {
+            this._delayHideTimer = setTimeout(() => {
+                this.hide();
+            }, this.options.delayHide);
+        }
     }
 
     /**
@@ -460,6 +506,9 @@ export class PopupController implements ReactiveController {
 
         // 停止任何正在进行的显示动画
         this._showAnimation?.pause();
+
+        // 清理延迟隐藏定时器
+        this._clearDelayHideTimer();
 
         // 触发自定义事件
         this._triggerHideEvent(container);
@@ -501,6 +550,16 @@ export class PopupController implements ReactiveController {
     }
 
     /**
+     * 清理延迟隐藏定时器
+     */
+    private _clearDelayHideTimer(): void {
+        if (this._delayHideTimer) {
+            clearTimeout(this._delayHideTimer);
+            this._delayHideTimer = undefined;
+        }
+    }
+
+    /**
      * 切换弹出层显示状态
      */
     toggle(): void {
@@ -520,7 +579,7 @@ export class PopupController implements ReactiveController {
         const middleware = [
             offset({
                 crossAxis: this.options.offset?.[0] || 0,
-                mainAxis: baseOffset + 6,
+                mainAxis: baseOffset + (this.options.arrow ? 6 : 0),
             }),
             flip(isAutoUpdate ? { fallbackAxisSideDirection: "start" } : {}),
             shift({
@@ -545,13 +604,13 @@ export class PopupController implements ReactiveController {
     }
 
     /**
-     * 计算并应用位置
+     * 统一的位置计算函数 - 消除重复代码
+     * @param callback 可选的回调函数，用于处理计算结果
      */
-    private async _computeAndApplyPosition(
-        setupAutoUpdate: boolean = true
-    ): Promise<void> {
+    private async _calculatePosition(
+        callback?: (position: ComputePositionReturn) => void
+    ): Promise<ComputePositionReturn> {
         const middleware = this._createMiddleware();
-
         const position = await computePosition(
             this.host as unknown as HTMLElement,
             this.container,
@@ -561,7 +620,23 @@ export class PopupController implements ReactiveController {
             }
         );
 
-        this._applyPosition(position);
+        // 如果提供了回调函数，则执行回调
+        if (callback) {
+            callback(position);
+        }
+
+        return position;
+    }
+
+    /**
+     * 计算并应用位置
+     */
+    private async _computeAndApplyPosition(
+        setupAutoUpdate: boolean = true
+    ): Promise<void> {
+        await this._calculatePosition((position) => {
+            this._applyPosition(position);
+        });
 
         if (setupAutoUpdate) {
             this._setupAutoUpdate();
@@ -579,12 +654,8 @@ export class PopupController implements ReactiveController {
      * 更新位置
      */
     private _updatePosition(): void {
-        const middleware = this._createMiddleware(true);
-
-        computePosition(this.host as unknown as HTMLElement, this.container, {
-            placement: this.options.placement!,
-            middleware,
-        }).then((position) => {
+        // 使用统一的位置计算函数
+        this._calculatePosition((position) => {
             this._applyPosition(position);
         });
 
@@ -648,16 +719,8 @@ export class PopupController implements ReactiveController {
             this.host as unknown as HTMLElement,
             this.container,
             () => {
-                const middleware = this._createMiddleware(true);
-
-                computePosition(
-                    this.host as unknown as HTMLElement,
-                    this.container,
-                    {
-                        placement: this.options.placement!,
-                        middleware,
-                    }
-                ).then((position) => {
+                // 使用统一的位置计算函数进行自动更新
+                this._calculatePosition((position) => {
                     if (this._isVisible) {
                         this._applyPosition(position);
                     }
@@ -714,6 +777,158 @@ export class PopupController implements ReactiveController {
     }
 
     /**
+     * 设置触发事件
+     */
+    private _setupTriggerEvents(): void {
+        const hostElement = this.host as unknown as HTMLElement;
+
+        // 清理之前的事件监听器
+        this._removeTriggerEvents();
+
+        if (this.options.on === "mouseover") {
+            this._mouseEnterHandler = (e: MouseEvent) => {
+                e.stopPropagation();
+                // 清除任何待处理的隐藏定时器
+                this._clearMouseLeaveTimer();
+                this.show();
+            };
+
+            this._mouseLeaveHandler = (e: MouseEvent) => {
+                e.stopPropagation();
+                // 立即清除任何待处理的隐藏定时器
+                this._clearMouseLeaveTimer();
+
+                // 标记应该隐藏，但延迟执行以检查鼠标是否进入了容器
+                this._shouldHideOnMouseLeave = true;
+                this._mouseLeaveTimer = setTimeout(() => {
+                    // 首先快速检查relatedTarget
+                    const relatedTarget = e.relatedTarget as Node;
+                    const isInHost = hostElement.contains(relatedTarget);
+                    const isInContainer =
+                        this._container?.contains(relatedTarget);
+
+                    // 如果relatedTarget不在容器内，再做精确的位置检查
+                    if (!isInContainer) {
+                        // 使用鼠标位置做最终验证
+                        const mouseX = e.clientX;
+                        const mouseY = e.clientY;
+                        const elements = document.elementsFromPoint(
+                            mouseX,
+                            mouseY
+                        );
+                        const isMouseOverContainer = elements.some((el) =>
+                            this._container?.contains(el)
+                        );
+
+                        // 如果鼠标既不在host也不在container内，则隐藏
+                        if (!isInHost && !isMouseOverContainer) {
+                            this.hide();
+                        }
+                    }
+                    this._shouldHideOnMouseLeave = false;
+                }, 30); // 30ms延迟，足够快但有足够时间给DOM更新
+            };
+
+            hostElement.addEventListener("mouseenter", this._mouseEnterHandler);
+            hostElement.addEventListener("mouseleave", this._mouseLeaveHandler);
+
+            // 为容器添加鼠标事件监听器（容器创建后再设置）
+            if (this._container) {
+                this._setupContainerMouseEvents();
+            }
+        }
+    }
+
+    /**
+     * 清理鼠标离开定时器
+     */
+    private _clearMouseLeaveTimer(): void {
+        if (this._mouseLeaveTimer) {
+            clearTimeout(this._mouseLeaveTimer);
+            this._mouseLeaveTimer = undefined;
+        }
+        this._shouldHideOnMouseLeave = false;
+    }
+
+    /**
+     * 为容器设置鼠标事件
+     */
+    private _setupContainerMouseEvents(): void {
+        if (!this._container || this.options.on !== "mouseover") return;
+
+        const containerMouseEnterHandler = () => {
+            // 鼠标进入容器，清除任何待处理的隐藏操作
+            this._clearMouseLeaveTimer();
+            this._clearDelayHideTimer();
+        };
+
+        const containerMouseLeaveHandler = (e: MouseEvent) => {
+            // 立即清除任何待处理的隐藏定时器
+            this._clearMouseLeaveTimer();
+
+            // 延迟检查鼠标最终位置，给浏览器时间更新DOM
+            this._shouldHideOnMouseLeave = true;
+            this._mouseLeaveTimer = setTimeout(() => {
+                const hostElement = this.host as unknown as HTMLElement;
+
+                // 使用当前鼠标位置而不是relatedTarget，因为相关目标可能已经改变
+                const mouseX = e.clientX;
+                const mouseY = e.clientY;
+
+                // 检查鼠标是否在任何相关元素上方
+                const elements = document.elementsFromPoint(mouseX, mouseY);
+                const isInHost = elements.some((el) =>
+                    hostElement?.contains(el)
+                );
+                const isInContainer = elements.some((el) =>
+                    this._container?.contains(el)
+                );
+
+                // 如果鼠标既不在host也不在container内，则隐藏
+                if (!isInHost && !isInContainer) {
+                    this.hide();
+                }
+                this._shouldHideOnMouseLeave = false;
+            }, 50); // 50ms延迟，确保准确检测
+        };
+
+        this._container.addEventListener(
+            "mouseenter",
+            containerMouseEnterHandler
+        );
+        this._container.addEventListener(
+            "mouseleave",
+            containerMouseLeaveHandler
+        );
+    }
+
+    /**
+     * 移除触发事件监听器
+     */
+    private _removeTriggerEvents(): void {
+        const hostElement = this.host as unknown as HTMLElement;
+
+        // 清理定时器
+        this._clearMouseLeaveTimer();
+
+        if (this._mouseEnterHandler) {
+            hostElement.removeEventListener(
+                "mouseenter",
+                this._mouseEnterHandler
+            );
+            this._mouseEnterHandler = undefined;
+        }
+
+        if (this._mouseLeaveHandler) {
+            hostElement.removeEventListener(
+                "mouseleave",
+                this._mouseLeaveHandler
+            );
+            this._mouseLeaveHandler = undefined;
+        }
+    }
+
+    /**
      * 移除外部事件监听器
      */
     private _removeExternalListeners(): void {
@@ -740,8 +955,8 @@ export class PopupController implements ReactiveController {
             container.removeChild(node);
         });
 
-        // 获取host元素的slot内容
-        const childNodes = getSlots(this.host as LitElement);
+        // 获取host元素的指定slot内容
+        const childNodes = getSlots(this.host as LitElement, this.options.slot);
 
         childNodes.forEach((child) => {
             const clonedChild = child.cloneNode(true);
@@ -803,7 +1018,6 @@ export class PopupController implements ReactiveController {
         // 从host元素触发事件
         (this.host as unknown as HTMLElement).dispatchEvent(event);
     }
-
     /**
      * 销毁控制器
      */
@@ -812,6 +1026,8 @@ export class PopupController implements ReactiveController {
         this._cleanup?.();
         this._showAnimation?.pause();
         this._hideAnimation?.pause();
+        this._clearDelayHideTimer();
+        this._clearMouseLeaveTimer();
 
         // 清理箭头元素
         if (this._arrowElement?.parentNode) {

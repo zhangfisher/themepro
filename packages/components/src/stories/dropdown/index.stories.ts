@@ -8,6 +8,7 @@ import { PersistentDropdown } from "./PersistentDropdown";
 import { ArrowDemo } from "./ArrowDemo";
 import { PlacementDemo } from "./PlacementDemo";
 import { FitWidthDemo } from "./FitWidthDemo";
+import { MouseOverDropdown } from "./MouseOverDropdown";
 
 const meta: Meta = {
     title: "通用/AutoDropdown",
@@ -92,3 +93,4 @@ export const 持久化菜单: Story = PersistentDropdown;
 export const 指示箭头演示: Story = ArrowDemo;
 export const 弹出方向演示: Story = PlacementDemo;
 export const 宽度适配演示: Story = FitWidthDemo;
+export const 悬停显示触发: Story = MouseOverDropdown;
