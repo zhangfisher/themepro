@@ -92,6 +92,10 @@ export interface PopupControllerOptions {
      */
     on?: PopupTriggerEvent;
     /**
+     * 触发元素选择器，可以是单个选择器或选择器数组
+     */
+    trigger?: string | string[];
+    /**
      * 弹出层显示时触发
      */
     onShow?: () => void;
@@ -120,6 +124,11 @@ export class PopupController implements ReactiveController {
     private _mouseLeaveHandler?: (e: MouseEvent) => void;
     private _mouseLeaveTimer?: NodeJS.Timeout;
     private _shouldHideOnMouseLeave: boolean = false;
+    private _currentTriggerElement?: HTMLElement;
+    private _triggerSelectors?: string[];
+    private _triggerDelegateHandler?: (e: Event) => void;
+    private _triggerMouseLeaveHandler?: (e: MouseEvent) => void;
+    private _currentTriggerMode?: PopupTriggerEvent;
 
     constructor(
         host: ReactiveControllerHost,
@@ -377,6 +386,7 @@ export class PopupController implements ReactiveController {
     hostConnected(): void {
         // 容器将在第一次show调用时创建
         this._setupTriggerEvents();
+        this._setupTriggerElements();
     }
 
     /**
@@ -387,6 +397,192 @@ export class PopupController implements ReactiveController {
         this._updateOptionsFromHost();
         // 重新设置触发事件
         this._setupTriggerEvents();
+        this._setupTriggerElements();
+    }
+
+    /**
+     * 设置trigger元素监听 - 使用事件委托模式
+     */
+    private _setupTriggerElements(): void {
+        const hostElement = this.host as unknown as HTMLElement;
+
+        // 清理之前的触发器监听
+        this._removeTriggerElements();
+
+        if (!this.options.trigger) return;
+
+        // 将触发器选择器转换为数组并存储
+        this._triggerSelectors = Array.isArray(this.options.trigger)
+            ? this.options.trigger
+            : [this.options.trigger];
+
+        // 存储当前的触发模式
+        this._currentTriggerMode = this.options.on;
+
+        // 创建获取匹配触发器的函数
+        const getMatchedTrigger = (e: Event): HTMLElement | null => {
+            const composedPath = e.composedPath();
+
+            // 找到host元素在事件路径中的索引位置
+            let hostIndex = -1;
+            for (let i = 0; i < composedPath.length; i++) {
+                if (composedPath[i] === hostElement) {
+                    hostIndex = i;
+                    break;
+                }
+            }
+
+            // 如果在路径中找不到host元素，使用整个路径
+            if (hostIndex === -1) {
+                hostIndex = composedPath.length;
+            }
+
+            // 遍历事件路径，从开始到host元素为止，寻找匹配的触发器元素
+            for (let i = 0; i <= hostIndex; i++) {
+                const pathElement = composedPath[i];
+                if (pathElement instanceof HTMLElement) {
+                    // 检查当前元素是否匹配任何触发器选择器
+                    for (const selector of this._triggerSelectors!) {
+                        // 使用matches方法直接检查元素是否匹配选择器
+                        if (pathElement.matches?.(selector)) {
+                            return pathElement;
+                        }
+                        // 对于复杂的CSS选择器，尝试在父元素链中查找（限制在路径范围内）
+                        let parent = pathElement.parentElement;
+                        while (
+                            parent &&
+                            parent !== hostElement &&
+                            composedPath.includes(parent)
+                        ) {
+                            if (parent.matches?.(selector)) {
+                                return parent;
+                            }
+                            parent = parent.parentElement;
+                        }
+                    }
+                }
+            }
+
+            return null;
+        };
+
+        // 创建委托事件处理器
+        this._triggerDelegateHandler = (e: Event) => {
+            const matchedElement = getMatchedTrigger(e);
+
+            if (matchedElement) {
+                // 阻止事件冒泡和默认行为
+                e.preventDefault();
+                e.stopPropagation();
+
+                // 设置当前触发元素
+                this._currentTriggerElement = matchedElement;
+
+                // 根据事件类型和触发模式处理
+                if (
+                    this._currentTriggerMode === "click" &&
+                    e.type === "click"
+                ) {
+                    this.show();
+                } else if (
+                    this._currentTriggerMode === "mouseover" &&
+                    e.type === "mouseover"
+                ) {
+                    // 对于mouseover，检查是否是从外部进入
+                    const mouseEvent = e as MouseEvent;
+                    const relatedTarget = mouseEvent.relatedTarget as Node;
+                    const isComingFromOutside =
+                        !hostElement.contains(relatedTarget) &&
+                        !matchedElement.contains(relatedTarget);
+
+                    if (isComingFromOutside) {
+                        this._clearMouseLeaveTimer();
+                        this.show();
+                    }
+                }
+            }
+        };
+
+        // 在host元素上监听事件（事件委托）
+        if (this._currentTriggerMode === "click") {
+            hostElement.addEventListener(
+                "click",
+                this._triggerDelegateHandler,
+                true
+            );
+        } else if (this._currentTriggerMode === "mouseover") {
+            // 对于mouseover模式，监听mouseover事件并处理mouseenter逻辑
+            hostElement.addEventListener(
+                "mouseover",
+                this._triggerDelegateHandler,
+                true
+            );
+
+            // 同时添加mouseleave监听来处理隐藏逻辑
+            this._triggerMouseLeaveHandler = (e: MouseEvent) => {
+                const matchedElement = getMatchedTrigger(e);
+
+                if (matchedElement) {
+                    // 检查是否移动到外部
+                    const relatedTarget = e.relatedTarget as Node;
+                    const isGoingOutside =
+                        !hostElement.contains(relatedTarget) &&
+                        !matchedElement.contains(relatedTarget) &&
+                        !this._container?.contains(relatedTarget);
+
+                    if (isGoingOutside) {
+                        this._mouseLeaveTimer = setTimeout(() => {
+                            this.hide();
+                        }, 30);
+                    }
+                }
+            };
+
+            hostElement.addEventListener(
+                "mouseout",
+                this._triggerMouseLeaveHandler,
+                true
+            );
+        }
+    }
+
+    /**
+     * 移除trigger元素监听 - 事件委托模式清理
+     */
+    private _removeTriggerElements(): void {
+        const hostElement = this.host as unknown as HTMLElement;
+
+        // 移除委托事件监听器
+        if (this._triggerDelegateHandler) {
+            if (this._currentTriggerMode === "click") {
+                hostElement.removeEventListener(
+                    "click",
+                    this._triggerDelegateHandler,
+                    true
+                );
+            } else if (this._currentTriggerMode === "mouseover") {
+                hostElement.removeEventListener(
+                    "mouseover",
+                    this._triggerDelegateHandler,
+                    true
+                );
+            }
+            this._triggerDelegateHandler = undefined;
+        }
+
+        if (this._triggerMouseLeaveHandler) {
+            hostElement.removeEventListener(
+                "mouseout",
+                this._triggerMouseLeaveHandler,
+                true
+            );
+            this._triggerMouseLeaveHandler = undefined;
+        }
+
+        // 清理状态
+        this._triggerSelectors = undefined;
+        this._currentTriggerElement = undefined;
+        this._currentTriggerMode = undefined;
     }
 
     /**
@@ -394,6 +590,7 @@ export class PopupController implements ReactiveController {
      */
     hostDisconnected(): void {
         this._removeTriggerEvents();
+        this._removeTriggerElements();
         this.destroy();
     }
 
@@ -604,15 +801,26 @@ export class PopupController implements ReactiveController {
     }
 
     /**
+     * 获取当前触发元素或host元素
+     */
+    private _getReferenceElement(): HTMLElement {
+        if (this._currentTriggerElement) {
+            return this._currentTriggerElement;
+        }
+        return this.host as unknown as HTMLElement;
+    }
+
+    /**
      * 统一的位置计算函数 - 消除重复代码
      * @param callback 可选的回调函数，用于处理计算结果
      */
     private async _calculatePosition(
         callback?: (position: ComputePositionReturn) => void
     ): Promise<ComputePositionReturn> {
+        const referenceElement = this._getReferenceElement();
         const middleware = this._createMiddleware();
         const position = await computePosition(
-            this.host as unknown as HTMLElement,
+            referenceElement,
             this.container,
             {
                 placement: this.options.placement!,
@@ -955,7 +1163,32 @@ export class PopupController implements ReactiveController {
             container.removeChild(node);
         });
 
-        // 获取host元素的指定slot内容
+        // 如果有trigger元素且有data-tooltip或data-slot属性，优先使用
+        if (this._currentTriggerElement) {
+            const tooltip =
+                this._currentTriggerElement.getAttribute("data-tips");
+            const slot = this._currentTriggerElement.getAttribute("data-slot");
+
+            if (tooltip) {
+                // 使用data-tooltip内容（HTML格式）
+                const tooltipWrapper = document.createElement("div");
+                tooltipWrapper.innerHTML = tooltip;
+                container.appendChild(tooltipWrapper);
+                return;
+            }
+
+            if (slot) {
+                // 使用指定的slot内容
+                const childNodes = getSlots(this.host as LitElement, slot);
+                childNodes.forEach((child) => {
+                    const clonedChild = child.cloneNode(true);
+                    container.appendChild(clonedChild);
+                });
+                return;
+            }
+        }
+
+        // 获取host元素的指定slot内容（默认行为）
         const childNodes = getSlots(this.host as LitElement, this.options.slot);
 
         childNodes.forEach((child) => {
@@ -1028,6 +1261,7 @@ export class PopupController implements ReactiveController {
         this._hideAnimation?.pause();
         this._clearDelayHideTimer();
         this._clearMouseLeaveTimer();
+        this._removeTriggerElements();
 
         // 清理箭头元素
         if (this._arrowElement?.parentNode) {

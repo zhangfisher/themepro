@@ -33,12 +33,7 @@ export class AutoDropdown extends AutoButton {
 
     @property({ type: Boolean, reflect: true })
     open?: boolean = false;
-
     private _popupController?: PopupController;
-
-    onInitState(): void {
-        if (!this.state) this.state = {};
-    }
 
     connectedCallback(): void {
         super.connectedCallback();
