@@ -19,13 +19,13 @@ import { getId } from "@/utils/getId";
 import { isFunction } from "@/utils/isFunction";
 
 export type AutoButtonTag = {
-    id: string;
+    id?: string;
     /**
      * 如果checkable=true
      * 可以使用多个图标，使用,分开，如：icon="icon1,icon2"
      * 当checkable=true时，可以切换图标
      */
-    icon?: string;
+    icon: string;
     label?: string;
     tips?: string;
     /**
@@ -459,7 +459,7 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
 
         return html`<span
             class="tag ${classMap(tagClasss)}"
-            data-id="${tag.id}"
+            data-id="${tag.id || tag.icon}"
             data-tips=${ifDefined(tag.tips)}
         >
             ${when(

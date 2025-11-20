@@ -92,9 +92,21 @@ export interface PopupControllerOptions {
      */
     on?: PopupTriggerEvent;
     /**
-     * 触发元素选择器，可以是单个选择器或选择器数组
+     * 声明定义内部额外的热点区域选择器
+     *
+     * 满足条件的元素均可以通过
+     *
+     * 允许Host内部符合选择器的元素也可以弹出内容
+     * - 通过data-tips
+     * - data-popup-slot="xxx"
+     *
      */
-    trigger?: string | string[];
+    hotspots1?: string | string[];
+    /**
+     * 触发元素选择器，可以是单个选择器或选择器数组
+     *
+     */
+    hotspots?: string | string[];
     /**
      * 弹出层显示时触发
      */
@@ -118,16 +130,15 @@ export class PopupController implements ReactiveController {
     private _showAnimation?: any;
     private _hideAnimation?: any;
     private _arrowElement?: HTMLElement;
-    private _refEl: HTMLElement;
     private _delayHideTimer?: NodeJS.Timeout;
     private _mouseEnterHandler?: (e: MouseEvent) => void;
     private _mouseLeaveHandler?: (e: MouseEvent) => void;
     private _mouseLeaveTimer?: NodeJS.Timeout;
     private _shouldHideOnMouseLeave: boolean = false;
-    private _currentTriggerElement?: HTMLElement;
-    private _triggerSelectors?: string[];
-    private _triggerDelegateHandler?: (e: Event) => void;
-    private _triggerMouseLeaveHandler?: (e: MouseEvent) => void;
+    private _currentHotspotElement?: HTMLElement;
+    private _hotspotSelectors?: string[];
+    private _hotspotDelegateHandler?: (e: Event) => void;
+    private _hotspotMouseLeaveHandler?: (e: MouseEvent) => void;
     private _currentTriggerMode?: PopupTriggerEvent;
 
     constructor(
@@ -135,7 +146,6 @@ export class PopupController implements ReactiveController {
         options: PopupControllerOptions = {}
     ) {
         this.host = host;
-        this._refEl = host as any;
         this.options = this._initOptions(options);
         host.addController(this);
     }
@@ -407,14 +417,14 @@ export class PopupController implements ReactiveController {
         const hostElement = this.host as unknown as HTMLElement;
 
         // 清理之前的触发器监听
-        this._removeTriggerElements();
+        this._removeHotspotElements();
 
-        if (!this.options.trigger) return;
+        if (!this.options.hotspots) return;
 
         // 将触发器选择器转换为数组并存储
-        this._triggerSelectors = Array.isArray(this.options.trigger)
-            ? this.options.trigger
-            : [this.options.trigger];
+        this._hotspotSelectors = Array.isArray(this.options.hotspots)
+            ? this.options.hotspots
+            : [this.options.hotspots];
 
         // 存储当前的触发模式
         this._currentTriggerMode = this.options.on;
@@ -442,7 +452,7 @@ export class PopupController implements ReactiveController {
                 const pathElement = composedPath[i];
                 if (pathElement instanceof HTMLElement) {
                     // 检查当前元素是否匹配任何触发器选择器
-                    for (const selector of this._triggerSelectors!) {
+                    for (const selector of this._hotspotSelectors!) {
                         // 使用matches方法直接检查元素是否匹配选择器
                         if (pathElement.matches?.(selector)) {
                             return pathElement;
@@ -467,7 +477,7 @@ export class PopupController implements ReactiveController {
         };
 
         // 创建委托事件处理器
-        this._triggerDelegateHandler = (e: Event) => {
+        this._hotspotDelegateHandler = (e: Event) => {
             const matchedElement = getMatchedTrigger(e);
 
             if (matchedElement) {
@@ -476,7 +486,7 @@ export class PopupController implements ReactiveController {
                 e.stopPropagation();
 
                 // 设置当前触发元素
-                this._currentTriggerElement = matchedElement;
+                this._currentHotspotElement = matchedElement;
 
                 // 根据事件类型和触发模式处理
                 if (
@@ -507,19 +517,19 @@ export class PopupController implements ReactiveController {
         if (this._currentTriggerMode === "click") {
             hostElement.addEventListener(
                 "click",
-                this._triggerDelegateHandler,
+                this._hotspotDelegateHandler,
                 true
             );
         } else if (this._currentTriggerMode === "mouseover") {
             // 对于mouseover模式，监听mouseover事件并处理mouseenter逻辑
             hostElement.addEventListener(
                 "mouseover",
-                this._triggerDelegateHandler,
+                this._hotspotDelegateHandler,
                 true
             );
 
             // 同时添加mouseleave监听来处理隐藏逻辑
-            this._triggerMouseLeaveHandler = (e: MouseEvent) => {
+            this._hotspotMouseLeaveHandler = (e: MouseEvent) => {
                 const matchedElement = getMatchedTrigger(e);
 
                 if (matchedElement) {
@@ -540,7 +550,7 @@ export class PopupController implements ReactiveController {
 
             hostElement.addEventListener(
                 "mouseout",
-                this._triggerMouseLeaveHandler,
+                this._hotspotMouseLeaveHandler,
                 true
             );
         }
@@ -549,39 +559,39 @@ export class PopupController implements ReactiveController {
     /**
      * 移除trigger元素监听 - 事件委托模式清理
      */
-    private _removeTriggerElements(): void {
+    private _removeHotspotElements(): void {
         const hostElement = this.host as unknown as HTMLElement;
 
         // 移除委托事件监听器
-        if (this._triggerDelegateHandler) {
+        if (this._hotspotDelegateHandler) {
             if (this._currentTriggerMode === "click") {
                 hostElement.removeEventListener(
                     "click",
-                    this._triggerDelegateHandler,
+                    this._hotspotDelegateHandler,
                     true
                 );
             } else if (this._currentTriggerMode === "mouseover") {
                 hostElement.removeEventListener(
                     "mouseover",
-                    this._triggerDelegateHandler,
+                    this._hotspotDelegateHandler,
                     true
                 );
             }
-            this._triggerDelegateHandler = undefined;
+            this._hotspotDelegateHandler = undefined;
         }
 
-        if (this._triggerMouseLeaveHandler) {
+        if (this._hotspotMouseLeaveHandler) {
             hostElement.removeEventListener(
                 "mouseout",
-                this._triggerMouseLeaveHandler,
+                this._hotspotMouseLeaveHandler,
                 true
             );
-            this._triggerMouseLeaveHandler = undefined;
+            this._hotspotMouseLeaveHandler = undefined;
         }
 
         // 清理状态
-        this._triggerSelectors = undefined;
-        this._currentTriggerElement = undefined;
+        this._hotspotSelectors = undefined;
+        this._currentHotspotElement = undefined;
         this._currentTriggerMode = undefined;
     }
 
@@ -590,7 +600,7 @@ export class PopupController implements ReactiveController {
      */
     hostDisconnected(): void {
         this._removeTriggerEvents();
-        this._removeTriggerElements();
+        this._removeHotspotElements();
         this.destroy();
     }
 
@@ -630,7 +640,14 @@ export class PopupController implements ReactiveController {
         const container = this.container;
 
         // 克隆内容到容器中（只在第一次显示时执行）
-        this._cloneContent();
+        const hasContent = this._cloneContent();
+
+        // 如果没有内容，则不显示弹出层
+        if (!hasContent) {
+            this._createPopupContainer();
+            this.container.style.visibility = "hidden";
+            return;
+        }
 
         // 停止任何正在进行的隐藏动画
         this._hideAnimation?.pause();
@@ -804,8 +821,8 @@ export class PopupController implements ReactiveController {
      * 获取当前触发元素或host元素
      */
     private _getReferenceElement(): HTMLElement {
-        if (this._currentTriggerElement) {
-            return this._currentTriggerElement;
+        if (this._currentHotspotElement) {
+            return this._currentHotspotElement;
         }
         return this.host as unknown as HTMLElement;
     }
@@ -1147,8 +1164,9 @@ export class PopupController implements ReactiveController {
 
     /**
      * 克隆内容到容器中
+     * @returns 是否成功添加了内容
      */
-    private _cloneContent(): void {
+    private _cloneContent(): boolean {
         const container = this.container;
 
         // 清除之前的内容（保留箭头元素）
@@ -1163,38 +1181,44 @@ export class PopupController implements ReactiveController {
             container.removeChild(node);
         });
 
-        // 如果有trigger元素且有data-tooltip或data-slot属性，优先使用
-        if (this._currentTriggerElement) {
-            const tooltip =
-                this._currentTriggerElement.getAttribute("data-tips");
-            const slot = this._currentTriggerElement.getAttribute("data-slot");
+        // 如果有hotspot元素且有data-tooltip或data-slot属性，优先使用
+        if (this._currentHotspotElement) {
+            const tooltip = this._currentHotspotElement.dataset.tips;
+            const slot = this._currentHotspotElement.dataset.popupSlot;
 
             if (tooltip) {
-                // 使用data-tooltip内容（HTML格式）
+                // 使用data-tips内容（HTML格式）
                 const tooltipWrapper = document.createElement("div");
                 tooltipWrapper.innerHTML = tooltip;
                 container.appendChild(tooltipWrapper);
-                return;
+                return true;
             }
 
             if (slot) {
                 // 使用指定的slot内容
                 const childNodes = getSlots(this.host as LitElement, slot);
-                childNodes.forEach((child) => {
-                    const clonedChild = child.cloneNode(true);
-                    container.appendChild(clonedChild);
-                });
-                return;
+                if (childNodes.length > 0) {
+                    childNodes.forEach((child) => {
+                        const clonedChild = child.cloneNode(true);
+                        container.appendChild(clonedChild);
+                    });
+                    return true;
+                }
             }
         }
 
         // 获取host元素的指定slot内容（默认行为）
         const childNodes = getSlots(this.host as LitElement, this.options.slot);
 
-        childNodes.forEach((child) => {
-            const clonedChild = child.cloneNode(true);
-            container.appendChild(clonedChild);
-        });
+        if (childNodes.length > 0) {
+            childNodes.forEach((child) => {
+                const clonedChild = child.cloneNode(true);
+                container.appendChild(clonedChild);
+            });
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -1261,7 +1285,7 @@ export class PopupController implements ReactiveController {
         this._hideAnimation?.pause();
         this._clearDelayHideTimer();
         this._clearMouseLeaveTimer();
-        this._removeTriggerElements();
+        this._removeHotspotElements();
 
         // 清理箭头元素
         if (this._arrowElement?.parentNode) {
