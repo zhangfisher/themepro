@@ -1,7 +1,7 @@
 import { html } from "lit";
 import type { Story } from "./types";
 
-export const LocalElementPopup: Story = {
+export const HotshopPopup: Story = {
     name: "局部元素弹出",
     render: (args: any) => {
         return html`
@@ -28,6 +28,7 @@ export const LocalElementPopup: Story = {
                             },
                             {
                                 icon: "info",
+                                tips: "<strong>信息</strong><br>显示更多的信息",
                             },
                         ]}
                         style="width: 300px;"
@@ -36,16 +37,31 @@ export const LocalElementPopup: Story = {
                         labelGrow
                         data-tips="<strong>设置按钮</strong><br>点击打开系统设置面板"
                         .popupOptions=${{
-                            trigger: ".tag",
+                            hotspots: ".tag",
                             placement: "top",
                             animationDuration: 200,
                             arrow: true,
                         }}
-                    ></auto-dropdown>
+                        ><strong>热点信息</strong><br />
+                        同一个元素中包括多个hotspot元素
+                    </auto-dropdown>
 
                     <auto-dropdown
-                        .tags=${["folder", "tag", "checked"]}
-                        .labelGrow=${args.labelGrow}
+                        .tags=${[
+                            {
+                                icon: "settings",
+                                tips: "系统设置",
+                            },
+                            {
+                                icon: "tag",
+                                tips: "<strong>打开标签</strong><br>点击打开系统设置面板",
+                            },
+                            {
+                                icon: "info",
+                                tips: "<strong>信息</strong><br>显示更多的信息",
+                            },
+                        ]}
+                        labelGrow
                         style="width: 300px;"
                         icon="tag"
                         size="small"
@@ -53,16 +69,26 @@ export const LocalElementPopup: Story = {
                         type="primary"
                         data-tips="<strong>保存操作</strong><br>将当前更改保存到文档中"
                         .popupOptions=${{
-                            trigger: ".tag",
+                            hotspots: ".tag",
                             placement: "top",
                             animationDuration: 200,
                             arrow: true,
                         }}
-                    ></auto-dropdown>
+                    >
+                        <div slot="settings">
+                            <strong>系统设置</strong><br />显示更多的信息
+                        </div>
+                        <div slot="tag">
+                            <strong>标签</strong><br />自定义标签
+                        </div>
+                        <div slot="info">
+                            <strong>信息</strong><br />显示更多的信息
+                        </div>
+                    </auto-dropdown>
 
                     <auto-dropdown
                         .tags=${["folder", "tag", "settings"]}
-                        .labelGrow=${args.labelGrow}
+                        labelGrow
                         style="width: 300px;"
                         icon="folder"
                         size="x-small"
@@ -70,7 +96,7 @@ export const LocalElementPopup: Story = {
                         type="success"
                         data-tips="<strong>复制功能</strong><br>复制选中的内容到剪贴板"
                         .popupOptions=${{
-                            trigger: ".tag",
+                            hotspots: ".tag",
                             placement: "top",
                             animationDuration: 200,
                             arrow: true,
@@ -79,7 +105,7 @@ export const LocalElementPopup: Story = {
 
                     <auto-dropdown
                         .tags=${["star", "tag", "settings"]}
-                        .labelGrow=${args.labelGrow}
+                        labelGrow
                         style="width: 300px;"
                         icon="checked"
                         size="large"
@@ -87,7 +113,7 @@ export const LocalElementPopup: Story = {
                         type="danger"
                         data-tips="<strong>删除操作</strong><br>此操作不可撤销，请谨慎操作"
                         .popupOptions=${{
-                            trigger: ".tag",
+                            hotspots: ".tag",
                             placement: "top",
                             animationDuration: 200,
                             arrow: true,
@@ -108,7 +134,7 @@ export const LocalElementPopup: Story = {
                             >
                             <code
                                 style="background: #f1f3f4; padding: 2px 6px; border-radius: 3px;"
-                                >trigger: ".tag"</code
+                                >hotspots: ".tag"</code
                             >
                             - 指定auto-button组件内的tag元素作为触发器
                         </div>

@@ -14,9 +14,10 @@ import {
 import { animate } from "animejs";
 import type { ReactiveController, ReactiveControllerHost } from "lit";
 import { createThemeproContainer } from "../utils/createThemeproContainer";
-import { getSlots } from "../utils/getSlots";
+import { getSlotElements } from "../utils/getSlotElements";
 import type { LitElement } from "lit";
 import { parseObjectFromAttr } from "@/utils/parseObjectFromAttr";
+import { getSlotNodes } from "@/utils/getSlotNodes";
 
 export type PopupPlacement =
     | "top"
@@ -90,9 +91,10 @@ export interface PopupControllerOptions {
     /**
      * 触发显示的事件类型，默认为'click'
      */
-    on?: PopupTriggerEvent;
+    trigger?: "click" | "mouseover";
     /**
-     * 声明定义内部额外的热点区域选择器
+     * 触发元素选择器，可以是单个选择器或选择器数组
+     *     声明定义内部额外的热点区域选择器
      *
      * 满足条件的元素均可以通过
      *
@@ -100,10 +102,6 @@ export interface PopupControllerOptions {
      * - 通过data-tips
      * - data-popup-slot="xxx"
      *
-     */
-    hotspots1?: string | string[];
-    /**
-     * 触发元素选择器，可以是单个选择器或选择器数组
      *
      */
     hotspots?: string | string[];
@@ -140,6 +138,7 @@ export class PopupController implements ReactiveController {
     private _hotspotDelegateHandler?: (e: Event) => void;
     private _hotspotMouseLeaveHandler?: (e: MouseEvent) => void;
     private _currentTriggerMode?: PopupTriggerEvent;
+    private _currentPopupElement?: HTMLElement;
 
     constructor(
         host: ReactiveControllerHost,
@@ -169,7 +168,7 @@ export class PopupController implements ReactiveController {
             width: null,
             height: null,
             arrow: false,
-            on: "click",
+            trigger: "click",
         };
         // 从绑定属性读取配置
         const attrOptions = parseObjectFromAttr(
@@ -427,7 +426,7 @@ export class PopupController implements ReactiveController {
             : [this.options.hotspots];
 
         // 存储当前的触发模式
-        this._currentTriggerMode = this.options.on;
+        this._currentTriggerMode = this.options.trigger;
 
         // 创建获取匹配触发器的函数
         const getMatchedTrigger = (e: Event): HTMLElement | null => {
@@ -635,7 +634,26 @@ export class PopupController implements ReactiveController {
      * 显示弹出层
      */
     async show(): Promise<void> {
-        if (this._isVisible) return;
+        // 如果已经有弹出内容，且当前要显示的元素与之前的不同，先隐藏当前弹出层
+        if (
+            this._isVisible &&
+            this._currentPopupElement &&
+            this._currentPopupElement !== this._currentHotspotElement
+        ) {
+            this.hide();
+            // 等待隐藏动画完成后再显示新的内容
+            await new Promise((resolve) =>
+                setTimeout(resolve, this.options.animationDuration!)
+            );
+        }
+
+        // 如果已经有弹出内容且是同一个元素，直接返回
+        if (
+            this._isVisible &&
+            this._currentPopupElement === this._currentHotspotElement
+        ) {
+            return;
+        }
 
         const container = this.container;
 
@@ -663,7 +681,7 @@ export class PopupController implements ReactiveController {
         this._setupExternalListeners();
 
         // 如果是mouseover触发模式，为容器设置鼠标事件
-        if (this.options.on === "mouseover") {
+        if (this.options.trigger === "mouseover") {
             this._setupContainerMouseEvents();
         }
 
@@ -691,6 +709,10 @@ export class PopupController implements ReactiveController {
             });
         }
 
+        // 设置当前弹出的元素
+        this._currentPopupElement =
+            this._currentHotspotElement ||
+            (this.host as unknown as HTMLElement);
         this._isVisible = true;
 
         // 触发自定义事件
@@ -760,6 +782,8 @@ export class PopupController implements ReactiveController {
         }
 
         this._isVisible = false;
+        // 清除当前弹出的元素
+        this._currentPopupElement = undefined;
         this.options.onHide?.();
     }
 
@@ -1010,7 +1034,7 @@ export class PopupController implements ReactiveController {
         // 清理之前的事件监听器
         this._removeTriggerEvents();
 
-        if (this.options.on === "mouseover") {
+        if (this.options.trigger === "mouseover") {
             this._mouseEnterHandler = (e: MouseEvent) => {
                 e.stopPropagation();
                 // 清除任何待处理的隐藏定时器
@@ -1079,7 +1103,7 @@ export class PopupController implements ReactiveController {
      * 为容器设置鼠标事件
      */
     private _setupContainerMouseEvents(): void {
-        if (!this._container || this.options.on !== "mouseover") return;
+        if (!this._container || this.options.trigger !== "mouseover") return;
 
         const containerMouseEnterHandler = () => {
             // 鼠标进入容器，清除任何待处理的隐藏操作
@@ -1196,7 +1220,7 @@ export class PopupController implements ReactiveController {
 
             if (slot) {
                 // 使用指定的slot内容
-                const childNodes = getSlots(this.host as LitElement, slot);
+                const childNodes = getSlotNodes(this.host as LitElement, slot);
                 if (childNodes.length > 0) {
                     childNodes.forEach((child) => {
                         const clonedChild = child.cloneNode(true);
@@ -1208,7 +1232,10 @@ export class PopupController implements ReactiveController {
         }
 
         // 获取host元素的指定slot内容（默认行为）
-        const childNodes = getSlots(this.host as LitElement, this.options.slot);
+        const childNodes = getSlotNodes(
+            this.host as LitElement,
+            this.options.slot
+        );
 
         if (childNodes.length > 0) {
             childNodes.forEach((child) => {

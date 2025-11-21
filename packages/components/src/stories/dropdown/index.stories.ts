@@ -9,7 +9,7 @@ import { ArrowDemo } from "./ArrowDemo";
 import { PlacementDemo } from "./PlacementDemo";
 import { FitWidthDemo } from "./FitWidthDemo";
 import { MouseOverDropdown } from "./MouseOverDropdown";
-import { LocalElementPopup } from "./LocalElementPopup";
+import { HotshopPopup } from "./HotshopPopup";
 
 const meta: Meta = {
     title: "通用/AutoDropdown",
@@ -95,4 +95,4 @@ export const 指示箭头演示: Story = ArrowDemo;
 export const 弹出方向演示: Story = PlacementDemo;
 export const 宽度适配演示: Story = FitWidthDemo;
 export const 悬停显示触发: Story = MouseOverDropdown;
-export const 局部元素弹出: Story = LocalElementPopup;
+export const 热点元素弹出: Story = HotshopPopup;
