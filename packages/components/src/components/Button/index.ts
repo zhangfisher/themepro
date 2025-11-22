@@ -1,9 +1,5 @@
 import { classMap } from "lit/directives/class-map.js";
-/**
- *
- *
- *
- */
+import { spread } from "@open-wc/lit-helpers";
 import { html } from "lit";
 import { property } from "lit/decorators.js";
 import { customElement } from "lit/decorators/custom-element.js";
@@ -17,6 +13,7 @@ import { ifDefined } from "lit/directives/if-defined.js";
 import { repeat } from "lit/directives/repeat.js";
 import { getId } from "@/utils/getId";
 import { isFunction } from "@/utils/isFunction";
+import { camelToKebab } from "@/utils/camelToKebab";
 
 export type AutoButtonTag = {
     id?: string;
@@ -47,6 +44,7 @@ export type AutoButtonTag = {
      * 当checkable=true时，表示当前选中状态的值
      */
     value?: any;
+    dataset?: Record<string, string>;
     onClick?: (args: {
         tag: AutoButtonTag;
         button: AutoButton;
@@ -457,10 +455,18 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
                 : icons[1]
             : tag.icon;
 
+        const dataset = Object.entries(tag.dataset || {}).reduce<
+            Record<string, string>
+        >((acc, [key, value]) => {
+            acc[`data-${camelToKebab(key)}`] = value;
+            return acc;
+        }, {});
+
         return html`<span
             class="tag ${classMap(tagClasss)}"
             data-id="${tag.id || tag.icon}"
             data-tips=${ifDefined(tag.tips)}
+            ${spread(dataset)}
         >
             ${when(
                 tag.icon,

@@ -51,14 +51,23 @@ export const HotshopPopup: Story = {
                             {
                                 icon: "settings",
                                 tips: "系统设置",
+                                dataset: {
+                                    popupSlot: "settings",
+                                },
                             },
                             {
                                 icon: "tag",
                                 tips: "<strong>打开标签</strong><br>点击打开系统设置面板",
+                                dataset: {
+                                    popupSlot: "tag",
+                                },
                             },
                             {
                                 icon: "info",
                                 tips: "<strong>信息</strong><br>显示更多的信息",
+                                dataset: {
+                                    popupSlot: "info",
+                                },
                             },
                         ]}
                         labelGrow
