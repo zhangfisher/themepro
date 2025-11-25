@@ -1205,7 +1205,7 @@ export class PopupController implements ReactiveController {
             container.removeChild(node);
         });
 
-        // 如果有hotspot元素且有data-tooltip或data-slot属性，优先使用
+        // 如果有hotspot元素且有data-tips或data-slot属性，优先使用
         if (this._currentHotspotElement) {
             const tooltip = this._currentHotspotElement.dataset.tips;
             const slot = this._currentHotspotElement.dataset.popupSlot;

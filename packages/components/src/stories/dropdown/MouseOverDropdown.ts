@@ -18,7 +18,7 @@ export const MouseOverDropdown: Story = {
                         label="悬停显示菜单"
                         type="primary"
                         .popupOptions=${{
-                            on: "mouseover",
+                            trigger: "mouseover",
                             placement: "bottom-start",
                             offset: [0, 8],
                             animationDuration: 200,
@@ -54,7 +54,7 @@ export const MouseOverDropdown: Story = {
                         label="用户信息"
                         type="info"
                         .popupOptions=${{
-                            on: "mouseover",
+                            trigger: "mouseover",
                             placement: "right-start",
                             animationDuration: 150,
                             arrow: true,
@@ -99,7 +99,7 @@ export const MouseOverDropdown: Story = {
                         label="工具提示"
                         type="warning"
                         .popupOptions=${{
-                            on: "mouseover",
+                            trigger: "mouseover",
                             placement: "top",
                             delayHide: 1000,
                             animationDuration: 100,
@@ -165,7 +165,8 @@ export const MouseOverDropdown: Story = {
                     style="margin: 0; padding-left: 20px; color: #666; line-height: 1.6;"
                 >
                     <li>
-                        <code>on: "mouseover"</code> - 设置为鼠标悬停触发模式
+                        <code>trigger: "mouseover"</code> -
+                        设置为鼠标悬停触发模式
                     </li>
                     <li>鼠标移入按钮区域时自动显示弹出内容</li>
                     <li>鼠标移出按钮且不在弹出内容内时自动隐藏</li>
