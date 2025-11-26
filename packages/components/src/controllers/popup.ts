@@ -105,6 +105,7 @@ export interface PopupControllerOptions {
      *
      */
     hotspots?: string | string[];
+    hotspotTrigger?: "click" | "mouseover";
     /**
      * 弹出层显示时触发
      */
@@ -132,13 +133,17 @@ export class PopupController implements ReactiveController {
     private _mouseEnterHandler?: (e: MouseEvent) => void;
     private _mouseLeaveHandler?: (e: MouseEvent) => void;
     private _mouseLeaveTimer?: NodeJS.Timeout;
-    private _shouldHideOnMouseLeave: boolean = false;
     private _currentHotspotElement?: HTMLElement;
     private _hotspotSelectors?: string[];
     private _hotspotDelegateHandler?: (e: Event) => void;
-    private _hotspotMouseLeaveHandler?: (e: MouseEvent) => void;
     private _currentTriggerMode?: PopupTriggerEvent;
     private _currentPopupElement?: HTMLElement;
+    private _currentPopupOptions?: PopupControllerOptions;
+    private _mouseoverHotspotElements: Array<{
+        element: HTMLElement;
+        mouseEnterHandler: (e: MouseEvent) => void;
+        mouseLeaveHandler: (e: MouseEvent) => void;
+    }> = [];
 
     constructor(
         host: ReactiveControllerHost,
@@ -159,7 +164,7 @@ export class PopupController implements ReactiveController {
         const optionAttr = userOptions.optionAttr ?? "popupOptions";
         const defaultOptions: PopupControllerOptions = {
             placement: "top" as PopupPlacement,
-            offset: [0, 4],
+            offset: [0, 2],
             fitWidth: false,
             persistent: false,
             animationDuration: 100,
@@ -169,6 +174,7 @@ export class PopupController implements ReactiveController {
             height: null,
             arrow: false,
             trigger: "click",
+            hotspotTrigger: "mouseover",
         };
         // 从绑定属性读取配置
         const attrOptions = parseObjectFromAttr(
@@ -219,6 +225,7 @@ export class PopupController implements ReactiveController {
      */
     private _createArrowElement(): HTMLElement {
         const hostElement = this.host as unknown as LitElement;
+        const currentOptions = this._currentPopupOptions || this.options;
         const arrowElement = hostElement.ownerDocument!.createElement("div");
         arrowElement.className = "popup-arrow";
         arrowElement.style.cssText = `
@@ -228,7 +235,7 @@ export class PopupController implements ReactiveController {
             z-index: 1;
             pointer-events: none;
             transform: rotate(45deg);
-            display: ${this.options.arrow ? "block" : "none"};
+            display: ${currentOptions.arrow ? "block" : "none"};
         `;
 
         arrowElement.style.backgroundColor =
@@ -243,8 +250,9 @@ export class PopupController implements ReactiveController {
         middlewareData: ComputePositionReturn["middlewareData"],
         placement?: string
     ): void {
+        const currentOptions = this._currentPopupOptions || this.options;
         if (
-            !this.options.arrow ||
+            !currentOptions.arrow ||
             !this._arrowElement ||
             !middlewareData.arrow ||
             !this._container
@@ -261,7 +269,7 @@ export class PopupController implements ReactiveController {
 
         const { x, y } = middlewareData.arrow;
         const currentPlacement =
-            placement || this.options.placement || "bottom-start";
+            placement || currentOptions.placement || "bottom-start";
 
         const side = currentPlacement.split("-")[0];
         const staticSide = {
@@ -336,10 +344,11 @@ export class PopupController implements ReactiveController {
         if (this._container) return;
 
         const hostElement = this.host as unknown as LitElement;
+        const currentOptions = this._currentPopupOptions || this.options;
 
         // 创建dropdown容器
         this._container = hostElement.ownerDocument!.createElement("div");
-        this._container.className = this.options.className || "popup";
+        this._container.className = currentOptions.className || "popup";
 
         // 设置容器初始样式
         this._container.style.cssText = `
@@ -358,7 +367,7 @@ export class PopupController implements ReactiveController {
         });
 
         // 创建并添加箭头元素到容器内部
-        if (this.options.arrow) {
+        if (currentOptions.arrow) {
             this._arrowElement = this._createArrowElement();
             if (this._arrowElement) {
                 this._container.appendChild(this._arrowElement);
@@ -366,8 +375,8 @@ export class PopupController implements ReactiveController {
         }
 
         // 添加自定义类名（额外类名）
-        if (this.options.className && this.options.className !== "popup") {
-            this._container.classList.add(this.options.className);
+        if (currentOptions.className && currentOptions.className !== "popup") {
+            this._container.classList.add(currentOptions.className);
         }
     }
 
@@ -395,7 +404,7 @@ export class PopupController implements ReactiveController {
     hostConnected(): void {
         // 容器将在第一次show调用时创建
         this._setupTriggerEvents();
-        this._setupTriggerElements();
+        this._setupTriggerHotspotElements();
     }
 
     /**
@@ -406,30 +415,54 @@ export class PopupController implements ReactiveController {
         this._updateOptionsFromHost();
         // 重新设置触发事件
         this._setupTriggerEvents();
-        this._setupTriggerElements();
+        this._setupTriggerHotspotElements();
     }
 
+    
+    
+    
     /**
      * 设置trigger元素监听 - 使用事件委托模式
      */
-    private _setupTriggerElements(): void {
+    private _setupTriggerHotspotElements(): void {
         const hostElement = this.host as unknown as HTMLElement;
+        const currentOptions = this._currentPopupOptions || this.options;
 
         // 清理之前的触发器监听
         this._removeHotspotElements();
 
-        if (!this.options.hotspots) return;
+        if (!currentOptions.hotspots) {
+            return;
+        }
 
+        // 初始化hotspot配置
+        this._initializeHotspotConfig(hostElement, currentOptions);
+
+        // 设置click事件委托
+        this._setupClickEventDelegation(hostElement);
+
+        // 设置mouseover事件监听器
+        this._setupMouseoverEventListeners(hostElement);
+    }
+
+    /**
+     * 初始化hotspot配置
+     */
+    private _initializeHotspotConfig(hostElement: HTMLElement, currentOptions: PopupControllerOptions): void {
         // 将触发器选择器转换为数组并存储
-        this._hotspotSelectors = Array.isArray(this.options.hotspots)
-            ? this.options.hotspots
-            : [this.options.hotspots];
+        this._hotspotSelectors = Array.isArray(currentOptions.hotspots)
+            ? currentOptions.hotspots
+            : [currentOptions.hotspots];
 
         // 存储当前的触发模式
-        this._currentTriggerMode = this.options.trigger;
+        this._currentTriggerMode = currentOptions.trigger;
+    }
 
-        // 创建获取匹配触发器的函数
-        const getMatchedTrigger = (e: Event): HTMLElement | null => {
+    /**
+     * 创建匹配hotspot元素的函数
+     */
+    private _createMatchTriggerFunction(hostElement: HTMLElement): (e: Event) => HTMLElement | null {
+        return (e: Event): HTMLElement | null => {
             const composedPath = e.composedPath();
 
             // 找到host元素在事件路径中的索引位置
@@ -474,8 +507,14 @@ export class PopupController implements ReactiveController {
 
             return null;
         };
+    }
 
-        // 创建委托事件处理器
+    /**
+     * 设置click事件委托处理
+     */
+    private _setupClickEventDelegation(hostElement: HTMLElement): void {
+        const getMatchedTrigger = this._createMatchTriggerFunction(hostElement);
+
         this._hotspotDelegateHandler = (e: Event) => {
             const matchedElement = getMatchedTrigger(e);
 
@@ -487,105 +526,131 @@ export class PopupController implements ReactiveController {
                 // 设置当前触发元素
                 this._currentHotspotElement = matchedElement;
 
-                // 根据事件类型和触发模式处理
-                if (
-                    this._currentTriggerMode === "click" &&
-                    e.type === "click"
-                ) {
-                    this.show();
-                } else if (
-                    this._currentTriggerMode === "mouseover" &&
-                    e.type === "mouseover"
-                ) {
-                    // 对于mouseover，检查是否是从外部进入
-                    const mouseEvent = e as MouseEvent;
-                    const relatedTarget = mouseEvent.relatedTarget as Node;
-                    const isComingFromOutside =
-                        !hostElement.contains(relatedTarget) &&
-                        !matchedElement.contains(relatedTarget);
-
-                    if (isComingFromOutside) {
-                        this._clearMouseLeaveTimer();
-                        this.show();
-                    }
-                }
+                // click事件总是触发popup
+                this.show();
             }
         };
 
-        // 在host元素上监听事件（事件委托）
-        if (this._currentTriggerMode === "click") {
-            hostElement.addEventListener(
-                "click",
-                this._hotspotDelegateHandler,
-                true
-            );
-        } else if (this._currentTriggerMode === "mouseover") {
-            // 对于mouseover模式，监听mouseover事件并处理mouseenter逻辑
-            hostElement.addEventListener(
-                "mouseover",
-                this._hotspotDelegateHandler,
-                true
-            );
+        // 对click事件使用委托
+        hostElement.addEventListener(
+            "click",
+            this._hotspotDelegateHandler,
+            true
+        );
+    }
 
-            // 同时添加mouseleave监听来处理隐藏逻辑
-            this._hotspotMouseLeaveHandler = (e: MouseEvent) => {
-                const matchedElement = getMatchedTrigger(e);
+    /**
+     * 为mouseover触发的hotspot元素添加事件监听器
+     */
+    private _setupMouseoverEventListeners(hostElement: HTMLElement): void {
+        const currentOptions = this._currentPopupOptions || this.options;
 
-                if (matchedElement) {
-                    // 检查是否移动到外部
-                    const relatedTarget = e.relatedTarget as Node;
-                    const isGoingOutside =
-                        !hostElement.contains(relatedTarget) &&
-                        !matchedElement.contains(relatedTarget) &&
-                        !this._container?.contains(relatedTarget);
+        if (!this._hotspotSelectors) {
+            return;
+        }
 
-                    if (isGoingOutside) {
-                        this._mouseLeaveTimer = setTimeout(() => {
-                            this.hide();
-                        }, 30);
-                    }
+        for (const selector of this._hotspotSelectors) {
+            const elements = hostElement.shadowRoot!.querySelectorAll(selector);
+            elements.forEach((element) => {
+                const hotspotElement = element as HTMLElement;
+
+                // 检查该元素是否使用mouseover触发
+                const elementTrigger =
+                    hotspotElement.dataset.popupTrigger ||
+                    currentOptions.hotspotTrigger ||
+                    this._currentTriggerMode;
+
+                if (elementTrigger === "mouseover") {
+                    // 为mouseover触发的hotspot元素添加事件监听
+                    const mouseEnterHandler = (e: MouseEvent) => {
+                        e.stopPropagation();
+
+                        // 检查是否是从外部进入
+                        const relatedTarget = e.relatedTarget as Node;
+                        const isComingFromOutside =
+                            !hotspotElement.contains(relatedTarget) &&
+                            !hostElement.contains(relatedTarget);
+
+                        const isComingFromHostArea =
+                            hostElement.contains(relatedTarget) &&
+                            !hotspotElement.contains(relatedTarget);
+
+                        if (isComingFromOutside || isComingFromHostArea) {
+                            this._clearMouseLeaveTimer();
+                            this._currentHotspotElement = hotspotElement;
+                            this.show();
+                        }
+                    };
+
+                    const mouseLeaveHandler = (e: MouseEvent) => {
+                        e.stopPropagation();
+
+                        // 检查是否移动到外部
+                        const relatedTarget = e.relatedTarget as Node;
+                        const isGoingOutside =
+                            !hostElement.contains(relatedTarget) &&
+                            !hotspotElement.contains(relatedTarget) &&
+                            !this._container?.contains(relatedTarget);
+
+                        if (isGoingOutside) {
+                            this._mouseLeaveTimer = setTimeout(() => {
+                                this.hide();
+                            }, 30);
+                        }
+                    };
+
+                    // 添加事件监听器
+                    hotspotElement.addEventListener(
+                        "mouseenter",
+                        mouseEnterHandler
+                    );
+                    hotspotElement.addEventListener(
+                        "mouseleave",
+                        mouseLeaveHandler
+                    );
+
+                    // 存储引用以便后续清理
+                    this._mouseoverHotspotElements.push({
+                        element: hotspotElement,
+                        mouseEnterHandler,
+                        mouseLeaveHandler,
+                    });
                 }
-            };
-
-            hostElement.addEventListener(
-                "mouseout",
-                this._hotspotMouseLeaveHandler,
-                true
-            );
+            });
         }
     }
 
     /**
-     * 移除trigger元素监听 - 事件委托模式清理
+     * 移除trigger元素监听 - 清理单独添加的事件监听器
      */
     private _removeHotspotElements(): void {
         const hostElement = this.host as unknown as HTMLElement;
 
-        // 移除委托事件监听器
+        // 移除click事件委托
         if (this._hotspotDelegateHandler) {
-            if (this._currentTriggerMode === "click") {
-                hostElement.removeEventListener(
-                    "click",
-                    this._hotspotDelegateHandler,
-                    true
-                );
-            } else if (this._currentTriggerMode === "mouseover") {
-                hostElement.removeEventListener(
-                    "mouseover",
-                    this._hotspotDelegateHandler,
-                    true
-                );
-            }
+            hostElement.removeEventListener(
+                "click",
+                this._hotspotDelegateHandler,
+                true
+            );
             this._hotspotDelegateHandler = undefined;
         }
 
-        if (this._hotspotMouseLeaveHandler) {
-            hostElement.removeEventListener(
-                "mouseout",
-                this._hotspotMouseLeaveHandler,
-                true
+        // 移除所有mouseover触发的hotspot元素的事件监听器
+        if (this._mouseoverHotspotElements) {
+            this._mouseoverHotspotElements.forEach(
+                ({ element, mouseEnterHandler, mouseLeaveHandler }) => {
+                    element.removeEventListener(
+                        "mouseenter",
+                        mouseEnterHandler
+                    );
+                    element.removeEventListener(
+                        "mouseleave",
+                        mouseLeaveHandler
+                    );
+                }
             );
-            this._hotspotMouseLeaveHandler = undefined;
+            this._mouseoverHotspotElements = [];
         }
 
         // 清理状态
@@ -608,6 +673,40 @@ export class PopupController implements ReactiveController {
      */
     get isVisible(): boolean {
         return this._isVisible;
+    }
+
+    /**
+     * 获取当前弹出选项
+     * 根据当前弹出元素动态获取选项配置
+     */
+    getCurrentPopupOptions(): PopupControllerOptions {
+        const hostElement = this.host as unknown as HTMLElement;
+
+        // 如果当前弹出元素是host元素，直接使用this.options
+        if (
+            this._currentPopupElement === hostElement ||
+            !this._currentPopupElement
+        ) {
+            return this.options;
+        }
+
+        // 如果是hotspot元素，合并基础选项和hotspot的自定义选项
+        const hotspotOptionsStr =
+            this._currentPopupElement.dataset.popupOptions;
+        let hotspotOptions: Partial<PopupControllerOptions> = {
+            trigger: "mouseover",
+        };
+
+        if (hotspotOptionsStr) {
+            try {
+                hotspotOptions = JSON.parse(hotspotOptionsStr);
+            } catch (error) {
+                console.warn("Failed to parse data-popup-options:", error);
+            }
+        }
+
+        // 合并基础选项和hotspot选项，hotspot选项优先级更高
+        return Object.assign({}, this.options, hotspotOptions);
     }
 
     /**
@@ -655,6 +754,14 @@ export class PopupController implements ReactiveController {
             return;
         }
 
+        // 设置当前弹出的元素
+        this._currentPopupElement =
+            this._currentHotspotElement ||
+            (this.host as unknown as HTMLElement);
+
+        // 重新创建当前弹出选项
+        this._currentPopupOptions = this.getCurrentPopupOptions();
+
         const container = this.container;
 
         // 克隆内容到容器中（只在第一次显示时执行）
@@ -681,7 +788,8 @@ export class PopupController implements ReactiveController {
         this._setupExternalListeners();
 
         // 如果是mouseover触发模式，为容器设置鼠标事件
-        if (this.options.trigger === "mouseover") {
+        const currentOptions = this._currentPopupOptions || this.options;
+        if (currentOptions.trigger === "mouseover") {
             this._setupContainerMouseEvents();
         }
 
@@ -690,7 +798,7 @@ export class PopupController implements ReactiveController {
 
         // 位置计算完成后再开始显示动画
         const targets = [container];
-        if (this.options.arrow && this._arrowElement) {
+        if (currentOptions.arrow && this._arrowElement) {
             targets.push(this._arrowElement);
         }
 
@@ -698,8 +806,9 @@ export class PopupController implements ReactiveController {
             opacity: [0, 1],
             scale: [0.9, 1],
             translateY: [-10, 0],
-            duration: this.options.animationDuration!,
-            easing: this.options.animationEasing || "easeOutQuart",
+            duration: this._currentPopupOptions!.animationDuration!,
+            easing:
+                this._currentPopupOptions!.animationEasing || "easeOutQuart",
         });
 
         // 设置动画回调
@@ -709,10 +818,6 @@ export class PopupController implements ReactiveController {
             });
         }
 
-        // 设置当前弹出的元素
-        this._currentPopupElement =
-            this._currentHotspotElement ||
-            (this.host as unknown as HTMLElement);
         this._isVisible = true;
 
         // 触发自定义事件
@@ -725,10 +830,11 @@ export class PopupController implements ReactiveController {
 
     private _setDelayHide() {
         // 如果配置了延迟隐藏，设置定时器
-        if (this.options.delayHide && this.options.delayHide > 0) {
+        const currentOptions = this._currentPopupOptions || this.options;
+        if (currentOptions.delayHide && currentOptions.delayHide > 0) {
             this._delayHideTimer = setTimeout(() => {
                 this.hide();
-            }, this.options.delayHide);
+            }, currentOptions.delayHide);
         }
     }
 
@@ -751,7 +857,8 @@ export class PopupController implements ReactiveController {
 
         // 使用animejs创建隐藏动画
         const targets = [container];
-        if (this.options.arrow && this._arrowElement) {
+        const currentOptions = this._currentPopupOptions || this.options;
+        if (currentOptions.arrow && this._arrowElement) {
             targets.push(this._arrowElement);
         }
 
@@ -759,8 +866,13 @@ export class PopupController implements ReactiveController {
             opacity: [1, 0],
             scale: [1, 0.9],
             translateY: [0, -10],
-            duration: this.options.animationDuration!,
-            easing: this.options.animationEasing || "easeInQuart",
+            duration:
+                this._currentPopupOptions?.animationDuration ||
+                this.options.animationDuration!,
+            easing:
+                this._currentPopupOptions?.animationEasing ||
+                this.options.animationEasing ||
+                "easeInQuart",
         });
 
         // 设置动画回调
@@ -778,7 +890,7 @@ export class PopupController implements ReactiveController {
                 container.style.pointerEvents = "none";
                 this._hideAnimation = undefined;
                 this._removeExternalListeners();
-            }, this.options.animationDuration!);
+            }, this._currentPopupOptions?.animationDuration || this.options.animationDuration!);
         }
 
         this._isVisible = false;
@@ -812,12 +924,14 @@ export class PopupController implements ReactiveController {
      * 创建浮层中间件配置
      */
     private _createMiddleware(isAutoUpdate: boolean = false): any[] {
+        const currentOptions = this._currentPopupOptions || this.options;
+
         // 计算基础偏移量和箭头偏移量
-        const baseOffset = this.options.offset?.[1] || 4;
+        const baseOffset = currentOptions.offset?.[1] || 2;
         const middleware = [
             offset({
-                crossAxis: this.options.offset?.[0] || 0,
-                mainAxis: baseOffset + (this.options.arrow ? 6 : 0),
+                crossAxis: currentOptions.offset?.[0] || 0,
+                mainAxis: baseOffset + (currentOptions.arrow ? 6 : 0),
             }),
             flip(isAutoUpdate ? { fallbackAxisSideDirection: "start" } : {}),
             shift({
@@ -829,7 +943,7 @@ export class PopupController implements ReactiveController {
         ];
 
         // 如果需要箭头，添加arrow middleware
-        if (this.options.arrow && this._arrowElement) {
+        if (currentOptions.arrow && this._arrowElement) {
             middleware.push(
                 arrow({
                     element: this._arrowElement,
@@ -859,12 +973,13 @@ export class PopupController implements ReactiveController {
         callback?: (position: ComputePositionReturn) => void
     ): Promise<ComputePositionReturn> {
         const referenceElement = this._getReferenceElement();
+        const currentOptions = this._currentPopupOptions || this.options;
         const middleware = this._createMiddleware();
         const position = await computePosition(
             referenceElement,
             this.container,
             {
-                placement: this.options.placement!,
+                placement: currentOptions.placement!,
                 middleware,
             }
         );
@@ -918,6 +1033,7 @@ export class PopupController implements ReactiveController {
         const { x, y, placement, middlewareData } = position;
         const { referenceHidden } = middlewareData.hide || {};
         const container = this.container;
+        const currentOptions = this._currentPopupOptions || this.options;
 
         Object.assign(container.style, {
             left: `${x}px`,
@@ -926,7 +1042,7 @@ export class PopupController implements ReactiveController {
         });
 
         // 处理宽度适配
-        if (this.options.fitWidth) {
+        if (currentOptions.fitWidth) {
             const triggerWidth = (
                 this.host as unknown as HTMLElement
             ).getBoundingClientRect().width;
@@ -934,22 +1050,25 @@ export class PopupController implements ReactiveController {
 
             // 当指定fitWidth时，popupWidth表示minWidth
             if (
-                this.options.width !== null &&
-                this.options.width !== undefined
+                currentOptions.width !== null &&
+                currentOptions.width !== undefined
             ) {
-                container.style.minWidth = `${this.options.width}px`;
+                container.style.minWidth = `${currentOptions.width}px`;
             }
         } else if (
-            this.options.width !== null &&
-            this.options.width !== undefined
+            currentOptions.width !== null &&
+            currentOptions.width !== undefined
         ) {
             // 非fitWidth模式下，popupWidth表示确切宽度
-            container.style.width = `${this.options.width}px`;
+            container.style.width = `${currentOptions.width}px`;
         }
 
         // 处理高度控制
-        if (this.options.height !== null && this.options.height !== undefined) {
-            container.style.height = `${this.options.height}px`;
+        if (
+            currentOptions.height !== null &&
+            currentOptions.height !== undefined
+        ) {
+            container.style.height = `${currentOptions.height}px`;
         }
 
         // 处理箭头位置，传递实际的placement（可能已翻转）
@@ -982,7 +1101,8 @@ export class PopupController implements ReactiveController {
      * 设置外部事件监听器
      */
     private _setupExternalListeners(): void {
-        if (this.options.persistent) return;
+        const currentOptions = this._currentPopupOptions || this.options;
+        if (currentOptions.persistent) return;
 
         const container = this.container;
         const hostElement = this.host as unknown as HTMLElement;
@@ -1030,11 +1150,12 @@ export class PopupController implements ReactiveController {
      */
     private _setupTriggerEvents(): void {
         const hostElement = this.host as unknown as HTMLElement;
+        const currentOptions = this._currentPopupOptions || this.options;
 
         // 清理之前的事件监听器
         this._removeTriggerEvents();
 
-        if (this.options.trigger === "mouseover") {
+        if (currentOptions.trigger === "mouseover") {
             this._mouseEnterHandler = (e: MouseEvent) => {
                 e.stopPropagation();
                 // 清除任何待处理的隐藏定时器
@@ -1047,9 +1168,7 @@ export class PopupController implements ReactiveController {
                 // 立即清除任何待处理的隐藏定时器
                 this._clearMouseLeaveTimer();
 
-                // 标记应该隐藏，但延迟执行以检查鼠标是否进入了容器
-                this._shouldHideOnMouseLeave = true;
-                this._mouseLeaveTimer = setTimeout(() => {
+                                this._mouseLeaveTimer = setTimeout(() => {
                     // 首先快速检查relatedTarget
                     const relatedTarget = e.relatedTarget as Node;
                     const isInHost = hostElement.contains(relatedTarget);
@@ -1074,8 +1193,7 @@ export class PopupController implements ReactiveController {
                             this.hide();
                         }
                     }
-                    this._shouldHideOnMouseLeave = false;
-                }, 30); // 30ms延迟，足够快但有足够时间给DOM更新
+                  }, 30); // 30ms延迟，足够快但有足够时间给DOM更新
             };
 
             hostElement.addEventListener("mouseenter", this._mouseEnterHandler);
@@ -1096,14 +1214,14 @@ export class PopupController implements ReactiveController {
             clearTimeout(this._mouseLeaveTimer);
             this._mouseLeaveTimer = undefined;
         }
-        this._shouldHideOnMouseLeave = false;
     }
 
     /**
      * 为容器设置鼠标事件
      */
     private _setupContainerMouseEvents(): void {
-        if (!this._container || this.options.trigger !== "mouseover") return;
+        const currentOptions = this._currentPopupOptions || this.options;
+        if (!this._container || currentOptions.trigger !== "mouseover") return;
 
         const containerMouseEnterHandler = () => {
             // 鼠标进入容器，清除任何待处理的隐藏操作
@@ -1116,7 +1234,6 @@ export class PopupController implements ReactiveController {
             this._clearMouseLeaveTimer();
 
             // 延迟检查鼠标最终位置，给浏览器时间更新DOM
-            this._shouldHideOnMouseLeave = true;
             this._mouseLeaveTimer = setTimeout(() => {
                 const hostElement = this.host as unknown as HTMLElement;
 
@@ -1137,7 +1254,6 @@ export class PopupController implements ReactiveController {
                 if (!isInHost && !isInContainer) {
                     this.hide();
                 }
-                this._shouldHideOnMouseLeave = false;
             }, 50); // 50ms延迟，确保准确检测
         };
 
@@ -1232,9 +1348,10 @@ export class PopupController implements ReactiveController {
         }
 
         // 获取host元素的指定slot内容（默认行为）
+        const currentOptions = this._currentPopupOptions || this.options;
         const childNodes = getSlotNodes(
             this.host as LitElement,
-            this.options.slot
+            currentOptions.slot
         );
 
         if (childNodes.length > 0) {
