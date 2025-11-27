@@ -24,13 +24,13 @@ export function queryClosestElement(
     let currentHost: Element | null = null;
 
     // 如果当前元素在 Shadow DOM 中，先在当前 Shadow DOM 中查找
-    if (currentElement.getRootNode() instanceof ShadowRoot) {
-        const shadowRoot = currentElement.getRootNode() as ShadowRoot;
-        const matchedElement = shadowRoot.querySelector(selector);
+    if (currentElement.shadowRoot) {
+        const matchedElement =
+            currentElement.shadowRoot.querySelector(selector);
         if (matchedElement) {
             return matchedElement;
         }
-        currentHost = shadowRoot.host;
+        currentHost = currentElement.getRootNode();
     } else {
         // 如果不在 Shadow DOM 中，使用标准的 closest 方法
         return currentElement.querySelector(selector);

@@ -10,6 +10,7 @@ import { PlacementDemo } from "./PlacementDemo";
 import { FitWidthDemo } from "./FitWidthDemo";
 import { MouseOverDropdown } from "./MouseOverDropdown";
 import { HotshopPopup } from "./HotshopPopup";
+import { RefReferenceDemo } from "./RefReferenceDemo";
 
 const meta: Meta = {
     title: "通用/AutoDropdown",
@@ -80,6 +81,10 @@ const meta: Meta = {
             control: "object",
             description: "弹出层配置选项，包含所有弹出相关的配置",
         },
+        "popupOptions.ref": {
+            control: "text",
+            description: "弹出层位置基准元素选择器，指定后弹出层将相对于该元素定位而不是触发按钮",
+        },
     },
 } satisfies Meta;
 
@@ -96,3 +101,4 @@ export const 弹出方向演示: Story = PlacementDemo;
 export const 宽度适配演示: Story = FitWidthDemo;
 export const 悬停显示触发: Story = MouseOverDropdown;
 export const 热点元素弹出: Story = HotshopPopup;
+export const 弹出基准元素: Story = RefReferenceDemo;
