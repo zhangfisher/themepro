@@ -103,14 +103,15 @@ export const HotshopPopup: Story = {
                         size="x-small"
                         label="复制内容"
                         type="success"
-                        data-tips="<strong>复制功能</strong><br>复制选中的内容到剪贴板"
                         .popupOptions=${{
                             hotspots: ".tag",
                             placement: "top",
                             animationDuration: 200,
                             arrow: true,
                         }}
-                    ></auto-dropdown>
+                        ><strong>复制功能</strong
+                        ><br />复制选中的内容到剪贴板</auto-dropdown
+                    >
 
                     <auto-dropdown
                         .tags=${["star", "tag", "settings"]}
@@ -120,14 +121,26 @@ export const HotshopPopup: Story = {
                         size="large"
                         label="删除项目"
                         type="danger"
-                        data-tips="<strong>删除操作</strong><br>此操作不可撤销，请谨慎操作"
                         .popupOptions=${{
+                            trigger: "mouseover",
                             hotspots: ".tag",
                             placement: "top",
                             animationDuration: 200,
                             arrow: true,
                         }}
-                    ></auto-dropdown>
+                    >
+                        <div slot="settings">
+                            <strong>系统设置</strong><br />显示更多的信息
+                        </div>
+                        <div slot="tag">
+                            <strong>标签</strong><br />自定义标签
+                        </div>
+                        <div slot="info">
+                            <strong>信息</strong><br />显示更多的信息
+                        </div>
+                        <strong>删除操作</strong
+                        ><br />此操作不可撤销，请谨慎操作</auto-dropdown
+                    >
                 </div>
 
                 <div
@@ -145,7 +158,7 @@ export const HotshopPopup: Story = {
                                 style="background: #f1f3f4; padding: 2px 6px; border-radius: 3px;"
                                 >hotspots: ".tag"</code
                             >
-                            - 指定auto-button组件内的tag元素作为触发器
+                            - 指定auto-dropdown组件内的tag元素作为触发器
                         </div>
                         <div>
                             <strong style="color: #52c41a;">data-tips:</strong>

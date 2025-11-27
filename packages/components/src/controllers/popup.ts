@@ -107,6 +107,13 @@ export interface PopupControllerOptions {
     hotspots?: string | string[];
     hotspotTrigger?: "click" | "mouseover";
     /**
+     * 指定弹出层的宿主元素，默认为host元素
+     *
+     * 允许指定一个选择器，用于查找宿主元素
+     * 当指定时则使用该选择器指定的元素作为宿主元素，后续的弹出位置计算将基于该元素替代host元素
+     */
+    ref?: string;
+    /**
      * 弹出层显示时触发
      */
     onShow?: () => void;
@@ -418,9 +425,6 @@ export class PopupController implements ReactiveController {
         this._setupTriggerHotspotElements();
     }
 
-    
-    
-    
     /**
      * 设置trigger元素监听 - 使用事件委托模式
      */
@@ -435,8 +439,13 @@ export class PopupController implements ReactiveController {
             return;
         }
 
-        // 初始化hotspot配置
-        this._initializeHotspotConfig(hostElement, currentOptions);
+        // 初始化hotspot配置 // 将触发器选择器转换为数组并存储
+        this._hotspotSelectors = Array.isArray(currentOptions.hotspots)
+            ? currentOptions.hotspots
+            : [currentOptions.hotspots];
+
+        // 存储当前的触发模式
+        this._currentTriggerMode = currentOptions.trigger;
 
         // 设置click事件委托
         this._setupClickEventDelegation(hostElement);
@@ -446,22 +455,11 @@ export class PopupController implements ReactiveController {
     }
 
     /**
-     * 初始化hotspot配置
-     */
-    private _initializeHotspotConfig(hostElement: HTMLElement, currentOptions: PopupControllerOptions): void {
-        // 将触发器选择器转换为数组并存储
-        this._hotspotSelectors = Array.isArray(currentOptions.hotspots)
-            ? currentOptions.hotspots
-            : [currentOptions.hotspots];
-
-        // 存储当前的触发模式
-        this._currentTriggerMode = currentOptions.trigger;
-    }
-
-    /**
      * 创建匹配hotspot元素的函数
      */
-    private _createMatchTriggerFunction(hostElement: HTMLElement): (e: Event) => HTMLElement | null {
+    private _createMatchTriggerFunction(
+        hostElement: HTMLElement
+    ): (e: Event) => HTMLElement | null {
         return (e: Event): HTMLElement | null => {
             const composedPath = e.composedPath();
 
@@ -1168,7 +1166,7 @@ export class PopupController implements ReactiveController {
                 // 立即清除任何待处理的隐藏定时器
                 this._clearMouseLeaveTimer();
 
-                                this._mouseLeaveTimer = setTimeout(() => {
+                this._mouseLeaveTimer = setTimeout(() => {
                     // 首先快速检查relatedTarget
                     const relatedTarget = e.relatedTarget as Node;
                     const isInHost = hostElement.contains(relatedTarget);
@@ -1193,7 +1191,7 @@ export class PopupController implements ReactiveController {
                             this.hide();
                         }
                     }
-                  }, 30); // 30ms延迟，足够快但有足够时间给DOM更新
+                }, 30); // 30ms延迟，足够快但有足够时间给DOM更新
             };
 
             hostElement.addEventListener("mouseenter", this._mouseEnterHandler);
