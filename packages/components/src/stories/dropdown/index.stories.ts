@@ -11,6 +11,7 @@ import { FitWidthDemo } from "./FitWidthDemo";
 import { MouseOverDropdown } from "./MouseOverDropdown";
 import { HotshopPopup } from "./HotshopPopup";
 import { RefReferenceDemo } from "./RefReferenceDemo";
+import { OpenControlDemo } from "./OpenControlDemo";
 
 const meta: Meta = {
     title: "通用/AutoDropdown",
@@ -102,3 +103,4 @@ export const 宽度适配演示: Story = FitWidthDemo;
 export const 悬停显示触发: Story = MouseOverDropdown;
 export const 热点元素弹出: Story = HotshopPopup;
 export const 弹出基准元素: Story = RefReferenceDemo;
+export const 属性控制弹出: Story = OpenControlDemo;

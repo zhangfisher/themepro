@@ -30,6 +30,7 @@ export function queryClosestElement(
         if (matchedElement) {
             return matchedElement;
         }
+        //@ts-expect-error
         currentHost = currentElement.getRootNode();
     } else {
         // 如果不在 Shadow DOM 中，使用标准的 closest 方法

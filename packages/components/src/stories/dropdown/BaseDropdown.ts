@@ -14,12 +14,16 @@ export const BaseDropdown: Story = {
                     .open=${args.open}
                     .popupOptions=${{
                         fitWidth: args.popupOptions?.fitWidth || false,
-                        placement: args.popupOptions?.placement || "bottom-start",
+                        placement:
+                            args.popupOptions?.placement || "bottom-start",
                         offset: args.popupOptions?.offset || [0, 4],
                         persistent: args.popupOptions?.persistent || false,
                         arrow: args.popupOptions?.arrow || false,
-                        animationDuration: args.popupOptions?.animationDuration || 300,
-                        animationEasing: args.popupOptions?.animationEasing || "easeOutQuart",
+                        animationDuration:
+                            args.popupOptions?.animationDuration || 300,
+                        animationEasing:
+                            args.popupOptions?.animationEasing ||
+                            "easeOutQuart",
                     }}
                 >
                     <div style="padding: 8px 16px; cursor: pointer; ">
@@ -41,7 +45,9 @@ export const BaseDropdown: Story = {
 
                 <auto-dropdown
                     label="右侧菜单"
-                    placement="right-start"
+                    .popupOptions=${{
+                        placement: "right-start",
+                    }}
                     type="info"
                 >
                     <div
@@ -59,7 +65,9 @@ export const BaseDropdown: Story = {
 
                 <auto-dropdown
                     label="上方菜单自动反转"
-                    placement="top"
+                    .popupOptions=${{
+                        placement: "top",
+                    }}
                     type="warning"
                 >
                     <div
@@ -84,12 +92,16 @@ export const BaseDropdown: Story = {
                     .open=${args.open}
                     .popupOptions=${{
                         fitWidth: args.popupOptions?.fitWidth || false,
-                        placement: args.popupOptions?.placement || "bottom-start",
+                        placement:
+                            args.popupOptions?.placement || "bottom-start",
                         offset: args.popupOptions?.offset || [0, 4],
                         persistent: args.popupOptions?.persistent || false,
                         arrow: args.popupOptions?.arrow || false,
-                        animationDuration: args.popupOptions?.animationDuration || 300,
-                        animationEasing: args.popupOptions?.animationEasing || "easeOutQuart",
+                        animationDuration:
+                            args.popupOptions?.animationDuration || 300,
+                        animationEasing:
+                            args.popupOptions?.animationEasing ||
+                            "easeOutQuart",
                     }}
                 >
                     <div
@@ -124,7 +136,9 @@ export const BaseDropdown: Story = {
 
                 <auto-dropdown
                     label="右侧菜单"
-                    placement="right-start"
+                    .popupOptions="${{
+                        placement: "right-start",
+                    }}"
                     type="info"
                 >
                     <div

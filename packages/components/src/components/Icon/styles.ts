@@ -1,7 +1,7 @@
-import { css } from 'lit'
+import { css } from "lit";
 
 export const styles = css`
-    :host{
+    :host {
         position: relative;
     }
     .auto-icon {
@@ -9,25 +9,26 @@ export const styles = css`
         mask-size: cover;
         -webkit-mask-size: cover;
         vertical-align: text-bottom;
-        position: relative; 
+        position: relative;
         font-size: var(--auto-icon-size);
         width: 1em;
         height: 1em;
-    }    
-    .shape{
+        transition: transform 0.3s ease-in-out;
+    }
+    .shape {
         display: inline-block;
         position: relative;
         background-color: var(--t-theme-color-2);
         aspect-ratio: 1;
-        padding: calc(0.5 * var(--auto-padding));            
-        &.circle{
-            border-radius: 50%;                        
+        padding: calc(0.5 * var(--auto-padding));
+        &.circle {
+            border-radius: 50%;
         }
-        &.round{
-            border-radius: var(--auto-border-radius);            
+        &.round {
+            border-radius: var(--auto-border-radius);
         }
     }
-    :host([inherit]) .auto-icon{
+    :host([inherit]) .auto-icon {
         font-size: inherit;
     }
-`
+`;

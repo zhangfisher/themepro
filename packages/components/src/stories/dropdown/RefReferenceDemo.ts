@@ -99,7 +99,7 @@ export const RefReferenceDemo: Story = {
                                 size="small"
                                 .popupOptions=${{
                                     ref: "#header-bar", // 基于标题栏定位
-                                    placement: "bottom-start",
+                                    placement: "right",
                                     offset: [0, 0],
                                     arrow: true,
                                     animationDuration: 200,
@@ -141,7 +141,7 @@ export const RefReferenceDemo: Story = {
                                 size="small"
                                 .popupOptions=${{
                                     ref: "#header-bar", // 基于标题栏定位
-                                    placement: "bottom-end",
+                                    placement: "right-end",
                                     offset: [0, 0],
                                     arrow: true,
                                     animationDuration: 200,

@@ -14,7 +14,6 @@ import {
 import { animate } from "animejs";
 import type { ReactiveController, ReactiveControllerHost } from "lit";
 import { createThemeproContainer } from "../utils/createThemeproContainer";
-import { getSlotElements } from "../utils/getSlotElements";
 import type { LitElement } from "lit";
 import { parseObjectFromAttr } from "@/utils/parseObjectFromAttr";
 import { getSlotNodes } from "@/utils/getSlotNodes";
@@ -126,7 +125,7 @@ export interface PopupControllerOptions {
 
 export class PopupController implements ReactiveController {
     private host: ReactiveControllerHost;
-    private options: PopupControllerOptions;
+    options: PopupControllerOptions;
     private _container?: HTMLElement;
 
     // 内部状态
@@ -964,12 +963,17 @@ export class PopupController implements ReactiveController {
         // 如果指定了ref选择器，使用queryClosestElement查找元素
         if (currentOptions.ref) {
             const hostElement = this.host as unknown as HTMLElement;
-            const refElement = queryClosestElement(hostElement, currentOptions.ref);
+            const refElement = queryClosestElement(
+                hostElement,
+                currentOptions.ref
+            );
             if (refElement && refElement instanceof HTMLElement) {
                 return refElement;
             }
             // 如果找不到元素，回退到默认逻辑
-            console.warn(`PopupController: 未找到匹配ref选择器 "${currentOptions.ref}" 的元素`);
+            console.warn(
+                `PopupController: 未找到匹配ref选择器 "${currentOptions.ref}" 的元素`
+            );
         }
 
         // 如果有hotspot元素，使用hotspot元素

@@ -499,10 +499,13 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
             name="empty"
         ></auto-icon>`;
     }
+    protected renderBefore() {}
+    protected renderAfter() {}
     render() {
         if (this.shape === "circle") this.ripple.center = true;
         const isChecked = this.checkable && this.checked;
         return html`
+            ${this.renderBefore()}
             ${when(
                 this.loading,
                 () => html`<auto-icon inherit name="loading"></auto-icon>`
@@ -543,6 +546,7 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
             ${when(isChecked && this.checkPos === "after", () =>
                 this._renderChecked()
             )}
+            ${this.renderAfter()}
         `;
     }
 }

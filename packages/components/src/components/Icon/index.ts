@@ -15,64 +15,71 @@
  * <auto-icon size="32px"></auto-icon>
  *
  */
-import { LitElement, type TemplateResult, html } from 'lit'
-import { property } from 'lit/decorators.js'
-import { customElement } from 'lit/decorators/custom-element.js'
-import { styleMap } from 'lit/directives/style-map.js'
-import { classMap } from 'lit/directives/class-map.js'
-import { when } from 'lit/directives/when.js'
-import { styles } from './styles'
-import { toggleWrapper } from '../../utils/toggleWrapper'
+import { LitElement, type TemplateResult, html } from "lit";
+import { property } from "lit/decorators.js";
+import { customElement } from "lit/decorators/custom-element.js";
+import { styleMap } from "lit/directives/style-map.js";
+import { classMap } from "lit/directives/class-map.js";
+import { when } from "lit/directives/when.js";
+import { styles } from "./styles";
+import { toggleWrapper } from "../../utils/toggleWrapper";
 
-@customElement('auto-icon')
+@customElement("auto-icon")
 export class AutoIcon extends LitElement {
-    static styles = styles
+    static styles = styles;
 
     /**
      * 指定尺寸
      */
     @property({ type: String })
-    size?: string
+    size?: string;
     /**
      * 图标尺寸继承父元素的font-size
      */
     @property({ type: Boolean, reflect: true })
-    inherit?: boolean
+    inherit?: boolean;
 
     @property({ type: String })
-    name: string = 'star'
+    name: string = "star";
 
     @property({ type: String })
-    color?: string
+    color?: string;
 
     @property({ type: String })
-    rotate?: string
+    rotate?: string;
 
     @property({ type: Number })
-    strokeWidth?: number
+    strokeWidth?: number;
 
     @property({ type: String })
-    shape?: 'circle' | 'square' | 'round'
+    shape?: "circle" | "square" | "round";
 
     private _renderIcon() {
+        const style: Record<string, any> = {
+            "mask-image": `var(--auto-icon-${this.name})`,
+            "font-size": this.size,
+        };
+        if (this.color) {
+            style.color = this.color;
+        }
+        if (this.rotate) {
+            style.transform = `rotate(${this.rotate}deg)`;
+        }
+        if (this.strokeWidth) {
+            style["--stroke-width"] = this.strokeWidth;
+        }
+
         return html`
-            <div class="${classMap({
-                'auto-icon': true,
-            })} " 
-            style="${styleMap({
-                'mask-image': `var(--auto-icon-${this.name})`,
-                color: this.color ? this.color : undefined,
-                'font-size': this.size,
-                '--stroke-width': this.strokeWidth,
-                transform: this.rotate ? `rotate(${this.rotate}deg)` : undefined,
-            })}">                
-            </div>
-        `
+            <div
+                class="${classMap({
+                    "auto-icon": true,
+                })} "
+                style="${styleMap(style)}"
+            ></div>
+        `;
     }
     private _renderShape(content: TemplateResult) {
-        return html`<div class="shape ${this.shape}">
-			${content}
-		</div>`
+        return html`<div class="shape ${this.shape}">${content}</div>`;
     }
 
     render() {
@@ -80,14 +87,14 @@ export class AutoIcon extends LitElement {
             return html`${when(
                 this.shape,
                 () => this._renderShape(content),
-                () => content,
-            )}`
-        })
+                () => content
+            )}`;
+        });
     }
 }
 
 declare global {
     interface HTMLElementTagNameMap {
-        'auto-icon': AutoIcon
+        "auto-icon": AutoIcon;
     }
 }
