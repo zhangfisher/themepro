@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotspot 位置修复测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .host-element {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            border: 2px solid #007bff;
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .hotspot {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.2s;
+        }
+
+        .hotspot:hover {
+            background-color: #218838;
+        }
+
+        .hotspot.target {
+            position: absolute;
+            right: 20px;
+            bottom: 20px;
+            background-color: #dc3545;
+        }
+
+        .hotspot.target:hover {
+            background-color: #c82333;
+        }
+
+        .instructions {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .expected {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .popup-content {
+            padding: 10px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Hotspot 位置修复测试</h1>
+
+        <div class="instructions">
+            <h3>测试说明：</h3>
+            <p>1. 点击绿色的 hotspot 元素，观察弹出位置是否基于 hotspot 元素</p>
+            <p>2. 当弹出层显示时，再次点击 host 元素的背景区域，应该不会触发新的弹出事件</p>
+            <p>3. 点击右下角红色的 target hotspot，观察弹出位置是否准确对齐</p>
+            <p>4. 弹出内容应该出现在对应 hotspot 元素的附近，而不是基于整个 host 元素</p>
+            <p>5. 当 hotspot 弹出层激活时，host 元素的点击和 mouseover 事件应该被忽略</p>
+        </div>
+
+        <div class="host-element" id="host">
+            <h3>Host 元素</h3>
+            <p>这是包含 hotspot 的容器元素</p>
+
+            <div class="hotspot"
+                 data-popup-slot="popup-content"
+                 data-popup-options='{"placement": "top-start", "arrow": true}'>
+                Hotspot 1 (top-start)
+            </div>
+
+            <div class="hotspot"
+                 data-popup-slot="popup-content"
+                 data-popup-options='{"placement": "bottom", "arrow": true}'>
+                Hotspot 2 (bottom)
+            </div>
+
+            <div class="hotspot target"
+                 data-tips='<div class="popup-content">这是右下角目标 hotspots 的弹出内容</div>'
+                 data-popup-options='{"placement": "top", "arrow": true}'>
+                Target Hotspot
+            </div>
+        </div>
+
+        <div class="expected">
+            <h3>预期行为：</h3>
+            <ul>
+                <li>✅ 点击 Hotspot 1 时，弹出内容应出现在该按钮的左上方</li>
+                <li>✅ 点击 Hotspot 2 时，弹出内容应出现在该按钮的正下方</li>
+                <li>✅ 点击 Target Hotspot 时，弹出内容应出现在右下角按钮的上方</li>
+                <li>❌ 弹出内容不应该基于整个 host 元素的位置计算</li>
+                <li>🔥 <strong>新增：</strong>当 hotspot 弹出层激活时，点击 host 元素背景应该被忽略</li>
+                <li>🔥 <strong>新增：</strong>当 hotspot 弹出层激活时，鼠标进入 host 元素应该被忽略</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Slot 内容 -->
+    <template id="popup-content">
+        <div class="popup-content">
+            <h4>弹出内容</h4>
+            <p>这是来自 slot 的弹出内容，应该基于 hotspot 元素定位</p>
+        </div>
+    </template>
+
+    <script type="module">
+        // 这里应该加载并测试修复后的 PopupController
+        console.log('Hotspot 位置修复测试页面已加载');
+        console.log('等待 PopupController 组件加载...');
+
+        // 模拟测试逻辑
+        window.addEventListener('load', () => {
+            console.log('页面加载完成');
+
+            // 监听 popup 事件
+            document.addEventListener('popup:show', (e) => {
+                console.log('弹出层显示事件:', e.detail);
+
+                // 检查弹出层位置
+                const container = e.detail.container;
+                if (container) {
+                    const rect = container.getBoundingClientRect();
+                    console.log('弹出层位置:', {
+                        left: rect.left,
+                        top: rect.top,
+                        width: rect.width,
+                        height: rect.height
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

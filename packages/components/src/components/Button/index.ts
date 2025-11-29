@@ -86,6 +86,18 @@ export interface AutoButtonProps {
      */
     vertical?: boolean;
     /**
+     * outline样式别名，相当于variant='outline'
+     */
+    outline?: boolean;
+    /**
+     * ghost样式别名，相当于variant='ghost'
+     */
+    ghost?: boolean;
+    /**
+     * link样式别名，相当于variant='link'
+     */
+    link?: boolean;
+    /**
      * 当按钮为checked时
      */
     value?: any;
@@ -216,6 +228,15 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
     vertical?: boolean;
 
     @property({ type: Boolean, reflect: true })
+    outline?: boolean;
+
+    @property({ type: Boolean, reflect: true })
+    ghost?: boolean;
+
+    @property({ type: Boolean, reflect: true })
+    link?: boolean;
+
+    @property({ type: Boolean, reflect: true })
     checkable: boolean = false;
     /**
      * 复选值，默认是[true,false]
@@ -249,6 +270,32 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
         if (changed.has("size")) this.applySizeAttributes();
         if (changed.has("disabled") || changed.has("loading"))
             this.updateA11y();
+
+        // 处理属性别名逻辑
+        this._handleVariantAliases(changed);
+    }
+
+    private _handleVariantAliases(
+        changed: Map<string | number | symbol, unknown>
+    ): void {
+        // 检查是否有属性别名变化
+        if (
+            changed.has("outline") ||
+            changed.has("ghost") ||
+            changed.has("link")
+        ) {
+            // 根据boolean属性设置variant
+            if (this.outline) {
+                this.variant = "outline";
+            } else if (this.ghost) {
+                this.variant = "ghost";
+            } else if (this.link) {
+                this.variant = "link";
+            } else {
+                // 如果所有boolean属性都为false，则重置为default
+                this.variant = "default";
+            }
+        }
     }
 
     private applySizeAttributes() {
@@ -286,6 +333,20 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
         if (!this.state) this.state = {};
         if (this.state) {
             if (!this.state.tags) this.state.tags = this._getTags();
+        }
+
+        // 初始化时处理属性别名
+        this._initializeVariantAliases();
+    }
+
+    private _initializeVariantAliases(): void {
+        // 检查boolean属性并设置对应的variant
+        if (this.outline) {
+            this.variant = "outline";
+        } else if (this.ghost) {
+            this.variant = "ghost";
+        } else if (this.link) {
+            this.variant = "link";
         }
     }
 
@@ -458,7 +519,12 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
         const dataset = Object.entries(tag.dataset || {}).reduce<
             Record<string, string>
         >((acc, [key, value]) => {
-            acc[`data-${camelToKebab(key)}`] = value;
+            try {
+                acc[`data-${camelToKebab(key)}`] =
+                    typeof value === "object" ? JSON.stringify(value) : value;
+            } catch {
+                acc[`data-${camelToKebab(key)}`] = String(value);
+            }
             return acc;
         }, {});
 

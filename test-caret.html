@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoDropdown Caret Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .demo-section {
+            margin-bottom: 40px;
+        }
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .demo-item {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+        }
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .controls label {
+            font-weight: 500;
+        }
+        .controls select, .controls button {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+        }
+        .controls button {
+            cursor: pointer;
+            background: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+        .controls button:hover {
+            background: #0056b3;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        h3 {
+            margin: 30px 0 15px 0;
+            color: #666;
+            font-size: 16px;
+        }
+        .dropdown-content {
+            padding: 16px;
+            min-width: 180px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .dropdown-content p {
+            margin: 0 0 8px 0;
+        }
+        .dropdown-content .divider {
+            height: 1px;
+            background: #eee;
+            margin: 8px 0;
+        }
+        .dropdown-content button {
+            display: block;
+            width: 100%;
+            text-align: left;
+            padding: 8px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .dropdown-content button:hover {
+            background: #f5f5f5;
+        }
+        /* 模拟 AutoButton 样式 */
+        auto-dropdown {
+            display: inline-block;
+        }
+        .auto-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .auto-button:hover {
+            border-color: #007bff;
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.1);
+        }
+        .auto-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        /* 模拟 auto-icon */
+        .auto-icon {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+        .arrow-icon {
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 6px solid #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>🎯 AutoDropdown Caret 指示箭头演示</h1>
+
+        <div class="demo-section">
+            <h2>📋 功能说明</h2>
+            <p>这个演示展示了 AutoDropdown 组件的 caret 属性如何控制箭头的显示方向和位置。</p>
+
+            <h3>支持的 caret 模式：</h3>
+            <ul>
+                <li><strong>none</strong>: 不显示箭头</li>
+                <li><strong>auto</strong>: 根据 placement 和 open 状态自动计算箭头方向</li>
+                <li><strong>before</strong>: 强制在左侧渲染箭头，使用 auto 逻辑</li>
+                <li><strong>after</strong>: 强制在右侧渲染箭头，箭头始终指向弹出方向</li>
+                <li><strong>top/bottom/left/right</strong>: 固定箭头方向，不受其他因素影响</li>
+            </ul>
+        </div>
+
+        <div class="demo-section">
+            <h2>🎮 交互式演示</h2>
+            <div class="controls">
+                <label>Placement:</label>
+                <select id="placement-select">
+                    <option value="bottom-start">Bottom Start</option>
+                    <option value="bottom-end">Bottom End</option>
+                    <option value="top-start">Top Start</option>
+                    <option value="top-end">Top End</option>
+                    <option value="left-start">Left Start</option>
+                    <option value="left-end">Left End</option>
+                    <option value="right-start">Right Start</option>
+                    <option value="right-end">Right End</option>
+                </select>
+
+                <label>Caret Mode:</label>
+                <select id="caret-select">
+                    <option value="auto">Auto</option>
+                    <option value="before">Before</option>
+                    <option value="after">After</option>
+                    <option value="none">None</option>
+                    <option value="top">Fixed Top</option>
+                    <option value="bottom">Fixed Bottom</option>
+                    <option value="left">Fixed Left</option>
+                    <option value="right">Fixed Right</option>
+                </select>
+
+                <button id="toggle-btn">切换状态</button>
+            </div>
+
+            <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 8px;">
+                <div id="interactive-dropdown" style="display: inline-block;">
+                    <button class="auto-button" onclick="toggleDropdown()">
+                        <span class="auto-icon" id="icon-left"></span>
+                        <span id="button-text">交互式演示</span>
+                        <span class="auto-icon" id="icon-right"></span>
+                    </button>
+                </div>
+                <div style="margin-top: 20px; font-size: 14px; color: #666;">
+                    <p id="status-text">点击按钮或使用上方控制面板</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🎭 不同 Placement 的箭头方向</h2>
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <h4>Top Left</h4>
+                    <button class="auto-button" onclick="showDemo(event, 'top-start')">
+                        <span class="auto-icon" id="caret-top-left" style="transform: rotate(90deg)"></span>
+                        <span>Top Left</span>
+                        <span class="auto-icon"></span>
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <h4>Top Right</h4>
+                    <button class="auto-button" onclick="showDemo(event, 'top-end')">
+                        <span class="auto-icon" id="caret-top-right" style="transform: rotate(90deg)"></span>
+                        <span>Top Right</span>
+                        <span class="auto-icon"></span>
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <h4>Right Top</h4>
+                    <button class="auto-button" onclick="showDemo(event, 'right-start')">
+                        <span class="auto-icon"></span>
+                        <span>Right Top</span>
+                        <span class="auto-icon" id="caret-right-top" style="transform: rotate(180deg)"></span>
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <h4>Right Bottom</h4>
+                    <button class="auto-button" onclick="showDemo(event, 'right-end')">
+                        <span class="auto-icon"></span>
+                        <span>Right Bottom</span>
+                        <span class="auto-icon" id="caret-right-bottom" style="transform: rotate(180deg)"></span>
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <h4>Bottom Left</h4>
+                    <button class="auto-button" onclick="showDemo(event, 'bottom-start')">
+                        <span class="auto-icon" id="caret-bottom-left" style="transform: rotate(-90deg)"></span>
+                        <span>Bottom Left</span>
+                        <span class="auto-icon"></span>
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <h4>Bottom Right</h4>
+                    <button class="auto-button" onclick="showDemo(event, 'bottom-end')">
+                        <span class="auto-icon" id="caret-bottom-right" style="transform: rotate(-90deg)"></span>
+                        <span>Bottom Right</span>
+                        <span class="auto-icon"></span>
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <h4>Left Top</h4>
+                    <button class="auto-button" onclick="showDemo(event, 'left-start')">
+                        <span class="auto-icon" id="caret-left-top" style="transform: rotate(0deg)"></span>
+                        <span>Left Top</span>
+                        <span class="auto-icon"></span>
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <h4>Left Bottom</h4>
+                    <button class="auto-button" onclick="showDemo(event, 'left-end')">
+                        <span class="auto-icon" id="caret-left-bottom" style="transform: rotate(0deg)"></span>
+                        <span>Left Bottom</span>
+                        <span class="auto-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🎨 Caret 模式对比</h2>
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <h4>None</h4>
+                    <button class="auto-button" onclick="showDemo(event, 'right-start', 'none')">
+                        <span class="auto-icon"></span>
+                        <span>无箭头</span>
+                        <span class="auto-icon"></span>
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <h4>Auto</h4>
+                    <button class="auto-button" onclick="showDemo(event, 'right-start', 'auto')">
+                        <span class="auto-icon" id="caret-auto" style="transform: rotate(180deg)"></span>
+                        <span>自动</span>
+                        <span class="auto-icon"></span>
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <h4>Before</h4>
+                    <button class="auto-button" onclick="showDemo(event, 'right-start', 'before')">
+                        <span class="auto-icon" id="caret-before" style="transform: rotate(180deg)"></span>
+                        <span>前置</span>
+                        <span class="auto-icon"></span>
+                    </button>
+                </div>
+
+                <div class="demo-item">
+                    <h4>After</h4>
+                    <button class="auto-button" onclick="showDemo(event, 'right-start', 'after')">
+                        <span class="auto-icon"></span>
+                        <span>后置</span>
+                        <span class="auto-icon" id="caret-after" style="transform: rotate(180deg)"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="popup-container" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></div>
+
+    <script>
+        // 全局状态
+        let isOpen = false;
+        let currentPlacement = 'bottom-start';
+        let currentCaret = 'auto';
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCaretDisplay();
+            updateStatusText();
+        });
+
+        // 控制面板事件
+        document.getElementById('placement-select').addEventListener('change', function(e) {
+            currentPlacement = e.target.value;
+            updateCaretDisplay();
+        });
+
+        document.getElementById('caret-select').addEventListener('change', function(e) {
+            currentCaret = e.target.value;
+            updateCaretDisplay();
+        });
+
+        document.getElementById('toggle-btn').addEventListener('click', function() {
+            toggleDropdown();
+        });
+
+        // 切换下拉菜单
+        function toggleDropdown() {
+            isOpen = !isOpen;
+            updateCaretDisplay();
+            updateStatusText();
+
+            if (isOpen) {
+                showPopup();
+            } else {
+                hidePopup();
+            }
+        }
+
+        // 更新箭头显示
+        function updateCaretDisplay() {
+            const leftIcon = document.getElementById('icon-left');
+            const rightIcon = document.getElementById('icon-right');
+
+            // 添加箭头样式
+            leftIcon.innerHTML = '<div class="arrow-icon"></div>';
+            rightIcon.innerHTML = '<div class="arrow-icon"></div>';
+
+            const rotation = calculateArrowRotation(currentPlacement, currentCaret, isOpen);
+
+            if (currentCaret === 'none' || currentCaret === 'after') {
+                leftIcon.style.display = 'none';
+            } else {
+                leftIcon.style.display = 'inline-block';
+                leftIcon.querySelector('.arrow-icon').style.transform = `rotate(${rotation}deg)`;
+            }
+
+            if (currentCaret === 'none' || currentCaret === 'before') {
+                rightIcon.style.display = 'none';
+            } else {
+                rightIcon.style.display = 'inline-block';
+                rightIcon.querySelector('.arrow-icon').style.transform = `rotate(${rotation}deg)`;
+            }
+        }
+
+        // 计算箭头旋转角度
+        function calculateArrowRotation(placement, caret, open) {
+            // 固定方向模式
+            switch (caret) {
+                case 'top': return -90;
+                case 'bottom': return 90;
+                case 'left': return 0;
+                case 'right': return 180;
+                case 'none': return 0;
+            }
+
+            // 'after' 模式：箭头始终指向弹出方向
+            if (caret === 'after') {
+                if (placement.startsWith('left')) return 0;
+                if (placement.startsWith('right')) return 180;
+                if (placement.startsWith('top')) return -90;
+                if (placement.startsWith('bottom')) return 90;
+            }
+
+            // 'auto' 和 'before' 模式：根据 placement 和 open 状态
+            if (placement.startsWith('left')) {
+                return open ? 0 : 180;
+            } else if (placement.startsWith('right')) {
+                return open ? 180 : 0;
+            } else if (placement.startsWith('top')) {
+                return open ? -90 : 90;
+            } else { // bottom
+                return open ? 90 : -90;
+            }
+        }
+
+        // 更新状态文本
+        function updateStatusText() {
+            const statusText = document.getElementById('status-text');
+            statusText.innerHTML = `
+                状态: <strong>${isOpen ? '打开' : '关闭'}</strong> |
+                Placement: <strong>${currentPlacement}</strong> |
+                Caret: <strong>${currentCaret}</strong>
+            `;
+        }
+
+        // 显示弹出层
+        function showPopup() {
+            const container = document.getElementById('popup-container');
+            const dropdown = document.getElementById('interactive-dropdown');
+            const rect = dropdown.getBoundingClientRect();
+
+            // 创建弹出内容
+            const popup = document.createElement('div');
+            popup.className = 'dropdown-content';
+            popup.id = 'temp-popup';
+            popup.style.cssText = `
+                position: absolute;
+                left: ${rect.left}px;
+                top: ${rect.bottom + 4}px;
+                pointer-events: auto;
+                opacity: 0;
+                transform: scale(0.9) translateY(-10px);
+                transition: all 0.2s ease-out;
+            `;
+
+            popup.innerHTML = `
+                <p>这是 ${currentPlacement} 的弹出内容</p>
+                <div class="divider"></div>
+                <button onclick="alert('选项 1')">选项 1</button>
+                <button onclick="alert('选项 2')">选项 2</button>
+                <button onclick="alert('选项 3')">选项 3</button>
+            `;
+
+            container.appendChild(popup);
+
+            // 显示动画
+            setTimeout(() => {
+                popup.style.opacity = '1';
+                popup.style.transform = 'scale(1) translateY(0)';
+            }, 10);
+
+            // 点击外部关闭
+            setTimeout(() => {
+                document.addEventListener('click', closeOnOutsideClick);
+            }, 100);
+        }
+
+        // 隐藏弹出层
+        function hidePopup() {
+            const popup = document.getElementById('temp-popup');
+            if (popup) {
+                popup.style.opacity = '0';
+                popup.style.transform = 'scale(0.9) translateY(-10px)';
+
+                setTimeout(() => {
+                    if (popup.parentNode) {
+                        popup.parentNode.removeChild(popup);
+                    }
+                }, 200);
+            }
+
+            document.removeEventListener('click', closeOnOutsideClick);
+        }
+
+        // 点击外部关闭
+        function closeOnOutsideClick(e) {
+            const dropdown = document.getElementById('interactive-dropdown');
+            const popup = document.getElementById('temp-popup');
+
+            if (!dropdown.contains(e.target) && (!popup || !popup.contains(e.target))) {
+                isOpen = false;
+                updateCaretDisplay();
+                updateStatusText();
+                hidePopup();
+            }
+        }
+
+        // 演示函数
+        function showDemo(event, placement, caret = 'auto') {
+            event.stopPropagation();
+
+            // 模拟弹出层显示
+            const button = event.currentTarget;
+            const rect = button.getBoundingClientRect();
+
+            const container = document.getElementById('popup-container');
+
+            // 清理之前的弹出层
+            const existingPopup = document.getElementById('demo-popup');
+            if (existingPopup) {
+                existingPopup.remove();
+            }
+
+            const popup = document.createElement('div');
+            popup.className = 'dropdown-content';
+            popup.id = 'demo-popup';
+            popup.style.cssText = `
+                position: absolute;
+                left: ${rect.left}px;
+                top: ${rect.bottom + 8}px;
+                pointer-events: auto;
+                z-index: 1000;
+            `;
+
+            popup.innerHTML = `
+                <p>Placement: ${placement}</p>
+                <p>Caret: ${caret}</p>
+                <div class="divider"></div>
+                <button onclick="this.parentElement.remove()">关闭</button>
+            `;
+
+            container.appendChild(popup);
+
+            // 点击外部关闭
+            setTimeout(() => {
+                document.addEventListener('click', function closeDemo(e) {
+                    if (!button.contains(e.target) && !popup.contains(e.target)) {
+                        popup.remove();
+                        document.removeEventListener('click', closeDemo);
+                    }
+                });
+            }, 100);
+        }
+    </script>
+</body>
+</html>

@@ -151,13 +151,12 @@ export class PopupController implements ReactiveController {
         mouseEnterHandler: (e: MouseEvent) => void;
         mouseLeaveHandler: (e: MouseEvent) => void;
     }> = [];
-    private _userOptions?: Record<string, any>;
+
     constructor(
         host: ReactiveControllerHost,
         options: PopupControllerOptions = {}
     ) {
         this.host = host;
-        this._userOptions = options;
         this.options = this._initOptions(options);
         host.addController(this);
     }
@@ -195,10 +194,9 @@ export class PopupController implements ReactiveController {
         // 修复配置合并顺序：确保用户传入的选项优先级最高
         // 特别是onShow和onHide回调函数不被覆盖
         return {
-            ...userOptions, // 用户传入的配置（中间层）
-            ...attrOptions, // 从属性读取的配置（最高优先级）
-            onShow: this._userOptions?.onShow,
-            onHide: this._userOptions?.onHide,
+            ...defaultOptions, // 默认配置（最底层）
+            ...userOptions, // 用户传入的配置（最高优先级）
+            ...attrOptions, // 从属性读取的配置（中间层）
         };
     }
     /**
@@ -206,7 +204,7 @@ export class PopupController implements ReactiveController {
      */
     private _updateOptionsFromHost(): void {
         // 合并配置，用户选项优先级最高
-        // this.options = this._initOptions();
+        //this._updateAttrOptions();
         // 如果弹出层可见且更新了位置相关配置，重新计算位置
         if (
             this._isVisible &&
@@ -821,6 +819,7 @@ export class PopupController implements ReactiveController {
         }
 
         this._isVisible = true;
+        console.log("current popup", this._currentPopupElement);
         // 触发自定义事件
         this._triggerShowEvent(container);
         // 延迟隐藏

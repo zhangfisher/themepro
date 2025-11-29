@@ -4,7 +4,7 @@
  *
  */
 import { html } from "lit";
-import { property } from "lit/decorators.js";
+import { property, state } from "lit/decorators.js";
 import { customElement } from "lit/decorators/custom-element.js";
 import { styles } from "./styles";
 import { AutoButton, type AutoButtonProps } from "../Button";
@@ -26,15 +26,15 @@ export interface AutoDropdownProps extends AutoButtonProps {
      * 显示一个下拉方向指示箭头
      * 使用<auto-icon name="arrow" rotate="<角度>"></auto-icon>
      *
-     * - none: 显示
+     * - none: 不显示箭头
      * - auto: 会根据_popupController.options.placement的值来自动决定显示的指示箭头的方向和显示位置
      *        当placement.startsWith("left")时，并在open=true叶指示箭头向右显示(rotate=0)，open=false时指示箭头向左显示(rotate=180)，在renderBefore中渲染
      *        当placement.startsWith("right")时，相反方向，在renderAfter中渲染
      *        当placement.startsWith("top")时，并在open=true叶指示箭头向上显示(rotate=-90)，open=false时指示箭头向下显示(rotate=90)，在renderAfter中渲染
      *        当placement.startsWith("bottom")时，并在open=true叶指示箭头向下显示(rotate=90)，open=false时指示箭头向上显示(rotate=-90)，在renderAfter中渲染
-     *
-     * - "before" | "after": 强制在renderBefore和renderAfter中渲染指示箭头
-     *
+     * - before: 强制在renderBefore中渲染指示箭头，使用auto相同的方向逻辑
+     * - after: 强制在renderAfter中渲染指示箭头，箭头始终指向弹出方向
+     * - top | bottom | left | right: 强制箭头方向，不受placement和open状态影响
      */
     caret?: "none" | "auto" | "before" | "after";
 }
@@ -57,6 +57,10 @@ export class AutoDropdown extends AutoButton {
     // 内部状态标记，避免循环触发
     private _isInternalUpdate: boolean = false;
     private _isPopupVisible: boolean = false;
+
+    // 保存当前箭头旋转值
+    @state()
+    private _currentRotate: number = 0;
 
     connectedCallback(): void {
         super.connectedCallback();
@@ -102,6 +106,13 @@ export class AutoDropdown extends AutoButton {
                 onShow: () => this._onPopupShow(),
                 onHide: () => this._onPopupHide(),
             });
+            // placement 可能变化，需要更新箭头方向
+            this._updateArrowRotation();
+        }
+
+        // 如果 caret 属性发生变化，更新箭头方向
+        if (changed.has("caret")) {
+            this._updateArrowRotation();
         }
 
         // 重置内部更新标记
@@ -130,12 +141,14 @@ export class AutoDropdown extends AutoButton {
      * PopupController 显示时回调
      */
     private _onPopupShow(): void {
-        if (!this.open || this._isPopupVisible) return;
+        if (this._isPopupVisible) return;
 
         this._isInternalUpdate = true;
         this._isPopupVisible = true;
         this.open = true;
 
+        // 更新箭头旋转角度并触发重新渲染
+        this._updateArrowRotation();
         this.requestUpdate();
     }
 
@@ -143,12 +156,14 @@ export class AutoDropdown extends AutoButton {
      * PopupController 隐藏时回调
      */
     private _onPopupHide(): void {
-        if (!this.open || !this._isPopupVisible) return;
+        if (!this._isPopupVisible) return;
 
         this._isInternalUpdate = true;
         this._isPopupVisible = false;
         this.open = false;
 
+        // 更新箭头旋转角度并触发重新渲染
+        this._updateArrowRotation();
         this.requestUpdate();
     }
 
@@ -206,7 +221,61 @@ export class AutoDropdown extends AutoButton {
     }
 
     protected override renderAfter() {
-        return html`<auto-icon name="arrow"></auto-icon>`;
+        if (["none", "before"].includes(this.caret!)) return;
+        if (this.caret === "auto" && this._shouldRenderInBefore())
+            return html``;
+
+        return html`<auto-icon
+            name="arrow"
+            rotate="${this._currentRotate}"
+        ></auto-icon>`;
+    }
+
+    protected override renderBefore() {
+        if (["none", "after"].includes(this.caret!)) return;
+        if (this.caret === "auto" && !this._shouldRenderInBefore())
+            return html``;
+
+        return html`<auto-icon
+            name="arrow"
+            rotate="${this._currentRotate}"
+        ></auto-icon>`;
+    }
+
+    /**
+     * 判断在 auto 模式下是否应该在 renderBefore 中渲染箭头
+     * 根据设计注释：当placement.startsWith("left")时在renderBefore中渲染，其他情况在renderAfter中渲染
+     */
+    private _shouldRenderInBefore(): boolean {
+        const placement =
+            this._popupController?.options?.placement || "bottom-start";
+        return placement.startsWith("left");
+    }
+
+    /**
+     * 强制重新计算并更新箭头旋转角度
+     */
+    private _updateArrowRotation(): void {
+        this._currentRotate = this._calculateArrowRotation();
+    }
+
+    /**
+     * 计算箭头旋转角度
+     */
+    private _calculateArrowRotation(): number {
+        const placement =
+            this._popupController?.options?.placement || "bottom-start";
+        const isOpen = this.open;
+        if (placement.startsWith("left")) {
+            return isOpen ? 0 : 180; // open: 向右(0°), close: 向左(180°)
+        } else if (placement.startsWith("right")) {
+            return isOpen ? 180 : 0; // open: 向左(180°), close: 向右(0°)
+        } else if (placement.startsWith("top")) {
+            return isOpen ? 90 : -90; // open: 向上(-90°), close: 向下(90°)
+        } else {
+            // bottom (默认)
+            return isOpen ? -90 : 90; // open: 向下(90°), close: 向上(-90°)
+        }
     }
 
     render() {

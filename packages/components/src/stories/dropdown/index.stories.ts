@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/web-components";
-import { fn } from "storybook/test";
 import "../../components/Dropdown/index";
+import "./NestedDropdownTest";
 import { BaseDropdown } from "./BaseDropdown";
 import { CustomAnimation } from "./CustomAnimation";
 import { ComplexContent } from "./ComplexContent";
@@ -12,6 +12,9 @@ import { MouseOverDropdown } from "./MouseOverDropdown";
 import { HotshopPopup } from "./HotshopPopup";
 import { RefReferenceDemo } from "./RefReferenceDemo";
 import { OpenControlDemo } from "./OpenControlDemo";
+import { CaretDemo } from "./CaretDemo";
+import { NestedDropdownDemo } from "./NestedDropdownTest";
+import { fn } from "storybook/internal/test";
 
 const meta: Meta = {
     title: "通用/AutoDropdown",
@@ -29,6 +32,7 @@ const meta: Meta = {
         labelGrow: undefined,
         checked: undefined,
         open: false,
+        caret: "auto",
         popupOptions: {
             fitWidth: false,
             placement: "bottom-start",
@@ -84,7 +88,29 @@ const meta: Meta = {
         },
         "popupOptions.ref": {
             control: "text",
-            description: "弹出层位置基准元素选择器，指定后弹出层将相对于该元素定位而不是触发按钮",
+            description:
+                "弹出层位置基准元素选择器，指定后弹出层将相对于该元素定位而不是触发按钮",
+        },
+        caret: {
+            control: { type: "select" },
+            options: [
+                "none",
+                "auto",
+                "before",
+                "after",
+                "top",
+                "bottom",
+                "left",
+                "right",
+            ],
+            description: "指示箭头显示模式",
+            table: {
+                defaultValue: { summary: "auto" },
+                type: {
+                    summary:
+                        "none | auto | before | after | top | bottom | left | right",
+                },
+            },
         },
     },
 } satisfies Meta;
@@ -104,3 +130,5 @@ export const 悬停显示触发: Story = MouseOverDropdown;
 export const 热点元素弹出: Story = HotshopPopup;
 export const 弹出基准元素: Story = RefReferenceDemo;
 export const 属性控制弹出: Story = OpenControlDemo;
+export const 方向箭头演示: Story = CaretDemo;
+export const 嵌套组件弹出: Story = NestedDropdownDemo;

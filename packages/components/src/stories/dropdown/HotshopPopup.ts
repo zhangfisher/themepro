@@ -11,7 +11,7 @@ export const HotshopPopup: Story = {
                 <div style="display: flex; flex-direction: column; gap: 20px;">
                     <h3>局部元素弹出功能</h3>
                     <p style="color: #666; font-size: 14px;">
-                        通过trigger选择器指定host内部的具体元素作为触发器，支持data-tooltip和data-slot属性
+                        通过trigger选择器指定host内部的具体元素作为触发器，支持data-tips和data-slot属性
                     </p>
                 </div>
 
@@ -25,6 +25,9 @@ export const HotshopPopup: Story = {
                             {
                                 icon: "tag",
                                 tips: "<strong>打开标签</strong><br>点击打开系统设置面板",
+                                dataset: {
+                                    popupOptions: { placement: "bottom" },
+                                },
                             },
                             {
                                 icon: "info",
@@ -40,9 +43,10 @@ export const HotshopPopup: Story = {
                             hotspots: ".tag",
                             placement: "top",
                             animationDuration: 200,
+                            fitWidth: true,
                             arrow: true,
                         }}
-                        ><strong>热点信息</strong><br />
+                        ><strong>根热点信息</strong><br />
                         同一个元素中包括多个hotspot元素
                     </auto-dropdown>
 
