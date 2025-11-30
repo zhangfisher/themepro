@@ -53,8 +53,6 @@ export type TooltipPlacement =
     | "right-start"
     | "right-end";
 
-export type TooltipTriggerEvent = "click" | "mouseover";
-
 export interface TooltipControllerOptions {
     /**
      * 提示框位置
@@ -102,11 +100,196 @@ export interface TooltipControllerOptions {
     onHide?: () => void;
 }
 
+export class Tooltip {
+    options: TooltipControllerOptions;
+    _container?: HTMLElement;
+    _arrowElement?: HTMLElement;
+    constructor(
+        public ref: HTMLElement,
+        public controller: TooltipController,
+        options: TooltipControllerOptions = {}
+    ) {
+        this.options = Object.assign(
+            {
+                placement: "top" as TooltipPlacement,
+                offset: [0, 4],
+                animationDuration: 150,
+                animationEasing: "easeOutQuart",
+                className: "tooltip",
+                arrow: true,
+                trigger: "mouseover",
+                delayHide: 0,
+            },
+            options
+        );
+        this._parseAttrOptions();
+        this._init();
+    }
+    get container() {
+        return this._container!;
+    }
+    get host() {
+        return this.controller.hostElement;
+    }
+    private _init() {
+        const content = this._getTooltipContent();
+        if (!content) {
+            this._container = this._createTooltipContainer();
+            this.controller.themeproContainer.appendChild(this._container);
+        }
+    }
+    /**
+     * 解析元素上的工具提示选项属性
+     *
+     * 1. 从指定的属性名（默认为"tooltipOptions"）中解析JSON格式的选项
+     * 2. 从data-tooltip-*属性中解析单个选项值
+     * 3. 根据选项值的类型自动转换属性值（数字、布尔值、对象或字符串）
+     *
+     * @private 这是一个内部方法
+     */
+    private _parseAttrOptions() {
+        if (this.ref instanceof HTMLElement) {
+            const optionAttr = this.options.optionAttr ?? "tooltipOptions";
+            const attrOptions = parseObjectFromAttr(this.ref, optionAttr);
+            Object.assign(this.options, attrOptions);
+            // 解析data-tooltip-<option>属性
+            Object.entries(this.options).forEach(([key, value]) => {
+                const attrKey = `tooltip${key
+                    .charAt(0)
+                    .toUpperCase()}${key.slice(1)}`;
+                const val = this.ref.dataset[attrKey];
+                if (val) {
+                    const valueType = typeof value;
+                    if (valueType === "number") {
+                        (this.options as any)[key] = Number(val);
+                    } else if (valueType === "boolean") {
+                        (this.options as any)[key] = Boolean(val);
+                    } else if (valueType === "object") {
+                        try {
+                            (this.options as any)[key] = JSON.parse(val);
+                        } catch {
+                            (this.options as any)[key] = val;
+                        }
+                    } else {
+                        (this.options as any)[key] = val;
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * 根据配置读取tooltip内容
+     *
+     * tooltip内容的解析原则:
+     *
+     * - data-tooltip="html字符串"
+     * - data-tooltip="slot://<从host元素读取指定slotname>"
+     * - data-tooltip="query://<指定CSS选择器>"
+     * - data-tooltip="query://<在ref元素内部查询>"
+     *
+     *
+     */
+    private _getTooltipContent(): string | undefined {
+        const tooltipAttr = this.ref.getAttribute("data-tooltip");
+        if (!tooltipAttr) return;
+
+        // 检查是否是slot引用：slot::<slotname>
+        if (tooltipAttr.startsWith("slot://")) {
+            const slotName = tooltipAttr.substring(7); // 去掉 "slot::"
+            const slotNodes = getSlotNodes(
+                this.controller.host as LitElement,
+                slotName
+            );
+            if (slotNodes.length > 0) {
+                // 将slot内容转换为HTML字符串
+                const tempDiv = document.createElement("div");
+                slotNodes.forEach((node) => {
+                    tempDiv.appendChild(node.cloneNode(true));
+                });
+                return tempDiv.innerHTML;
+            }
+        } else if (tooltipAttr.startsWith("query://")) {
+            const query = tooltipAttr.substring(8);
+            const queryResult = this.ref.querySelector(query);
+            if (queryResult) {
+                return queryResult.innerHTML;
+            }
+        } else {
+            return tooltipAttr;
+        }
+    }
+
+    /**
+     * 创建tooltip容器
+     */
+    private _createTooltipContainer() {
+        const container = this.host.ownerDocument!.createElement("div");
+        if (this.options.className) {
+            container.classList.add(this.options.className);
+        }
+        container.style.cssText = `
+            position: absolute;
+            pointer-events: auto;
+            opacity: 0;
+            transform: scale(0.9) translateY(-5px);
+            visibility: hidden;
+            z-index: 1000;
+            background-color: var(--auto-bgcolor);
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 14px;
+            color: var(--auto-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            max-width: 300px;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        `;
+
+        // 监听tooltip-close事件
+        container.addEventListener("tooltip:close", () => {
+            this.hide();
+        });
+        if (this.options.arrow) {
+            const arrowElement = this._createArrowElement(container);
+            if (arrowElement) {
+                container.appendChild(arrowElement);
+            }
+            this._arrowElement = arrowElement;
+        }
+        container.style.visibility = "visible";
+        container.style.pointerEvents = "auto";
+        return container;
+    }
+    /**
+     * 创建箭头元素
+     */
+    private _createArrowElement(container: HTMLElement): HTMLElement {
+        const arrowElement = this.host.ownerDocument!.createElement("div");
+        arrowElement.className = "tooltip-arrow";
+        arrowElement.style.cssText = `
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            z-index: 1;
+            pointer-events: none;
+            transform: rotate(45deg);
+            display: ${this.options.arrow ? "block" : "none"};
+        `;
+        arrowElement.style.backgroundColor = container.style.backgroundColor;
+        return arrowElement;
+    }
+    onEnter(e: any) {}
+    onLeave(e: any) {}
+    show() {}
+    hide() {}
+}
+
 export class TooltipController implements ReactiveController {
-    private host: ReactiveControllerHost;
+    host: ReactiveControllerHost;
     options: TooltipControllerOptions;
     private _container?: HTMLElement;
-
+    tooltips: WeakMap<HTMLElement, Tooltip> = new WeakMap();
     // 内部状态
     private _isVisible: boolean = false;
     private _cleanup?: () => void;
@@ -126,6 +309,30 @@ export class TooltipController implements ReactiveController {
     private _tooltipContainerMouseLeaveHandler?: (e: MouseEvent) => void;
     private _containerEventListenersAdded: boolean = false;
     private _userOptions?: Record<string, any>;
+    private _themeproContainer?: HTMLElement;
+    constructor(
+        host: ReactiveControllerHost,
+        options: TooltipControllerOptions = {}
+    ) {
+        this.host = host;
+        this._userOptions = options;
+        this.options = this._initOptions(options);
+        host.addController(this);
+    }
+    get hostElement() {
+        return this.host as LitElement;
+    }
+    /**
+     * 全局容器
+     */
+    get themeproContainer() {
+        if (!this._themeproContainer) {
+            this._themeproContainer = createThemeproContainer(
+                this.host as LitElement
+            );
+        }
+        return this._themeproContainer!;
+    }
 
     /**
      * 检查是否应该显示新的tooltip
@@ -160,16 +367,6 @@ export class TooltipController implements ReactiveController {
         // 默认情况，应该显示
         console.log("default case, should show new tooltip");
         return true;
-    }
-
-    constructor(
-        host: ReactiveControllerHost,
-        options: TooltipControllerOptions = {}
-    ) {
-        this.host = host;
-        this._userOptions = options;
-        this.options = this._initOptions(options);
-        host.addController(this);
     }
 
     /**
