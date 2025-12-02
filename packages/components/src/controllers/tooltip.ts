@@ -120,11 +120,13 @@ export class Tooltip {
     private _onContainerMouseLeave?: (e: MouseEvent) => void;
     private _onExternalClick?: () => void;
     private _cleanup?: () => void;
+    el: WeakRef<HTMLElement>;
     constructor(
-        public ref: HTMLElement,
+        el: HTMLElement,
         public controller: TooltipController,
         options: TooltipControllerOptions = {}
     ) {
+        this.el = new WeakRef(el);
         this.options = Object.assign(
             {
                 placement: "top" as TooltipPlacement,
@@ -140,6 +142,12 @@ export class Tooltip {
         );
         this._parseAttrOptions();
         this._init();
+    }
+    getRef() {
+        return this.el.deref();
+    }
+    get ref() {
+        return this.getRef()!;
     }
     get container() {
         return this._container!;
@@ -747,30 +755,41 @@ export class Tooltip {
             this._onContainerMouseLeave = undefined;
         }
     }
+    destroy() {}
+}
+
+export class TooltipManager extends Array<Tooltip> {
+    has(el: HTMLElement) {
+        return this.some((t) => t.el.deref() === el);
+    }
+    hide() {
+        this.forEach((t) => {
+            t.hide();
+        });
+    }
+    destory() {
+        this.forEach((t) => {
+            t.hide();
+            t.destroy();
+        });
+    }
 }
 
 export class TooltipController implements ReactiveController {
     host: ReactiveControllerHost;
     options: TooltipControllerOptions;
-    private _container?: HTMLElement;
-    tooltips: WeakMap<HTMLElement, Tooltip> = new WeakMap();
-    // 内部状态
-    private _isVisible: boolean = false;
-    private _cleanup?: () => void;
-    private _arrowElement?: HTMLElement;
+
+    overTooltips: TooltipManager = new TooltipManager();
+    clickTooltips: TooltipManager = new TooltipManager();
     private _mouseLeaveTimer?: NodeJS.Timeout;
-    private _currentTooltipElement?: HTMLElement;
     private _tooltipDelegateHandler?: (e: Event) => void;
-    private _mouseoverMouseMoveHandler?: (e: MouseEvent) => void;
-    private _isMouseInValidArea: boolean = false;
-    private _userOptions?: Record<string, any>;
+    private _onMouseMove?: (e: MouseEvent) => void;
     private _themeproContainer?: HTMLElement;
     constructor(
         host: ReactiveControllerHost,
         options: TooltipControllerOptions = {}
     ) {
         this.host = host;
-        this._userOptions = options;
         this.options = this._initOptions(options);
         host.addController(this);
     }
@@ -819,19 +838,7 @@ export class TooltipController implements ReactiveController {
         return {
             ...userOptions, // 用户传入的配置（中间层）
             ...attrOptions, // 从属性读取的配置（最高优先级）
-            onShow: this._userOptions?.onShow,
-            onHide: this._userOptions?.onHide,
         };
-    }
-
-    /**
-     * 获取提示框容器
-     */
-    get container(): HTMLElement {
-        if (!this._container) {
-            this._createContainer();
-        }
-        return this._container!;
     }
 
     /**
@@ -861,7 +868,7 @@ export class TooltipController implements ReactiveController {
         this._setupClickEventDelegation(hostElement);
 
         // 设置mouseover事件监听器
-        this._setupMouseoverEventListeners(hostElement);
+        this._setupMouseoverEventDelegation(hostElement);
     }
 
     /**
@@ -923,217 +930,73 @@ export class TooltipController implements ReactiveController {
         );
     }
 
+    private _getTooltipElement(e: MouseEvent) {
+        const composedPath = e.composedPath();
+        // 查找当前鼠标位置的具有data-tooltip属性的元素
+        let tooltipElement: HTMLElement | null = null;
+        for (let i = 0; i < composedPath.length; i++) {
+            const element = composedPath[i];
+            if (
+                element instanceof HTMLElement &&
+                element.hasAttribute?.("data-tooltip")
+            ) {
+                // 确保元素在host范围内
+                if (
+                    element === this.hostElement ||
+                    this.hostElement.contains(element)
+                ) {
+                    tooltipElement = element;
+                    break;
+                }
+            }
+        }
+        return tooltipElement;
+    }
+
     /**
      * 为mouseover触发的tooltip元素添加统一的事件监听器
      */
-    private _setupMouseoverEventListeners(hostElement: HTMLElement): void {
-        const currentOptions = this._getCurrentTooltipOptions();
-
+    private _setupMouseoverEventDelegation(hostElement: HTMLElement): void {
         // 清理之前的监听器
-        this._removeMouseoverEventListeners();
+        this._removeMouseMoveEventListeners();
 
-        this._mouseoverMouseMoveHandler = (e: MouseEvent) => {
-            const composedPath = e.composedPath();
-            const hostElement = this.host as unknown as HTMLElement;
-
-            // 查找当前鼠标位置的具有data-tooltip属性的元素
-            let currentTooltipElement: HTMLElement | null = null;
-
-            for (let i = 0; i < composedPath.length; i++) {
-                const element = composedPath[i];
-
-                // 检查是否是具有data-tooltip属性的元素
-                if (
-                    element instanceof HTMLElement &&
-                    element.hasAttribute?.("data-tooltip")
-                ) {
-                    // 确保元素在host范围内
-                    if (
-                        element === hostElement ||
-                        hostElement.contains(element)
-                    ) {
-                        currentTooltipElement = element;
-                        break;
-                    }
-                }
-            }
-
-            // 设置鼠标在有效区域的标志 - 只针对data-tooltip元素
-            this._isMouseInValidArea = currentTooltipElement !== null;
-
+        this._onMouseMove = (e: MouseEvent) => {
+            const tooltipElement = this._getTooltipElement(e);
             // 处理data-tooltip元素的进入和离开事件
-            if (currentTooltipElement) {
-                // 检查是否切换到不同的tooltip元素
-                if (this._currentTooltipElement !== currentTooltipElement) {
-                    // 如果当前已有tooltip元素，先离开它（传递当前元素，不触发hide）
-                    if (this._currentTooltipElement) {
-                        this._onLeaveTooltipElementForSwitch();
-                    }
-                    // 然后进入新的tooltip元素
-                    this._onEnterTooltipElement(currentTooltipElement);
+            if (tooltipElement) {
+                // 该元素已经在overTooltips中
+                if (this.overTooltips.has(tooltipElement)) {
+                } else {
+                    // 马上隐藏现有的Tooltip
+                    this.overTooltips.hide();
+                    // 该元素已经在overTooltips中
+                    const tooltip = new Tooltip(
+                        tooltipElement,
+                        this,
+                        this.options
+                    );
+                    this.overTooltips.push(tooltip);
+                    tooltip.show();
                 }
-                // 如果是同一个元素，不做处理（避免重复触发）
-            } else if (this._currentTooltipElement) {
-                // 没有找到任何tooltip元素，离开当前的tooltip元素
-                this._onLeaveTooltipElement(e as MouseEvent);
+            } else {
+                // 不在tooltip元素上移动代表了已经所有tooltip元素
+                this.overTooltips.hide();
             }
         };
 
         // 在host元素上添加mousemove监听器
-        hostElement.addEventListener(
-            "mousemove",
-            this._mouseoverMouseMoveHandler
-        );
+        hostElement.addEventListener("mousemove", this._onMouseMove);
     }
 
     /**
      * 移除mouseover触发的tooltip元素的事件监听器
      */
-    private _removeMouseoverEventListeners(): void {
+    private _removeMouseMoveEventListeners(): void {
         const hostElement = this.host as unknown as HTMLElement;
-
-        if (this._mouseoverMouseMoveHandler) {
-            hostElement.removeEventListener(
-                "mousemove",
-                this._mouseoverMouseMoveHandler
-            );
-            this._mouseoverMouseMoveHandler = undefined;
+        if (this._onMouseMove) {
+            hostElement.removeEventListener("mousemove", this._onMouseMove);
+            this._onMouseMove = undefined;
         }
-
-        this._previousTooltipElement = undefined;
-    }
-
-    /**
-     * 处理进入tooltip元素
-     */
-    private _onEnterTooltipElement(element: HTMLElement): void {
-        const elementOptions = this._getElementTooltipOptions(element);
-        const trigger = elementOptions.trigger || this.options.trigger!;
-
-        if (trigger === "mouseover") {
-            // 防止重复显示同一个元素的tooltip
-            const previousElement = this._currentTooltipElement;
-            this._currentTooltipElement = element;
-            this._previousTooltipElement = element;
-
-            // 如果是同一个元素且已可见，直接返回（避免重复显示）
-            if (previousElement === element && this._isVisible) {
-                console.log("same element already visible, skip");
-                return;
-            }
-
-            // 清理之前的延迟隐藏定时器
-            this._clearMouseLeaveTimer();
-
-            // 如果当前可见且是不同的元素，先隐藏再显示
-            if (this._isVisible && previousElement !== element) {
-                this.hide();
-                // 使用较短的延迟后显示新的tooltip
-                setTimeout(() => {
-                    this.show();
-                }, 50);
-            } else {
-                // 直接显示新元素的tooltip
-                this.show();
-            }
-        }
-    }
-
-    /**
-     * 处理离开tooltip元素
-     */
-    private _onLeaveTooltipElement(event?: MouseEvent): void {
-        if (!this._currentTooltipElement) {
-            return;
-        }
-
-        // 事件源检测：如果事件来自当前tooltip元素内部，不处理
-        if (event && this._isEventFromCurrentTooltipElement(event)) {
-            return;
-        }
-
-        // 如果已经有延迟隐藏定时器在运行，不重复设置
-        if (this._mouseLeaveTimer) {
-            return;
-        }
-
-        const elementOptions = this._getElementTooltipOptions(
-            this._currentTooltipElement
-        );
-        const trigger = elementOptions.trigger || this.options.trigger!;
-
-        if (trigger === "mouseover" && this._isMouseInValidArea === false) {
-            // 不在任何有效区域，启动延迟隐藏
-            const delayHide = this.options.delayHide ?? 30; // 使用全局配置，默认30ms
-            this._mouseLeaveTimer = setTimeout(() => {
-                // 再次检查当前鼠标位置是否在有效范围内
-                if (!this._isMouseInValidArea) {
-                    this.hide();
-                }
-                // 清除定时器引用
-                this._mouseLeaveTimer = undefined;
-            }, delayHide);
-        }
-    }
-
-    /**
-     * 处理tooltip元素切换时的离开逻辑
-     */
-    private _onLeaveTooltipElementForSwitch(): void {
-        if (!this._currentTooltipElement) {
-            return;
-        }
-
-        const elementOptions = this._getElementTooltipOptions(
-            this._currentTooltipElement
-        );
-        const trigger = elementOptions.trigger || this.options.trigger!;
-
-        if (trigger === "mouseover") {
-            // 立即清理当前元素的延迟隐藏定时器
-            this._clearMouseLeaveTimer();
-
-            // 保存当前容器引用，避免影响新的tooltip容器
-            const currentContainer = this._container;
-            const currentIsVisible = this._isVisible;
-
-            // 立即隐藏当前tooltip容器，避免影响新tooltip
-            if (currentContainer && currentIsVisible) {
-                console.log("hiding current container for switch");
-                currentContainer.style.visibility = "hidden";
-                currentContainer.style.pointerEvents = "none";
-                // 注意：不要立即设置 this._isVisible = false，让后续的 show() 正常工作
-                // this._isVisible = false; // 移除这行，让 show() 方法来管理状态
-
-                // 清理外部监听器
-                this._removeExternalListeners();
-
-                // 清理自动更新
-                this._cleanup?.();
-                this._cleanup = undefined;
-            }
-
-            // 保持当前tooltip状态，但允许新元素覆盖内容
-        }
-    }
-
-    /**
-     * 检测事件是否来自当前tooltip元素内部
-     */
-    private _isEventFromCurrentTooltipElement(event: MouseEvent): boolean {
-        if (!this._currentTooltipElement) {
-            return false;
-        }
-
-        const composedPath = event.composedPath();
-        const targetElement = composedPath[0] as HTMLElement;
-
-        // 如果事件的直接目标元素在当前tooltip元素内部，则不处理
-        return (
-            targetElement &&
-            targetElement !== this._currentTooltipElement &&
-            this._currentTooltipElement.contains(targetElement)
-        );
     }
 
     /**
@@ -1153,13 +1016,7 @@ export class TooltipController implements ReactiveController {
         }
 
         // 移除mouseover事件监听器
-        this._removeMouseoverEventListeners();
-
-        // 清理状态
-        this._currentTooltipElement = undefined;
-
-        // 移除容器事件监听器
-        this._removeContainerEventListeners();
+        this._removeMouseMoveEventListeners();
     }
 
     /**
@@ -1171,7 +1028,19 @@ export class TooltipController implements ReactiveController {
     }
 
     /**
+     * 清理鼠标离开定时器
+     */
+    private _clearMouseLeaveTimer(): void {
+        if (this._mouseLeaveTimer) {
+            clearTimeout(this._mouseLeaveTimer);
+            this._mouseLeaveTimer = undefined;
+        }
+    }
+    /**
      * 销毁控制器
      */
-    destroy(): void {}
+    destroy(): void {
+        this._clearMouseLeaveTimer();
+        this._removeTriggerEvents();
+    }
 }
