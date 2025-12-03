@@ -31,7 +31,7 @@ export const 默认提示框: Story = {
                 >
                     悬停查看提示
                 </button>
-                <span
+                <!-- <span
                     data-tooltip="<strong>提示</strong><br/>文字也可以有提示"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
@@ -43,7 +43,7 @@ export const 默认提示框: Story = {
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
                     容器提示
-                </div>
+                </div> -->
             </div>
         </tooltip-demo>
     `,

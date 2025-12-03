@@ -118,6 +118,7 @@ export class Tooltip {
     private _onEscapeKeyPress?: (e: KeyboardEvent) => void;
     private _onContainerMouseEnter?: (e: MouseEvent) => void;
     private _onContainerMouseLeave?: (e: MouseEvent) => void;
+    private _onRefMouseLeave?: () => void;
     private _onExternalClick?: () => void;
     private _cleanup?: () => void;
     el: WeakRef<HTMLElement>;
@@ -143,11 +144,8 @@ export class Tooltip {
         this._parseAttrOptions();
         this._init();
     }
-    getRef() {
-        return this.el.deref();
-    }
     get ref() {
-        return this.getRef()!;
+        return this.el.deref()!;
     }
     get container() {
         return this._container!;
@@ -155,6 +153,10 @@ export class Tooltip {
     get host() {
         return this.controller.hostElement;
     }
+    /**
+     *  获取目标元素，即tooltip的显示位置
+     *  用于计算tooltip的位置
+     */
     get target() {
         if (!this._target) {
             if (typeof this.options.transfer === "string") {
@@ -173,8 +175,9 @@ export class Tooltip {
     }
     private _init() {
         const content = this._getTooltipContent();
-        if (!content) {
+        if (content) {
             this._container = this._createTooltipContainer();
+            this._setTooltipContent(content);
             this.controller.themeproContainer.appendChild(this._container);
         }
     }
@@ -261,6 +264,30 @@ export class Tooltip {
     }
 
     /**
+     * 设置tooltip内容
+     */
+    private _setTooltipContent(content: string): void {
+        if (!this._container) return;
+
+        // 清除之前的内容（保留箭头元素）
+        const nodesToRemove: Node[] = [];
+        this._container.childNodes.forEach((child) => {
+            if (child !== this._arrowElement) {
+                nodesToRemove.push(child);
+            }
+        });
+
+        nodesToRemove.forEach((node) => {
+            this._container!.removeChild(node);
+        });
+
+        // 创建内容包装器
+        const contentWrapper = document.createElement("div");
+        contentWrapper.classList.add("tooltip-content");
+        contentWrapper.innerHTML = content;
+        this._container.appendChild(contentWrapper);
+    }
+    /**
      * 创建tooltip容器
      */
     private _createTooltipContainer() {
@@ -333,7 +360,15 @@ export class Tooltip {
         };
 
         // 为tooltip容器添加mouseenter和mouseleave事件监听器
-        this._setupContainerEventListeners();
+        this._onContainerEventListeners();
+
+        // 为this.ref添加mouseleave事件监听器
+        this._onRefMouseLeave = () => {
+            this._mouseLeaveTimer = setTimeout(() => {
+                this.hide();
+            }, 100);
+        };
+        this.ref.addEventListener("mouseleave", this._onRefMouseLeave);
 
         // 延迟添加事件监听器，避免当前事件触发
         setTimeout(() => {
@@ -366,6 +401,12 @@ export class Tooltip {
         this._onExternalClick?.();
         this._onExternalClick = undefined;
         this._onEscapeKeyPress = undefined;
+
+        // 移除this.ref的mouseleave事件监听器
+        if (this._onRefMouseLeave) {
+            this.ref.removeEventListener("mouseleave", this._onRefMouseLeave);
+            this._onRefMouseLeave = undefined;
+        }
     }
 
     /**
@@ -380,7 +421,7 @@ export class Tooltip {
     /**
      * 设置tooltip容器的事件监听器
      */
-    private _setupContainerEventListeners(): void {
+    private _onContainerEventListeners(): void {
         if (!this._container) return;
         this._onContainerMouseEnter = (e: MouseEvent) => {
             e.stopPropagation();
@@ -434,9 +475,6 @@ export class Tooltip {
         arrowElement.style.backgroundColor = container.style.backgroundColor;
         return arrowElement;
     }
-    onEnter(e: any) {}
-    onLeave(e: any) {}
-    onClick(e: any) {}
 
     /**
      * 设置自动更新
@@ -684,7 +722,7 @@ export class Tooltip {
         if (!this._isVisible) return;
 
         const container = this.container;
-
+        const options = this.options;
         // 停止任何正在进行的显示动画
         this._showAnimation?.pause();
 
@@ -693,7 +731,7 @@ export class Tooltip {
 
         // 使用animejs创建隐藏动画
         const targets = [container];
-        if (this.options.arrow && this._arrowElement) {
+        if (options.arrow && this._arrowElement) {
             targets.push(this._arrowElement);
         }
 
@@ -701,12 +739,10 @@ export class Tooltip {
             opacity: [1, 0],
             scale: [1, 0.9],
             translateY: [0, -5],
-            duration:
-                this.options.animationDuration ||
-                this.options.animationDuration!,
+            duration: options.animationDuration || options.animationDuration!,
             easing:
-                this.options.animationEasing ||
-                this.options.animationEasing ||
+                options.animationEasing ||
+                options.animationEasing ||
                 "easeInQuart",
         });
 
@@ -725,11 +761,11 @@ export class Tooltip {
                 container.style.pointerEvents = "none";
                 this._hideAnimation = undefined;
                 this._removeEventListeners();
-            }, this.options.animationDuration || this.options.animationDuration!);
+            }, options.animationDuration || options.animationDuration!);
         }
 
         this._isVisible = false;
-        this.options.onHide?.();
+        options.onHide?.();
 
         // 移除容器事件监听器
         this._removeContainerEventListeners();
@@ -755,7 +791,12 @@ export class Tooltip {
             this._onContainerMouseLeave = undefined;
         }
     }
-    destroy() {}
+    destroy() {
+        this.hide();
+        this._removeEventListeners();
+        this._removeContainerEventListeners();
+        this.controller.themeproContainer?.removeChild(this.container);
+    }
 }
 
 export class TooltipManager extends Array<Tooltip> {
@@ -779,8 +820,7 @@ export class TooltipController implements ReactiveController {
     host: ReactiveControllerHost;
     options: TooltipControllerOptions;
 
-    overTooltips: TooltipManager = new TooltipManager();
-    clickTooltips: TooltipManager = new TooltipManager();
+    tooltips: TooltipManager = new TooltipManager();
     private _mouseLeaveTimer?: NodeJS.Timeout;
     private _tooltipDelegateHandler?: (e: Event) => void;
     private _onMouseMove?: (e: MouseEvent) => void;
@@ -879,18 +919,17 @@ export class TooltipController implements ReactiveController {
         const hostElement = this.host as unknown as HTMLElement;
 
         for (let i = 0; i < composedPath.length; i++) {
-            const element = composedPath[i];
+            const el = composedPath[i];
             if (
-                element instanceof HTMLElement &&
-                element.hasAttribute?.("data-tooltip")
+                el instanceof HTMLElement &&
+                el.hasAttribute?.("data-tooltip")
             ) {
                 // 确保元素在host范围内
-                if (element === hostElement || hostElement.contains(element)) {
-                    return element;
+                if (el === hostElement || hostElement.contains(el)) {
+                    return el;
                 }
             }
         }
-
         return null;
     }
 
@@ -965,22 +1004,17 @@ export class TooltipController implements ReactiveController {
             // 处理data-tooltip元素的进入和离开事件
             if (tooltipElement) {
                 // 该元素已经在overTooltips中
-                if (this.overTooltips.has(tooltipElement)) {
-                } else {
-                    // 马上隐藏现有的Tooltip
-                    this.overTooltips.hide();
+                if (!this.tooltips.has(tooltipElement)) {
+                    // 马上隐藏已经显示的Tooltip
+                    this.tooltips.hide();
                     // 该元素已经在overTooltips中
-                    const tooltip = new Tooltip(
-                        tooltipElement,
-                        this,
-                        this.options
-                    );
-                    this.overTooltips.push(tooltip);
+                    const tooltip = new Tooltip(tooltipElement, this, {
+                        ...this.options,
+                        trigger: "mouseover",
+                    });
+                    this.tooltips.push(tooltip);
                     tooltip.show();
                 }
-            } else {
-                // 不在tooltip元素上移动代表了已经所有tooltip元素
-                this.overTooltips.hide();
             }
         };
 
