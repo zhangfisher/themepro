@@ -22,24 +22,13 @@
  * - 也支持为data-tooltip-options每一个成员单独指定data-tooltip-<options.key>属性，用于覆盖全局TooltipControllerOptions的对应成员，比如data-tooltip-placement="bottom"
  * - data-tooltip-options支持json格式，比如data-tooltip-options='{"placement":"bottom"}'
  */
-import {
-    computePosition,
-    flip,
-    offset,
-    shift,
-    autoUpdate,
-    hide,
-    arrow,
-    type ComputePositionReturn,
-} from "@floating-ui/dom";
-import { animate } from "animejs";
 import type { ReactiveController, ReactiveControllerHost } from "lit";
-import { createThemeproContainer } from "../utils/createThemeproContainer";
+import { createThemeproContainer } from "../../utils/createThemeproContainer";
 import type { LitElement } from "lit";
 import { parseObjectFromAttr } from "@/utils/parseObjectFromAttr";
-import { getSlotNodes } from "@/utils/getSlotNodes";
-import { queryClosestElement } from "@/utils/queryClosestElement";
-
+import type { TooltipControllerOptions, TooltipPlacement } from "./types";
+import { TooltipManager } from "./manager";
+import { Tooltip } from "./tooltip";
 export class TooltipController implements ReactiveController {
     host: ReactiveControllerHost;
     options: TooltipControllerOptions;
@@ -82,7 +71,7 @@ export class TooltipController implements ReactiveController {
         const optionAttr = userOptions?.optionAttr ?? "tooltipOptions";
         const defaultOptions: TooltipControllerOptions = {
             placement: "top" as TooltipPlacement,
-            offset: [0, 8],
+            offset: [0, 4],
             animationDuration: 150,
             animationEasing: "easeOutQuart",
             className: "tooltip",
@@ -172,16 +161,6 @@ export class TooltipController implements ReactiveController {
                 if (trigger === "click") {
                     e.preventDefault();
                     e.stopPropagation();
-
-                    if (
-                        this._isVisible &&
-                        this._currentTooltipElement === matchedElement
-                    ) {
-                        this.hide();
-                    } else {
-                        this._currentTooltipElement = matchedElement;
-                        this.show();
-                    }
                 }
             }
         };

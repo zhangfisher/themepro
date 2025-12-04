@@ -1,3 +1,5 @@
+import { jsonParser } from "./jsonParser";
+
 /**
  * 从HTML元素的属性中解析JSON对象
  * @template T - 返回对象的类型，默认为Record<string, any>
@@ -16,7 +18,8 @@ export function parseObjectFromAttr<
     const value: T = Object.assign({}, defaultValue) as T;
     try {
         if (typeof attrValue === "string") {
-            Object.assign(value, JSON.parse(attrValue));
+            return jsonParser(attrValue);
+            // Object.assign(value, JSON.parse(attrValue));
         } else if (typeof attrValue === "object") {
             Object.assign(value, attrValue);
         }
