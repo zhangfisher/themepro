@@ -27,10 +27,6 @@ export class Tooltip {
     private _mouseLeaveTimer?: NodeJS.Timeout;
     private _isVisible: boolean = false;
     private _target?: HTMLElement;
-    private _onContainerMouseEnter?: (e: MouseEvent) => void;
-    private _onContainerMouseLeave?: (e: MouseEvent) => void;
-    private _onRefMouseLeave?: () => void;
-    private _onExternalClick?: () => void;
     private _cleanup?: () => void;
     el: WeakRef<HTMLElement>;
     constructor(
