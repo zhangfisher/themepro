@@ -27,7 +27,6 @@ export class Tooltip {
     private _mouseLeaveTimer?: NodeJS.Timeout;
     private _isVisible: boolean = false;
     private _target?: HTMLElement;
-    private _onEscapeKeyPress?: (e: KeyboardEvent) => void;
     private _onContainerMouseEnter?: (e: MouseEvent) => void;
     private _onContainerMouseLeave?: (e: MouseEvent) => void;
     private _onRefMouseLeave?: () => void;
@@ -63,7 +62,7 @@ export class Tooltip {
         return this._container!;
     }
     get host() {
-        return this.controller.hostElement;
+        return this.controller.hostElement as HTMLElement;
     }
     /**
      *  获取目标元素，即tooltip的显示位置
@@ -237,113 +236,66 @@ export class Tooltip {
             this.show();
         }
     }
+    private _onMouseLeave = (e: any) => {
+        e.stopPropagation();
+        clearTimeout(this._mouseLeaveTimer);
+        this._mouseLeaveTimer = setTimeout(() => {
+            this.hide();
+        }, 100);
+    };
+    private _onMouseEnter = (e: any) => {
+        e.stopPropagation();
+        clearTimeout(this._mouseLeaveTimer);
+    };
+    private _onEscapeKeyPress = (e: KeyboardEvent) => {
+        if (e.key === "Escape" && this._isVisible) {
+            this.hide();
+        }
+    };
+    private _onDocumentClick = (e: Event) => {
+        const path = e.composedPath();
+        if (!path.includes(this.host) && !path.includes(this.container)) {
+            this.hide();
+        }
+    };
+
     /**
      * 设置外部事件监听器
      */
-    private _setupEventListeners(): void {
-        const container = this.container;
-        const hostElement = this.host as unknown as HTMLElement;
-
-        const handleDocumentClick = (e: Event) => {
-            const path = e.composedPath();
-            if (!path.includes(hostElement) && !path.includes(container)) {
-                this.hide();
-            }
-        };
-
-        this._onEscapeKeyPress = (e: KeyboardEvent) => {
-            if (e.key === "Escape" && this._isVisible) {
-                this.hide();
-            }
-        };
-
-        // 为tooltip容器添加mouseenter和mouseleave事件监听器
-        this._onContainerEventListeners();
-
-        // 为this.ref添加mouseleave事件监听器
-        this._onRefMouseLeave = () => {
-            this._mouseLeaveTimer = setTimeout(() => {
-                this.hide();
-            }, 100);
-        };
-        this.ref.addEventListener("mouseleave", this._onRefMouseLeave);
-
+    private _addEventListeners(): void {
+        // 为 this.ref 添加mouseenter和mouseleave事件监听器
+        if (this.ref) {
+            this.ref.addEventListener("mouseenter", this._onMouseEnter);
+            this.ref.addEventListener("mouseleave", this._onMouseLeave);
+        }
+        if (this._container) {
+            this._container.addEventListener("mouseenter", this._onMouseEnter);
+            this._container.addEventListener("mouseleave", this._onMouseLeave);
+        }
         // 延迟添加事件监听器，避免当前事件触发
         setTimeout(() => {
-            const document = hostElement.ownerDocument;
-            document.addEventListener("click", handleDocumentClick, true);
-
-            if (this._onEscapeKeyPress) {
-                document.addEventListener("keydown", this._onEscapeKeyPress);
-            }
-
-            this._onExternalClick = () => {
-                document.removeEventListener(
-                    "click",
-                    handleDocumentClick,
-                    true
-                );
-                if (this._onEscapeKeyPress) {
-                    document.removeEventListener(
-                        "keydown",
-                        this._onEscapeKeyPress
-                    );
-                }
-            };
+            const document = this.host.ownerDocument;
+            document.addEventListener("click", this._onDocumentClick, true);
+            document.addEventListener("keydown", this._onEscapeKeyPress);
         }, 0);
     }
-    /**
-     * 移除外部事件监听器
-     */
-    private _removeEventListeners(): void {
-        this._onExternalClick?.();
-        this._onExternalClick = undefined;
-        this._onEscapeKeyPress = undefined;
-
-        // 移除this.ref的mouseleave事件监听器
-        if (this._onRefMouseLeave) {
-            this.ref.removeEventListener("mouseleave", this._onRefMouseLeave);
-            this._onRefMouseLeave = undefined;
+    private _removeEventListeners() {
+        if (this.ref) {
+            this.ref.removeEventListener("mouseenter", this._onMouseEnter);
+            this.ref.removeEventListener("mouseleave", this._onMouseLeave);
         }
-    }
-
-    /**
-     * 清理鼠标离开定时器
-     */
-    private _clearMouseLeaveTimer(): void {
-        if (this._mouseLeaveTimer) {
-            clearTimeout(this._mouseLeaveTimer);
-            this._mouseLeaveTimer = undefined;
+        if (this.container) {
+            this.container.removeEventListener(
+                "mouseenter",
+                this._onMouseEnter
+            );
+            this.container.removeEventListener(
+                "mouseleave",
+                this._onMouseLeave
+            );
         }
-    }
-    /**
-     * 设置tooltip容器的事件监听器
-     */
-    private _onContainerEventListeners(): void {
-        if (!this._container) return;
-        this._onContainerMouseEnter = (e: MouseEvent) => {
-            e.stopPropagation();
-            // 鼠标进入tooltip容器，清除延迟隐藏定时器
-            this._clearMouseLeaveTimer();
-        };
-
-        this._onContainerMouseLeave = (e: MouseEvent) => {
-            e.stopPropagation();
-            // 鼠标离开tooltip容器，启动延迟隐藏
-            this._mouseLeaveTimer = setTimeout(() => {
-                this.hide();
-            }, 100);
-        };
-
-        this._container.addEventListener(
-            "mouseenter",
-            this._onContainerMouseEnter
-        );
-
-        this._container.addEventListener(
-            "mouseleave",
-            this._onContainerMouseLeave
-        );
+        document.removeEventListener("click", this._onDocumentClick, true);
+        document.removeEventListener("keydown", this._onEscapeKeyPress);
     }
 
     /**
@@ -353,6 +305,10 @@ export class Tooltip {
         if (this._delayHideTimer) {
             clearTimeout(this._delayHideTimer);
             this._delayHideTimer = undefined;
+        }
+        if (this._mouseLeaveTimer) {
+            clearTimeout(this._mouseLeaveTimer);
+            this._mouseLeaveTimer = undefined;
         }
     }
     /**
@@ -574,11 +530,10 @@ export class Tooltip {
         if (this._isVisible) return;
         // 停止任何正在进行的隐藏动画
         this._hideAnimation?.pause();
-
         // 清理之前的延迟隐藏定时器
         this._clearDelayHideTimer();
         // 设置外部事件监听器
-        this._setupEventListeners();
+        this._addEventListeners();
 
         // 先同步计算显示位置，确保定位准确
         await this._updatePosition(true, true);
@@ -664,35 +619,10 @@ export class Tooltip {
 
         this._isVisible = false;
         options.onHide?.();
-
-        // 移除容器事件监听器
-        this._removeContainerEventListeners();
-    }
-    /**
-     * 移除tooltip容器的事件监听器
-     */
-    private _removeContainerEventListeners(): void {
-        if (!this._container) return;
-        if (this._onContainerMouseEnter) {
-            this._container.removeEventListener(
-                "mouseenter",
-                this._onContainerMouseEnter
-            );
-            this._onContainerMouseEnter = undefined;
-        }
-
-        if (this._onContainerMouseLeave) {
-            this._container.removeEventListener(
-                "mouseleave",
-                this._onContainerMouseLeave
-            );
-            this._onContainerMouseLeave = undefined;
-        }
     }
     destroy() {
         this.hide();
         this._removeEventListeners();
-        this._removeContainerEventListeners();
         this.controller.themeproContainer?.removeChild(this.container);
     }
 }
