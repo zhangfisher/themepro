@@ -28,12 +28,11 @@ import type { LitElement } from "lit";
 import { parseObjectFromAttr } from "@/utils/parseObjectFromAttr";
 import type { TooltipControllerOptions, TooltipPlacement } from "./types";
 import { TooltipManager } from "./manager";
-import { Tooltip } from "./tooltip";
 export class TooltipController implements ReactiveController {
     host: ReactiveControllerHost;
     options: TooltipControllerOptions;
 
-    tooltips: TooltipManager = new TooltipManager();
+    tooltips: TooltipManager = new TooltipManager(this);
     private _mouseLeaveTimer?: NodeJS.Timeout;
     private _tooltipDelegateHandler?: (e: Event) => void;
     private _onMouseMove?: (e: MouseEvent) => void;
@@ -207,16 +206,17 @@ export class TooltipController implements ReactiveController {
             // 处理data-tooltip元素的进入和离开事件
             if (tooltipElement) {
                 // 该元素已经在overTooltips中
-                if (!this.tooltips.has(tooltipElement)) {
+                if (this.tooltips.has(tooltipElement)) {
+                    this.tooltips.get(tooltipElement)?.show();
+                } else {
                     // 马上隐藏已经显示的Tooltip
                     this.tooltips.hide();
-                    // 该元素已经在overTooltips中
-                    const tooltip = new Tooltip(tooltipElement, this, {
-                        ...this.options,
-                        trigger: "mouseover",
-                    });
-                    this.tooltips.push(tooltip);
-                    tooltip.show();
+                    this.tooltips
+                        .add(tooltipElement, {
+                            ...this.options,
+                            trigger: "mouseover",
+                        })
+                        .show();
                 }
             }
         };

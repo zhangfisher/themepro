@@ -45,11 +45,12 @@ export class Tooltip {
                 arrow: true,
                 trigger: "mouseover",
                 delayHide: 0,
+                cache: false,
             },
             options
         );
         this._parseAttrOptions();
-        this._init();
+        this._initElements();
     }
     get ref() {
         return this.el.deref()!;
@@ -80,7 +81,7 @@ export class Tooltip {
         }
         return this._target!;
     }
-    private _init() {
+    private _initElements() {
         const content = this._getTooltipContent();
         if (content) {
             this._container = this._createTooltipContainer();
@@ -232,6 +233,12 @@ export class Tooltip {
             this.show();
         }
     }
+
+    private _onMouseEnter = (e: any) => {
+        e.stopPropagation();
+        clearTimeout(this._mouseLeaveTimer);
+    };
+
     private _onMouseLeave = (e: any) => {
         e.stopPropagation();
         clearTimeout(this._mouseLeaveTimer);
@@ -239,18 +246,15 @@ export class Tooltip {
             this.hide();
         }, 100);
     };
-    private _onMouseEnter = (e: any) => {
-        e.stopPropagation();
-        clearTimeout(this._mouseLeaveTimer);
-    };
     private _onEscapeKeyPress = (e: KeyboardEvent) => {
         if (e.key === "Escape" && this._isVisible) {
             this.hide();
         }
     };
+
     private _onDocumentClick = (e: Event) => {
         const path = e.composedPath();
-        if (!path.includes(this.host) && !path.includes(this.container)) {
+        if (!path.includes(this.ref) && !path.includes(this.container)) {
             this.hide();
         }
     };
@@ -555,7 +559,7 @@ export class Tooltip {
         this._setDelayHide();
     }
     /**
-     * 设置延迟隐藏
+     * 设置自动延迟隐藏
      */
     private _setDelayHide() {
         if (this.options.delayHide && this.options.delayHide > 0) {
@@ -601,7 +605,6 @@ export class Tooltip {
                 container.style.visibility = "hidden";
                 container.style.pointerEvents = "none";
                 this._hideAnimation = undefined;
-                this._removeEventListeners();
             });
         } else {
             // 如果动画对象异常，直接执行完成逻辑
@@ -609,16 +612,20 @@ export class Tooltip {
                 container.style.visibility = "hidden";
                 container.style.pointerEvents = "none";
                 this._hideAnimation = undefined;
-                this._removeEventListeners();
             }, options.animationDuration || options.animationDuration!);
         }
+        this._removeEventListeners();
 
         this._isVisible = false;
         options.onHide?.();
     }
     destroy() {
-        this.hide();
         this._removeEventListeners();
-        this.controller.themeproContainer?.removeChild(this.container);
+        if (!this.options.cache) {
+            setTimeout(() => {
+                this.controller.themeproContainer?.removeChild(this.container);
+                this.controller.tooltips.remove(this);
+            });
+        }
     }
 }

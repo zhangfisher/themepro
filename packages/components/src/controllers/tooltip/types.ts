@@ -50,6 +50,10 @@ export interface TooltipControllerOptions {
      */
     delayHide?: number;
     /**
+     * 是否缓存tooltip组件，默认为 false
+     */
+    cache?: boolean;
+    /**
      * 将选定元素的Tooltip转移到其他元素
      */
     transfer?: string;
