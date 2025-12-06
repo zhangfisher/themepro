@@ -18,7 +18,7 @@ import { parseObjectFromAttr } from "@/utils/parseObjectFromAttr";
 import { getDatasetFromElement } from "@/utils/getDatasetFromElement";
 
 export class Tooltip {
-    options: TooltipControllerOptions;
+    options: Required<TooltipControllerOptions>;
     private _container?: HTMLElement;
     private _arrowElement?: HTMLElement;
     private _showAnimation?: any;
@@ -48,7 +48,7 @@ export class Tooltip {
                 cache: false,
             },
             options
-        );
+        ) as Required<TooltipControllerOptions>;
         this._parseAttrOptions();
         this._initElements();
     }
@@ -127,25 +127,14 @@ export class Tooltip {
      *
      *
      */
-    private _getTooltipContent(): string | undefined {
+    private _getTooltipContent(): string | HTMLElement | undefined {
         const tooltipAttr = this.ref.getAttribute("data-tooltip");
         if (!tooltipAttr) return;
 
         // 检查是否是slot引用：slot::<slotname>
         if (tooltipAttr.startsWith("slot://")) {
             const slotName = tooltipAttr.substring(7); // 去掉 "slot::"
-            const slotNodes = getSlotNodes(
-                this.controller.host as LitElement,
-                slotName
-            );
-            if (slotNodes.length > 0) {
-                // 将slot内容转换为HTML字符串
-                const tempDiv = document.createElement("div");
-                slotNodes.forEach((node) => {
-                    tempDiv.appendChild(node.cloneNode(true));
-                });
-                return tempDiv.innerHTML;
-            }
+            return this._getHostSlotContent(slotName);
         } else if (tooltipAttr.startsWith("query://")) {
             const query = tooltipAttr.substring(8);
             const queryResult = this.ref.querySelector(query);
@@ -156,11 +145,17 @@ export class Tooltip {
             return tooltipAttr;
         }
     }
+    private _getHostSlotContent(slotName: string) {
+        const slot = this.host.querySelector(`[slot='${slotName}']`);
+        if (slot instanceof HTMLElement) {
+            return slot.cloneNode(true) as HTMLElement;
+        }
+    }
 
     /**
      * 设置tooltip内容
      */
-    private _setTooltipContent(content: string): void {
+    private _setTooltipContent(content: string | HTMLElement): void {
         if (!this._container) return;
 
         // 清除之前的内容（保留箭头元素）
@@ -178,7 +173,12 @@ export class Tooltip {
         // 创建内容包装器
         const contentWrapper = document.createElement("div");
         contentWrapper.classList.add("tooltip-content");
-        contentWrapper.innerHTML = content;
+        if (typeof content === "string") {
+            contentWrapper.innerHTML = content;
+        } else {
+            content.innerHTML = content.innerHTML.replaceAll(/\n/g, "").trim();
+            contentWrapper.appendChild(content);
+        }
         this._container.appendChild(contentWrapper);
     }
     /**
@@ -243,6 +243,12 @@ export class Tooltip {
         e.stopPropagation();
         clearTimeout(this._mouseLeaveTimer);
         this._mouseLeaveTimer = setTimeout(() => {
+            // 如果单击显示模式启用了延迟隐藏，则等待延迟时间后再隐藏提示框
+            if (
+                this.options.delayHide > 0 &&
+                this.options.trigger === "click"
+            ) {
+            }
             this.hide();
         }, 100);
     };
@@ -605,6 +611,7 @@ export class Tooltip {
                 container.style.visibility = "hidden";
                 container.style.pointerEvents = "none";
                 this._hideAnimation = undefined;
+                this.destroy();
             });
         } else {
             // 如果动画对象异常，直接执行完成逻辑
@@ -612,9 +619,9 @@ export class Tooltip {
                 container.style.visibility = "hidden";
                 container.style.pointerEvents = "none";
                 this._hideAnimation = undefined;
+                this.destroy();
             }, options.animationDuration || options.animationDuration!);
         }
-        this._removeEventListeners();
 
         this._isVisible = false;
         options.onHide?.();
