@@ -1,0 +1,58 @@
+{
+	"name": "themepro",
+	"module": "src/index.ts",
+	"type": "module",
+	"version": "1.0.7",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/zhangfisher/themepro.git"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.umd.js"
+		},
+		"./index.css": {
+			"import": "./dist/index.css",
+			"require": "./dist/index.css"
+		},
+		"./themes/*.css": {
+			"import": "./dist/*.css",
+			"require": "./dist/*.css"
+		}
+	},
+	"files": [
+		"dist",
+		"readme.md"
+	],
+	"scripts": {
+		"dev": "vite",
+		"storybook": "storybook dev -p 6006 --no-open",
+		"build": "bun run build:css && tsup",
+		"build:css": "lessc src/styles/index.less dist/index.css",
+		"build:storybook": "storybook build"
+	},
+	"devDependencies": {
+		"@storybook/addon-docs": "^9.1.10",
+		"@storybook/web-components-vite": "^9.1.10",
+		"@types/bun": "1.2.22",
+		"esbuild-copy-files-plugin": "^1.2.1",
+		"less": "^4.4.1",
+		"lit": "^3.3.1",
+		"storybook": "^9.1.10",
+		"tsup": "^8.5.0",
+		"typescript": "^5.9.3",
+		"vanilla-picker": "^2.12.3",
+		"vite": "^7.1.7",
+		"vite-plugin-cp": "^6.0.3",
+		"vitepress": "^1.6.4",
+		"vitepress-demo-plugin": "^1.4.7"
+	},
+	"peerDependencies": {},
+	"dependencies": {
+		"@ant-design/fast-color": "^3.0.0",
+		"@yosulramp/material-color-palette-js": "^1.0.4"
+	},
+	"packageManager": "bun@1.2.23"
+}

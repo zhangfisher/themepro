@@ -1,0 +1,148 @@
+.auto-alert {
+    border: var(--auto-border);
+    border-radius: var(--auto-border-radius);
+    box-shadow: var(--auto-shadow);
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    font-size: var(--auto-font-size);
+    padding: var(--auto-spacing);
+    background: var(--auto-panel-bgcolor);
+    border: var(--auto-border);
+    color: var(--auto-color);
+    padding-left: calc(3em + var(--auto-spacing));
+
+    &:after {
+        content: ' ';
+        left: var(--auto-spacing);
+        top: 50%;
+        transform: translateY(-50%);
+        mask-image: var(--auto-icon-info);
+        mask-size: cover;
+        width: 2em;
+        height: 2em;
+        position: absolute;
+        background-color: var(--auto-color);
+    }
+
+    &>.title {
+        font: var(--auto-title-font);
+        color: var(--auto-panel-header-color);
+        display: flex;
+        align-items: center;
+        padding-bottom: calc(0.5 * var(--auto-spacing));
+        justify-content: space-between;
+
+        &:first-child {
+            flex-grow: 1;
+        }
+
+        &>.closeable {
+            flex-shrink: 0;
+        }
+    }
+
+    &>.closeable {
+        position: absolute;
+        right: var(--auto-spacing);
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    &.warning {
+        background: color-mix(in srgb, var(--t-color-warning), white 90%);
+        border: 1px solid color-mix(in srgb, var(--t-color-warning), white 50%);
+        color: var(--t-color-warning);
+
+        &:after {
+            background-color: var(--t-color-warning);
+            mask-image: var(--auto-icon-alert);
+        }
+    }
+
+    &.success {
+        background: color-mix(in srgb, var(--t-color-success), white 90%);
+        border: 1px solid color-mix(in srgb, var(--t-color-success), white 50%);
+        color: var(--t-color-success);
+
+        &:after {
+            background-color: var(--t-color-success);
+            mask-image: var(--auto-icon-success);
+        }
+    }
+
+    &.primary {
+        background: color-mix(in srgb, var(--t-color-primary), white 90%);
+        border: 1px solid color-mix(in srgb, var(--t-color-primary), white 50%);
+        color: var(--t-color-primary);
+
+        &:after {
+            background-color: var(--t-color-primary);
+            mask-image: var(--auto-icon-focus);
+        }
+    }
+
+    &.error,
+    &.danger {
+        background: color-mix(in srgb, var(--t-color-danger), white 90%);
+        border: 1px solid color-mix(in srgb, var(--t-color-danger), white 50%);
+        color: var(--t-color-danger);
+
+        &:after {
+            background-color: var(--t-color-danger);
+            mask-image: var(--auto-icon-error);
+
+        }
+    }
+}
+
+:host([dark]),
+[dark] {
+    .auto-alert {
+        background: var(--auto-panel-bgcolor);
+        border: var(--auto-border);
+        color: var(--auto-color);
+
+        &.success {
+            background: var(--t-color-success);
+            border: 1px solid var(--t-color-success);
+            color: 1px solid color-mix(in srgb, var(--t-color-success), white 70%);
+
+            &:after {
+                background-color: color-mix(in srgb, var(--t-color-success), white 70%);
+            }
+        }
+
+        &.warning {
+            background: var(--t-color-warning);
+            border: 1px solid var(--t-color-warning);
+            color: color-mix(in srgb, var(--t-color-warning), white 70%);
+
+            &:after {
+                background-color: color-mix(in srgb, var(--t-color-warning), white 70%);
+            }
+        }
+
+        &.primary {
+            background: var(--t-color-primary);
+            border: 1px solid var(--t-color-primary);
+            color: color-mix(in srgb, var(--t-color-primary), white 70%);
+
+            &:after {
+                background-color: color-mix(in srgb, var(--t-color-primary), white 70%);
+            }
+        }
+
+        &.error,
+        &.danger {
+            background: var(--t-color-danger);
+            border: 1px solid var(--t-color-danger);
+            color: color-mix(in srgb, var(--t-color-danger), white 70%);
+
+            &:after {
+                background-color: color-mix(in srgb, var(--t-color-danger), white 70%);
+            }
+        }
+    }
+}

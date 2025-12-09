@@ -1,0 +1,65 @@
+.auto-input {
+    background: var(--auto-input-bgcolor);
+    border: var(--auto-input-border);
+    padding: var(--auto-input-padding);
+    border-radius: var(--auto-border-radius);
+    accent-color: var(--auto-primary-color);
+    font: var(--auto-font);
+
+    &:hover {
+        border: var(--auto-active-border);
+        transition: all 0.5s ease-in;
+    }
+
+    &:focus {
+        outline: none;
+        background: var(--t-theme-bgcolor-1);
+    }
+
+
+    &::placeholder {
+        color: var(--auto-border-color);
+    }
+
+    &[type=checkbox] {
+        cursor: pointer;
+    }
+}
+
+// 用来提供一个包含input的容器
+.auto-input-wrapper {
+    display: flex;
+    background: var(--auto-input-bgcolor);
+    border: var(--auto-input-border);
+    padding: var(--auto-input-padding);
+    border-radius: var(--auto-border-radius);
+
+    &:hover {
+        border: var(--auto-active-border);
+        transition: all 0.5s ease-in;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    .auto-input,
+    input {
+        border: none;
+        padding: 0;
+        border-radius: var(--auto-border-radius);
+        box-shadow: none;
+        flex-grow: 1;
+        min-width: 0;
+        font: var(--auto-font);
+        background: transparent;
+
+        &:focus {
+            outline: none;
+        }
+
+        &::placeholder {
+            color: var(--auto-border-color);
+        }
+    }
+}

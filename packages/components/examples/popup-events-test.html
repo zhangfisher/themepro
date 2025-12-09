@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popup Events Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            background: #fafafa;
+        }
+
+        .event-log {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .event-entry {
+            margin: 4px 0;
+            padding: 4px 8px;
+            border-radius: 3px;
+        }
+
+        .event-entry.show {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .event-entry.hide {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .dropdown-content {
+            padding: 12px;
+            background: white;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            min-width: 180px;
+        }
+
+        .dropdown-item {
+            padding: 8px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .dropdown-item:hover {
+            background: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Popup Events 测试</h1>
+        <p>测试popup控制器的自定义事件：popup:show 和 popup:hide</p>
+
+        <div class="test-section">
+            <h3>基础事件测试</h3>
+            <p>点击下面的按钮测试弹出层的显示和隐藏事件</p>
+
+            <!-- 这里应该使用实际的auto-dropdown组件 -->
+            <button id="testDropdown" style="margin: 10px; padding: 8px 16px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                点击测试事件
+            </button>
+
+            <div class="event-log" id="eventLog">
+                <div style="color: #666; font-style: italic;">事件日志将显示在这里...</div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>事件处理演示</h3>
+            <p>监听popup:show和popup:hide事件并处理</p>
+
+            <div id="eventInfo" style="padding: 15px; background: #e6f7ff; border: 1px solid #91d5ff; border-radius: 4px; margin-top: 15px;">
+                <strong>事件信息：</strong>
+                <div id="lastEventType">等待事件...</div>
+                <div id="eventTimestamp"></div>
+                <div id="containerInfo"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        // 模拟测试（实际应该导入和使用真实的auto-dropdown组件）
+        console.log('Popup Events Test Page');
+
+        const eventLog = document.getElementById('eventLog');
+        const lastEventType = document.getElementById('lastEventType');
+        const eventTimestamp = document.getElementById('eventTimestamp');
+        const containerInfo = document.getElementById('containerInfo');
+
+        // 清空日志
+        function clearLog() {
+            eventLog.innerHTML = '';
+        }
+
+        // 添加日志条目
+        function addLogEntry(type, data) {
+            const entry = document.createElement('div');
+            entry.className = `event-entry ${type}`;
+
+            const time = new Date().toLocaleTimeString();
+            entry.innerHTML = `[${time}] ${type.toUpperCase()}: ${JSON.stringify(data, null, 2)}`;
+
+            eventLog.appendChild(entry);
+            eventLog.scrollTop = eventLog.scrollHeight;
+        }
+
+        // 更新事件信息
+        function updateEventInfo(type, event) {
+            lastEventType.textContent = `最后事件: ${type}`;
+            eventTimestamp.textContent = `时间戳: ${new Date(event.detail.timestamp).toLocaleString()}`;
+
+            if (event.detail.container) {
+                containerInfo.textContent = `容器元素: ${event.detail.container.tagName} (类名: ${event.detail.container.className})`;
+            } else {
+                containerInfo.textContent = `容器元素: 未提供`;
+            }
+        }
+
+        // 监听popup:show事件
+        document.addEventListener('popup:show', (event) => {
+            console.log('popup:show event triggered', event);
+
+            addLogEntry('show', {
+                container: event.detail.container?.tagName,
+                timestamp: event.detail.timestamp
+            });
+
+            updateEventInfo('popup:show', event);
+        });
+
+        // 监听popup:hide事件
+        document.addEventListener('popup:hide', (event) => {
+            console.log('popup:hide event triggered', event);
+
+            addLogEntry('hide', {
+                container: event.detail.container?.tagName,
+                timestamp: event.detail.timestamp
+            });
+
+            updateEventInfo('popup:hide', event);
+        });
+
+        // 模拟按钮点击（在实际使用中，这里应该触发真实的auto-dropdown）
+        document.getElementById('testDropdown').addEventListener('click', () => {
+            clearLog();
+
+            // 模拟事件（在实际使用中，这些事件会由auto-dropdown组件触发）
+            const mockContainer = document.createElement('div');
+            mockContainer.className = 'popup-container';
+
+            const showEvent = new CustomEvent('popup:show', {
+                bubbles: true,
+                composed: true,
+                detail: {
+                    container: mockContainer,
+                    controller: null,
+                    timestamp: Date.now()
+                }
+            });
+
+            document.getElementById('testDropdown').dispatchEvent(showEvent);
+
+            // 模拟延迟后隐藏
+            setTimeout(() => {
+                const hideEvent = new CustomEvent('popup:hide', {
+                    bubbles: true,
+                    composed: true,
+                    detail: {
+                        container: mockContainer,
+                        controller: null,
+                        timestamp: Date.now()
+                    }
+                });
+
+                document.getElementById('testDropdown').dispatchEvent(hideEvent);
+            }, 3000);
+        });
+
+        // 页面加载说明
+        console.log(`
+Popup Events Test Guide:
+
+1. 真实使用方法：
+   - 使用auto-dropdown组件替代模拟按钮
+   - 组件会自动触发popup:show和popup:hide事件
+
+2. 事件数据结构：
+   - event.type: "popup:show" 或 "popup:hide"
+   - event.detail.container: 弹出层DOM元素引用
+   - event.detail.controller: PopupController实例引用
+   - event.detail.timestamp: 事件时间戳
+
+3. 事件监听示例：
+   document.addEventListener('popup:show', (event) => {
+     console.log('弹出层显示:', event.detail.container);
+   });
+
+   document.addEventListener('popup:hide', (event) => {
+     console.log('弹出层隐藏:', event.detail.container);
+   });
+
+4. 事件特性：
+   - bubbles: true (事件会冒泡)
+   - composed: true (事件可以跨Shadow DOM边界)
+        `);
+    </script>
+</body>
+</html>

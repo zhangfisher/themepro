@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoDropdown 修复验证</title>
+    <script type="module" src="../dist/index.js"></script>
+</head>
+<body>
+    <div style="padding: 20px; font-family: Arial, sans-serif;">
+        <h1>AutoDropdown dropdownContainer 修复验证</h1>
+
+        <h2>基础用法测试</h2>
+        <p>验证dropdownContainer是否正确找到并初始化</p>
+
+        <auto-dropdown label="点击测试" type="primary">
+            <div class="dropdown" style="padding: 8px 0; min-width: 160px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <div style="padding: 8px 16px; cursor: pointer;">选项 1</div>
+                <div style="padding: 8px 16px; cursor: pointer;">选项 2</div>
+                <div style="padding: 8px 16px; cursor: pointer;">选项 3</div>
+            </div>
+        </auto-dropdown>
+
+        <script>
+            // 监听dropdown初始化事件
+            document.addEventListener('DOMContentLoaded', () => {
+                const dropdown = document.querySelector('auto-dropdown');
+
+                // 监听点击事件来检查初始化状态
+                dropdown?.addEventListener('click', (e) => {
+                    console.log('Dropdown clicked:', e);
+                    // 检查是否正确初始化
+                    setTimeout(() => {
+                        const autoContainer = document.querySelector('.auto-container');
+                        if (autoContainer) {
+                            console.log('✅ auto-container 已创建');
+                            const popup = autoContainer.querySelector('.auto-dropdown-popup');
+                            if (popup) {
+                                console.log('✅ dropdown-popup 已创建');
+                                console.log('📦 popup children count:', popup.children.length);
+                            } else {
+                                console.log('❌ dropdown-popup 未找到');
+                            }
+                        } else {
+                            console.log('❌ auto-container 未创建');
+                        }
+                    }, 100);
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

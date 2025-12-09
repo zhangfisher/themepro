@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Themepro</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="/themepro/index.css" />
+        <link rel="stylesheet" type="text/css" href="/themepro/red.css" />
+        <link rel="stylesheet" type="text/css" href="/themepro/blue.css" />
+        <link rel="stylesheet" type="text/css" href="/themepro/dark.css" />
+        <link rel="stylesheet" href="/themepro/components.css" />
+        <script src="/themepro/index.global.js"></script>
+        <style>
+            .theme {
+                padding: 0.5em 1em;
+                background: white;
+                border: 1px solid #333;
+                cursor: pointer;
+                color: gray;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="background: var(--t-theme-bgcolor); text-align: center">
+            <div
+                style="
+                    margin: 1rem;
+                    padding: 0.5rem;
+                    background: var(--t-theme-bgcolor-2);
+                    text-align: center;
+                "
+            >
+                <div
+                    id="themes"
+                    style="
+                        padding: 1em;
+                        display: flex;
+                        gap: 0.5em;
+                        justify-content: center;
+                    "
+                >
+                    <div class="theme" style="background: white">Light</div>
+                    <div class="theme" style="background: #444">Dark</div>
+                    <div class="theme" style="background: blue">Blue</div>
+                    <div class="theme" style="background: red">Red</div>
+                </div>
+                <div
+                    id="sizes"
+                    style="
+                        display: flex;
+                        gap: 0.5em;
+                        margin: 1rem;
+                        padding: 0.5rem;
+                        text-align: center;
+                        justify-content: center;
+                    "
+                >
+                    <label class="size-input"
+                        ><input
+                            type="radio"
+                            name="size"
+                            value="x-small"
+                        />xsmall</label
+                    >
+                    <label class="size-input"
+                        ><input type="radio" name="size" value="small" />
+                        small</label
+                    >
+                    <label class="size-input"
+                        ><input
+                            type="radio"
+                            name="size"
+                            value="medium"
+                            checked
+                        />
+                        medium</label
+                    >
+                    <label class="size-input"
+                        ><input type="radio" name="size" value="large" />
+                        large</label
+                    >
+                    <label class="size-input"
+                        ><input type="radio" name="size" value="x-large" />
+                        xlarge</label
+                    >
+                </div>
+                <div
+                    id="spacing"
+                    style="
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.5em;
+                        margin: 1rem;
+                        padding: 0.5rem;
+                        text-align: center;
+                        justify-content: center;
+                    "
+                >
+                    <div>Auto</div>
+                    <div style="display: flex; gap: 0.5rem">
+                        <button class="auto-btn">取消</button>
+                        <button class="auto-btn primary">确定</button>
+                        <button class="auto-btn success">成功</button>
+                        <button class="auto-btn warning">保存</button>
+                        <button class="auto-btn danger">删除</button>
+                        <button class="auto-btn info">关闭</button>
+                    </div>
+                    <div>x-small</div>
+                    <div style="display: flex; gap: 0.5rem">
+                        <button class="auto-btn x-small">取消</button>
+                        <button class="auto-btn primary x-small">确定</button>
+                        <button class="auto-btn success x-small">成功</button>
+                        <button class="auto-btn warning x-small">保存</button>
+                        <button class="auto-btn danger x-small">删除</button>
+                        <button class="auto-btn info x-small">关闭</button>
+                    </div>
+                    <div>small</div>
+                    <div style="display: flex; gap: 0.5rem">
+                        <button class="auto-btn small">取消</button>
+                        <button class="auto-btn primary small">确定</button>
+                        <button class="auto-btn success small">成功</button>
+                        <button class="auto-btn warning small">保存</button>
+                        <button class="auto-btn danger small">删除</button>
+                        <button class="auto-btn info small">关闭</button>
+                    </div>
+                    <div>medium</div>
+                    <div style="display: flex; gap: 0.5rem">
+                        <button class="auto-btn medium">取消</button>
+                        <button class="auto-btn primary medium">确定</button>
+                        <button class="auto-btn success medium">成功</button>
+                        <button class="auto-btn warning medium">保存</button>
+                        <button class="auto-btn danger medium">删除</button>
+                        <button class="auto-btn info medium">关闭</button>
+                    </div>
+                    <div>large</div>
+                    <div style="display: flex; gap: 0.5rem">
+                        <button class="auto-btn large">取消</button>
+                        <button class="auto-btn primary large">确定</button>
+                        <button class="auto-btn success large">成功</button>
+                        <button class="auto-btn warning large">保存</button>
+                        <button class="auto-btn danger large">删除</button>
+                        <button class="auto-btn info large">关闭</button>
+                    </div>
+                    <div>x-large</div>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap">
+                        <button class="auto-btn x-large">取消</button>
+                        <button class="auto-btn primary x-large">确定</button>
+                        <button class="auto-btn success x-large">成功</button>
+                        <button class="auto-btn warning x-large">保存</button>
+                        <button class="auto-btn danger x-large">删除</button>
+                        <button class="auto-btn info x-large">关闭</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            const element = document.getElementById("themes");
+            element.addEventListener("click", (event) => {
+                document.documentElement.dataset.theme =
+                    event.target.innerText.toLowerCase();
+            });
+            const sizes = document.querySelector("#sizes");
+            sizes.addEventListener("change", (event) => {
+                const size = document.querySelector(
+                    "input[type=radio][name=size]:checked"
+                );
+                ThemePro.size = size.value;
+            });
+        </script>
+    </body>
+</html>

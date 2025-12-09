@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown 内容克隆修复验证</title>
+    <script type="module" src="../dist/index.js"></script>
+</head>
+<body>
+    <div style="padding: 20px; font-family: Arial, sans-serif;">
+        <h1>Dropdown 内容克隆修复验证</h1>
+
+        <h2>测试内容克隆</h2>
+        <p>验证 .dropdown-content 内部内容是否正确克隆到 _dropdownContainer</p>
+
+        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
+            <auto-dropdown id="test-dropdown-1" label="测试1" type="primary">
+                <div class="dropdown" style="padding: 8px 0; min-width: 160px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                    <div style="padding: 8px 16px; cursor: pointer; color: #1890ff;">🔵 选项 1</div>
+                    <div style="padding: 8px 16px; cursor: pointer; color: #52c41a;">🟢 选项 2</div>
+                    <div style="padding: 8px 16px; cursor: pointer; color: #faad14;">🟡 选项 3</div>
+                    <hr style="margin: 4px 0; border: none; border-top: 1px solid #e0e0e0;">
+                    <div style="padding: 8px 16px; cursor: pointer; color: #ff4d4f;">🔴 危险选项</div>
+                </div>
+            </auto-dropdown>
+
+            <auto-dropdown id="test-dropdown-2" label="测试2" type="info">
+                <ul style="padding: 8px 0; min-width: 140px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; list-style: none; margin: 0;">
+                    <li style="padding: 8px 16px; cursor: pointer;">📝 文档</li>
+                    <li style="padding: 8px 16px; cursor: pointer;">⚙️ 设置</li>
+                    <li style="padding: 8px 16px; cursor: pointer;">🚪 退出</li>
+                </ul>
+            </auto-dropdown>
+        </div>
+
+        <div id="log-output" style="margin-top: 20px; padding: 10px; background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 4px; font-family: monospace; font-size: 12px; max-height: 200px; overflow-y: auto;">
+            <strong>验证日志:</strong><br>
+        </div>
+
+        <div style="margin-top: 20px;">
+            <button onclick="testContentCloning()" style="padding: 10px 20px; background: #1890ff; color: white; border: none; cursor: pointer; border-radius: 4px; margin-right: 10px;">
+                验证内容克隆
+            </button>
+            <button onclick="clearLog()" style="padding: 10px 20px; background: #f0f0f0; border: 1px solid #ccc; cursor: pointer; border-radius: 4px;">
+                清空日志
+            </button>
+        </div>
+
+        <script>
+            const logOutput = document.getElementById('log-output');
+
+            function log(message) {
+                const timestamp = new Date().toLocaleTimeString();
+                logOutput.innerHTML += `[${timestamp}] ${message}<br>`;
+                logOutput.scrollTop = logOutput.scrollHeight;
+                console.log(message);
+            }
+
+            function clearLog() {
+                logOutput.innerHTML = '<strong>验证日志:</strong><br>';
+            }
+
+            function testContentCloning() {
+                log('🔍 开始验证内容克隆...');
+
+                // 检查 .themepro-container 是否存在
+                const themeproContainer = document.querySelector('.themepro-container');
+                if (themeproContainer) {
+                    log('✅ .themepro-container 存在');
+                } else {
+                    log('❌ .themepro-container 不存在');
+                    return;
+                }
+
+                // 检查所有 .popup 容器
+                const popupContainers = document.querySelectorAll('.themepro-container .popup');
+                log(`📦 找到 ${popupContainers.length} 个 .popup 容器`);
+
+                popupContainers.forEach((popup, index) => {
+                    const childCount = popup.children.length;
+                    log(`🎯 Popup ${index + 1}: ${childCount} 个子元素`);
+
+                    if (childCount > 0) {
+                        log(`✅ Popup ${index + 1} 包含克隆的内容`);
+
+                        // 列出前几个子元素的类型
+                        for (let i = 0; i < Math.min(3, popup.children.length); i++) {
+                            const child = popup.children[i];
+                            const tagName = child.tagName.toLowerCase();
+                            const hasContent = child.innerHTML.trim().length > 0;
+                            log(`   └─ ${tagName} ${hasContent ? '(有内容)' : '(空内容)'}`);
+                        }
+                    } else {
+                        log(`❌ Popup ${index + 1} 没有内容`);
+                    }
+                });
+
+                // 检查原始 .dropdown-content 是否保持隐藏
+                const originalContents = document.querySelectorAll('.dropdown-content');
+                let allHidden = true;
+
+                originalContents.forEach((content, index) => {
+                    const isHidden = content.style.visibility === 'hidden';
+                    const hasSlotContent = content.querySelector('slot') !== null;
+                    log(`📋 原始 dropdown-content ${index + 1}: ${isHidden ? '已隐藏' : '可见'} ${hasSlotContent ? '(有slot)' : '(无slot)'}`);
+                    if (!isHidden) allHidden = false;
+                });
+
+                if (allHidden) {
+                    log('✅ 所有原始 .dropdown-content 都保持 visibility: hidden 状态');
+                } else {
+                    log('❌ 部分 .dropdown-content 不是 visibility: hidden');
+                }
+
+                log('🎉 内容克隆验证完成');
+            }
+
+            // 监听组件初始化事件
+            document.addEventListener('DOMContentLoaded', () => {
+                log('🚀 页面加载完成，容器已创建但内容克隆延迟到点击时执行');
+
+                // 立即检查基础状态（点击前）
+                setTimeout(() => {
+                    const themeproContainer = document.querySelector('.themepro-container');
+                    const popupContainers = document.querySelectorAll('.themepro-container .popup');
+
+                    log(`📦 基础状态检查:`);
+                    log(`   .themepro-container 存在: ${themeproContainer ? '是' : '否'}`);
+                    log(`   .popup 容器数量: ${popupContainers.length}`);
+
+                    popupContainers.forEach((popup, index) => {
+                        const childCount = popup.children.length;
+                        log(`   Popup ${index + 1} 子元素数量: ${childCount} (应为0，因为还未点击)`);
+                    });
+
+                    log('💡 现在点击任意下拉菜单按钮来触发内容克隆');
+                }, 500);
+            });
+        </script>
+    </div>
+</body>
+</html>

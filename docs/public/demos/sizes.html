@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="blue">
+    <head>
+        <title>Themepro</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="/themepro/index.css" />
+        <link rel="stylesheet" type="text/css" href="/themepro/red.css" />
+        <link rel="stylesheet" type="text/css" href="/themepro/blue.css" />
+        <link rel="stylesheet" type="text/css" href="/themepro/dark.css" />
+        <link rel="stylesheet" href="/themepro/components.css" />
+        <script src="/themepro/index.global.js"></script>
+        <style>
+            .theme {
+                padding: 0.5em 1em;
+                background: white;
+                border: 1px solid #333;
+                cursor: pointer;
+                color: gray;
+            }
+            .size-input {
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <div style="background: var(--t-theme-bgcolor); text-align: center">
+            <div
+                id="sizes"
+                style="
+                    display: flex;
+                    gap: 0.5em;
+                    margin: 1rem;
+                    padding: 0.5rem;
+                    text-align: center;
+                    justify-content: center;
+                "
+            >
+                <label class="size-input"
+                    ><input
+                        type="radio"
+                        name="size"
+                        value="x-small"
+                    />xsmall</label
+                >
+                <label class="size-input"
+                    ><input type="radio" name="size" value="small" />
+                    small</label
+                >
+                <label class="size-input"
+                    ><input type="radio" name="size" value="medium" checked />
+                    medium</label
+                >
+                <label class="size-input"
+                    ><input type="radio" name="size" value="large" />
+                    large</label
+                >
+                <label class="size-input"
+                    ><input type="radio" name="size" value="x-large" />
+                    xlarge</label
+                >
+            </div>
+            <div
+                style="
+                    line-height: var(--auto-line-height);
+                    padding: 1rem;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    gap: 1rem;
+                "
+            >
+                <div
+                    style="
+                        font: var(--auto-font);
+                        padding: 1rem;
+                        border: var(--auto-border);
+                        background: var(--auto-panel-bgcolor);
+                    "
+                >
+                    font=var(--auto-font)
+                </div>
+                <div
+                    style="
+                        padding: 1rem;
+                        border: var(--auto-border);
+                        background: var(--auto-panel-bgcolor);
+                    "
+                >
+                    <div style="font-size: var(--t-font-size-x-small)">
+                        font-size=var(--t-font-size-x-small)
+                    </div>
+                    <div style="font-size: var(--t-font-size-small)">
+                        font-size=var(--t-font-size-small)
+                    </div>
+                    <div style="font-size: var(--t-font-size-medium)">
+                        font-size=var(--t-font-size-medium)
+                    </div>
+                    <div style="font-size: var(--t-font-size-large)">
+                        font-size=var(--t-font-size-large)
+                    </div>
+                    <div style="font-size: var(--t-font-size-x-large)">
+                        font-size=var(--t-font-size-x-large)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            const sizes = document.querySelector("#sizes");
+            sizes.addEventListener("change", (event) => {
+                const size = document.querySelector(
+                    "input[type=radio][name=size]:checked"
+                );
+                ThemePro.size = size.value;
+            });
+        </script>
+    </body>
+</html>

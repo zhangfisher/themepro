@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PopupController 内容克隆测试</title>
+    <script type="module" src="../dist/index.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        test-container {
+            display: block;
+            margin: 20px 0;
+        }
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        .log {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>PopupController 内容克隆功能测试</h1>
+
+    <div class="test-section">
+        <h2>基础内容克隆测试</h2>
+        <p>验证 PopupController 是否正确处理内容克隆</p>
+
+        <auto-dropdown id="basic-test" label="基础测试" type="primary">
+            <div style="padding: 12px; background: white; border: 1px solid #d9d9d9; border-radius: 6px;">
+                <p>这是克隆的内容</p>
+                <ul>
+                    <li>选项 1</li>
+                    <li>选项 2</li>
+                    <li>选项 3</li>
+                </ul>
+            </div>
+        </auto-dropdown>
+    </div>
+
+    <div class="test-section">
+        <h2>复杂内容克隆测试</h2>
+        <p>测试复杂 HTML 结构的内容克隆</p>
+
+        <auto-dropdown id="complex-test" label="复杂测试" type="success">
+            <div style="padding: 16px; background: white; border: 1px solid #d9d9d9; border-radius: 8px; min-width: 300px;">
+                <h4 style="margin: 0 0 12px 0; color: #52c41a;">📋 任务列表</h4>
+                <div style="margin-bottom: 12px;">
+                    <label style="display: block; margin-bottom: 4px;">
+                        <input type="checkbox" checked> 完成文档编写
+                    </label>
+                    <label style="display: block; margin-bottom: 4px;">
+                        <input type="checkbox"> 代码审查
+                    </label>
+                    <label style="display: block; margin-bottom: 4px;">
+                        <input type="checkbox"> 单元测试
+                    </label>
+                </div>
+                <button style="padding: 8px 16px; background: #52c41a; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                    添加新任务
+                </button>
+            </div>
+        </auto-dropdown>
+    </div>
+
+    <div class="test-section">
+        <h2>重复点击测试</h2>
+        <p>验证内容不会重复克隆</p>
+
+        <auto-dropdown id="repeat-test" label="重复点击测试" type="warning">
+            <div style="padding: 12px; background: white; border: 1px solid #d9d9d9; border-radius: 6px;">
+                <p id="content-counter">这个内容只应该被克隆一次</p>
+            </div>
+        </auto-dropdown>
+    </div>
+
+    <div id="test-log" class="log">
+        <strong>测试日志:</strong><br>
+    </div>
+
+    <script>
+        const log = document.getElementById('test-log');
+
+        function addLog(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+            log.innerHTML += `[${timestamp}] ${icon} ${message}<br>`;
+            log.scrollTop = log.scrollHeight;
+            console.log(message);
+        }
+
+        // 监听所有dropdown事件
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdowns = document.querySelectorAll('auto-dropdown');
+
+            dropdowns.forEach((dropdown, index) => {
+                dropdown.addEventListener('dropdown-show', () => {
+                    addLog(`Dropdown ${index + 1} 显示`, 'success');
+
+                    // 检查容器内容
+                    setTimeout(() => {
+                        const popupContainers = document.querySelectorAll('.themepro-container .popup');
+                        if (popupContainers[index]) {
+                            const childCount = popupContainers[index].children.length;
+                            addLog(`Popup ${index + 1} 包含 ${childCount} 个子元素`);
+
+                            if (childCount > 0) {
+                                addLog(`✅ 内容克隆成功`, 'success');
+
+                                // 特殊测试：检查重复点击
+                                if (dropdown.id === 'repeat-test') {
+                                    const counter = document.getElementById('content-counter');
+                                    if (counter) {
+                                        const clonedCount = document.querySelectorAll('#content-counter').length;
+                                        addLog(`#content-counter 元素数量: ${clonedCount}`);
+                                        if (clonedCount === 1) {
+                                            addLog(`✅ 无重复克隆`, 'success');
+                                        } else {
+                                            addLog(`❌ 存在重复克隆`, 'error');
+                                        }
+                                    }
+                                }
+                            } else {
+                                addLog(`❌ 内容克隆失败`, 'error');
+                            }
+                        }
+                    }, 100);
+                });
+
+                dropdown.addEventListener('dropdown-hide', () => {
+                    addLog(`Dropdown ${index + 1} 隐藏`);
+                });
+            });
+
+            addLog('🚀 测试环境初始化完成');
+            addLog('💡 请点击各个下拉菜单进行测试');
+        });
+    </script>
+</body>
+</html>

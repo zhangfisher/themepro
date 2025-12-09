@@ -1,0 +1,72 @@
+// 卡片
+.auto-card {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    background: var(--auto-panel-bgcolor);
+    color: var(--auto-color);
+    border-radius: var(--auto-border-radius);
+    box-shadow: var(--auto-shadow);
+    border: var(--auto-border);
+    padding: 0;
+    box-sizing: border-box;
+
+    &>.auto-card-header {
+        display: flex;
+        position: relative;
+        flex-direction: row;
+        align-items: center;
+        padding: calc(0.5 * var(--auto-spacing));
+        border-radius: var(--auto-border-radius) var(--auto-border-radius) 0 0;
+        flex-shrink: 0;
+        font: var(--auto-title-font);
+        color: var(--auto-panel-header-color);
+        background-color: var(--auto-panel-header-bgcolor);
+
+        &>.auto-card-title {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        &>* {
+            flex-grow: 1;
+        }
+
+        &>.closeable {
+            flex-shrink: 0 !important;
+            flex-grow: 0 !important;
+            margin-left: auto;
+        }
+    }
+
+    &>.auto-card-body {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        flex: 1 1 auto;
+        padding: var(--auto-spacing);
+        min-height: 0;
+    }
+
+    &>.auto-card-body:not(:has(+ .auto-card-footer)) {
+        border-radius: 0 0 var(--auto-border-radius) var(--auto-border-radius);
+    }
+
+    &>.auto-card-footer {
+        padding: calc(0.8 * var(--auto-spacing));
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        display: flex;
+        position: relative;
+        flex-direction: row;
+        align-items: center;
+        border-top: var(--auto-border);
+        border-radius: 0 0 var(--auto-border-radius) var(--auto-border-radius);
+
+        &>*[type='button'] {
+            margin-left: auto;
+            margin-right: 0;
+        }
+    }
+}

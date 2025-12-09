@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Themepro</title>    
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/themepro/index.css" />     
+        <link rel="stylesheet" type="text/css" href="/themepro/red.css" />
+        <link rel="stylesheet" type="text/css" href="/themepro/blue.css" />
+        <link rel="stylesheet" type="text/css" href="/themepro/dark.css" />
+        <link rel="stylesheet" href="/themepro/components.css" />
+        <script src="/themepro/index.global.js"></script>
+    <style>
+      .color {
+        margin-bottom: 0.2rem;
+        font-size: 0.6rem;
+        padding: 0.5rem;
+        text-align: center;
+        color: #aaa;
+        cursor: pointer;
+      }
+      .color:hover {
+        outline: 2px solid #ccc;
+      }
+      .colors {
+        box-sizing: border-box;
+        width: calc(16.66% - 0.2rem);
+      }
+      .color-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.2rem;
+        margin: auto;
+      } 
+      .neutral-colors{
+        display:flex;padding:0.5em; flex-direction:row;margin:0.5em;gap:0.5em;
+      }
+      .neutral-colors .color {
+        color: #aaa;
+      }
+    </style>
+  </head>
+  <body >
+     
+    
+    <div class="color-container" style="padding: 1rem; box-sizing: border-box">
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-gray-0)">
+          gray-0
+        </div>
+        <div class="color" style="background: var(--t-color-gray-1)">
+          gray-1
+        </div>
+        <div class="color" style="background: var(--t-color-gray-2)">
+          gray-2
+        </div>
+        <div class="color" style="background: var(--t-color-gray-3)">
+          gray-3
+        </div>
+        <div class="color" style="background: var(--t-color-gray-4)">
+          gray-4
+        </div>
+        <div class="color" style="background: var(--t-color-gray-5)">
+          gray-5
+        </div>
+        <div class="color" style="background: var(--t-color-gray-6)">
+          gray-6
+        </div>
+        <div class="color" style="background: var(--t-color-gray-7)">
+          gray-7
+        </div>
+        <div class="color" style="background: var(--t-color-gray-8)">
+          gray-8
+        </div>
+        <div class="color" style="background: var(--t-color-gray-9)">
+          gray-9
+        </div>
+        <div class="color" style="background: var(--t-color-gray-10)">
+          gray-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-red-0)">
+          red-0
+        </div>
+        <div class="color" style="background: var(--t-color-red-1)">
+          red-1
+        </div>
+        <div class="color" style="background: var(--t-color-red-2)">
+          red-2
+        </div>
+        <div class="color" style="background: var(--t-color-red-3)">
+          red-3
+        </div>
+        <div class="color" style="background: var(--t-color-red-4)">
+          red-4
+        </div>
+        <div class="color" style="background: var(--t-color-red-5)">
+          red-5
+        </div>
+        <div class="color" style="background: var(--t-color-red-6)">
+          red-6
+        </div>
+        <div class="color" style="background: var(--t-color-red-7)">
+          red-7
+        </div>
+        <div class="color" style="background: var(--t-color-red-8)">
+          red-8
+        </div>
+        <div class="color" style="background: var(--t-color-red-9)">
+          red-9
+        </div>
+        <div class="color" style="background: var(--t-color-red-10)">
+          red-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-orange-0)">
+          orange-0
+        </div>
+        <div class="color" style="background: var(--t-color-orange-1)">
+          orange-1
+        </div>
+        <div class="color" style="background: var(--t-color-orange-2)">
+          orange-2
+        </div>
+        <div class="color" style="background: var(--t-color-orange-3)">
+          orange-3
+        </div>
+        <div class="color" style="background: var(--t-color-orange-4)">
+          orange-4
+        </div>
+        <div class="color" style="background: var(--t-color-orange-5)">
+          orange-5
+        </div>
+        <div class="color" style="background: var(--t-color-orange-6)">
+          orange-6
+        </div>
+        <div class="color" style="background: var(--t-color-orange-7)">
+          orange-7
+        </div>
+        <div class="color" style="background: var(--t-color-orange-8)">
+          orange-8
+        </div>
+        <div class="color" style="background: var(--t-color-orange-9)">
+          orange-9
+        </div>
+        <div class="color" style="background: var(--t-color-orange-10)">
+          orange-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-amber-0)">
+          amber-0
+        </div>
+        <div class="color" style="background: var(--t-color-amber-1)">
+          amber-1
+        </div>
+        <div class="color" style="background: var(--t-color-amber-2)">
+          amber-2
+        </div>
+        <div class="color" style="background: var(--t-color-amber-3)">
+          amber-3
+        </div>
+        <div class="color" style="background: var(--t-color-amber-4)">
+          amber-4
+        </div>
+        <div class="color" style="background: var(--t-color-amber-5)">
+          amber-5
+        </div>
+        <div class="color" style="background: var(--t-color-amber-6)">
+          amber-6
+        </div>
+        <div class="color" style="background: var(--t-color-amber-7)">
+          amber-7
+        </div>
+        <div class="color" style="background: var(--t-color-amber-8)">
+          amber-8
+        </div>
+        <div class="color" style="background: var(--t-color-amber-9)">
+          amber-9
+        </div>
+        <div class="color" style="background: var(--t-color-amber-10)">
+          amber-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-yellow-0)">
+          yellow-0
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-1)">
+          yellow-1
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-2)">
+          yellow-2
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-3)">
+          yellow-3
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-4)">
+          yellow-4
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-5)">
+          yellow-5
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-6)">
+          yellow-6
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-7)">
+          yellow-7
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-8)">
+          yellow-8
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-9)">
+          yellow-9
+        </div>
+        <div class="color" style="background: var(--t-color-yellow-10)">
+          yellow-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-lime-0)">
+          lime-0
+        </div>
+        <div class="color" style="background: var(--t-color-lime-1)">
+          lime-1
+        </div>
+        <div class="color" style="background: var(--t-color-lime-2)">
+          lime-2
+        </div>
+        <div class="color" style="background: var(--t-color-lime-3)">
+          lime-3
+        </div>
+        <div class="color" style="background: var(--t-color-lime-4)">
+          lime-4
+        </div>
+        <div class="color" style="background: var(--t-color-lime-5)">
+          lime-5
+        </div>
+        <div class="color" style="background: var(--t-color-lime-6)">
+          lime-6
+        </div>
+        <div class="color" style="background: var(--t-color-lime-7)">
+          lime-7
+        </div>
+        <div class="color" style="background: var(--t-color-lime-8)">
+          lime-8
+        </div>
+        <div class="color" style="background: var(--t-color-lime-9)">
+          lime-9
+        </div>
+        <div class="color" style="background: var(--t-color-lime-10)">
+          lime-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-green-0)">
+          green-0
+        </div>
+        <div class="color" style="background: var(--t-color-green-1)">
+          green-1
+        </div>
+        <div class="color" style="background: var(--t-color-green-2)">
+          green-2
+        </div>
+        <div class="color" style="background: var(--t-color-green-3)">
+          green-3
+        </div>
+        <div class="color" style="background: var(--t-color-green-4)">
+          green-4
+        </div>
+        <div class="color" style="background: var(--t-color-green-5)">
+          green-5
+        </div>
+        <div class="color" style="background: var(--t-color-green-6)">
+          green-6
+        </div>
+        <div class="color" style="background: var(--t-color-green-7)">
+          green-7
+        </div>
+        <div class="color" style="background: var(--t-color-green-8)">
+          green-8
+        </div>
+        <div class="color" style="background: var(--t-color-green-9)">
+          green-9
+        </div>
+        <div class="color" style="background: var(--t-color-green-10)">
+          green-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-emerald-0)">
+          emerald-0
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-1)">
+          emerald-1
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-2)">
+          emerald-2
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-3)">
+          emerald-3
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-4)">
+          emerald-4
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-5)">
+          emerald-5
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-6)">
+          emerald-6
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-7)">
+          emerald-7
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-8)">
+          emerald-8
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-9)">
+          emerald-9
+        </div>
+        <div class="color" style="background: var(--t-color-emerald-10)">
+          emerald-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-teal-0)">
+          teal-0
+        </div>
+        <div class="color" style="background: var(--t-color-teal-1)">
+          teal-1
+        </div>
+        <div class="color" style="background: var(--t-color-teal-2)">
+          teal-2
+        </div>
+        <div class="color" style="background: var(--t-color-teal-3)">
+          teal-3
+        </div>
+        <div class="color" style="background: var(--t-color-teal-4)">
+          teal-4
+        </div>
+        <div class="color" style="background: var(--t-color-teal-5)">
+          teal-5
+        </div>
+        <div class="color" style="background: var(--t-color-teal-6)">
+          teal-6
+        </div>
+        <div class="color" style="background: var(--t-color-teal-7)">
+          teal-7
+        </div>
+        <div class="color" style="background: var(--t-color-teal-8)">
+          teal-8
+        </div>
+        <div class="color" style="background: var(--t-color-teal-9)">
+          teal-9
+        </div>
+        <div class="color" style="background: var(--t-color-teal-10)">
+          teal-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-cyan-0)">
+          cyan-0
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-1)">
+          cyan-1
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-2)">
+          cyan-2
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-3)">
+          cyan-3
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-4)">
+          cyan-4
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-5)">
+          cyan-5
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-6)">
+          cyan-6
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-7)">
+          cyan-7
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-8)">
+          cyan-8
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-9)">
+          cyan-9
+        </div>
+        <div class="color" style="background: var(--t-color-cyan-10)">
+          cyan-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-sky-0)">
+          sky-0
+        </div>
+        <div class="color" style="background: var(--t-color-sky-1)">
+          sky-1
+        </div>
+        <div class="color" style="background: var(--t-color-sky-2)">
+          sky-2
+        </div>
+        <div class="color" style="background: var(--t-color-sky-3)">
+          sky-3
+        </div>
+        <div class="color" style="background: var(--t-color-sky-4)">
+          sky-4
+        </div>
+        <div class="color" style="background: var(--t-color-sky-5)">
+          sky-5
+        </div>
+        <div class="color" style="background: var(--t-color-sky-6)">
+          sky-6
+        </div>
+        <div class="color" style="background: var(--t-color-sky-7)">
+          sky-7
+        </div>
+        <div class="color" style="background: var(--t-color-sky-8)">
+          sky-8
+        </div>
+        <div class="color" style="background: var(--t-color-sky-9)">
+          sky-9
+        </div>
+        <div class="color" style="background: var(--t-color-sky-10)">
+          sky-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-blue-0)">
+          blue-0
+        </div>
+        <div class="color" style="background: var(--t-color-blue-1)">
+          blue-1
+        </div>
+        <div class="color" style="background: var(--t-color-blue-2)">
+          blue-2
+        </div>
+        <div class="color" style="background: var(--t-color-blue-3)">
+          blue-3
+        </div>
+        <div class="color" style="background: var(--t-color-blue-4)">
+          blue-4
+        </div>
+        <div class="color" style="background: var(--t-color-blue-5)">
+          blue-5
+        </div>
+        <div class="color" style="background: var(--t-color-blue-6)">
+          blue-6
+        </div>
+        <div class="color" style="background: var(--t-color-blue-7)">
+          blue-7
+        </div>
+        <div class="color" style="background: var(--t-color-blue-8)">
+          blue-8
+        </div>
+        <div class="color" style="background: var(--t-color-blue-9)">
+          blue-9
+        </div>
+        <div class="color" style="background: var(--t-color-blue-10)">
+          blue-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-indigo-0)">
+          indigo-0
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-1)">
+          indigo-1
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-2)">
+          indigo-2
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-3)">
+          indigo-3
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-4)">
+          indigo-4
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-5)">
+          indigo-5
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-6)">
+          indigo-6
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-7)">
+          indigo-7
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-8)">
+          indigo-8
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-9)">
+          indigo-9
+        </div>
+        <div class="color" style="background: var(--t-color-indigo-10)">
+          indigo-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-violet-0)">
+          violet-0
+        </div>
+        <div class="color" style="background: var(--t-color-violet-1)">
+          violet-1
+        </div>
+        <div class="color" style="background: var(--t-color-violet-2)">
+          violet-2
+        </div>
+        <div class="color" style="background: var(--t-color-violet-3)">
+          violet-3
+        </div>
+        <div class="color" style="background: var(--t-color-violet-4)">
+          violet-4
+        </div>
+        <div class="color" style="background: var(--t-color-violet-5)">
+          violet-5
+        </div>
+        <div class="color" style="background: var(--t-color-violet-6)">
+          violet-6
+        </div>
+        <div class="color" style="background: var(--t-color-violet-7)">
+          violet-7
+        </div>
+        <div class="color" style="background: var(--t-color-violet-8)">
+          violet-8
+        </div>
+        <div class="color" style="background: var(--t-color-violet-9)">
+          violet-9
+        </div>
+        <div class="color" style="background: var(--t-color-violet-10)">
+          violet-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-purple-0)">
+          purple-0
+        </div>
+        <div class="color" style="background: var(--t-color-purple-1)">
+          purple-1
+        </div>
+        <div class="color" style="background: var(--t-color-purple-2)">
+          purple-2
+        </div>
+        <div class="color" style="background: var(--t-color-purple-3)">
+          purple-3
+        </div>
+        <div class="color" style="background: var(--t-color-purple-4)">
+          purple-4
+        </div>
+        <div class="color" style="background: var(--t-color-purple-5)">
+          purple-5
+        </div>
+        <div class="color" style="background: var(--t-color-purple-6)">
+          purple-6
+        </div>
+        <div class="color" style="background: var(--t-color-purple-7)">
+          purple-7
+        </div>
+        <div class="color" style="background: var(--t-color-purple-8)">
+          purple-8
+        </div>
+        <div class="color" style="background: var(--t-color-purple-9)">
+          purple-9
+        </div>
+        <div class="color" style="background: var(--t-color-purple-10)">
+          purple-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-fuchsia-0)">
+          fuchsia-0
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-1)">
+          fuchsia-1
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-2)">
+          fuchsia-2
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-3)">
+          fuchsia-3
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-4)">
+          fuchsia-4
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-5)">
+          fuchsia-5
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-6)">
+          fuchsia-6
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-7)">
+          fuchsia-7
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-8)">
+          fuchsia-8
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-9)">
+          fuchsia-9
+        </div>
+        <div class="color" style="background: var(--t-color-fuchsia-10)">
+          fuchsia-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-pink-0)">
+          pink-0
+        </div>
+        <div class="color" style="background: var(--t-color-pink-1)">
+          pink-1
+        </div>
+        <div class="color" style="background: var(--t-color-pink-2)">
+          pink-2
+        </div>
+        <div class="color" style="background: var(--t-color-pink-3)">
+          pink-3
+        </div>
+        <div class="color" style="background: var(--t-color-pink-4)">
+          pink-4
+        </div>
+        <div class="color" style="background: var(--t-color-pink-5)">
+          pink-5
+        </div>
+        <div class="color" style="background: var(--t-color-pink-6)">
+          pink-6
+        </div>
+        <div class="color" style="background: var(--t-color-pink-7)">
+          pink-7
+        </div>
+        <div class="color" style="background: var(--t-color-pink-8)">
+          pink-8
+        </div>
+        <div class="color" style="background: var(--t-color-pink-9)">
+          pink-9
+        </div>
+        <div class="color" style="background: var(--t-color-pink-10)">
+          pink-10
+        </div>
+      </div>
+      <div class="colors">
+        <div class="color" style="background: var(--t-color-rose-0)">
+          rose-0
+        </div>
+        <div class="color" style="background: var(--t-color-rose-1)">
+          rose-1
+        </div>
+        <div class="color" style="background: var(--t-color-rose-2)">
+          rose-2
+        </div>
+        <div class="color" style="background: var(--t-color-rose-3)">
+          rose-3
+        </div>
+        <div class="color" style="background: var(--t-color-rose-4)">
+          rose-4
+        </div>
+        <div class="color" style="background: var(--t-color-rose-5)">
+          rose-5
+        </div>
+        <div class="color" style="background: var(--t-color-rose-6)">
+          rose-6
+        </div>
+        <div class="color" style="background: var(--t-color-rose-7)">
+          rose-7
+        </div>
+        <div class="color" style="background: var(--t-color-rose-8)">
+          rose-8
+        </div>
+        <div class="color" style="background: var(--t-color-rose-9)">
+          rose-9
+        </div>
+        <div class="color" style="background: var(--t-color-rose-10)">
+          rose-10
+        </div>
+      </div>
+    </div>
+    </div>
+    <script>
+      document.querySelector('.color-container').addEventListener('click', function(event) {
+        // 检查点击的是否为.color元素
+        if (event.target.classList.contains('color')) {
+          // 获取背景颜色变量
+          const style = window.getComputedStyle(event.target);
+          const backgroundStyle = event.target.getAttribute('style');
+          const match = backgroundStyle.match(/background:\s*(var\([^)]+\))/);
+          
+          if (match && match[1]) {
+            const colorVariable = match[1];
+            
+            // 复制到剪贴板
+            navigator.clipboard.writeText(colorVariable)
+              .then(() => {
+                // 显示复制成功的提示
+                const originalText = event.target.innerHTML;
+                event.target.innerHTML = '已复制!';
+                
+                // 2秒后恢复原始文本
+                setTimeout(() => {
+                  event.target.innerHTML = originalText;
+                }, 1000);
+              })
+              .catch(err => {
+                console.error('复制失败:', err);
+              });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

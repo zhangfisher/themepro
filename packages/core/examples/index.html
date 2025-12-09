@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Themepro</title>
+        <script src="https://cdn.jsdelivr.net/npm/less@4.1.1"></script>
+        <script type="module" src="index.ts"></script>
+        <script type="module" src="card.ts"></script>
+        <script type="module" src="list.ts"></script>
+        <script type="module" src="controller.ts"></script>
+        <link rel="stylesheet" href="index.css" />
+        <!-- <link
+            rel="stylesheet"
+            href="https://unpkg.com/lucide-static@latest/font/lucide.css"
+        /> -->
+    </head>
+    <body>
+        <div>
+            <themepro-controller></themepro-controller>
+        </div>
+        <div class="themes row">
+            <span class="theme" style="background: #b5b5b5">Light</span>
+            <span class="theme" style="background: hsl(240 3.7% 44%)">
+                Dark
+            </span>
+            <span class="theme" style="background: #4096ff">Blue</span>
+            <span class="theme" style="background: #ff4d4f">Red</span>
+            <span class="theme" style="background: #52c41a">Green</span>
+            <span class="theme" style="background: #fa8c16">Orange</span>
+            <span class="theme" style="background: #ff7a45">Volcano</span>
+            <span class="theme" style="background: #fadb14">Yellow</span>
+            <span class="theme" style="background: #a0d911">Lime</span>
+            <span class="theme" style="background: #eb2f96">Magenta</span>
+            <span class="theme" style="background: #722ed1">Purple</span>
+        </div>
+        <div class="row">
+            <div class="auto-card">
+                <div class="auto-card-header">图标</div>
+                <div
+                    class="auto-card-body"
+                    style="flex-direction: column; gap: 0.5em"
+                >
+                    <div class="inline-row">
+                        <auto-icon name="home"></auto-icon>
+                        <auto-icon name="info"></auto-icon>
+                        <auto-icon name="close"></auto-icon>
+                        <auto-icon name="settings"></auto-icon>
+                        <auto-icon name="star"></auto-icon>
+                        <auto-icon name="tag"></auto-icon>
+                        <auto-icon name="yes"></auto-icon>
+                        <auto-icon name="no"></auto-icon>
+                        <auto-icon name="important"></auto-icon>
+                        <auto-icon name="file"></auto-icon>
+                        <auto-icon name="folder"></auto-icon>
+                        <auto-icon name="arrow"></auto-icon>
+                        <auto-icon name="folder-open"></auto-icon>
+                        <auto-icon name="checked"></auto-icon>
+                        <auto-icon name="unchecked"></auto-icon>
+                        <auto-icon name="save"></auto-icon>
+                        <auto-icon name="loading"></auto-icon>
+                        <auto-icon name="alert"></auto-icon>
+                    </div>
+                    <div class="inline-row" style="font-size: 2em">
+                        <auto-icon name="home" strokeWidth="2"></auto-icon>
+                        <auto-icon name="info" strokeWidth="2"></auto-icon>
+                        <auto-icon name="close" strokeWidth="2"></auto-icon>
+                        <auto-icon name="settings" strokeWidth="2"></auto-icon>
+                        <auto-icon
+                            title="star"
+                            name="star"
+                            strokeWidth="2"
+                        ></auto-icon>
+                        <auto-icon name="tag" strokeWidth="2"></auto-icon>
+                        <auto-icon name="yes" strokeWidth="2"></auto-icon>
+                        <auto-icon name="no" strokeWidth="2"></auto-icon>
+                        <auto-icon name="important" strokeWidth="2"></auto-icon>
+                        <auto-icon name="file" strokeWidth="2"></auto-icon>
+                        <auto-icon name="folder" strokeWidth="2"></auto-icon>
+                        <auto-icon name="arrow" strokeWidth="2"></auto-icon>
+                        <auto-icon
+                            name="folder-open"
+                            strokeWidth="2"
+                        ></auto-icon>
+                        <auto-icon name="checked" strokeWidth="2"></auto-icon>
+                        <auto-icon name="unchecked" strokeWidth="2"></auto-icon>
+                        <auto-icon name="save" strokeWidth="2"></auto-icon>
+                    </div>
+                    <div class="inline-row">
+                        <auto-loading>加载中</auto-loading>
+                        <auto-loading size="12px">加载中</auto-loading>
+                        <auto-loading size="24px">加载中</auto-loading>
+                        <auto-loading size="32px" color="red"
+                            >加载中</auto-loading
+                        >
+                        <auto-loading size="x-large">加载中</auto-loading>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="auto-card">
+                <div class="auto-card-header">按钮</div>
+                <div
+                    class="auto-card-body"
+                    style="flex-direction: column; gap: 0.5em"
+                >
+                    <div class="row">
+                        <auto-button icon="close" caret>启动</auto-button>
+                        <auto-button type="primary" icon="settings"
+                            >确定</auto-button
+                        >
+                        <auto-button type="success" icon="star"
+                            >成功</auto-button
+                        >
+                        <auto-button type="warning" icon="home" caret>
+                            保存</auto-button
+                        >
+                        <auto-button type="danger">删除</auto-button>
+                        <auto-button type="info" icon="folder-open"
+                            >打开文件</auto-button
+                        >
+                    </div>
+                    <div class="row">
+                        <auto-button icon="close">启动</auto-button>
+                        <auto-button
+                            type="primary"
+                            icon="settings"
+                        ></auto-button>
+                        <auto-button type="success" icon="star"></auto-button>
+                        <auto-button type="warning" icon="home" caret>
+                        </auto-button>
+                        <auto-button type="danger" icon="loading"></auto-button>
+                        <auto-button
+                            type="info"
+                            icon="folder-open"
+                        ></auto-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="auto-card">
+                <div class="auto-card-header">表单</div>
+                <div
+                    class="auto-card-body"
+                    style="flex-direction: column; gap: 0.5em"
+                >
+                    <input placeholder="请输入内容" />
+                    <label>
+                        <input type="checkbox" placeholder="请输入内容" />
+                        自动生成主题
+                    </label>
+                    <input placeholder="请输入内容" />
+                    <input placeholder="请输入内容" />
+                    <textarea placeholder="请输入内容" rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="list">
+                <div class="item">习近平深情瞻仰人民英雄纪念碑</div>
+                <div class="item auto-selected">
+                    <span>.auto-selected</span>天安门广场国庆升旗仪式
+                </div>
+                <div class="item auto-disabled">
+                    <span>.auto-disabled</span>一起祝新中国生日快乐
+                </div>
+                <div class="item selected">
+                    <span>.selected</span>国庆70周年阅兵
+                </div>
+                <div class="item hover">
+                    <span>.hover</span>中国正式成为安第斯共同体观察员国
+                </div>
+                <div class="item" style="color: var(--auto-secondary-color)">
+                    <span>--auto-secondary-color</span>
+                    天问二号最新影像！五星红旗与地球同框
+                </div>
+                <div class="item">特朗普再次威胁征收“电影关税”</div>
+                <div class="item" style="border: var(--auto-disable-border)">
+                    <span>--auto-disable-border</span>
+                    国庆主题曲《这一路》发布！今天，一起向祖国告白！
+                </div>
+                <div class="item" style="border: var(--auto-selected-border)">
+                    <span>--auto-selected-border</span>
+                    盛世同歌 风华正茂
+                </div>
+                <div class="item">以物述史 读懂故宫的“前世今生”</div>
+                <div class="item">超级黄金周展现流动中国活力和潜力</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="auto-card">
+                <div class="auto-card-header">颜色变量</div>
+                <div class="auto-card-body">
+                    <div class="row wrap">
+                        <span class="var" style="background: var(--auto-color)"
+                            >--auto-color</span
+                        >
+                        <span
+                            class="var"
+                            style="background: var(--auto-secondary-color)"
+                            >--auto-secondary-color</span
+                        >
+                        <span
+                            class="var"
+                            style="background: var(--auto-disable-color)"
+                            >--auto-disable-color</span
+                        >
+                        <span
+                            class="var"
+                            style="background: var(--auto-hover-color)"
+                        >
+                            --auto-hover-color</span
+                        >
+                        <span
+                            class="var"
+                            style="background: var(--auto-dark-color)"
+                            >--auto-dark-color</span
+                        >
+                        <span
+                            class="var"
+                            style="background: var(--auto-light-color)"
+                            >--auto-light-color</span
+                        >
+                        <span class="var" style="background: var(--auto-color)"
+                            >--auto-color</span
+                        >
+                        <span
+                            class="var"
+                            style="background: var(--auto-bgcolor)"
+                            >--auto-bgcolor</span
+                        >
+                        <span
+                            class="var"
+                            style="background: var(--auto-workspace-bgcolor)"
+                            >--auto-workspace-bgcolor</span
+                        >
+                        <span
+                            class="var"
+                            style="background: var(--auto-light-bgcolor)"
+                            >--auto-light-bgcolor</span
+                        ><span
+                            class="var"
+                            style="background: var(--auto-dark-bgcolor)"
+                            >--auto-dark-bgcolor</span
+                        >
+                        <span
+                            class="var"
+                            style="background: var(--auto-selected-bgcolor)"
+                            >--auto-selected-bgcolor</span
+                        ><span
+                            class="var"
+                            style="background: var(--auto-hover-bgcolor)"
+                            >--auto-hover-bgcolor</span
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <auto-card title="道德经">
+                道可道,非常道;名可名,非常名。无名天地之始,有名万物之母。故常无欲,以观其妙;常
+                有欲,以观其徼
+            </auto-card>
+            <auto-card title="道德经" data-theme="light">
+                道可道,非常道;名可名,非常名。无名天地之始,有名万物之母。故常无欲,以观其妙;常
+                有欲,以观其徼
+            </auto-card>
+            <auto-card title="道德经" data-theme="dark"
+                >道可道,非常道;名可名,非常名。无名天地之始,有名万物之母。故常无欲,以观其妙;常
+                有欲,以观其徼
+            </auto-card>
+            <auto-card title="道德经" data-theme="red"
+                >道可道,非常道;名可名,非常名。无名天地之始,有名万物之母。故常无欲,以观其妙;常
+                有欲,以观其徼
+            </auto-card>
+            <auto-card title="道德经" data-theme="blue"
+                >道可道,非常道;名可名,非常名。无名天地之始,有名万物之母。故常无欲,以观其妙;常
+                有欲,以观其徼
+            </auto-card>
+        </div>
+        <div class="col">
+            <div class="auto-alert">
+                卡片内容
+                <span class="closeable"></span>
+            </div>
+            <div class="auto-alert warning">
+                卡片内容:warning
+                <span class="closeable"></span>
+            </div>
+            <div class="auto-alert error">
+                卡片内容:error/danger<span class="closeable"></span>
+            </div>
+            <div class="auto-alert success">
+                卡片内容:success<span class="closeable"></span>
+            </div>
+            <div class="auto-alert primary">
+                <div class="title">
+                    卡片内容:primary<span class="closeable"></span>
+                </div>
+                <p>
+                    道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
+                    有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <auto-list>
+                <auto-list-item title="标题1">内容1</auto-list-item>
+                <auto-list-item title="标题2">内容2</auto-list-item>
+                <auto-list-item title="标题3">内容3</auto-list-item>
+            </auto-list>
+        </div>
+        <div class="row">
+            <div class="auto-card">
+                <div class="auto-card-header">颜色变量</div>
+                <div class="auto-card-body">
+                    道可道,非常道;名可名,非常名。无名天地之始,有名万物之母。故常无欲,以观其妙;常
+                    有欲,以观其徼
+                    <span class="var" style="background: var(--auto-color)"
+                        >--auto-color</span
+                    >
+                    <span class="var" style="background: var(--auto-bgcolor)"
+                        >--auto-bgcolor</span
+                    >
+                </div>
+            </div>
+        </div>
+        <div class="col" style="background: var(--auto-bgcolor)">
+            <div class="key-colors row">
+                <div class="color" style="background: var(--t-theme-color)">
+                    theme-color
+                </div>
+                <div class="color" style="background: var(--t-theme-bgcolor)">
+                    theme-bgcolor
+                </div>
+                <div class="color" style="background: var(--t-theme-bgcolor-1)">
+                    theme-bgcolor-1
+                </div>
+                <div class="color" style="background: var(--t-theme-bgcolor-2)">
+                    theme-bgcolor-2
+                </div>
+                <div class="color" style="background: var(--t-theme-bgcolor-3)">
+                    theme-bgcolor-3
+                </div>
+                <div class="color" style="background: var(--t-theme-bgcolor-4)">
+                    theme-bgcolor-4
+                </div>
+            </div>
+            <div class="key-colors">
+                <div class="color" style="background: var(--t-color-theme-0)">
+                    theme-0
+                </div>
+                <div class="color" style="background: var(--t-color-theme-1)">
+                    theme-1
+                </div>
+                <div class="color" style="background: var(--t-color-theme-2)">
+                    theme-2
+                </div>
+                <div class="color" style="background: var(--t-color-theme-3)">
+                    theme-3
+                </div>
+                <div class="color" style="background: var(--t-color-theme-4)">
+                    theme-4
+                </div>
+                <div class="color" style="background: var(--t-color-theme-5)">
+                    theme-5
+                </div>
+                <div class="color" style="background: var(--t-color-theme-6)">
+                    theme-6
+                </div>
+                <div class="color" style="background: var(--t-color-theme-7)">
+                    theme-7
+                </div>
+                <div class="color" style="background: var(--t-color-theme-8)">
+                    theme-8
+                </div>
+                <div class="color" style="background: var(--t-color-theme-9)">
+                    theme-9
+                </div>
+            </div>
+            <div class="key-colors">
+                <div class="color" style="background: var(--t-color-primary-0)">
+                    primary-0
+                </div>
+                <div class="color" style="background: var(--t-color-primary-1)">
+                    primary-1
+                </div>
+                <div class="color" style="background: var(--t-color-primary-2)">
+                    primary-2
+                </div>
+                <div class="color" style="background: var(--t-color-primary-3)">
+                    primary-3
+                </div>
+                <div class="color" style="background: var(--t-color-primary-4)">
+                    primary-4
+                </div>
+                <div class="color" style="background: var(--t-color-primary-5)">
+                    primary-5
+                </div>
+                <div class="color" style="background: var(--t-color-primary-6)">
+                    primary-6
+                </div>
+                <div class="color" style="background: var(--t-color-primary-7)">
+                    primary-7
+                </div>
+                <div class="color" style="background: var(--t-color-primary-8)">
+                    primary-8
+                </div>
+                <div class="color" style="background: var(--t-color-primary-9)">
+                    primary-9
+                </div>
+            </div>
+            <div class="key-colors">
+                <div class="color" style="background: var(--t-color-success-0)">
+                    success-0
+                </div>
+                <div class="color" style="background: var(--t-color-success-1)">
+                    success-1
+                </div>
+                <div class="color" style="background: var(--t-color-success-2)">
+                    success-2
+                </div>
+                <div class="color" style="background: var(--t-color-success-3)">
+                    success-3
+                </div>
+                <div class="color" style="background: var(--t-color-success-4)">
+                    success-4
+                </div>
+                <div class="color" style="background: var(--t-color-success-5)">
+                    success-5
+                </div>
+                <div class="color" style="background: var(--t-color-success-6)">
+                    success-6
+                </div>
+                <div class="color" style="background: var(--t-color-success-7)">
+                    success-7
+                </div>
+                <div class="color" style="background: var(--t-color-success-8)">
+                    success-8
+                </div>
+                <div class="color" style="background: var(--t-color-success-9)">
+                    success-9
+                </div>
+            </div>
+            <div class="key-colors">
+                <div class="color" style="background: var(--t-color-danger-0)">
+                    danger-0
+                </div>
+                <div class="color" style="background: var(--t-color-danger-1)">
+                    danger-1
+                </div>
+                <div class="color" style="background: var(--t-color-danger-2)">
+                    danger-2
+                </div>
+                <div class="color" style="background: var(--t-color-danger-3)">
+                    danger-3
+                </div>
+                <div class="color" style="background: var(--t-color-danger-4)">
+                    danger-4
+                </div>
+                <div class="color" style="background: var(--t-color-danger-5)">
+                    danger-5
+                </div>
+                <div class="color" style="background: var(--t-color-danger-6)">
+                    danger-6
+                </div>
+                <div class="color" style="background: var(--t-color-danger-7)">
+                    danger-7
+                </div>
+                <div class="color" style="background: var(--t-color-danger-8)">
+                    danger-8
+                </div>
+                <div class="color" style="background: var(--t-color-danger-9)">
+                    danger-9
+                </div>
+            </div>
+            <div class="key-colors">
+                <div class="color" style="background: var(--t-color-warning-0)">
+                    warning-0
+                </div>
+                <div class="color" style="background: var(--t-color-warning-1)">
+                    warning-1
+                </div>
+                <div class="color" style="background: var(--t-color-warning-2)">
+                    warning-2
+                </div>
+                <div class="color" style="background: var(--t-color-warning-3)">
+                    warning-3
+                </div>
+                <div class="color" style="background: var(--t-color-warning-4)">
+                    warning-4
+                </div>
+                <div class="color" style="background: var(--t-color-warning-5)">
+                    warning-5
+                </div>
+                <div class="color" style="background: var(--t-color-warning-6)">
+                    warning-6
+                </div>
+                <div class="color" style="background: var(--t-color-warning-7)">
+                    warning-7
+                </div>
+                <div class="color" style="background: var(--t-color-warning-8)">
+                    warning-8
+                </div>
+                <div class="color" style="background: var(--t-color-warning-9)">
+                    warning-9
+                </div>
+            </div>
+            <div class="key-colors">
+                <div class="color" style="background: var(--t-color-info-0)">
+                    info-0
+                </div>
+                <div class="color" style="background: var(--t-color-info-1)">
+                    info-1
+                </div>
+                <div class="color" style="background: var(--t-color-info-2)">
+                    info-2
+                </div>
+                <div class="color" style="background: var(--t-color-info-3)">
+                    info-3
+                </div>
+                <div class="color" style="background: var(--t-color-info-4)">
+                    info-4
+                </div>
+                <div class="color" style="background: var(--t-color-info-5)">
+                    info-5
+                </div>
+                <div class="color" style="background: var(--t-color-info-6)">
+                    info-6
+                </div>
+                <div class="color" style="background: var(--t-color-info-7)">
+                    info-7
+                </div>
+                <div class="color" style="background: var(--t-color-info-8)">
+                    info-8
+                </div>
+                <div class="color" style="background: var(--t-color-info-9)">
+                    info-9
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="themes">
+                <button class="auto-btn">Light</button>
+                <button class="auto-btn" variant="primary">Dark</button>
+                <button class="auto-btn" variant="success">Blue</button>
+                <button class="auto-btn" variant="warning">Red</button>
+                <button class="auto-btn" variant="warning">green</button>
+            </div>
+        </div>
+    </body>
+</html>

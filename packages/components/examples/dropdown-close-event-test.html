@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Dropdown 关闭事件测试</title>
+        <script type="module" src="../dist/index.js"></script>
+    </head>
+    <body>
+        <div style="padding: 20px; font-family: Arial, sans-serif">
+            <h1>Dropdown 关闭事件测试</h1>
+
+            <h2>持久化下拉菜单 - 事件关闭测试</h2>
+            <p>验证手动关闭按钮是否通过事件正确工作</p>
+
+            <div
+                style="
+                    display: flex;
+                    gap: 20px;
+                    flex-wrap: wrap;
+                    margin: 20px 0;
+                "
+            >
+                <auto-dropdown label="持久化菜单1" persistent type="danger">
+                    <div
+                        style="
+                            padding: 20px;
+                            min-width: 300px;
+                            background: white;
+                            border: 1px solid #d9d9d9;
+                            border-radius: 8px;
+                            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+                        "
+                    >
+                        <p
+                            style="
+                                margin: 0 0 16px 0;
+                                color: #666;
+                                line-height: 1.5;
+                            "
+                        >
+                            这是第一个持久化下拉菜单，使用事件方式关闭。
+                        </p>
+                        <div
+                            style="
+                                display: flex;
+                                gap: 8px;
+                                justify-content: flex-end;
+                            "
+                        >
+                            <button
+                                style="
+                                    padding: 8px 16px;
+                                    border: 1px solid #d9d9d9;
+                                    background: #fff;
+                                    cursor: pointer;
+                                    border-radius: 4px;
+                                "
+                                onclick="this.dispatchEvent(new CustomEvent('popup:close', { bubbles: true, composed: true }))"
+                            >
+                                手动关闭
+                            </button>
+                        </div>
+                    </div>
+                </auto-dropdown>
+
+                <auto-dropdown label="持久化菜单2" persistent type="warning">
+                    <div
+                        style="
+                            padding: 20px;
+                            min-width: 300px;
+                            background: white;
+                            border: 1px solid #d9d9d9;
+                            border-radius: 8px;
+                            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+                        "
+                    >
+                        <p
+                            style="
+                                margin: 0 0 16px 0;
+                                color: #666;
+                                line-height: 1.5;
+                            "
+                        >
+                            这是第二个持久化下拉菜单，使用不同样式的关闭按钮。
+                        </p>
+                        <div
+                            style="
+                                display: flex;
+                                gap: 8px;
+                                justify-content: flex-end;
+                            "
+                        >
+                            <button
+                                style="
+                                    padding: 8px 16px;
+                                    border: 1px solid #faad14;
+                                    background: #faad14;
+                                    color: white;
+                                    cursor: pointer;
+                                    border-radius: 4px;
+                                "
+                                onclick="this.dispatchEvent(new CustomEvent('popup:close', { bubbles: true, composed: true }))"
+                            >
+                                关闭菜单
+                            </button>
+                        </div>
+                    </div>
+                </auto-dropdown>
+            </div>
+
+            <h2>普通下拉菜单 - 对比测试</h2>
+            <p>普通下拉菜单点击外部可以关闭</p>
+
+            <div style="margin: 20px 0">
+                <auto-dropdown label="普通菜单" type="primary">
+                    <div
+                        style="
+                            padding: 12px;
+                            min-width: 200px;
+                            background: white;
+                            border: 1px solid #d9d9d9;
+                            border-radius: 6px;
+                        "
+                    >
+                        <div style="padding: 8px 16px; cursor: pointer">
+                            选项 1
+                        </div>
+                        <div style="padding: 8px 16px; cursor: pointer">
+                            选项 2
+                        </div>
+                        <hr
+                            style="
+                                margin: 4px 0;
+                                border: none;
+                                border-top: 1px solid #e0e0e0;
+                            "
+                        />
+                        <button
+                            style="
+                                padding: 6px 12px;
+                                margin: 4px;
+                                border: 1px solid #1890ff;
+                                background: #1890ff;
+                                color: white;
+                                cursor: pointer;
+                                border-radius: 4px;
+                                font-size: 12px;
+                            "
+                            onclick="this.dispatchEvent(new CustomEvent('popup:close', { bubbles: true, composed: true }))"
+                        >
+                            关闭
+                        </button>
+                    </div>
+                </auto-dropdown>
+            </div>
+
+            <div
+                id="log-output"
+                style="
+                    margin-top: 20px;
+                    padding: 10px;
+                    background: #f9f9f9;
+                    border: 1px solid #e0e0e0;
+                    border-radius: 4px;
+                    font-family: monospace;
+                    font-size: 12px;
+                    max-height: 200px;
+                    overflow-y: auto;
+                "
+            >
+                <strong>测试日志:</strong><br />
+            </div>
+
+            <div style="margin-top: 20px">
+                <button
+                    onclick="clearLog()"
+                    style="
+                        padding: 10px 20px;
+                        background: #f0f0f0;
+                        border: 1px solid #ccc;
+                        cursor: pointer;
+                        border-radius: 4px;
+                    "
+                >
+                    清空日志
+                </button>
+            </div>
+
+            <script>
+                const logOutput = document.getElementById("log-output");
+
+                function log(message) {
+                    const timestamp = new Date().toLocaleTimeString();
+                    logOutput.innerHTML += `[${timestamp}] ${message}<br>`;
+                    logOutput.scrollTop = logOutput.scrollHeight;
+                    console.log(message);
+                }
+
+                function clearLog() {
+                    logOutput.innerHTML = "<strong>测试日志:</strong><br>";
+                }
+
+                // 监听所有dropdown组件的事件
+                document.addEventListener("DOMContentLoaded", () => {
+                    const dropdowns =
+                        document.querySelectorAll("auto-dropdown");
+
+                    dropdowns.forEach((dropdown, index) => {
+                        dropdown.addEventListener("dropdown-show", () => {
+                            log(`📱 Dropdown ${index + 1} 显示`);
+                        });
+
+                        dropdown.addEventListener("dropdown-hide", () => {
+                            log(`📱 Dropdown ${index + 1} 隐藏`);
+                        });
+
+                        dropdown.addEventListener("dropdown-toggle", (e) => {
+                            log(
+                                `🔄 Dropdown ${index + 1} 切换: ${
+                                    e.detail.open ? "打开" : "关闭"
+                                }`
+                            );
+                        });
+
+                        dropdown.addEventListener("popup:close", () => {
+                            log(`❌ Dropdown ${index + 1} 关闭事件触发`);
+                        });
+                    });
+
+                    log("🚀 事件监听器已设置完成");
+                    log("💡 测试说明:");
+                    log(
+                        "   1. 点击持久化菜单的手动关闭按钮，观察是否触发关闭事件"
+                    );
+                    log("   2. 点击普通菜单，观察点击外部是否正常关闭");
+                    log("   3. 使用普通菜单中的关闭按钮，测试事件关闭功能");
+                });
+            </script>
+        </div>
+    </body>
+</html>

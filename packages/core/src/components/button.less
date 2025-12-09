@@ -1,0 +1,155 @@
+.auto-btn,
+.auto-btn button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: calc(0.8 * var(--auto-input-padding)) calc(2 * var(--auto-input-padding));
+    border-radius: var(--auto-border-radius);
+    font: var(--auto-font);
+    cursor: pointer;
+    color: var(--auto-color);
+    background: var(--auto-bgcolor);
+    box-shadow: var(--auto-shadow);
+    border: var(--auto-border);
+    box-sizing: border-box;
+    vertical-align: bottom;
+    gap: 0.3em;
+    user-select: none;
+    position: relative;
+
+    &:hover {
+        border: var(--auto-active-border);
+        background-color: var(--t-color-theme-1);
+        color: var(--auto-active-border-color);
+        outline: 4px solid var(--auto-active-border);
+    }
+
+    &:active {
+        background: var(--t-color-theme-2);
+    }
+
+    &.x-small {
+        font-size: var(--t-font-size-x-small);
+        padding: calc(0.5 * var(--t-spacing-x-small)) var(--t-spacing-x-small);
+    }
+
+    &.small {
+        font-size: var(--t-font-size-small);
+        padding: calc(0.5 * var(--t-spacing-small)) var(--t-spacing-small);
+    }
+
+    &.medium {
+        font-size: var(--t-font-size-medium);
+        padding: calc(0.5* var(--t-spacing-medium)) var(--t-spacing-medium);
+    }
+
+    &.large {
+        font-size: var(--t-font-size-large);
+        padding: calc(0.5* var(--t-spacing-large)) var(--t-spacing-large);
+    }
+
+    &.x-large {
+        font-size: var(--t-font-size-x-large);
+        padding: calc(0.5* var(--t-spacing-x-large)) var(--t-spacing-x-large);
+    }
+
+    &.compact {
+        padding: calc(0.3 * var(--auto-input-padding)) calc(0.5 * var(--auto-input-padding));
+    }
+
+    &.circle {
+        border-radius: 50%;
+        aspect-ratio: 1;
+        padding: var(--auto-input-padding);
+    }
+
+    &.pill {
+        border-radius: 9999px;
+    }
+
+    &.primary {
+        background-color: var(--auto-primary-color);
+        color: color-mix(in srgb, var(--auto-primary-color) 0%, white 100%);
+        border: 1px solid var(--auto-primary-color);
+
+        &:hover {
+            background-color: color-mix(in srgb, var(--t-color-primary), white 20%);
+        }
+
+        &:active {
+            background-color: color-mix(in srgb, var(--t-color-primary), white 30%);
+        }
+    }
+
+    &.success {
+        background-color: var(--t-color-success);
+        color: color-mix(in srgb, var(--t-color-success) 0%, white 100%);
+        border: 1px solid var(--t-color-success);
+
+        &:hover {
+            background-color: color-mix(in srgb, var(--t-color-success), white 10%);
+        }
+
+        &:active {
+            background-color: color-mix(in srgb, var(--t-color-success), white 20%);
+        }
+    }
+
+    &.warning {
+        background-color: var(--t-color-warning);
+        color: color-mix(in srgb, var(--t-color-warning) 0%, white 100%);
+        border: 1px solid var(--t-color-warning);
+
+        &:hover {
+            background-color: color-mix(in srgb, var(--t-color-warning), white 10%);
+        }
+
+        &:active {
+            background-color: color-mix(in srgb, var(--t-color-warning), white 20%);
+        }
+    }
+
+    &.error,
+    &.danger {
+        background-color: var(--t-color-danger);
+        color: color-mix(in srgb, var(--t-color-danger), white 100%);
+        border: 1px solid var(--t-color-danger);
+
+        &:hover {
+            background-color: color-mix(in srgb, var(--t-color-danger), white 10%);
+        }
+
+        &:active {
+            background-color: color-mix(in srgb, var(--t-color-danger), white 20%);
+        }
+    }
+
+    &.info {
+        background-color: var(--t-color-info);
+        color: color-mix(in srgb, var(--t-color-info) 0%, white 100%);
+        border: 1px solid var(--t-color-info-4);
+
+        &:hover {
+            background-color: color-mix(in srgb, var(--t-color-info), white 10%);
+        }
+
+        &:active {
+            background-color: color-mix(in srgb, var(--t-color-info), white 20%);
+        }
+    }
+}
+
+@keyframes clickEffect {
+    0% {
+        outline: 1px solid transparent;
+    }
+
+    50% {
+        outline: 8px solid var(--auto-theme-color-3);
+    }
+
+    100% {
+        outline: 1px solid transparent;
+    }
+}

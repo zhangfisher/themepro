@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Themepro</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="/themepro/index.css" />
+        <link rel="stylesheet" type="text/css" href="/themepro/red.css" />
+        <link rel="stylesheet" type="text/css" href="/themepro/blue.css" />
+        <link rel="stylesheet" type="text/css" href="/themepro/dark.css" />
+        <link rel="stylesheet" href="/themepro/components.css" />
+        <script src="/themepro/card.global.js"></script>
+        <script src="/themepro/list.global.js"></script>
+        <script src="/themepro/index.global.js"></script>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="/themepro/vanilla-picker.csp.css"
+        />
+        <script src="https://unpkg.com/vanilla-picker@2"></script>
+        <style>
+            .theme,
+            .custom-theme {
+                padding: 0.5em 1em;
+                background: white;
+                border: 1px solid #333;
+                cursor: pointer;
+                color: gray;
+            }
+            .color {
+                width: 49%;
+                padding: 0.5em 1em;
+                border: var(--auto-border);
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body style="overflow: hidden">
+        <div
+            style="
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                gap: 1em;
+                padding: 1rem;
+            "
+        >
+            <div class="auto-card">
+                <div class="auto-card-header">全局主题</div>
+                <div class="auto-card-body">
+                    <div
+                        id="themes"
+                        style="
+                            display: flex;
+                            gap: 0.5em;
+                            justify-content: center;
+                        "
+                    >
+                        <div class="custom-theme" id="custom-colorpicker">
+                            定制
+                        </div>
+                        <div class="theme" style="background: white">Light</div>
+                        <div class="theme" style="background: #444">Dark</div>
+                        <div class="theme" style="background: blue">Blue</div>
+                        <div class="theme" style="background: red">Red</div>
+                    </div>
+                </div>
+            </div>
+            <auto-card title="道德经 - WebComponent">
+                道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
+                有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门
+                <auto-list data-theme="#0c96d7ff">
+                    <auto-list-item title="道生一，一生二，二生三，三生万物。">
+                    </auto-list-item>
+                    <auto-list-item title="万物负阴而抱阳，冲气以为和。">
+                    </auto-list-item>
+                    <auto-list-item title="人之所恶，于人之所善，则恶之反善。">
+                    </auto-list-item>
+                </auto-list>
+            </auto-card>
+        </div>
+        <script>
+            const element = document.getElementById("themes");
+            element.addEventListener("click", (event) => {
+                if (event.target.classList.contains("theme")) {
+                    document.documentElement.dataset.theme =
+                        event.target.innerText.toLowerCase();
+                }
+            });
+            var primaryPicker = new Picker({
+                parent: document.getElementById("custom-colorpicker"),
+                onChange: function (color) {
+                    ThemePro.theme = "custom";
+                    ThemePro.create({
+                        name: "custom",
+                        theme: color.hex,
+                    });
+                },
+            });
+        </script>
+
+        <script>
+            document
+                .querySelector(".color-container")
+                .addEventListener("click", function (event) {
+                    // 检查点击的是否为.color元素
+                    if (event.target.classList.contains("color")) {
+                        // 获取背景颜色变量
+                        const style = window.getComputedStyle(event.target);
+                        const backgroundStyle =
+                            event.target.getAttribute("style");
+                        const match =
+                            backgroundStyle.match(/:\s*(var\([^)]+\))/);
+
+                        if (match && match[1]) {
+                            const colorVariable = match[1];
+
+                            // 复制到剪贴板
+                            navigator.clipboard
+                                .writeText(colorVariable)
+                                .then(() => {
+                                    // 显示复制成功的提示
+                                    const originalText = event.target.innerHTML;
+                                    event.target.innerHTML = "已复制!";
+
+                                    // 2秒后恢复原始文本
+                                    setTimeout(() => {
+                                        event.target.innerHTML = originalText;
+                                    }, 1000);
+                                })
+                                .catch((err) => {
+                                    console.error("复制失败:", err);
+                                });
+                        }
+                    }
+                });
+        </script>
+    </body>
+</html>

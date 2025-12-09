@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Themepro-Input</title>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/src/themes/light.css" />
+    <link rel="stylesheet" type="text/css" href="/src/themes/dark.css" />
+    <link rel="stylesheet" type="text/css" href="/src/themes/blue.css" />    
+    <link rel="stylesheet" type="text/css" href="/src/themes/red.css" />   
+    <link rel="stylesheet" type="text/css" href="/src/styles/index.less" /> 
+    <script type="module" src="/src/index.ts"></script>
+    <script type="module" src="/controller.js"></script> 
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+ <script>
+    lucide.createIcons();
+  </script>
+    <script src="../src/components/card"></script>
+    <style>
+        .container{
+            padding: 2rem;
+        }
+       .input{
+            display: flex;
+            align-items: center;
+            gap:0.5em;
+            padding: var(--auto-spacing);
+            margin: var(--auto-spacing);
+            height: var(--auto-input-height);
+            border-radius: var(--auto-border-radius);
+            box-shadow: var(--auto-shadow);
+            font-size: var(--auto-font-size);
+            border: var(--auto-border); 
+            font: var(--auto-font); 
+            color: var(--auto-text-color); 
+            background: var(--auto-input-bgcolor);
+       }
+       .input.x-small{
+            height:var(--t-input-height-x-small);
+            padding: var(--t-spacing-x-small);
+            border-radius: var(--auto-border-radius-x-small);
+            box-shadow: var(--t-shadow-x-small);    
+        }
+         .input.small{
+            height:var(--t-input-height-small);
+            padding: var(--t-spacing-small);
+            border-radius: var(--auto-border-radius-small);
+            box-shadow: var(--t-shadow-small);   
+        }   
+        .input.large{
+            height: var(--t-input-height-large);
+            padding: var(--t-spacing-large);
+            border-radius: var(--auto-border-radius-large);
+            box-shadow: var(--t-shadow-large);    
+        }
+        .input.x-large{
+            height: var(--t-input-height-x-large);
+            padding: var(--t-spacing-x-large);
+            border-radius: var(--auto-border-radius-x-large);
+            box-shadow: var(--t-shadow-x-large); 
+        }      
+    </style>
+  </head>
+  <body>
+    <div>
+      <div>
+    </div>
+    <div class="container">
+        <themepro-controller></themepro-controller> <i data-lucide="volume-2" class="my-class"></i>
+  <i data-lucide="x"></i>
+  <i data-lucide="menu"></i>
+              <my-card title="老子-道德经" style="margin: 0.5rem">
+        道可道，非常道；名可名，非常名。无名天地之始，有名万物之母。故常无欲，以观其妙；常
+        有欲，以观其徼（jiào）。此两者同出而异名，同谓之玄，玄之又玄，众妙之门
+        <input type="text" placeholder="请输入内容"/>
+      </my-card>
+      <div class="inputs">     
+        <div class="input">input: Auto
+            <input type="text" placeholder="请输入内容"/>
+            <input type="checkbox" placeholder="请输入内容"/>
+            <select>
+                <option value="one">option one</option>
+                <option value="two">option two</option>
+                <option value="three">option three</option>
+                <option value="four">option four</option>
+            </select>
+        </div>   
+        <div class="input x-small">input: x-small
+            <input type="text" placeholder="请输入内容"/>
+            <input type="checkbox" placeholder="请输入内容"/>
+            <select>
+                <option value="one">option one</option>
+                <option value="two">option two</option>
+                <option value="three">option three</option>
+                <option value="four">option four</option>
+            </select>
+        </div>
+        <div class="input small">input: small
+            <input type="text" placeholder="请输入内容"/>
+            <input type="checkbox" placeholder="请输入内容"/>
+            <select>
+                <option value="one">option one</option>
+                <option value="two">option two</option>
+                <option value="three">option three</option>
+                <option value="four">option four</option>
+            </select>
+        </div>
+        <div class="input">input: default/medium
+            <input type="text" placeholder="请输入内容"/>
+            <input type="checkbox" placeholder="请输入内容"/>
+            <select>
+                <option value="one">option one</option>
+                <option value="two">option two</option>
+                <option value="three">option three</option>
+                <option value="four">option four</option>
+            </select>
+        </div>
+        <div class="input large">input: large
+            <input type="text" placeholder="请输入内容"/>
+            <input type="checkbox" placeholder="请输入内容"/>
+            <select>
+                <option value="one">option one</option>
+                <option value="two">option two</option>
+                <option value="three">option three</option>
+                <option value="four">option four</option>
+            </select>
+
+        </div>
+        <div class="input x-large">input: x-large
+            <input type="text" placeholder="请输入内容"/>
+            <input type="checkbox" placeholder="请输入内容"/>
+            <select>
+                <option value="one">option one</option>
+                <option value="two">option two</option>
+                <option value="three">option three</option>
+                <option value="four">option four</option>
+            </select>
+        </div>        
+      </div>       
+    </div>
+  </body>
+</html>

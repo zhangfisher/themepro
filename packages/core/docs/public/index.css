@@ -1,0 +1,387 @@
+@charset "utf-8";
+
+body {
+  color: var(--auto-color);
+  background: var(--auto-workspace-bgcolor);
+  line-height: var(--auto-line-height);
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-rendering: optimizelegibility;
+}
+
+body *,
+body *:before,
+body *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* 内外边距通常让各个浏览器样式的表现位置不同 */
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+textarea,
+p,
+blockquote,
+th,
+td,
+hr,
+button,
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+menu,
+nav,
+section {
+  margin: 0;
+  padding: 0;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+menu,
+nav,
+section {
+  display: block;
+}
+
+audio,
+canvas,
+video {
+  display: inline-block;
+}
+
+/* 所有主流浏览器 */
+::selection {
+  background-color: var(--t-color-theme-3);
+  color: var(--t-theme-color);
+}
+
+::-moz-selection {
+  background-color: var(--t-color-theme-3);
+  color: var(--t-theme-color);
+  /* WebKit/Blink Browsers */
+}
+
+/* 去掉各Table cell 的边距并让其边重合 */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* 去除默认边框 */
+fieldset,
+img {
+  border: 0;
+}
+
+/* 块/段落引用 */
+blockquote {
+  position: relative;
+  color: #999;
+  font-weight: 400;
+  border-left: 1px solid #1abc9c;
+  padding-left: 1em;
+  margin: 1em 3em 1em 2em;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* 默认不显示下划线，保持页面简洁 */
+ins,
+a {
+  text-decoration: none;
+}
+
+/* 标记，类似于手写的荧光笔的作用 */
+mark {
+  background: #fffdd1;
+  border-bottom: 1px solid #ffedce;
+  padding: 2px;
+  margin: 0 5px;
+}
+
+/* 代码片断 */
+pre,
+code,
+pre tt {
+  font-family: Courier, 'Courier New', monospace;
+}
+
+pre {
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: 1em 1.5em;
+  display: block;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* 一致化 horizontal rule */
+hr {
+  border: none;
+  border-bottom: 1px solid #cfcfcf;
+  margin-bottom: 0.8em;
+  height: 10px;
+}
+
+/* 可拖动文件添加拖动手势 */
+[draggable] {
+  cursor: move;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font: var(--auto-title-font);
+  margin: 0;
+}
+
+button,
+input,
+select,
+option,
+textarea {
+  font: var(--auto-font);
+  color: var(--auto-color);
+  background: var(--auto-bgcolor);
+  border: var(--auto-border);
+  border-radius: var(--auto-border-radius);
+  box-sizing: border-box;
+  padding: var(--auto-input-padding);
+  outline: none;
+  transition: border, background-color 0.5s ease-in-out;
+}
+
+input:hover,
+select:hover,
+option:hover,
+textarea:hover {
+  background: var(--auto-bgcolor);
+  border: 1px solid var(--t-color-theme-3);
+}
+
+input[type=checkbox] {
+  width: 1em;
+  height: 1em;
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
+:host,
+:root {
+  --auto-icon-home: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house-icon lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>');
+  --auto-icon-info: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>');
+  --auto-icon-close: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-dasharray="22" stroke-dashoffset="22" stroke-linecap="round"><path d="M19 5L5 19"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.3s" dur="0.3s" values="22;0"/></path><path d="M5 5L19 19"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="22;0"/></path></g></svg>');
+  --auto-icon-settings: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg>');
+  --auto-icon-star: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="m22 9.24l-7.19-.62L12 2L9.19 8.63L2 9.24l5.46 4.73L5.82 21L12 17.27L18.18 21l-1.63-7.03zM12 15.4l-3.76 2.27l1-4.28l-3.32-2.88l4.38-.38L12 6.1l1.71 4.04l4.38.38l-3.32 2.88l1 4.28z"/></svg>');
+  --auto-icon-tag: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="currentColor" d="M10 14a4 4 0 1 1 4-4a4.005 4.005 0 0 1-4 4Zm0-6a2 2 0 1 0 1.998 2.004A2.002 2.002 0 0 0 10 8Z"/><path fill="currentColor" d="M16.644 29.415L2.586 15.354A2 2 0 0 1 2 13.941V4a2 2 0 0 1 2-2h9.941a2 2 0 0 1 1.414.586l14.06 14.058a2 2 0 0 1 0 2.828l-9.943 9.943a2 2 0 0 1-2.829 0ZM4 4v9.942L18.058 28L28 18.058L13.942 4Z"/></svg>');
+  --auto-icon-checked: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21"><g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 3.5h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2v-10a2 2 0 0 1 2-2"/><path d="m7.5 10.5l2 2l4-4"/></g></svg>');
+  --auto-icon-unchecked: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M5.5 3.5h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-10a2 2 0 0 1-2-2v-10a2 2 0 0 1 2-2"/></svg>');
+  --auto-icon-yes: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="m4 24l5-5l10 10L39 9l5 5l-25 25z" clip-rule="evenodd"/></svg>');
+  --auto-icon-no: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-dasharray="22" stroke-dashoffset="22" stroke-linecap="round" stroke-width="2"><path d="M19 5L5 19"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.3s" dur="0.3s" values="22;0"/></path><path d="M5 5L19 19"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="22;0"/></path></g></svg>');
+  --auto-icon-important: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.002a3.875 3.875 0 0 0-3.875 3.875c0 2.92 1.207 6.552 1.813 8.199a2.187 2.187 0 0 0 2.064 1.423c.904 0 1.739-.542 2.063-1.418c.606-1.64 1.81-5.254 1.81-8.204A3.875 3.875 0 0 0 12 2.002M9.625 5.877a2.375 2.375 0 0 1 4.75 0c0 2.655-1.111 6.043-1.717 7.684a.686.686 0 0 1-.655.438a.687.687 0 0 1-.657-.44c-.607-1.652-1.721-5.058-1.721-7.682m2.376 11.124a2.501 2.501 0 1 0 0 5.002a2.501 2.501 0 0 0 0-5.002M11 19.502a1.001 1.001 0 1 1 2.002 0a1.001 1.001 0 0 1-2.002 0"/></svg>');
+  --auto-icon-file: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><path fill="currentColor" d="m213.66 82.34l-56-56A8 8 0 0 0 152 24H56a16 16 0 0 0-16 16v176a16 16 0 0 0 16 16h144a16 16 0 0 0 16-16V88a8 8 0 0 0-2.34-5.66M160 51.31L188.69 80H160ZM200 216H56V40h88v48a8 8 0 0 0 8 8h48z"/></svg>');
+  --auto-icon-folder: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2"/></svg>');
+  --auto-icon-folder-open: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" d="m5 19l2.757-7.351A1 1 0 0 1 8.693 11H21a1 1 0 0 1 .986 1.164l-.996 5.211A2 2 0 0 1 19.026 19za2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h4l3 3h7a2 2 0 0 1 2 2v2"/></svg>');
+  --auto-icon-arrow: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path  d="m12 8l10 8l-10 8z"/></svg>');
+  --auto-icon-save: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" /><path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" /><path d="M7 3v4a1 1 0 0 0 1 1h7" /></svg>');
+  --auto-icon-loading: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><g transform="center"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" /><path d="M21 3v5h-5" /><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" /><path d="M8 16H3v5" /><animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/></g></svg>');
+  --auto-icon-alert: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-triangle-alert-icon lucide-triangle-alert"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" /><path d="M12 9v4" /><path d="M12 17h.01" /></svg>');
+  --auto-icon-bell: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0" /><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326" /></svg>');
+}
+
+.auto-icon {
+  display: inline-block;
+  background-color: currentColor;
+  mask-size: cover;
+  -webkit-mask-size: cover;
+  vertical-align: text-bottom;
+  position: relative;
+  stroke-width: 1;
+  width: 1em;
+  height: 1em;
+}
+
+.auto-icon.home {
+  mask-image: var(--auto-icon-home);
+  -webkit-mask-image: var(--auto-icon-home);
+  -moz-mask-image: var(--auto-icon-home);
+}
+
+.auto-icon.info {
+  mask-image: var(--auto-icon-info);
+}
+
+.auto-icon.close {
+  mask-image: var(--auto-icon-close);
+}
+
+.auto-icon.settings {
+  mask-image: var(--auto-icon-settings);
+}
+
+.auto-icon.star {
+  mask-image: var(--auto-icon-star);
+}
+
+.auto-icon.tag {
+  mask-image: var(--auto-icon-tag);
+}
+
+.auto-icon.checked {
+  mask-image: var(--auto-icon-checked);
+}
+
+.auto-icon.unchecked {
+  mask-image: var(--auto-icon-unchecked);
+}
+
+.auto-icon.yes {
+  mask-image: var(--auto-icon-yes);
+}
+
+.auto-icon.no {
+  mask-image: var(--auto-icon-no);
+}
+
+.auto-icon.important {
+  mask-image: var(--auto-icon-important);
+}
+
+.auto-icon.file {
+  mask-image: var(--auto-icon-file);
+}
+
+.auto-icon.folder {
+  mask-image: var(--auto-icon-folder);
+}
+
+.auto-icon.folder-open {
+  mask-image: var(--auto-icon-folder-open);
+}
+
+.auto-icon.arrow {
+  mask-image: var(--auto-icon-arrow);
+}
+
+.auto-icon.save {
+  mask-image: var(--auto-icon-save);
+}
+
+.auto-icon.loading {
+  mask-image: var(--auto-icon-loading);
+}
+
+.auto-icon.alert {
+  mask-image: var(--auto-icon-alert);
+}
+
+.auto-icon.bell {
+  mask-image: var(--auto-icon-bell);
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading {
+  animation: spin 2s linear infinite;
+}
+
+.auto-border {
+  border: var(--auto-border);
+}
+
+.auto-radius {
+  border-radius: var(--auto-border-radius);
+}
+
+.auto-title {
+  font: var(--auto-title-font);
+  font-weight: 500;
+}
+
+.auto-title.colorized {
+  color: var(--auto-panel-header-color);
+}
+
+.auto-shadow {
+  box-shadow: var(--auto-shadow);
+}
+
+.auto-text {
+  font: var(--auto-font);
+}
+
+.auto-text.colorized {
+  color: var(--auto-panel-header-color);
+}
+
+.auto-disabled {
+  color: color-mix(in srgb, var(--auto-theme-color) 50%, transparent 10%) !important;
+  background: color-mix(in srgb, var(--t-color-theme-1), white 28%) !important;
+}
+
+.auto-selected {
+  color: color-mix(in srgb, var(--auto-theme-color) 0%, white 100%) !important;
+  background: var(--t-color-theme-5) !important;
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dropdown 动画错误修复验证</title>
+    <script type="module" src="../dist/index.js"></script>
+</head>
+<body>
+    <div style="padding: 20px; font-family: Arial, sans-serif;">
+        <h1>Dropdown 动画错误修复验证</h1>
+
+        <h2>快速连续点击测试</h2>
+        <p>快速点击按钮验证动画回调错误是否已修复</p>
+
+        <auto-dropdown id="test-dropdown" label="快速点击测试" type="primary">
+            <div class="dropdown" style="padding: 8px 0; min-width: 160px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <div style="padding: 8px 16px; cursor: pointer;">选项 1</div>
+                <div style="padding: 8px 16px; cursor: pointer;">选项 2</div>
+                <div style="padding: 8px 16px; cursor: pointer;">选项 3</div>
+            </div>
+        </auto-dropdown>
+
+        <div style="margin-top: 20px;">
+            <button onclick="rapidClickTest()" style="padding: 10px 20px; background: #f0f0f0; border: 1px solid #ccc; cursor: pointer; border-radius: 4px;">
+                执行快速点击测试 (连续开关10次)
+            </button>
+        </div>
+
+        <div id="log-output" style="margin-top: 20px; padding: 10px; background: #f9f9f9; border: 1px solid #e0e0e0; border-radius: 4px; font-family: monospace; font-size: 12px; max-height: 200px; overflow-y: auto;">
+            <strong>测试日志:</strong><br>
+        </div>
+
+        <script>
+            const logOutput = document.getElementById('log-output');
+
+            function log(message) {
+                const timestamp = new Date().toLocaleTimeString();
+                logOutput.innerHTML += `[${timestamp}] ${message}<br>`;
+                logOutput.scrollTop = logOutput.scrollHeight;
+                console.log(message);
+            }
+
+            function rapidClickTest() {
+                const dropdown = document.getElementById('test-dropdown');
+                log('🚀 开始快速点击测试...');
+
+                let clickCount = 0;
+                const maxClicks = 10;
+
+                const clickInterval = setInterval(() => {
+                    if (clickCount >= maxClicks) {
+                        clearInterval(clickInterval);
+                        log('✅ 快速点击测试完成');
+                        log('📊 检查浏览器控制台是否有动画回调错误');
+                        return;
+                    }
+
+                    try {
+                        dropdown.open = !dropdown.open;
+                        clickCount++;
+                        log(`📍 点击 ${clickCount}: ${dropdown.open ? '打开' : '关闭'}`);
+                    } catch (error) {
+                        log(`❌ 点击 ${clickCount} 时发生错误: ${error.message}`);
+                        clearInterval(clickInterval);
+                    }
+                }, 100); // 每100ms点击一次
+            }
+
+            // 监听dropdown事件
+            document.addEventListener('DOMContentLoaded', () => {
+                const dropdown = document.getElementById('test-dropdown');
+
+                dropdown.addEventListener('dropdown-show', () => {
+                    log('📱 dropdown-show 事件触发');
+                });
+
+                dropdown.addEventListener('dropdown-hide', () => {
+                    log('📱 dropdown-hide 事件触发');
+                });
+
+                // 监听全局错误
+                window.addEventListener('error', (event) => {
+                    log(`🚨 全局错误: ${event.error.message}`);
+                });
+
+                // 监听未处理的Promise拒绝
+                window.addEventListener('unhandledrejection', (event) => {
+                    log(`🚨 未处理的Promise拒绝: ${event.reason}`);
+                });
+
+                log('✅ 测试页面已加载，可以开始测试');
+            });
+        </script>
+    </div>
+</body>
+</html>

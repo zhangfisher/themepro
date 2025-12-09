@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Themepro</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="/themepro/index.css" />
+        <link rel="stylesheet" type="text/css" href="/themepro/red.css" />
+        <link rel="stylesheet" type="text/css" href="/themepro/blue.css" />
+        <link rel="stylesheet" type="text/css" href="/themepro/dark.css" />
+        <link rel="stylesheet" href="/themepro/components.css" />
+        <script src="/themepro/index.global.js"></script>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="/themepro/vanilla-picker.csp.css"
+        />
+        <script src="https://unpkg.com/vanilla-picker@2"></script>
+        <style>
+            .theme,
+            .custom-theme {
+                padding: 0.5em 1em;
+                background: white;
+                border: 1px solid #333;
+                cursor: pointer;
+                color: gray;
+            }
+        </style>
+    </head>
+    <body style="overflow: hidden">
+        <div
+            style="
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                gap: 1em;
+                padding: 1rem;
+            "
+        >
+            <div class="auto-card">
+                <div class="auto-card-header">主题色</div>
+                <div class="auto-card-body">
+                    <div
+                        id="themes"
+                        style="
+                            display: flex;
+                            gap: 0.5em;
+                            justify-content: center;
+                        "
+                    >
+                        <div class="custom-theme" id="custom-colorpicker">
+                            定制
+                        </div>
+                        <div class="theme" style="background: white">Light</div>
+                        <div class="theme" style="background: #444">Dark</div>
+                        <div class="theme" style="background: blue">Blue</div>
+                        <div class="theme" style="background: red">Red</div>
+                    </div>
+                </div>
+            </div>
+            <div class="auto-card">
+                <div class="auto-card-header">尺寸</div>
+                <div class="auto-card-body">
+                    <div
+                        id="sizes"
+                        style="
+                            display: flex;
+                            gap: 0.5em;
+                            text-align: center;
+                            justify-content: center;
+                        "
+                    >
+                        <label class="size-input"
+                            ><input
+                                type="radio"
+                                name="size"
+                                value="x-small"
+                            />x-small</label
+                        >
+                        <label class="size-input"
+                            ><input type="radio" name="size" value="small" />
+                            small</label
+                        >
+                        <label class="size-input"
+                            ><input
+                                type="radio"
+                                name="size"
+                                value="medium"
+                                checked
+                            />
+                            medium</label
+                        >
+                        <label class="size-input"
+                            ><input type="radio" name="size" value="large" />
+                            large</label
+                        >
+                        <label class="size-input"
+                            ><input type="radio" name="size" value="x-large" />
+                            x-large</label
+                        >
+                    </div>
+                </div>
+            </div>
+            <div class="auto-card">
+                <div class="auto-card-header">
+                    标题<span class="closeable"></span>
+                </div>
+                <div class="auto-card-body">Hello ThemePro</div>
+                <div class="auto-card-footer">Footer</div>
+            </div>
+        </div>
+        <script>
+            const element = document.getElementById("themes");
+            element.addEventListener("click", (event) => {
+                if (event.target.classList.contains("theme")) {
+                    document.documentElement.dataset.theme =
+                        event.target.innerText.toLowerCase();
+                }
+            });
+            const sizes = document.querySelector("#sizes");
+            sizes.addEventListener("change", (event) => {
+                const size = document.querySelector(
+                    "input[type=radio][name=size]:checked"
+                );
+                ThemePro.size = size.value;
+            });
+            var primaryPicker = new Picker({
+                parent: document.getElementById("custom-colorpicker"),
+                onChange: function (color) {
+                    ThemePro.theme = "custom";
+                    ThemePro.create({
+                        name: "custom",
+                        theme: color.hex,
+                    });
+                },
+            });
+        </script>
+    </body>
+</html>
