@@ -12,6 +12,13 @@ export type TooltipPlacement =
     | "right-start"
     | "right-end";
 
+export type TooltipContent =
+    | string
+    | HTMLElement
+    | undefined
+    | null
+    | Promise<string | HTMLElement | undefined | null>;
+
 export interface TooltipControllerOptions {
     /**
      * 提示框位置
@@ -69,6 +76,15 @@ export interface TooltipControllerOptions {
      * }
      */
     styles?: Record<string, any>;
+    /**
+     *
+     * 可以实现定制动态内容，当准备显示弹出内容时调用
+     * 允许异步内容
+     *
+     * @param el
+     * @returns
+     */
+    getContent?: (el: HTMLElement) => TooltipContent;
     /**
      * 提示框显示时触发
      */

@@ -8,6 +8,9 @@
  *     ".subtitle": "color: blue;",
  * };
  * applyStylesToElement(el, styles);
+ *
+ * $root代表根元素
+ *
  * ```
  * @param el - 目标 HTML 元素
  * @param styles - 样式映射对象，键为 CSS 选择器，值为 CSS 文本
@@ -24,13 +27,22 @@ export function applyStylesToElement(
         if (!selector || typeof cssText !== "string") {
             return;
         }
-        const elements = el.querySelectorAll(
-            selector
-        ) as NodeListOf<HTMLElement>;
+        const elements =
+            selector === "$root"
+                ? [el]
+                : (el.querySelectorAll(selector) as NodeListOf<HTMLElement>);
         if (elements.length > 0) {
             elements.forEach((element) => {
                 if (element instanceof HTMLElement) {
-                    element.style.cssText = cssText;
+                    cssText
+                        .split(";")
+                        .filter((rule) => rule.trim())
+                        .forEach((rule) => {
+                            const [property, value] = rule
+                                .split(":")
+                                .map((s) => s.trim());
+                            (element.style as any)[property] = value;
+                        });
                 }
             });
         }

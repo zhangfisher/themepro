@@ -15,6 +15,7 @@ import { animate } from "animejs";
 import { parseObjectFromAttr } from "@/utils/parseObjectFromAttr";
 import { getDatasetFromElement } from "@/utils/getDatasetFromElement";
 import { removeUnescapedChars } from "../../utils/removeUnescapedChars";
+import { applyStylesToElement } from "@/utils/applyStylesToElement";
 
 export class Tooltip {
     options: Required<TooltipControllerOptions>;
@@ -43,8 +44,10 @@ export class Tooltip {
                 className: "tooltip",
                 arrow: true,
                 trigger: "mouseover",
+                padding: undefined,
                 delayHide: 0,
                 cache: false,
+                styles: undefined,
             },
             options
         ) as Required<TooltipControllerOptions>;
@@ -170,33 +173,14 @@ export class Tooltip {
      */
     private _setTooltipContent(content: string | HTMLElement): void {
         if (!this._container) return;
-
-        // 清除之前的内容（保留箭头元素）
-        const nodesToRemove: Node[] = [];
-        this._container.childNodes.forEach((child) => {
-            if (child !== this._arrowElement) {
-                nodesToRemove.push(child);
-            }
-        });
-
-        nodesToRemove.forEach((node) => {
-            this._container!.removeChild(node);
-        });
-
-        // 创建内容包装器
-        const contentWrapper = document.createElement("div");
-        contentWrapper.classList.add("content");
-        Object.assign(contentWrapper.style, {
-            position: "relative",
-            display: "flex",
-        });
+        const contentEl = this.container.querySelector(":scope>.content")!;
         if (typeof content === "string") {
-            contentWrapper.innerHTML = content;
+            contentEl.innerHTML = content;
         } else {
-            content.innerHTML = removeUnescapedChars(content.innerHTML);
-            contentWrapper.appendChild(content);
+            contentEl.innerHTML = removeUnescapedChars(content.innerHTML);
+            contentEl.appendChild(content);
         }
-        contentWrapper.childNodes.forEach((child) => {
+        contentEl.childNodes.forEach((child) => {
             if (
                 child instanceof HTMLElement &&
                 child.style.display === "none"
@@ -204,14 +188,15 @@ export class Tooltip {
                 child.style.display = "block";
             }
         });
-        this._container.appendChild(contentWrapper);
 
         // 创建内容包装器
         // const footerWrapper = document.createElement("div");
         // footerWrapper.classList.add("footer");
         // footerWrapper.appendChild(footerWrapper);
         // this._container.appendChild(footerWrapper);
+        applyStylesToElement(this._container, this.options.styles);
     }
+
     /**
      * 创建tooltip容器
      */
@@ -237,10 +222,6 @@ export class Tooltip {
             white-space: pre-wrap;
         `;
 
-        // 监听tooltip-close事件
-        container.addEventListener("tooltip:close", () => {
-            this.hide();
-        });
         if (this.options.arrow) {
             const arrowElement = this._createArrowElement(container);
             if (arrowElement) {
@@ -250,7 +231,23 @@ export class Tooltip {
         }
         container.style.visibility = "visible";
         container.style.pointerEvents = "auto";
+
+        // 创建内容包装器
+        const contentElement = document.createElement("div");
+        contentElement.classList.add("content");
+        Object.assign(contentElement.style, {
+            position: "relative",
+        });
+        container.appendChild(contentElement);
+
+        this._onTooltipContainerEvents(container);
         return container;
+    }
+    private _onTooltipContainerEvents(container: HTMLElement) {
+        // 监听tooltip-close事件
+        container.addEventListener("tooltip:close", () => {
+            this.hide();
+        });
     }
 
     /**
@@ -350,7 +347,7 @@ export class Tooltip {
      */
     private _createArrowElement(container: HTMLElement): HTMLElement {
         const arrowElement = this.host.ownerDocument!.createElement("div");
-        arrowElement.className = "tooltip-arrow";
+        arrowElement.className = "arrow";
         arrowElement.style.cssText = `
             position: absolute;
             width: 8px;
@@ -563,6 +560,7 @@ export class Tooltip {
     }
     async show() {
         if (this._isVisible) return;
+        if (!this._container) return;
         // 停止任何正在进行的隐藏动画
         this._hideAnimation?.pause();
         // 清理之前的延迟隐藏定时器

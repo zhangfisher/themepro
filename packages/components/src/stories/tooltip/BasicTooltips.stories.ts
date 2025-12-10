@@ -40,7 +40,7 @@ export const 默认提示框: Story = {
                     悬停查看提示
                 </button>
                 <auto-button
-                    data-tooltip="<strong>提示</strong><br/>文字也可以有提示"
+                    data-tooltip="<h3>提示</h3><p>文字也可以有提示<p>"
                     label="HTML弹出内容"
                 >
                 </auto-button>
@@ -57,7 +57,6 @@ export const 默认提示框: Story = {
                     查询指定元素内容
                     <div class="content" style="display:none">
                         <h3>默认从当前元素开始查找</h3>
-                        <br />
                         可以通过data-tooltip-selector指定查找范围
                     </div>
                 </button>
@@ -134,6 +133,7 @@ export const 延迟隐藏提示框: Story = {
         <div style="display: flex; gap: 20px; flex-wrap: wrap; padding: 40px;">
             <button
                 data-tooltip="延迟1秒后隐藏"
+                data-tooltip-trigger="click"
                 data-tooltip-delay-hide="1000"
                 style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
             >
@@ -143,6 +143,7 @@ export const 延迟隐藏提示框: Story = {
             <button
                 data-tooltip="延迟3秒后隐藏"
                 data-tooltip-delay-hide="3000"
+                data-tooltip-trigger="click"
                 style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
             >
                 3秒延迟
@@ -151,7 +152,7 @@ export const 延迟隐藏提示框: Story = {
             <button
                 data-tooltip="延迟5秒后自动消失"
                 data-tooltip-delay-hide="5000"
-                data-tooltip-trigger="mouseover"
+                data-tooltip-trigger="click"
                 style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
             >
                 5秒延迟
