@@ -49,6 +49,14 @@ export interface TooltipControllerOptions {
      */
     optionAttr?: string;
     /**
+     * 弹出内容宽度/高度与target元素的宽度/高度是否一致
+     * - none: 不启用适应
+     * - width: 宽度适应
+     * - height: 高度适应
+     * - auto: 根据弹出方向自动适应
+     */
+    fit?: "none" | "auto" | "width" | "height";
+    /**
      * 触发显示的事件类型，默认为'mouseover'
      */
     trigger?: "click" | "mouseover";
@@ -62,9 +70,10 @@ export interface TooltipControllerOptions {
      */
     cache?: boolean;
     /**
-     * 将选定元素的Tooltip转移到其他元素
+     * 默认情冲下弹出内容的计算是基于当前data-tooltip元素，
+     * 但也可以通过target指定一个其他元素来计算位置
      */
-    transfer?: string;
+    target?: string;
     /**
      * 提示框内边距
      */

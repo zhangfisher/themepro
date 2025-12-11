@@ -42,12 +42,14 @@ export class Tooltip {
                 animationDuration: 150,
                 animationEasing: "easeOutQuart",
                 className: "tooltip",
+                fit: "none",
                 arrow: true,
                 trigger: "mouseover",
                 padding: undefined,
                 delayHide: 0,
                 cache: false,
                 styles: undefined,
+                target: undefined,
             },
             options
         ) as Required<TooltipControllerOptions>;
@@ -69,11 +71,8 @@ export class Tooltip {
      */
     get target() {
         if (!this._target) {
-            if (typeof this.options.transfer === "string") {
-                const target = queryClosestElement(
-                    this.ref,
-                    this.options.transfer
-                );
+            if (typeof this.options.target === "string") {
+                const target = this._querySelector(this.options.target);
                 if (target instanceof HTMLElement) {
                     this._target = target;
                     return this._target;
@@ -82,6 +81,13 @@ export class Tooltip {
             this._target = this.ref;
         }
         return this._target!;
+    }
+    private _querySelector(selector: string) {
+        return (
+            queryClosestElement(this.ref, selector) ||
+            this.host.querySelector(selector) ||
+            this.host.ownerDocument.querySelector(selector)
+        );
     }
     private _initElements() {
         const content = this._getTooltipContent();
@@ -568,6 +574,8 @@ export class Tooltip {
         // 设置外部事件监听器
         this._addEventListeners();
 
+        this._fitContainer();
+
         // 先同步计算显示位置，确保定位准确
         await this._updatePosition(true, true);
 
@@ -590,6 +598,27 @@ export class Tooltip {
 
         // 延迟自动隐藏
         this._setDelayHide();
+    }
+    private _fitContainer() {
+        const fit = this.options.fit;
+        if (fit !== "none" && this.container) {
+            const placement = this.options.placement;
+            const targetRect = this.target.getBoundingClientRect();
+            if (fit === "width") {
+                this.container.style.width = `${targetRect.width}px`;
+            } else if (fit === "height") {
+                this.container.style.height = `${targetRect.height}px`;
+            } else if (fit === "auto") {
+                if (
+                    placement.startsWith("left") ||
+                    placement.startsWith("right")
+                ) {
+                    this.container.style.height = `${targetRect.height}px`;
+                } else {
+                    this.container.style.width = `${targetRect.width}px`;
+                }
+            }
+        }
     }
     /**
      * 设置自动延迟隐藏

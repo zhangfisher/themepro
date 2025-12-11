@@ -20,7 +20,7 @@ export function queryClosestElement(
     }
 
     // 获取当前元素的宿主元素（如果当前元素在 Shadow DOM 中）
-    let currentElement: Element | null = el;
+    const currentElement: Element | null = el;
     let currentHost: Element | null = null;
 
     // 如果当前元素在 Shadow DOM 中，先在当前 Shadow DOM 中查找
