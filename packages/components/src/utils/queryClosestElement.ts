@@ -10,6 +10,14 @@
  * @param el
  * @param selector
  */
+/**
+ * 查询与指定选择器匹配的最近祖先或 Shadow DOM 中的元素
+ * @param {HTMLElement} el - 起始查找的 DOM 元素
+ * @param {string} selector - 用于匹配元素的 CSS 选择器
+ * @returns {Element|null} 返回匹配的元素，如果未找到则返回 null
+ * @description 该函数会从当前元素开始向上查找，支持 Shadow DOM 环境下的元素查找。
+ * 首先检查当前元素是否匹配，然后在 Shadow DOM 中查找，最后向上遍历 Web Components 的宿主元素。
+ */
 export function queryClosestElement(
     el: HTMLElement,
     selector: string

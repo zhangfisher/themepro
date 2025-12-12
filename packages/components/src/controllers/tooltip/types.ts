@@ -95,6 +95,22 @@ export interface TooltipControllerOptions {
      */
     getContent?: (el: HTMLElement) => TooltipContent;
     /**
+     * 用于覆盖内部查询目标元素的函数
+     * 当data-tooltip以selector://<query>时调用此函数来查询目标元素
+     * 或者当target=<query>时调用此函数来查询目标元素
+     *
+     * @param selector
+     * @returns
+     */
+    querySelector?: (selector: string) => HTMLElement | null | undefined;
+    /**
+     * 当弹出内容是一个或link Promise时，可以指定一个loading元素
+     *
+     * - string: 字符串形式的HTML内容
+     * - () => HTMLElement: 返回一个HTMLElement的函数
+     */
+    loading?: string | (() => HTMLElement);
+    /**
      * 提示框显示时触发
      */
     onShow?: () => void;

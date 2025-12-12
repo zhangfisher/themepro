@@ -9,50 +9,54 @@
  *
  *
  */
-import { LitElement, html } from 'lit'
-import { property } from 'lit/decorators.js'
-import { customElement } from 'lit/decorators/custom-element.js'
-import { styleMap } from 'lit/directives/style-map.js'
-import { classMap } from 'lit/directives/class-map.js'
-import { styles } from './styles'
+import { LitElement, html } from "lit";
+import { property } from "lit/decorators.js";
+import { customElement } from "lit/decorators/custom-element.js";
+import { styleMap } from "lit/directives/style-map.js";
+import { classMap } from "lit/directives/class-map.js";
+import { styles } from "./styles";
 
-@customElement('auto-icon')
-export class AutoIcon extends LitElement {
-    static styles = styles
-
-    @property({ type: String })
-    size?: string
+@customElement("auto-icon-button")
+export class AutoIconButton extends LitElement {
+    static styles = styles;
 
     @property({ type: String })
-    name: string = 'star'
+    size?: string;
 
     @property({ type: String })
-    color?: string
+    name: string = "star";
 
     @property({ type: String })
-    rotate?: string
+    color?: string;
+
+    @property({ type: String })
+    rotate?: string;
 
     @property({ type: Number })
-    strokeWidth?: number
+    strokeWidth?: number;
 
     render() {
         return html`
-            <div class="${classMap({
-                'auto-icon': true,
-            })} " style="${styleMap({
-                'mask-image': `var(--auto-icon-${this.name})`,
-                color: this.color,
-                'font-size': this.size,
-                '--stroke-width': this.strokeWidth,
-                transform: this.rotate ? `rotate(${this.rotate}deg)` : undefined,
-            })}">                
-            </div>
-        `
+            <div
+                class="${classMap({
+                    "auto-icon": true,
+                })} "
+                style="${styleMap({
+                    "mask-image": `var(--auto-icon-${this.name})`,
+                    color: this.color,
+                    "font-size": this.size,
+                    "--stroke-width": this.strokeWidth,
+                    transform: this.rotate
+                        ? `rotate(${this.rotate}deg)`
+                        : undefined,
+                })}"
+            ></div>
+        `;
     }
 }
 
 declare global {
     interface HTMLElementTagNameMap {
-        'auto-icon': AutoIcon
+        "auto-icon-button": AutoIconButton;
     }
 }

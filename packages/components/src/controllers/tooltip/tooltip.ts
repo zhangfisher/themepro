@@ -50,6 +50,7 @@ export class Tooltip {
                 cache: false,
                 styles: undefined,
                 target: undefined,
+                querySelector: this._querySelector.bind(this),
             },
             options
         ) as Required<TooltipControllerOptions>;
@@ -72,7 +73,7 @@ export class Tooltip {
     get target() {
         if (!this._target) {
             if (typeof this.options.target === "string") {
-                const target = this._querySelector(this.options.target);
+                const target = this.options.querySelector(this.options.target);
                 if (target instanceof HTMLElement) {
                     this._target = target;
                     return this._target;
@@ -82,6 +83,13 @@ export class Tooltip {
         }
         return this._target!;
     }
+
+    /**
+     * 查询匹配指定选择器的元素
+     * 查询顺序：当前ref元素的最近匹配祖先 -> host元素内匹配元素 -> 文档范围内匹配元素
+     * @param {string} selector - CSS选择器字符串
+     * @returns {Element|null} 返回匹配的第一个元素，若无匹配则返回null
+     */
     private _querySelector(selector: string) {
         return (
             queryClosestElement(this.ref, selector) ||
@@ -122,7 +130,12 @@ export class Tooltip {
             // 解析data-tooltip-<option>属性
         }
     }
-
+    private _createLoadingContent() {
+        const loading = document.createElement("div");
+        loading.classList.add("loading");
+        loading.innerHTML = "<div class='loading-icon'></div>";
+        return loading;
+    }
     /**
      * 根据配置读取tooltip内容
      *
@@ -132,36 +145,29 @@ export class Tooltip {
      * - data-tooltip="slot://<从host元素读取指定slotname>"
      * - data-tooltip="query://<全局文档选择器>"
      * - data-tooltip-query="<全局文档选择器>"
-     * - data-tooltip="selector://<在ref元素内部查询>"
-     * - data-tooltip-selector="<在ref元素内部查询>"
-     *
+     * - data-tooltip="link://<url地址>"
      *
      */
     private _getTooltipContent(): string | HTMLElement | undefined | null {
         const slot = this.ref.dataset.tooltipSlot
             ? `slot://${this.ref.dataset.tooltipSlot}`
             : undefined;
-        const selector = this.ref.dataset.tooltipSelector
-            ? `selector://${this.ref.dataset.tooltipSelector}`
-            : undefined;
         const query = this.ref.dataset.tooltipQuery
             ? `query://${this.ref.dataset.tooltipQuery}`
             : undefined;
-        const content = slot || selector || query || this.ref.dataset.tooltip;
+        const content = slot || query || this.ref.dataset.tooltip;
         if (!content) return;
         let el: HTMLElement | null = null;
         if (content.startsWith("slot://")) {
             const slotName = content.substring(7);
             if (slotName.length === 0) return;
             el = this.host.querySelector(`[slot='${slotName}']`);
-        } else if (content.startsWith("selector://")) {
-            const selector = content.substring(11).trim();
-            if (selector.length === 0) return;
-            el = this.ref.querySelector(selector) as HTMLElement;
+            if (!el) return;
         } else if (content.startsWith("query://")) {
-            const query = content.substring(8).trim();
-            if (query.length === 0) return;
-            el = this.host.ownerDocument.querySelector(query) as HTMLElement;
+            const selector = content.substring(8).trim();
+            if (selector.length === 0) return;
+            el = this.options.querySelector(selector) as HTMLElement;
+            if (!el) return;
         }
         if (el instanceof HTMLElement) {
             return el
@@ -565,8 +571,8 @@ export class Tooltip {
         }
     }
     async show() {
-        if (this._isVisible) return;
-        if (!this._container) return;
+        if (this._isVisible || !this._container) return;
+
         // 停止任何正在进行的隐藏动画
         this._hideAnimation?.pause();
         // 清理之前的延迟隐藏定时器

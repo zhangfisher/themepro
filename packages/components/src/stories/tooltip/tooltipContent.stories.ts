@@ -374,7 +374,7 @@ export const 全局查询内容来源: Story = {
 
             <div id="status-indicator" style="display: none;">
                 <div
-                    style="display: flex; align-items: center; gap: 8px; padding: 8px;"
+                    style="display: flex; gap: 8px; padding: 8px;flex-direction:column"
                 >
                     <h3>状态指示器</h3>
                     <span style="font-size: 13px; color: #2e7d32;"
@@ -438,7 +438,7 @@ export const 局部选择器内容来源: Story = {
         <div style="display: flex; gap: 20px; flex-wrap: wrap; padding: 40px;">
             <div style="position: relative;">
                 <button
-                    data-tooltip="selector://.tooltip-content"
+                    data-tooltip="query://.tooltip-content"
                     data-tooltip-placement="top"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
@@ -460,7 +460,7 @@ export const 局部选择器内容来源: Story = {
 
             <div style="position: relative;">
                 <button
-                    data-tooltip-selector=".complex-tooltip"
+                    data-tooltip-query=".complex-tooltip"
                     data-tooltip-placement="bottom"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
@@ -491,7 +491,7 @@ export const 局部选择器内容来源: Story = {
 
             <div style="position: relative;">
                 <button
-                    data-tooltip="selector://.interactive-content"
+                    data-tooltip="query://.interactive-content"
                     data-tooltip-placement="right"
                 >
                     交互内容
@@ -509,7 +509,7 @@ export const 局部选择器内容来源: Story = {
     parameters: {
         docs: {
             description: {
-                story: '使用 `data-tooltip="selector://<selector>"` 或 `data-tooltip-selector` 属性从当前元素内部查询元素作为提示内容。',
+                story: '使用 `data-tooltip="query://<selector>"` 或 `data-tooltip-query` 属性从当前元素内部查询元素作为提示内容。',
             },
         },
     },
@@ -552,7 +552,7 @@ export const 内容来源综合示例: Story = {
 
                 <!-- 全局查询 -->
                 <button
-                    data-tooltip="selector://#shared-help"
+                    data-tooltip="query://#shared-help"
                     data-tooltip-placement="right"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
@@ -562,7 +562,7 @@ export const 内容来源综合示例: Story = {
                 <!-- 局部选择器 -->
                 <div style="position: relative;">
                     <button
-                        data-tooltip-selector=".local-content"
+                        data-tooltip-query=".local-content"
                         data-tooltip-placement="left"
                         style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                     >

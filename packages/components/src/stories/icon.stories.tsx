@@ -42,15 +42,20 @@ const renderIcon = (args: any) => html`
         })}
     </auto-flex>
     <h3>继承尺寸: 继承容器字体尺寸</h3>
-    <auto-flex
-        wrap
-        gap="1em"
-        style="border: var(--auto-border);padding:1em;font-size:2em"
-    >
-        ${repeat(icons, (name) => {
-            return html`<auto-icon inherit name=${name}></auto-icon>`;
-        })}
-    </auto-flex>
+    <div style="border: var(--auto-border);padding:1em;margin-bottom:1em;">
+        <p style="margin-bottom:0.5em;color:var(--auto-text-secondary);">
+            调整容器字体大小来控制图标尺寸（当前: ${args.inheritContainerFontSize}px）
+        </p>
+        <auto-flex
+            wrap
+            gap="1em"
+            style="font-size:${args.inheritContainerFontSize}px"
+        >
+            ${repeat(icons, (name) => {
+                return html`<auto-icon inherit name=${name}></auto-icon>`;
+            })}
+        </auto-flex>
+    </div>
     <h3>指定尺寸: 通过size属性指定</h3>
     <auto-flex
         wrap
@@ -96,7 +101,7 @@ const renderIcon = (args: any) => html`
 `;
 
 const meta = {
-    title: "通用/Icon",
+    title: "通用/AutoIcon",
     tags: ["autodocs"],
     render: renderIcon,
     argTypes: {
@@ -119,6 +124,13 @@ const meta = {
             control: "number",
             description: "描边宽度（传递到 CSS 变量 --stroke-width）",
         },
+        inheritContainerFontSize: {
+            control: "range",
+            min: 8,
+            max: 72,
+            step: 1,
+            description: "继承模式容器的字体大小（px）",
+        },
     },
     args: {
         name: "star",
@@ -126,6 +138,7 @@ const meta = {
         color: undefined,
         rotate: 0,
         strokeWidth: undefined,
+        inheritContainerFontSize: 32,
     },
 } satisfies Meta;
 

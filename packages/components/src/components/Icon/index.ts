@@ -57,8 +57,10 @@ export class AutoIcon extends LitElement {
     private _renderIcon() {
         const style: Record<string, any> = {
             "mask-image": `var(--auto-icon-${this.name})`,
-            "font-size": this.size,
         };
+        if (this.size) {
+            style["font-size"] = this.size;
+        }
         if (this.color) {
             style.color = this.color;
         }
