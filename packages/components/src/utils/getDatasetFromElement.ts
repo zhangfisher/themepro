@@ -1,5 +1,5 @@
 import { isNumber } from "flex-tools/typecheck/isNumber";
-import { jsonParser } from "./jsonParser";
+import { parseRelaxedJson } from "./parseRelaxedJson";
 export function getDatasetFromElement(
     el: HTMLElement,
     keys: string[],
@@ -23,7 +23,7 @@ export function getDatasetFromElement(
                     (value.startsWith("[") && value.endsWith("]")) ||
                     (value.startsWith("{") && value.endsWith("}"))
                 ) {
-                    dataset[key] = jsonParser(value);
+                    dataset[key] = parseRelaxedJson(value);
                 } else {
                     dataset[key] = value;
                 }

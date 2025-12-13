@@ -65,6 +65,7 @@ export type AutoButtonTag = {
 export type AutoButtonTags = AutoButtonTag[];
 
 export interface AutoButtonProps {
+    id?: string;
     /**
      * 按钮尺寸
      */
@@ -436,11 +437,12 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
         }
         this._handleCheckEvent(e);
         // 触发组件自定义点击事件，便于外部监听（如 Storybook actions）
+        const params: Record<string, any> = {};
+        if (this.checkable) params.checked = this.value;
+
         this.dispatchEvent(
-            new CustomEvent("autoclick", {
-                detail: {
-                    checked: this.value,
-                },
+            new CustomEvent("auto:click", {
+                detail: params,
                 bubbles: true,
                 composed: true,
             })

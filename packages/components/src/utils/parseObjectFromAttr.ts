@@ -1,4 +1,4 @@
-import { jsonParser } from "./jsonParser";
+import { parseRelaxedJson } from "./parseRelaxedJson";
 
 /**
  * 从HTML元素的属性中解析JSON对象
@@ -18,7 +18,7 @@ export function parseObjectFromAttr<
     const value: T = Object.assign({}, defaultValue) as T;
     try {
         if (typeof attrValue === "string") {
-            return jsonParser(attrValue);
+            return parseRelaxedJson(attrValue);
             // Object.assign(value, JSON.parse(attrValue));
         } else if (typeof attrValue === "object") {
             Object.assign(value, attrValue);

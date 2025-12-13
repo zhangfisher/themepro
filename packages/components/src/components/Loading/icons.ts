@@ -1,4 +1,4 @@
-export const BARS_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="currentColor">
+export const BARS_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="1em" height="1em" fill="currentColor">
   <path transform="translate(2)" d="M0 12 V20 H4 V12z">
     <animate attributeName="d" values="M0 12 V20 H4 V12z; M0 4 V28 H4 V4z; M0 12 V20 H4 V12z; M0 12 V20 H4 V12z" dur="1.2s" repeatCount="indefinite" begin="0" keytimes="0;.2;.5;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.8 0.4 0.8" calcMode="spline"  />
   </path>
@@ -16,7 +16,7 @@ export const BARS_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32
   </path>
 </svg>`;
 
-export const BUBBLES_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="currentColor">
+export const BUBBLES_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="1em" height="1em" fill="currentColor">
   <circle transform="translate(8 0)" cx="0" cy="16" r="0">
     <animate attributeName="r" values="0; 4; 0; 0" dur="1.2s" repeatCount="indefinite" begin="0"
       keytimes="0;0.2;0.7;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline" />
@@ -31,14 +31,14 @@ export const BUBBLES_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0
   </circle>
 </svg>`;
 
-export const SPIN_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="currentColor">
+export const SPIN_SVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="1em" height="1em" fill="currentColor">
   <path opacity=".25" d="M16 0 A16 16 0 0 0 16 32 A16 16 0 0 0 16 0 M16 4 A12 12 0 0 1 16 28 A12 12 0 0 1 16 4"/>
   <path d="M16 0 A16 16 0 0 1 32 16 L28 16 A12 12 0 0 0 16 4z">
     <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="0.8s" repeatCount="indefinite" />
   </path>
 </svg>`;
 
-export const SPINNING_BUBBLES = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="currentColor">
+export const SPINNING_BUBBLES = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="1em" height="1em" fill="currentColor">
   <circle cx="16" cy="3" r="0">
     <animate attributeName="r" values="0;3;0;0" dur="1s" repeatCount="indefinite" begin="0" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline" />
   </circle>
@@ -65,7 +65,7 @@ export const SPINNING_BUBBLES = `<svg xmlns="http://www.w3.org/2000/svg" viewBox
   </circle>
 </svg>`;
 
-export const SPOKES = `<svg id="loading" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="currentColor">
+export const SPOKES = `<svg id="loading" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="1em" height="1em" fill="currentColor">
   <path opacity=".1" d="M14 0 H18 V8 H14 z" transform="rotate(0 16 16)">
     <animate attributeName="opacity" from="1" to=".1" dur="1s" repeatCount="indefinite" begin="0"/>
   </path>
