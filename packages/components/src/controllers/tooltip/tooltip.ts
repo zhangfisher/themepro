@@ -16,6 +16,9 @@ import { parseObjectFromAttr } from "@/utils/parseObjectFromAttr";
 import { getDatasetFromElement } from "@/utils/getDatasetFromElement";
 import { removeUnescapedChars } from "../../utils/removeUnescapedChars";
 import { applyStylesToElement } from "@/utils/applyStylesToElement";
+import { isFunction } from "flex-tools/typecheck/isFunction";
+import { isPromiseLike } from "@/utils/isPromiseLike";
+import { getURLQueryParams } from "@/utils/getURLParams";
 
 export class Tooltip {
     options: Required<TooltipControllerOptions>;
@@ -131,15 +134,34 @@ export class Tooltip {
             // 解析data-tooltip-<option>属性
         }
     }
+    private _asyncLoader?: Promise<any>;
+
     /**
      *
      */
     private _createLoading(url?: string) {
-        const loading = document.createElement("div");
+        const sizeArg = getURLQueryParams<string | undefined>(
+            url || "",
+            "_size"
+        );
+        const [width, height] =
+            typeof sizeArg === "string"
+                ? sizeArg.split(",")
+                : this.options.predictSize || [];
+
+        const loading = document.createElement("auto-loading");
         loading.classList.add("loading");
-        loading.innerHTML = "<div class='loading-icon'></div>";
+        if (width) {
+            loading.style.width =
+                typeof width === "number" ? `${width}px` : width;
+        }
+        if (height) {
+            loading.style.width =
+                typeof height === "number" ? `${height}px` : height;
+        }
         return loading;
     }
+
     /**
      * 根据配置读取tooltip内容
      *
@@ -170,29 +192,46 @@ export class Tooltip {
             : undefined;
 
         const content = url || slot || query || this.ref.dataset.tooltip;
-        if (!content) return;
-        let el: HTMLElement | null = null;
-        if (content.startsWith("slot://")) {
-            const slotName = content.substring(7);
-            if (slotName.length === 0) return;
-            el = this.host.querySelector(`[slot='${slotName}']`);
-            if (!el) return;
-        } else if (content.startsWith("query://")) {
-            const selector = content.substring(8).trim();
-            if (selector.length === 0) return;
-            el = this.options.querySelector(selector) as HTMLElement;
-            if (!el) return;
-        } else if (
-            content.startsWith("link://") ||
-            content.startsWith("http://") ||
-            content.startsWith("https://")
-        ) {
+
+        if (!content && !isFunction(this.options.getContent)) return;
+
+        const isAsyncContent =
+            content?.startsWith("link://") ||
+            content?.startsWith("http://") ||
+            content?.startsWith("https://");
+
+        let el: any = null;
+
+        if (isAsyncContent && content) {
             let url = content.substring(content.indexOf("://") + 3);
             if (url.startsWith("http://") || url.startsWith("https://")) {
                 url = url.substring(content.indexOf("://") + 3);
             }
             el = this._createLoading(url);
+        } else {
+            if (content?.startsWith("slot://")) {
+                const slotName = content.substring(7);
+                if (slotName.length === 0) return;
+                el = this.host.querySelector(`[slot='${slotName}']`);
+            } else if (content?.startsWith("query://")) {
+                const selector = content.substring(8).trim();
+                if (selector.length === 0) return;
+                el = this.options.querySelector(selector) as HTMLElement;
+            } else {
+                el = removeUnescapedChars(content || "");
+            }
+            if (isFunction(this.options.getContent)) {
+                const result = this.options.getContent.call(this, el);
+                if (isPromiseLike(result)) {
+                    this._asyncLoader = result;
+                    el = this._createLoading();
+                } else {
+                    el = result;
+                }
+            }
+            if (!el) return;
         }
+
         if (el instanceof HTMLElement) {
             return el
                 ? removeUnescapedChars(
@@ -200,7 +239,7 @@ export class Tooltip {
                   )
                 : null;
         } else {
-            return removeUnescapedChars(content);
+            return removeUnescapedChars(el);
         }
     }
 

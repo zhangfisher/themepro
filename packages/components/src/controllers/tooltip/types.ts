@@ -93,7 +93,7 @@ export interface TooltipControllerOptions {
      * @param el 解析data-tooltip后得到的内容，可以在此进行修改，或者返回一个新的内容
      * @returns
      */
-    getContent?: (el: HTMLElement) => TooltipContent;
+    getContent?: (el: HTMLElement | null | undefined) => TooltipContent;
     /**
      * 用于覆盖内部查询目标元素的函数
      * 当data-tooltip以selector://<query>时调用此函数来查询目标元素
