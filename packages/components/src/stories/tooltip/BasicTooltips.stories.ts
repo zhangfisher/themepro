@@ -50,8 +50,7 @@ export const 默认提示框: Story = {
                 >
                 </auto-button>
                 <button
-                    data-tooltip="selector://.content"
-                    data-tooltip-selector=".content"
+                    data-tooltip="query://.content"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
                     查询指定元素内容
@@ -64,7 +63,7 @@ export const 默认提示框: Story = {
                     data-tooltip="query://"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
-                    查询指定元素内容
+                    没有内容
                 </button>
             </div>
         </tooltip-demo>

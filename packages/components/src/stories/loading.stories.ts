@@ -628,6 +628,7 @@ export const LoadingTypes: Story = {
                     ><auto-watermark text="themepro"></auto-watermark>
                     <auto-loading
                         message="小球"
+                        description="旋转气泡旋转气泡旋转气泡旋转气泡旋转气泡"
                         color="#eb2f96"
                         actions="[{label:'确认'},{label:'取消'}]"
                     ></auto-loading
@@ -670,6 +671,7 @@ export const LoadingTypes: Story = {
                     <auto-loading
                         type="spinning-bubbles"
                         message="旋转气泡"
+                        description="旋转气泡旋转气泡旋转气泡旋转气泡旋转气泡"
                         color="#eb2f96"
                         mask="dark"
                     ></auto-loading

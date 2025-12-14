@@ -51,6 +51,7 @@ export class Tooltip {
                 styles: undefined,
                 target: undefined,
                 querySelector: this._querySelector.bind(this),
+                predictSize: undefined,
             },
             options
         ) as Required<TooltipControllerOptions>;
@@ -130,7 +131,10 @@ export class Tooltip {
             // 解析data-tooltip-<option>属性
         }
     }
-    private _createLoadingContent() {
+    /**
+     *
+     */
+    private _createLoading(url?: string) {
         const loading = document.createElement("div");
         loading.classList.add("loading");
         loading.innerHTML = "<div class='loading-icon'></div>";
@@ -145,17 +149,27 @@ export class Tooltip {
      * - data-tooltip="slot://<从host元素读取指定slotname>"
      * - data-tooltip="query://<全局文档选择器>"
      * - data-tooltip-query="<全局文档选择器>"
-     * - data-tooltip="link://<url地址>"
+     * - data-tooltip="link://orders/123?fields=a,b,c"
+     * - data-tooltip="http://orders/aaa/aaa"
+     * - data-tooltip="http://192.168.1.11?fields=a,b,c"
+     * - data-tooltip="https://192.168.1.11"
+     * - data-tooltip-link=""
      *
      */
     private _getTooltipContent(): string | HTMLElement | undefined | null {
         const slot = this.ref.dataset.tooltipSlot
             ? `slot://${this.ref.dataset.tooltipSlot}`
             : undefined;
+
         const query = this.ref.dataset.tooltipQuery
             ? `query://${this.ref.dataset.tooltipQuery}`
             : undefined;
-        const content = slot || query || this.ref.dataset.tooltip;
+
+        const url = this.ref.dataset.tooltipLink
+            ? `link://${this.ref.dataset.tooltipLink}`
+            : undefined;
+
+        const content = url || slot || query || this.ref.dataset.tooltip;
         if (!content) return;
         let el: HTMLElement | null = null;
         if (content.startsWith("slot://")) {
@@ -168,6 +182,16 @@ export class Tooltip {
             if (selector.length === 0) return;
             el = this.options.querySelector(selector) as HTMLElement;
             if (!el) return;
+        } else if (
+            content.startsWith("link://") ||
+            content.startsWith("http://") ||
+            content.startsWith("https://")
+        ) {
+            let url = content.substring(content.indexOf("://") + 3);
+            if (url.startsWith("http://") || url.startsWith("https://")) {
+                url = url.substring(content.indexOf("://") + 3);
+            }
+            el = this._createLoading(url);
         }
         if (el instanceof HTMLElement) {
             return el

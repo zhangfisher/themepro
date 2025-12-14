@@ -1,4 +1,3 @@
-import { spread } from "@open-wc/lit-helpers";
 /**
  *
  * <auto-button>确定</auto-button>
@@ -94,7 +93,8 @@ export class AutoLoading extends LitElement {
             gap: 0.5em;
             padding: 1em;
             z-index: 1;
-            & > .message {
+            & > .message,
+            & > .memo {
                 display: -webkit-box;
                 font-size: var(--auto-font-size);
                 -webkit-line-clamp: 2;
@@ -105,6 +105,10 @@ export class AutoLoading extends LitElement {
                 text-align: center;
                 z-index: 1;
                 color: var(--auto-color) !important;
+            }
+            & > .memo {
+                color: var(--auto-secondary-color) !important;
+                font-size: calc(0.9 * var(--auto-font-size));
             }
             & > .actions {
                 display: flex;
@@ -150,6 +154,9 @@ export class AutoLoading extends LitElement {
 
     @property({ type: String })
     message: string = "Loading...";
+
+    @property({ type: String })
+    description?: string;
 
     @property({ type: String })
     color?: string = "var(--auto-theme-color)";
@@ -271,9 +278,12 @@ export class AutoLoading extends LitElement {
             <div class="mask"></div>
             <div class="content" style="color:${iconColor};">
                 ${html`${unsafeHTML(svgIcon)}`}
-                ${this.message
-                    ? html`<span class="message">${this.message}</span>`
-                    : ""}
+                ${when(this.message, () => {
+                    return html`<span class="message">${this.message}</span>`;
+                })}
+                ${when(this.description, () => {
+                    return html`<span class="memo">${this.description}</span>`;
+                })}
                 ${when(displayActions && displayActions.length > 0, () => {
                     return html`<div class="actions">
                         ${repeat(displayActions!, (action: any) => {

@@ -90,7 +90,7 @@ export interface TooltipControllerOptions {
      * 可以实现定制动态内容，当准备显示弹出内容时调用
      * 允许异步内容
      *
-     * @param el
+     * @param el 解析data-tooltip后得到的内容，可以在此进行修改，或者返回一个新的内容
      * @returns
      */
     getContent?: (el: HTMLElement) => TooltipContent;
@@ -110,6 +110,14 @@ export interface TooltipControllerOptions {
      * - () => HTMLElement: 返回一个HTMLElement的函数
      */
     loading?: string | (() => HTMLElement);
+    /**
+     *
+     * 预测弹出内容的宽度/高度
+     *
+     * 当内容是一个Promise时，可以通过该属性来预测内容的宽度/高度
+     *
+     */
+    predictSize?: [number | string, number | string];
     /**
      * 提示框显示时触发
      */
