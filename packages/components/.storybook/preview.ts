@@ -1,7 +1,12 @@
-import type { Preview } from '@storybook/web-components-vite'
-import '../../core/src/styles/index.less'
-import '../../core/src/index.ts'
-import '../src/styles/icons.less'
+import type { Preview } from "@storybook/web-components-vite";
+import { initialize, mswLoader } from "msw-storybook-addon";
+import "../../core/src/styles/index.less";
+import "../../core/src/index.ts";
+import "../src/styles/icons.less";
+import { handlers } from "./api.ts";
+
+initialize({}, handlers);
+
 const preview: Preview = {
     parameters: {
         docs: {
@@ -15,6 +20,7 @@ const preview: Preview = {
         },
     },
     decorators: [],
-}
+    loaders: [mswLoader],
+};
 
-export default preview
+export default preview;

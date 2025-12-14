@@ -122,6 +122,17 @@ export class TooltipController implements ReactiveController {
         // 设置mouseover事件监听器
         this._setupMouseoverEventDelegation(hostElement);
     }
+    private _isTooltipElement(el: any): el is HTMLElement {
+        return (
+            el instanceof HTMLElement &&
+            !!(
+                el.dataset.tooltip ||
+                el.dataset.tooltipSlot ||
+                el.dataset.tooltipQuery ||
+                el.dataset.tooltipLink
+            )
+        );
+    }
 
     private _getTooltipElement(e: MouseEvent) {
         const composedPath = e.composedPath();
@@ -129,13 +140,7 @@ export class TooltipController implements ReactiveController {
         let tooltipElement: HTMLElement | null = null;
         for (let i = 0; i < composedPath.length; i++) {
             const el = composedPath[i];
-            if (
-                el instanceof HTMLElement &&
-                (el.dataset.tooltip ||
-                    el.dataset.tooltipSlot ||
-                    el.dataset.tooltipSelector ||
-                    el.dataset.tooltipQuery)
-            ) {
+            if (this._isTooltipElement(el)) {
                 // 确保元素在host范围内
                 if (el === this.hostElement || this.hostElement.contains(el)) {
                     tooltipElement = el;

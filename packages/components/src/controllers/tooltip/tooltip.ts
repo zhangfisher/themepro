@@ -19,6 +19,7 @@ import { applyStylesToElement } from "@/utils/applyStylesToElement";
 import { isFunction } from "flex-tools/typecheck/isFunction";
 import { isPromiseLike } from "@/utils/isPromiseLike";
 import { getURLQueryParams } from "@/utils/getURLParams";
+import { isNumber } from "flex-tools/typecheck/isNumber";
 
 export class Tooltip {
     options: Required<TooltipControllerOptions>;
@@ -30,6 +31,7 @@ export class Tooltip {
     private _mouseLeaveTimer?: NodeJS.Timeout;
     private _isVisible: boolean = false;
     private _target?: HTMLElement;
+    private _loadContent?: Promise<any>;
     private _cleanup?: () => void;
     el: WeakRef<HTMLElement>;
     constructor(
@@ -134,10 +136,8 @@ export class Tooltip {
             // 解析data-tooltip-<option>属性
         }
     }
-    private _asyncLoader?: Promise<any>;
-
     /**
-     *
+     * 创建一个加载中的元素
      */
     private _createLoading(url?: string) {
         const sizeArg = getURLQueryParams<string | undefined>(
@@ -151,13 +151,16 @@ export class Tooltip {
 
         const loading = document.createElement("auto-loading");
         loading.classList.add("loading");
+
         if (width) {
-            loading.style.width =
-                typeof width === "number" ? `${width}px` : width;
+            loading.style.width = isNumber(width)
+                ? `${width}px`
+                : String(width);
         }
         if (height) {
-            loading.style.width =
-                typeof height === "number" ? `${height}px` : height;
+            loading.style.width = isNumber(height)
+                ? `${height}px`
+                : String(height);
         }
         return loading;
     }
@@ -204,10 +207,11 @@ export class Tooltip {
         let getContent = this.options.getContent;
 
         if (isAsyncContent && content) {
-            let url = content.substring(content.indexOf("://") + 3);
+            let url = content.substring(content.indexOf("://") + 3).trim();
             if (url.startsWith("http://") || url.startsWith("https://")) {
                 url = url.substring(content.indexOf("://") + 3);
             }
+            if (url.length === 0) return;
             el = this._createLoading(url);
             getContent = async () => {
                 const res = await fetch(url);
@@ -227,9 +231,9 @@ export class Tooltip {
             }
         }
         if (isFunction(getContent)) {
-            const result = getContent.call(this, el);
+            const result = getContent.call(this, el, this.ref, this);
             if (isPromiseLike(result)) {
-                this._asyncLoader = result as any;
+                this._loadContent = result as any;
                 el = this._createLoading();
             } else {
                 el = result;
@@ -328,7 +332,6 @@ export class Tooltip {
             this.hide();
         });
     }
-
     /**
      * 切换提示框显示状态
      */
@@ -339,12 +342,10 @@ export class Tooltip {
             this.show();
         }
     }
-
     private _onMouseEnter = (e: any) => {
         e.stopPropagation();
         clearTimeout(this._mouseLeaveTimer);
     };
-
     private _onMouseLeave = (e: any) => {
         e.stopPropagation();
         clearTimeout(this._mouseLeaveTimer);
@@ -361,14 +362,12 @@ export class Tooltip {
             this.hide();
         }
     };
-
     private _onDocumentClick = (e: Event) => {
         const path = e.composedPath();
         if (!path.includes(this.ref) && !path.includes(this.container)) {
             this.hide();
         }
     };
-
     /**
      * 设置外部事件监听器
      */
@@ -407,7 +406,6 @@ export class Tooltip {
         document.removeEventListener("click", this._onDocumentClick, true);
         document.removeEventListener("keydown", this._onEscapeKeyPress);
     }
-
     /**
      * 清理延迟隐藏定时器
      */
@@ -439,7 +437,6 @@ export class Tooltip {
         arrowElement.style.backgroundColor = container.style.backgroundColor;
         return arrowElement;
     }
-
     /**
      * 设置自动更新
      */
@@ -474,7 +471,6 @@ export class Tooltip {
         // 处理箭头位置，传递实际的placement（可能已翻转）
         this._updateArrowPosition(middlewareData, placement);
     }
-
     /**
      * 更新箭头位置和样式
      */
@@ -493,7 +489,6 @@ export class Tooltip {
             }
             return;
         }
-
         this._arrowElement.style.display = "block";
 
         const { x, y } = middlewareData.arrow;
@@ -520,7 +515,6 @@ export class Tooltip {
 
         this._setArrowBorderByPlacement(currentPlacement);
     }
-
     /**
      * 根据placement设置箭头边框显示
      */
@@ -552,7 +546,6 @@ export class Tooltip {
             });
         }
     }
-
     /**
      * 创建浮层中间件配置
      */
@@ -572,7 +565,6 @@ export class Tooltip {
                 strategy: "referenceHidden",
             }),
         ];
-
         // 如果需要箭头，添加arrow middleware
         if (this.options.arrow && this._arrowElement) {
             middleware.push(
@@ -585,7 +577,6 @@ export class Tooltip {
 
         return middleware;
     }
-
     /**
      * 统一的位置计算函数 - 消除重复代码
      * @param callback 可选的回调函数，用于处理计算结果
@@ -604,7 +595,6 @@ export class Tooltip {
         if (callback) {
             callback(position);
         }
-
         return position;
     }
     /**
@@ -665,6 +655,19 @@ export class Tooltip {
             duration: this.options.animationDuration!,
             easing: this.options.animationEasing || "easeOutQuart",
         });
+
+        if (this._loadContent && this._loadContent instanceof Promise) {
+            this._loadContent
+                .then((value: any) => {
+                    this._setTooltipContent(value);
+                })
+                .catch((e: any) => {
+                    this._setTooltipContent(e.message);
+                })
+                .finally(() => {
+                    this._loadContent = undefined;
+                });
+        }
 
         this._isVisible = true;
         this.options.onShow?.();

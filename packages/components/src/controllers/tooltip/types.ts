@@ -1,3 +1,5 @@
+import type { Tooltip } from "./tooltip";
+
 export type TooltipPlacement =
     | "top"
     | "bottom"
@@ -57,6 +59,14 @@ export interface TooltipControllerOptions {
      */
     fit?: "none" | "auto" | "width" | "height";
     /**
+     * 最小宽度
+     */
+    minWidth?: string;
+    /**
+     * 最小高度
+     */
+    minHeight?: string;
+    /**
      * 触发显示的事件类型，默认为'mouseover'
      */
     trigger?: "click" | "mouseover";
@@ -81,7 +91,7 @@ export interface TooltipControllerOptions {
     /**
      * 自定义样式
      * styles={
-     *    '.tooltip-context':"color:red;"
+     *    '.context':"color:red;"
      * }
      */
     styles?: Record<string, any>;
@@ -93,7 +103,11 @@ export interface TooltipControllerOptions {
      * @param el 解析data-tooltip后得到的内容，可以在此进行修改，或者返回一个新的内容
      * @returns
      */
-    getContent?: (el: HTMLElement | null | undefined) => TooltipContent;
+    getContent?: (
+        content: HTMLElement | null | undefined,
+        ref: HTMLElement,
+        tooltip: Tooltip
+    ) => TooltipContent;
     /**
      * 用于覆盖内部查询目标元素的函数
      * 当data-tooltip以selector://<query>时调用此函数来查询目标元素
