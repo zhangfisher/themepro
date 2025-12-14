@@ -220,18 +220,17 @@ export class Tooltip {
             } else {
                 el = removeUnescapedChars(content || "");
             }
-            if (isFunction(this.options.getContent)) {
-                const result = this.options.getContent.call(this, el);
-                if (isPromiseLike(result)) {
-                    this._asyncLoader = result;
-                    el = this._createLoading();
-                } else {
-                    el = result;
-                }
-            }
-            if (!el) return;
         }
-
+        if (isFunction(this.options.getContent)) {
+            const result = this.options.getContent.call(this, el);
+            if (isPromiseLike(result)) {
+                this._asyncLoader = result;
+                el = this._createLoading();
+            } else {
+                el = result;
+            }
+        }
+        if (!el) return;
         if (el instanceof HTMLElement) {
             return el
                 ? removeUnescapedChars(
