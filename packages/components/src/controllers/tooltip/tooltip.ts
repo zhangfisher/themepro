@@ -201,6 +201,7 @@ export class Tooltip {
             content?.startsWith("https://");
 
         let el: any = null;
+        let getContent = this.options.getContent;
 
         if (isAsyncContent && content) {
             let url = content.substring(content.indexOf("://") + 3);
@@ -208,6 +209,10 @@ export class Tooltip {
                 url = url.substring(content.indexOf("://") + 3);
             }
             el = this._createLoading(url);
+            getContent = async () => {
+                const res = await fetch(url);
+                return res.text();
+            };
         } else {
             if (content?.startsWith("slot://")) {
                 const slotName = content.substring(7);
@@ -221,10 +226,10 @@ export class Tooltip {
                 el = removeUnescapedChars(content || "");
             }
         }
-        if (isFunction(this.options.getContent)) {
-            const result = this.options.getContent.call(this, el);
+        if (isFunction(getContent)) {
+            const result = getContent.call(this, el);
             if (isPromiseLike(result)) {
-                this._asyncLoader = result;
+                this._asyncLoader = result as any;
                 el = this._createLoading();
             } else {
                 el = result;
