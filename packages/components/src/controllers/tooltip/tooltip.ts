@@ -20,6 +20,7 @@ import { isFunction } from "flex-tools/typecheck/isFunction";
 import { isPromiseLike } from "@/utils/isPromiseLike";
 import { getURLQueryParams } from "@/utils/getURLParams";
 import { isNumber } from "flex-tools/typecheck/isNumber";
+import "../../components/Loading";
 
 export class Tooltip {
     options: Required<TooltipControllerOptions>;
@@ -56,10 +57,15 @@ export class Tooltip {
                 styles: undefined,
                 target: undefined,
                 querySelector: this._querySelector.bind(this),
-                predictSize: undefined,
+                predictSize: [100, 100],
             },
             options
         ) as Required<TooltipControllerOptions>;
+        if (typeof this.options.predictSize === "string") {
+            //@ts-expect-error
+            this.options.predictSize = this.options.predictSize.split(",");
+        }
+
         this._parseAttrOptions();
         this._initElements();
     }
@@ -136,32 +142,27 @@ export class Tooltip {
             // 解析data-tooltip-<option>属性
         }
     }
+    private _parsePredictSize(url?: string) {
+        if (!url) return;
+        const sizeArg = getURLQueryParams<string | undefined>(url, "_size");
+        if (!sizeArg) return;
+        const size = typeof sizeArg === "string" ? sizeArg.split(",") : [];
+        if (!Array.isArray(this.options.predictSize)) {
+            this.options.predictSize = [100, 100];
+        }
+        if (size[0]) {
+            this.options.predictSize[0] = size[0];
+        }
+        if (size[1]) {
+            this.options.predictSize[1] = size[1];
+        }
+    }
     /**
      * 创建一个加载中的元素
      */
-    private _createLoading(url?: string) {
-        const sizeArg = getURLQueryParams<string | undefined>(
-            url || "",
-            "_size"
-        );
-        const [width, height] =
-            typeof sizeArg === "string"
-                ? sizeArg.split(",")
-                : this.options.predictSize || [];
-
+    private _createLoading() {
         const loading = document.createElement("auto-loading");
         loading.classList.add("loading");
-
-        if (width) {
-            loading.style.width = isNumber(width)
-                ? `${width}px`
-                : String(width);
-        }
-        if (height) {
-            loading.style.width = isNumber(height)
-                ? `${height}px`
-                : String(height);
-        }
         return loading;
     }
 
@@ -212,10 +213,11 @@ export class Tooltip {
                 url = url.substring(content.indexOf("://") + 3);
             }
             if (url.length === 0) return;
-            el = this._createLoading(url);
+            el = this._createLoading();
+            this._parsePredictSize(url);
             getContent = async () => {
                 const res = await fetch(url);
-                return res.text();
+                return removeUnescapedChars(await res.text());
             };
         } else {
             if (content?.startsWith("slot://")) {
@@ -321,6 +323,11 @@ export class Tooltip {
         Object.assign(contentElement.style, {
             position: "relative",
         });
+        if (Array.isArray(this.options.predictSize)) {
+            const [w, h] = this.options.predictSize;
+            if (w) contentElement.style.width = isNumber(w) ? `${w}px` : w;
+            if (h) contentElement.style.height = isNumber(h) ? `${h}px` : h;
+        }
         container.appendChild(contentElement);
 
         this._onTooltipContainerEvents(container);

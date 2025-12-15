@@ -131,7 +131,7 @@ export interface TooltipControllerOptions {
      * 当内容是一个Promise时，可以通过该属性来预测内容的宽度/高度
      *
      */
-    predictSize?: [number | string, number | string];
+    predictSize?: [string | number, string | number];
     /**
      * 提示框显示时触发
      */
