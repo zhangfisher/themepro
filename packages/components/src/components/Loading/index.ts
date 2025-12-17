@@ -91,7 +91,6 @@ export class AutoLoading extends LitElement {
             align-items: center;
             justify-content: center;
             gap: 0.5em;
-            padding: 1em;
             z-index: 1;
             & > .message,
             & > .memo {
@@ -279,7 +278,9 @@ export class AutoLoading extends LitElement {
             <div class="content" style="color:${iconColor};">
                 ${html`${unsafeHTML(svgIcon)}`}
                 ${when(this.message, () => {
-                    return html`<span class="message">${this.message}</span>`;
+                    return html`<span class="message"
+                        >${unsafeHTML(this.message)}</span
+                    >`;
                 })}
                 ${when(this.description, () => {
                     return html`<span class="memo">${this.description}</span>`;

@@ -172,7 +172,7 @@ const createUUIDHTML = () => {
 
 export const handlers = [
     // 现有的用户API
-    http.get("/user", () => {
+    http.get("/api/tooltip/user", () => {
         return HttpResponse.json({
             firstName: "Neil",
             lastName: "Maverick",
@@ -182,22 +182,22 @@ export const handlers = [
     // Tooltip 模拟API端点
     // 基础内容端点
     http.get("/api/tooltip/post", async () => {
-        await delay(3000);
+        await delay(2000000);
         return HttpResponse.html(createPostHTML(1));
     }),
 
     http.get("/api/tooltip/post-detail", async () => {
-        await delay(3000);
+        await delay(2000);
         return HttpResponse.html(createPostHTML(2));
     }),
 
     http.get("/api/tooltip/comment", async () => {
-        await delay(3000);
+        await delay(2000);
         return HttpResponse.html(createCommentHTML(1));
     }),
 
     http.get("/api/tooltip/html-sample", async () => {
-        await delay(3000);
+        await delay(2000);
         return HttpResponse.html(`
             <div style="padding: 20px; font-family: Arial, sans-serif;">
                 <h2 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 8px;">
@@ -223,12 +223,12 @@ export const handlers = [
     }),
 
     http.get("/api/tooltip/todo", async () => {
-        await delay(3000);
+        await delay(2000);
         return HttpResponse.html(createTodoHTML(1));
     }),
 
     http.get("/api/tooltip/user", async () => {
-        await delay(3000);
+        await delay(2000);
         return HttpResponse.html(createUserHTML(1));
     }),
 
@@ -237,7 +237,7 @@ export const handlers = [
     }),
 
     http.get("/api/tooltip/text-content", async () => {
-        await delay(3000);
+        await delay(2000);
         return HttpResponse.html(`
             <div style="padding: 15px; font-family: monospace; background: #2d3748; color: #e2e8f0; border-radius: 6px;">
                 <h4 style="margin: 0 0 10px 0; color: #4fd1c7;">📄 文本内容示例</h4>
@@ -271,7 +271,7 @@ export const handlers = [
     }),
 
     http.get("/api/tooltip/json-content", async () => {
-        await delay(3000);
+        await delay(2000);
         return HttpResponse.html(`
             <div style="padding: 16px; font-family: 'Courier New', monospace;">
                 <h4 style="margin: 0 0 12px 0; color: #333;">📊 JSON数据展示</h4>
@@ -296,18 +296,18 @@ export const handlers = [
     }),
 
     http.get("/api/tooltip/image-info", async () => {
-        await delay(3000);
+        await delay(2000);
         return HttpResponse.html(createImageInfoHTML());
     }),
 
     http.get("/api/tooltip/uuid", async () => {
-        await delay(3000);
+        await delay(2000);
         return HttpResponse.html(createUUIDHTML());
     }),
 
     // 错误处理端点
     http.get("/api/tooltip/status/:code", async ({ params }) => {
-        await delay(3000);
+        await delay(2000);
         const statusCode = parseInt(params.code as string, 10);
         return new HttpResponse(createErrorHTML(statusCode), {
             status: statusCode,
@@ -318,13 +318,13 @@ export const handlers = [
     }),
 
     http.get("/api/tooltip/network-error", async () => {
-        await delay(3000);
+        await delay(2000);
         // 模拟网络错误
         return HttpResponse.error();
     }),
 
     http.get("/api/tooltip/empty", async () => {
-        await delay(3000);
+        await delay(2000);
         return HttpResponse.html("");
     }),
 ];

@@ -121,15 +121,12 @@ export interface TooltipControllerOptions {
      * 当弹出内容是一个或link Promise时，可以指定一个loading元素
      *
      * - string: 字符串形式的HTML内容
-     * - () => HTMLElement: 返回一个HTMLElement的函数
      */
-    loading?: string | (() => HTMLElement);
+    loading?: string;
     /**
      *
      * 预测弹出内容的宽度/高度
-     *
      * 当内容是一个Promise时，可以通过该属性来预测内容的宽度/高度
-     *
      */
     predictSize?: [string | number, string | number];
     /**

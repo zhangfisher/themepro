@@ -1,3 +1,4 @@
+import { Tooltip } from "./../../controllers/tooltip/tooltip";
 import type { Meta, StoryObj } from "@storybook/web-components";
 import { html } from "lit";
 import "./TooltipDemo";
@@ -36,14 +37,14 @@ export const HTTP远程内容: Story = {
                 <button
                     data-tooltip="link://api/tooltip/post"
                     data-tooltip-placement="top"
-                    data-tooltip-predict-size="[400,200]"
+                    data-tooltip-trigger="click"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
                     加载模拟文章内容
                 </button>
 
                 <button
-                    data-tooltip="http://localhost:3000/api/tooltip/comment"
+                    data-tooltip="link://api/tooltip/comment"
                     data-tooltip-placement="bottom"
                     data-tooltip-predict-size="[300,150]"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
@@ -52,9 +53,9 @@ export const HTTP远程内容: Story = {
                 </button>
 
                 <button
-                    data-tooltip="http://localhost:3000/api/tooltip/html-sample"
+                    data-tooltip="link://api/tooltip/html-sample"
                     data-tooltip-placement="right"
-                    data-tooltip-predict-size="[500,300]"
+                    data-tooltip-predict-size="[300,300]"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
                     加载 HTML 示例
@@ -65,7 +66,7 @@ export const HTTP远程内容: Story = {
     parameters: {
         docs: {
             description: {
-                story: "使用 `data-tooltip='http://localhost:3000/...'` 通过 MSW 模拟 API 加载 HTML 内容。所有请求都被 MSW 拦截并返回模拟数据，无需真实的后端服务器。支持预设置尺寸以优化加载体验。",
+                story: "使用 `data-tooltip='link://...'` 通过 MSW 模拟 API 加载 HTML 内容。所有请求都被 MSW 拦截并返回模拟数据，无需真实的后端服务器。支持预设置尺寸以优化加载体验。",
             },
         },
     },
@@ -79,7 +80,7 @@ export const Link协议内容: Story = {
                 style="display: flex; gap: 20px; flex-wrap: wrap; padding: 40px;"
             >
                 <button
-                    data-tooltip="link://http://localhost:3000/api/tooltip/todo"
+                    data-tooltip="link://api/tooltip/todo"
                     data-tooltip-placement="top"
                     data-tooltip-predict-size="[350,150]"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
@@ -88,7 +89,7 @@ export const Link协议内容: Story = {
                 </button>
 
                 <button
-                    data-tooltip-link="http://localhost:3000/api/tooltip/user"
+                    data-tooltip-link="link://api/tooltip/user"
                     data-tooltip-placement="bottom"
                     data-tooltip-predict-size="[400,250]"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
@@ -97,7 +98,7 @@ export const Link协议内容: Story = {
                 </button>
 
                 <button
-                    data-tooltip="link://http://localhost:3000/api/tooltip/text-content"
+                    data-tooltip="link://api/tooltip/text-content"
                     data-tooltip-placement="left"
                     data-tooltip-predict-size="[300,200]"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
@@ -125,10 +126,11 @@ export const 带加载状态的远程内容: Story = {
             >
                 <!-- 模拟慢速加载 -->
                 <button
-                    data-tooltip="http://localhost:3000/api/tooltip/delay"
+                    data-tooltip="link://api/tooltip/delay"
                     data-tooltip-placement="top"
                     data-tooltip-predict-size="[300,120]"
-                    data-tooltip-loading='<div style="padding: 10px; display: flex; align-items: center; gap: 8px;"><div class="loading-spinner"></div><span>正在加载...</span></div>'
+                    data-tooltip-trigger="click"
+                    data-tooltip-loading='<div style="color:red;padding: 10px; display: flex; align-items: center; gap: 8px;"><div class="loading-spinner"></div><span>正在加载...</span></div>'
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
                     慢速加载示例(2秒延迟)
@@ -136,7 +138,7 @@ export const 带加载状态的远程内容: Story = {
 
                 <!-- 自定义加载尺寸 -->
                 <button
-                    data-tooltip="http://localhost:3000/api/tooltip/json-content"
+                    data-tooltip="link://api/tooltip/json-content"
                     data-tooltip-placement="bottom"
                     data-tooltip-predict-size="[400,200]"
                     data-tooltip-loading='<div style="padding: 15px; text-align: center; color: #666;">🔄 加载中请稍候...</div>'
@@ -147,7 +149,7 @@ export const 带加载状态的远程内容: Story = {
 
                 <!-- 带尺寸预测的加载 -->
                 <button
-                    data-tooltip="http://localhost:3000/api/tooltip/image-info"
+                    data-tooltip="link://api/tooltip/image-info"
                     data-tooltip-placement="right"
                     data-tooltip-predict-size="[450,300]"
                     data-tooltip-loading='<div style="padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 10px;"><div class="loading" style="width: 32px; height: 32px;"></div><span>获取图片信息...</span></div>'
@@ -206,7 +208,7 @@ export const 错误处理示例: Story = {
             >
                 <!-- 404 错误 -->
                 <button
-                    data-tooltip="http://localhost:3000/api/tooltip/status/404"
+                    data-tooltip="link://api/tooltip/status/404"
                     data-tooltip-placement="top"
                     data-tooltip-predict-size="[300,100]"
                     data-tooltip-loading='<div style="padding: 10px; color: #666;">⏳ 请求中...</div>'
@@ -217,7 +219,7 @@ export const 错误处理示例: Story = {
 
                 <!-- 500 错误 -->
                 <button
-                    data-tooltip="http://localhost:3000/api/tooltip/status/500"
+                    data-tooltip="link://api/tooltip/status/500"
                     data-tooltip-placement="bottom"
                     data-tooltip-predict-size="[300,100]"
                     data-tooltip-loading='<div style="padding: 10px; color: #666;">⏳ 加载中...</div>'
@@ -228,7 +230,7 @@ export const 错误处理示例: Story = {
 
                 <!-- 无效URL -->
                 <button
-                    data-tooltip="http://localhost:3000/api/tooltip/network-error"
+                    data-tooltip="link://api/tooltip/network-error"
                     data-tooltip-placement="right"
                     data-tooltip-predict-size="[300,100]"
                     data-tooltip-loading='<div style="padding: 10px; color: #666;">⏳ 连接中...</div>'
@@ -239,7 +241,7 @@ export const 错误处理示例: Story = {
 
                 <!-- 空内容URL -->
                 <button
-                    data-tooltip="http://localhost:3000/api/tooltip/empty"
+                    data-tooltip="link://api/tooltip/empty"
                     data-tooltip-placement="left"
                     data-tooltip-predict-size="[200,80]"
                     data-tooltip-loading='<div style="padding: 10px; color: #666;">⏳ 获取空内容...</div>'
@@ -267,7 +269,7 @@ export const 点击触发的远程内容: Story = {
                 style="display: flex; gap: 20px; flex-wrap: wrap; padding: 40px;"
             >
                 <button
-                    data-tooltip="http://localhost:3000/api/tooltip/post-detail"
+                    data-tooltip="link://api/tooltip/post-detail"
                     data-tooltip-trigger="click"
                     data-tooltip-placement="top"
                     data-tooltip-predict-size="[400,200]"
@@ -279,7 +281,7 @@ export const 点击触发的远程内容: Story = {
                 </button>
 
                 <button
-                    data-tooltip="link://http://localhost:3000/api/tooltip/user-detail"
+                    data-tooltip="link://api/tooltip/user-detail"
                     data-tooltip-trigger="click"
                     data-tooltip-placement="bottom"
                     data-tooltip-predict-size="[350,250]"
@@ -291,9 +293,8 @@ export const 点击触发的远程内容: Story = {
                 </button>
 
                 <button
-                    data-tooltip="http://localhost:3000/api/tooltip/uuid"
+                    data-tooltip="link://api/tooltip/uuid"
                     data-tooltip-trigger="click"
-                    data-tooltip-placement="right"
                     data-tooltip-predict-size="[300,120]"
                     data-tooltip-delay-hide="3000"
                     data-tooltip-loading='<div style="padding: 12px; color: #666;">🎲 生成UUID...</div>'
@@ -354,21 +355,15 @@ export const 远程内容综合演示: Story = {
                         style="margin: 10px 0 0 0; padding-left: 20px; font-size: 13px; color: #495057;"
                     >
                         <li>
-                            <code
-                                >data-tooltip="http://localhost:3000/..."</code
-                            >
+                            <code>data-tooltip="link://..."</code>
                             - HTTP 模拟内容
                         </li>
                         <li>
-                            <code
-                                >data-tooltip="link://http://localhost:3000/..."</code
-                            >
+                            <code>data-tooltip="link://..."</code>
                             - Link 协议模拟内容
                         </li>
                         <li>
-                            <code
-                                >data-tooltip-link="http://localhost:3000/..."</code
-                            >
+                            <code>data-tooltip-link="link://..."</code>
                             - Link 属性模拟内容
                         </li>
                     </ul>
@@ -394,9 +389,9 @@ export const 远程内容综合演示: Story = {
                             基础远程加载
                         </h4>
                         <button
-                            data-tooltip="http://localhost:3000/api/tooltip/post"
-                            data-tooltip-placement="bottom"
+                            data-tooltip="link://api/tooltip/post"
                             data-tooltip-predict-size="[380,200]"
+                            data-Tooltip-loading="正在加载文件内容..."
                             style="width: 100%; padding: 10px; border: 1px solid #007bff; border-radius: 4px; background: #007bff; color: white; cursor: pointer;"
                         >
                             📄 加载文章内容
@@ -413,10 +408,9 @@ export const 远程内容综合演示: Story = {
                             自定义加载状态
                         </h4>
                         <button
-                            data-tooltip="http://localhost:3000/api/tooltip/delay"
+                            data-tooltip="link://api/tooltip/delay"
                             data-tooltip-placement="top"
                             data-tooltip-predict-size="[300,120]"
-                            data-tooltip-loading='<div style="padding: 12px; text-align: center;"><div style="width: 20px; height: 20px; border: 2px solid #e3e3e3; border-top: 2px solid #007bff; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div><div style="margin-top: 8px; font-size: 12px; color: #666;">正在获取数据...</div></div>'
                             style="width: 100%; padding: 10px; border: 1px solid #28a745; border-radius: 4px; background: #28a745; color: white; cursor: pointer;"
                         >
                             ⏳ 带加载动画
@@ -433,12 +427,10 @@ export const 远程内容综合演示: Story = {
                             点击触发模式
                         </h4>
                         <button
-                            data-tooltip="link://http://localhost:3000/api/tooltip/comment"
+                            data-tooltip="link://api/tooltip/comment"
                             data-tooltip-trigger="click"
-                            data-tooltip-placement="right"
                             data-tooltip-predict-size="[350,180]"
                             data-tooltip-delay-hide="6000"
-                            data-tooltip-loading='<div style="padding: 15px; text-align: center; color: #28a745;">💬 获取评论中...</div>'
                             style="width: 100%; padding: 10px; border: 1px solid #ffc107; border-radius: 4px; background: #ffc107; color: #212529; cursor: pointer;"
                         >
                             💬 点击查看评论
@@ -455,10 +447,9 @@ export const 远程内容综合演示: Story = {
                             错误处理示例
                         </h4>
                         <button
-                            data-tooltip="http://localhost:3000/api/tooltip/status/404"
+                            data-tooltip="link://api/tooltip/status/404"
                             data-tooltip-placement="left"
                             data-tooltip-predict-size="[250,80]"
-                            data-tooltip-loading='<div style="padding: 8px; color: #dc3545;">⚠️ 检查链接...</div>'
                             style="width: 100%; padding: 10px; border: 1px solid #dc3545; border-radius: 4px; background: #dc3545; color: white; cursor: pointer;"
                         >
                             ❌ 模拟404错误

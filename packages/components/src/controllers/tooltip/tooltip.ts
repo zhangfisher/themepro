@@ -58,6 +58,7 @@ export class Tooltip {
                 target: undefined,
                 querySelector: this._querySelector.bind(this),
                 predictSize: [100, 100],
+                loading: undefined,
             },
             options
         ) as Required<TooltipControllerOptions>;
@@ -162,7 +163,9 @@ export class Tooltip {
      */
     private _createLoading() {
         const loading = document.createElement("auto-loading");
-        loading.classList.add("loading");
+        if (typeof this.options.loading === "string") {
+            loading.setAttribute("message", this.options.loading);
+        }
         return loading;
     }
 
@@ -208,9 +211,14 @@ export class Tooltip {
         let getContent = this.options.getContent;
 
         if (isAsyncContent && content) {
-            let url = content.substring(content.indexOf("://") + 3).trim();
-            if (url.startsWith("http://") || url.startsWith("https://")) {
-                url = url.substring(content.indexOf("://") + 3);
+            let url: string;
+            if (
+                content.startsWith("http://") ||
+                content.startsWith("https://")
+            ) {
+                url = content;
+            } else {
+                url = content.substring(content.indexOf("://") + 3).trim();
             }
             if (url.length === 0) return;
             el = this._createLoading();
@@ -256,9 +264,11 @@ export class Tooltip {
     /**
      * 设置tooltip内容
      */
-    private _setTooltipContent(content: string | HTMLElement): void {
+    private _setTooltipContent(content: string | HTMLElement) {
         if (!this._container) return;
-        const contentEl = this.container.querySelector(":scope>.content")!;
+        const contentEl = this.container.querySelector(
+            ":scope>.content"
+        )! as HTMLElement;
         if (typeof content === "string") {
             contentEl.innerHTML = content;
         } else {
@@ -273,13 +283,13 @@ export class Tooltip {
                 child.style.display = "block";
             }
         });
-
         // 创建内容包装器
         // const footerWrapper = document.createElement("div");
         // footerWrapper.classList.add("footer");
         // footerWrapper.appendChild(footerWrapper);
         // this._container.appendChild(footerWrapper);
         applyStylesToElement(this._container, this.options.styles);
+        return contentEl;
     }
 
     /**
@@ -298,13 +308,15 @@ export class Tooltip {
             z-index: 1000;
             background-color: var(--auto-bgcolor);
             border-radius: var(--auto-border-radius);
-            border: var(--auto-border);
-            padding: 8px 12px;
+            border: var(--auto-border); 
             font: var(--auto-font);
             color: var(--auto-color);
             box-shadow: var(--auto-shadow);
             word-wrap: break-word;
             white-space: pre-wrap;
+            max-width: 100%;
+            max-height: 100%;
+            box-sizing: border-box;
         `;
 
         if (this.options.arrow) {
@@ -322,11 +334,16 @@ export class Tooltip {
         contentElement.classList.add("content");
         Object.assign(contentElement.style, {
             position: "relative",
+            transition: "width,height 0.5s ease-out",
         });
         if (Array.isArray(this.options.predictSize)) {
             const [w, h] = this.options.predictSize;
-            if (w) contentElement.style.width = isNumber(w) ? `${w}px` : w;
-            if (h) contentElement.style.height = isNumber(h) ? `${h}px` : h;
+            if (w)
+                contentElement.style.width = isNumber(w) ? `${w}px` : String(w);
+            if (h)
+                contentElement.style.height = isNumber(h)
+                    ? `${h}px`
+                    : String(h);
         }
         container.appendChild(contentElement);
 
@@ -666,7 +683,11 @@ export class Tooltip {
         if (this._loadContent && this._loadContent instanceof Promise) {
             this._loadContent
                 .then((value: any) => {
-                    this._setTooltipContent(value);
+                    const el = this._setTooltipContent(value);
+                    if (el) {
+                        el.style.width = "auto";
+                        el.style.height = "auto";
+                    }
                 })
                 .catch((e: any) => {
                     this._setTooltipContent(e.message);
@@ -767,6 +788,8 @@ export class Tooltip {
     }
     destroy() {
         this._removeEventListeners();
+        //  如果有加载中的内容，则取消加载
+        this._loadContent = undefined;
         if (!this.options.cache) {
             setTimeout(() => {
                 this.controller.themeproContainer?.removeChild(this.container);
