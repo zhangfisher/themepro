@@ -10,7 +10,7 @@
  *
  */
 import { LitElement, css, html } from "lit";
-import { property } from "lit/decorators.js";
+import { property, query } from "lit/decorators.js";
 import { customElement } from "lit/decorators/custom-element.js";
 import { unsafeHTML } from "lit/directives/unsafe-html.js";
 import {
@@ -175,9 +175,14 @@ export class AutoLoading extends LitElement {
     @property({ type: Boolean, reflect: true })
     cancelable: boolean = false;
 
+    /**
+     * 可重试
+     */
+    @property({ type: Boolean, reflect: true })
+    retryable: boolean = false;
+
     updated(changedProperties: Map<string, any>) {
         super.updated(changedProperties);
-
         // 当 cancelable 属性变化时，确保组件重新渲染以显示/隐藏取消按钮
         if (changedProperties.has("cancelable")) {
             this.requestUpdate();
@@ -190,13 +195,25 @@ export class AutoLoading extends LitElement {
     @objectProperty()
     actions?: Array<AutoButtonProps>;
 
+    @query(".actions")
+    actionsEl?: HTMLElement;
+
     connectedCallback() {
         super.connectedCallback();
-        this.addEventListener("click", this._onActionClick as EventListener);
+        setTimeout(() => {
+            this.actionsEl?.addEventListener(
+                "click",
+                this._onActionClick as EventListener,
+                true
+            );
+        });
     }
 
     disconnectedCallback() {
-        this.removeEventListener("click", this._onActionClick as EventListener);
+        this.actionsEl?.removeEventListener(
+            "click",
+            this._onActionClick as EventListener
+        );
         super.disconnectedCallback();
     }
 
@@ -208,9 +225,8 @@ export class AutoLoading extends LitElement {
             if (actionId === "cancel") {
                 this.hide = true;
             }
-
             triggerCustomEvent(
-                event.target as HTMLElement,
+                actionEl as HTMLElement,
                 "action:click",
                 actionId
             );
@@ -291,8 +307,8 @@ export class AutoLoading extends LitElement {
                             return html`<auto-button
                                 class="action"
                                 size="small"
-                                data-id="${action.id || action.label}"
                                 ${spread(action)}
+                                data-id="${action.id || action.label}"
                                 ghost
                             ></auto-button>`;
                         })}

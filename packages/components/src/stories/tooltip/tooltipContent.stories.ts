@@ -80,6 +80,8 @@ export const 多行文本: Story = {
             <button
                 data-tooltip="<p>段落一：这是一段较长的文本内容，展示了如何在提示框中使用段落标签。</p><p>段落二：另一个段落，包含更多的信息内容。</p>"
                 data-tooltip-placement="bottom"
+                data-tooltip-trigger="click"
+                data-tooltip-delay-hide="1000000"
                 style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
             >
                 段落文本

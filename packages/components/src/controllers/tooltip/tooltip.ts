@@ -51,7 +51,7 @@ export class Tooltip {
                 fit: "none",
                 arrow: true,
                 trigger: "mouseover",
-                padding: undefined,
+                padding: "var(--auto-padding)",
                 delayHide: 0,
                 cache: false,
                 styles: undefined,
@@ -75,6 +75,9 @@ export class Tooltip {
     }
     get container() {
         return this._container!;
+    }
+    get contentElement(): HTMLElement | null | undefined {
+        return this._container?.querySelector(":scope > .content");
     }
     get host() {
         return this.controller.hostElement as HTMLElement;
@@ -266,9 +269,8 @@ export class Tooltip {
      */
     private _setTooltipContent(content: string | HTMLElement) {
         if (!this._container) return;
-        const contentEl = this.container.querySelector(
-            ":scope>.content"
-        )! as HTMLElement;
+        const contentEl = this.contentElement;
+        if (!contentEl) return;
         if (typeof content === "string") {
             contentEl.innerHTML = content;
         } else {
@@ -335,16 +337,8 @@ export class Tooltip {
         Object.assign(contentElement.style, {
             position: "relative",
             transition: "width,height 0.5s ease-out",
+            padding: this.options.padding,
         });
-        if (Array.isArray(this.options.predictSize)) {
-            const [w, h] = this.options.predictSize;
-            if (w)
-                contentElement.style.width = isNumber(w) ? `${w}px` : String(w);
-            if (h)
-                contentElement.style.height = isNumber(h)
-                    ? `${h}px`
-                    : String(h);
-        }
         container.appendChild(contentElement);
 
         this._onTooltipContainerEvents(container);
@@ -681,6 +675,20 @@ export class Tooltip {
         });
 
         if (this._loadContent && this._loadContent instanceof Promise) {
+            if (Array.isArray(this.options.predictSize)) {
+                const [w, h] = this.options.predictSize;
+                const contentElement = this.contentElement;
+                if (contentElement) {
+                    if (w)
+                        contentElement.style.width = isNumber(w)
+                            ? `${w}px`
+                            : String(w);
+                    if (h)
+                        contentElement.style.height = isNumber(h)
+                            ? `${h}px`
+                            : String(h);
+                }
+            }
             this._loadContent
                 .then((value: any) => {
                     const el = this._setTooltipContent(value);

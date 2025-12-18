@@ -641,6 +641,7 @@ export const LoadingTypes: Story = {
                         type="bars"
                         message="条形"
                         color="#52c41a"
+                        cancelable
                     ></auto-loading
                 ></auto-flex>
                 <auto-flex

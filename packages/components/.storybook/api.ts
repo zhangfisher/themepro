@@ -327,4 +327,8 @@ export const handlers = [
         await delay(2000);
         return HttpResponse.html("");
     }),
+    http.get("/api/tooltip/error", async () => {
+        await delay(1000);
+        return HttpResponse.error();
+    }),
 ];

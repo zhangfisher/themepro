@@ -77,6 +77,7 @@ export interface TooltipControllerOptions {
     delayHide?: number;
     /**
      * 是否缓存tooltip组件，默认为 false
+     * 如果cache=true则不会销毁tooltip类和元素，而只是隐藏
      */
     cache?: boolean;
     /**
@@ -124,11 +125,18 @@ export interface TooltipControllerOptions {
      */
     loading?: string;
     /**
-     *
      * 预测弹出内容的宽度/高度
      * 当内容是一个Promise时，可以通过该属性来预测内容的宽度/高度
+     * 当data-tooltip是一个link://,http://,https:// 时
+     * 可以通过该属性来预测内容的宽度/高度,显示
+     * 注意：指的是内容区,即.content的宽度/高度
      */
     predictSize?: [string | number, string | number];
+    /**
+     * 弹出内容的宽度/高度
+     * 注意：指的是内容区,即.content的宽度/高度
+     */
+    size?: [string | number, string | number];
     /**
      * 提示框显示时触发
      */

@@ -5,19 +5,12 @@
  *
  * const loader = new RemoteLoader(options)
  *
+ * loader.load(url).then((v)=>{
  *
- *
- * loader.then((v)=>{
- *
- * })
- * loader.cancel()
- *
- * loader.load(url)
- *
- *
- * loader.then('load',(v)=>{
+ * }).catch(()=>{
  *
  * })
+ * loader.abort()
  *
  */
 
@@ -25,14 +18,19 @@ export type RemoteLoaderOptions = {
     url?: string;
     abortController?: AbortController;
     format?: "json" | "text";
-};
+} & RequestInit;
+
 export class RemoteLoader<T> {
-    private _promise?: Promise<T>;
     private _resolve?: (value: T) => void;
     private _reject?: (reason?: any) => void;
     options: RemoteLoaderOptions;
     constructor(options?: RemoteLoaderOptions) {
-        this.options = Object.assign({}, options);
+        this.options = Object.assign(
+            {
+                format: "json",
+            },
+            options
+        );
     }
     load(url: string) {
         return new Promise((resolve, reject) => {
@@ -42,17 +40,22 @@ export class RemoteLoader<T> {
                 signal: this.options.abortController?.signal,
             })
                 .then((value) => {
-                    value.json();
-                    value.text();
-                    this._resolve!(value as T);
+                    const getResult =
+                        this.options.format === "json"
+                            ? value.json()
+                            : value.text();
+                    getResult
+                        .then((r) => {
+                            this._resolve!(r as T);
+                        })
+                        .catch((e) => {
+                            this._reject!(e);
+                        });
                 })
                 .catch((reason) => {
                     this._reject!(reason);
                 });
         });
-    }
-    then() {
-        return this._promise?.then;
     }
     abort() {
         this.options.abortController?.abort();
