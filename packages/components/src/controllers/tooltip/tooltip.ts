@@ -82,6 +82,7 @@ export class Tooltip {
     get host() {
         return this.controller.hostElement as HTMLElement;
     }
+
     /**
      *  获取目标元素，即tooltip的显示位置
      *  用于计算tooltip的位置
@@ -390,7 +391,6 @@ export class Tooltip {
      * 设置外部事件监听器
      */
     private _addEventListeners(): void {
-        console.log("_addEventListeners");
         if (this.ref) {
             this.ref.addEventListener("mouseenter", this._onMouseEnter);
             this.ref.addEventListener("mouseleave", this._onMouseLeave);
@@ -647,7 +647,6 @@ export class Tooltip {
     }
     async show() {
         if (this._isVisible || !this._container) return;
-
         // 停止任何正在进行的隐藏动画
         this._hideAnimation?.pause();
         // 清理之前的延迟隐藏定时器
@@ -677,8 +676,6 @@ export class Tooltip {
         this._loadAsyncContent();
         this._isVisible = true;
         this.options.onShow?.();
-
-        // 延迟自动隐藏
         this._setDelayHide();
     }
     private _loadAsyncContent() {
@@ -779,7 +776,7 @@ export class Tooltip {
         if (this._hideAnimation?.finished) {
             this._hideAnimation.finished.then(() => {
                 container.style.visibility = "hidden";
-                container.style.pointerEvents = "none";
+                ///container.style.pointerEvents = "none";
                 this._hideAnimation = undefined;
                 this.destroy();
             });
@@ -787,7 +784,7 @@ export class Tooltip {
             // 如果动画对象异常，直接执行完成逻辑
             setTimeout(() => {
                 container.style.visibility = "hidden";
-                container.style.pointerEvents = "none";
+                //container.style.pointerEvents = "none";
                 this._hideAnimation = undefined;
                 this.destroy();
             }, options.animationDuration || options.animationDuration!);
