@@ -390,7 +390,7 @@ export class Tooltip {
      * 设置外部事件监听器
      */
     private _addEventListeners(): void {
-        // 为 this.ref 添加mouseenter和mouseleave事件监听器
+        console.log("_addEventListeners");
         if (this.ref) {
             this.ref.addEventListener("mouseenter", this._onMouseEnter);
             this.ref.addEventListener("mouseleave", this._onMouseLeave);
@@ -411,12 +411,12 @@ export class Tooltip {
             this.ref.removeEventListener("mouseenter", this._onMouseEnter);
             this.ref.removeEventListener("mouseleave", this._onMouseLeave);
         }
-        if (this.container) {
-            this.container.removeEventListener(
+        if (this._container) {
+            this._container.removeEventListener(
                 "mouseenter",
                 this._onMouseEnter
             );
-            this.container.removeEventListener(
+            this._container.removeEventListener(
                 "mouseleave",
                 this._onMouseLeave
             );
@@ -674,6 +674,14 @@ export class Tooltip {
             easing: this.options.animationEasing || "easeOutQuart",
         });
 
+        this._loadAsyncContent();
+        this._isVisible = true;
+        this.options.onShow?.();
+
+        // 延迟自动隐藏
+        this._setDelayHide();
+    }
+    private _loadAsyncContent() {
         if (this._loadContent && this._loadContent instanceof Promise) {
             if (Array.isArray(this.options.predictSize)) {
                 const [w, h] = this.options.predictSize;
@@ -704,12 +712,6 @@ export class Tooltip {
                     this._loadContent = undefined;
                 });
         }
-
-        this._isVisible = true;
-        this.options.onShow?.();
-
-        // 延迟自动隐藏
-        this._setDelayHide();
     }
     private _fitContainer() {
         const fit = this.options.fit;

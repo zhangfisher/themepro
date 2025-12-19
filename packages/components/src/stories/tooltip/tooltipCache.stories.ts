@@ -47,20 +47,29 @@ export const 基础缓存演示: Story = {
         </div>
 
         <!-- 状态显示区域 -->
-        <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 6px;">
+        <div
+            style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 6px;"
+        >
             <h4 style="margin: 0 0 10px 0; color: #333;">状态监控</h4>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;"
+            >
                 <div>
                     <strong>缓存的 Tooltip:</strong>
-                    <div id="cached-status" style="color: #007bff;">等待交互...</div>
+                    <div id="cached-status" style="color: #007bff;">
+                        等待交互...
+                    </div>
                 </div>
                 <div>
                     <strong>非缓存的 Tooltip:</strong>
-                    <div id="non-cached-status" style="color: #6c757d;">等待交互...</div>
+                    <div id="non-cached-status" style="color: #6c757d;">
+                        等待交互...
+                    </div>
                 </div>
             </div>
             <div style="margin-top: 15px; font-size: 12px; color: #666;">
-                <strong>说明：</strong>反复悬停在两个按钮上，观察缓存和非缓存行为的区别。
+                <strong>说明：</strong
+                >反复悬停在两个按钮上，观察缓存和非缓存行为的区别。
             </div>
         </div>
     </tooltip-cache-demo>`,
@@ -151,10 +160,15 @@ export const 复杂内容缓存: Story = {
         </div>
 
         <!-- 性能提示 -->
-        <div style="margin-top: 30px; padding: 20px; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #2196f3;">
+        <div
+            style="margin-top: 30px; padding: 20px; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #2196f3;"
+        >
             <h5 style="margin: 0 0 10px 0; color: #1976d2;">💡 缓存性能优势</h5>
-            <p style="margin: 0; font-size: 14px; color: #424242; line-height: 1.5;">
-                对于包含复杂 HTML 结构、表格或大量样式的 tooltip，启用缓存可以显著提升性能。
+            <p
+                style="margin: 0; font-size: 14px; color: #424242; line-height: 1.5;"
+            >
+                对于包含复杂 HTML 结构、表格或大量样式的
+                tooltip，启用缓存可以显著提升性能。
                 第一次显示时创建元素，后续显示直接复用，避免了重复的 DOM 操作。
             </p>
         </div>
@@ -172,65 +186,49 @@ export const 动态内容缓存: Story = {
     name: "动态内容缓存",
     render: () => html`<tooltip-cache-demo>
         <div style="display: flex; gap: 20px; flex-wrap: wrap; padding: 40px;">
-            <!-- 动态时间内容 -->
-            <button
-                id="time-btn"
-                data-tooltip=""
-                data-tooltip-cache="true"
-                data-tooltip-placement="top"
-                style="padding: 12px 20px; border: 1px solid #17a2b8; border-radius: 6px; background: #17a2b8; color: white; cursor: pointer;"
-            >
-                动态时间 (缓存)
-            </button>
-
-            <!-- 动态计数器内容 -->
-            <button
-                id="counter-btn"
-                data-tooltip=""
-                data-tooltip-cache="true"
-                data-tooltip-placement="bottom"
-                style="padding: 12px 20px; border: 1px solid #6f42c1; border-radius: 6px; background: #6f42c1; color: white; cursor: pointer;"
-            >
-                动态计数 (缓存)
-            </button>
-
             <!-- 动态表单内容 -->
             <button
                 id="form-btn"
-                data-tooltip=""
+                data-tooltip="query://#form-tooltip"
                 data-tooltip-cache="true"
                 data-tooltip-placement="right"
                 style="padding: 12px 20px; border: 1px solid #fd7e14; border-radius: 6px; background: #fd7e14; color: white; cursor: pointer;"
             >
                 动态表单 (缓存)
             </button>
-        </div>
-
-        <!-- 控制面板 -->
-        <div style="margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 6px;">
-            <h4 style="margin: 0 0 15px 0; color: #333;">动态内容控制</h4>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                <div>
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #495057;">时间更新间隔</label>
-                    <select id="time-interval" style="width: 100%; padding: 5px; border: 1px solid #ced4da; border-radius: 4px;">
-                        <option value="1000">1 秒</option>
-                        <option value="2000" selected>2 秒</option>
-                        <option value="5000">5 秒</option>
-                    </select>
+            <div
+                id="form-tooltip"
+                style="display:none;padding: 15px; background: white; border-radius: 6px; border: 1px solid #ddd; min-width: 250px;"
+            >
+                <h4
+                    style="margin: 0 0 12px 0; color: #fd7e14; font-size: 14px;"
+                >
+                    📝 动态表单
+                </h4>
+                <form style="margin: 0;">
+                    <div style="margin-bottom: 8px;">
+                        <label
+                            style="display: block; margin-bottom: 3px; font-size: 12px; color: #495057;"
+                            >字段</label
+                        >
+                        <input
+                            type="text"
+                            placeholder="输入内容"
+                            style="width: 100%; padding: 4px; border: 1px solid #ced4da; border-radius: 3px; font-size: 12px;"
+                        />
+                    </div>
+                    <button
+                        type="button"
+                        style="width: 100%; padding: 6px; background: #fd7e14; color: white; border: none; border-radius: 3px; cursor: pointer; font-size: 12px;"
+                    >
+                        提交表单
+                    </button>
+                </form>
+                <div
+                    style="margin-top: 10px; padding: 5px; background: #fff3e0; border-radius: 3px; font-size: 11px; color: #fd7e14; text-align: center;"
+                >
+                    动态字段数量，缓存启用
                 </div>
-                <div>
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #495057;">计数器步长</label>
-                    <input type="number" id="counter-step" value="1" min="1" max="10"
-                           style="width: 100%; padding: 5px; border: 1px solid #ced4da; border-radius: 4px;">
-                </div>
-                <div>
-                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #495057;">表单字段数</label>
-                    <input type="number" id="form-fields" value="3" min="1" max="8"
-                           style="width: 100%; padding: 5px; border: 1px solid #ced4da; border-radius: 4px;">
-                </div>
-            </div>
-            <div style="margin-top: 15px; padding: 10px; background: #fff3cd; border-radius: 4px; font-size: 13px; color: #856404;">
-                <strong>注意：</strong>即使启用了缓存，通过 getContent 函数仍可以动态更新 tooltip 内容。
             </div>
         </div>
     </tooltip-cache-demo>`,
@@ -307,63 +305,6 @@ export const 缓存管理演示: Story = {
                 >
                     混合按钮 3 (缓存)
                 </button>
-            </div>
-        </div>
-
-        <!-- 缓存管理面板 -->
-        <div style="margin-top: 20px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
-            <h4 style="margin: 0 0 15px 0; color: #333;">缓存管理</h4>
-
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px;">
-                <div>
-                    <h5 style="margin: 0 0 10px 0; color: #495057;">缓存统计</h5>
-                    <div style="background: white; padding: 10px; border-radius: 4px; border: 1px solid #dee2e6;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                            <span>总 tooltip 数量:</span>
-                            <strong id="total-count">0</strong>
-                        </div>
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                            <span>缓存的 tooltip:</span>
-                            <strong id="cached-count" style="color: #28a745;">0</strong>
-                        </div>
-                        <div style="display: flex; justify-content: space-between;">
-                            <span>非缓存的 tooltip:</span>
-                            <strong id="non-cached-count" style="color: #dc3545;">0</strong>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <h5 style="margin: 0 0 10px 0; color: #495057;">内存占用</h5>
-                    <div style="background: white; padding: 10px; border-radius: 4px; border: 1px solid #dee2e6;">
-                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
-                            <span>缓存元素:</span>
-                            <strong id="cached-elements">0</strong>
-                        </div>
-                        <div style="display: flex; justify-content: space-between;">
-                            <span>估计内存:</span>
-                            <strong id="memory-usage">~0KB</strong>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="display: flex; gap: 10px;">
-                <button id="refresh-stats" style="padding: 8px 16px; border: 1px solid #007bff; border-radius: 4px; background: #007bff; color: white; cursor: pointer;">
-                    刷新统计
-                </button>
-                <button id="clear-cache" style="padding: 8px 16px; border: 1px solid #dc3545; border-radius: 4px; background: #dc3545; color: white; cursor: pointer;">
-                    清理缓存 (演示)
-                </button>
-            </div>
-
-            <div style="margin-top: 15px; padding: 10px; background: #d1ecf1; border-radius: 4px; font-size: 13px; color: #0c5460;">
-                <strong>使用说明：</strong>
-                <ul style="margin: 5px 0 0 0; padding-left: 20px;">
-                    <li>悬停在按钮上创建 tooltip</li>
-                    <li>观察缓存和非缓存的区别</li>
-                    <li>使用控制按钮管理缓存</li>
-                    <li>注意内存使用情况</li>
-                </ul>
             </div>
         </div>
     </tooltip-cache-demo>`,
