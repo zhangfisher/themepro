@@ -191,10 +191,18 @@ export const 动态内容缓存: Story = {
                 id="form-btn"
                 data-tooltip="query://#form-tooltip"
                 data-tooltip-cache="true"
-                data-tooltip-placement="right"
+                data-tooltip-placement="left"
                 style="padding: 12px 20px; border: 1px solid #fd7e14; border-radius: 6px; background: #fd7e14; color: white; cursor: pointer;"
             >
                 动态表单 (缓存)
+            </button>
+            <button
+                id="form-btn"
+                data-tooltip="query://#form-tooltip"
+                data-tooltip-placement="right"
+                style="padding: 12px 20px; border: 1px solid #fd7e14; border-radius: 6px; background: #fd7e14; color: white; cursor: pointer;"
+            >
+                动态表单 (不缓存)
             </button>
             <div
                 id="form-tooltip"

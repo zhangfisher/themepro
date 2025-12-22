@@ -4,7 +4,6 @@ import { html } from "lit";
 import { property } from "lit/decorators.js";
 import { customElement } from "lit/decorators/custom-element.js";
 import { when } from "lit/directives/when.js";
-
 import { styles } from "./styles";
 import { AutoElementBase } from "../../elements/base";
 import { styleMap } from "lit/directives/style-map.js";
@@ -14,6 +13,8 @@ import { repeat } from "lit/directives/repeat.js";
 import { getId } from "@/utils/getId";
 import { isFunction } from "@/utils/isFunction";
 import { camelToKebab } from "@/utils/camelToKebab";
+import "../Flex";
+import "../Icon";
 
 export type AutoButtonTag = {
     id?: string;
