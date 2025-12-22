@@ -59,6 +59,7 @@ export class Tooltip {
                 querySelector: this._querySelector.bind(this),
                 predictSize: [100, 100],
                 loading: undefined,
+                cssClass: "tooltip-visible",
             },
             options
         ) as Required<TooltipControllerOptions>;
@@ -654,6 +655,9 @@ export class Tooltip {
         // 设置外部事件监听器
         this._addEventListeners();
 
+        // 应用显示时的CSS类
+        this._applyCssClass(true);
+
         this._fitContainer();
 
         // 先同步计算显示位置，确保定位准确
@@ -741,6 +745,26 @@ export class Tooltip {
             }, this.options.delayHide);
         }
     }
+
+    /**
+     * 应用CSS类到ref元素
+     */
+    private _applyCssClass(isShowing: boolean): void {
+        if (!this.options.cssClass || !this.ref) return;
+
+        const cssClass = this.options.cssClass;
+        const [showClass, hideClass] = Array.isArray(cssClass)
+            ? cssClass
+            : cssClass.split(",");
+        if (isShowing) {
+            if (showClass) this.ref.classList.add(showClass);
+            this.ref.classList.remove(hideClass);
+        } else {
+            if (hideClass) this.ref.classList.add(hideClass);
+            this.ref.classList.remove(showClass);
+        }
+    }
+
     /**
      * 隐藏提示框
      */
@@ -754,6 +778,9 @@ export class Tooltip {
 
         // 清理延迟隐藏定时器
         this._clearDelayHideTimer();
+
+        // 应用隐藏时的CSS类
+        this._applyCssClass(false);
 
         // 使用animejs创建隐藏动画
         const targets = [container];
@@ -797,6 +824,7 @@ export class Tooltip {
         this._removeEventListeners();
         //  如果有加载中的内容，则取消加载
         this._loadContent = undefined;
+
         if (!this.options.cache) {
             setTimeout(() => {
                 this.controller.themeproContainer?.removeChild(this.container);

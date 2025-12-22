@@ -22,50 +22,53 @@ type Story = StoryObj;
 export const 默认提示框: Story = {
     name: "默认提示框",
     render: () => html`
-        <tooltip-demo>
-            <div
-                slot="info"
-                style="padding: 4px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
-            >
-                <b>元素容器也可以添加提示</b>
-                <p>提示信息可以是HTML内容，也可以是其他元素的slot</p>
-            </div>
-            <div
-                style="display: flex; gap: 20px; flex-wrap: wrap; padding: 40px;flex-direction:column"
-            >
-                <button
-                    data-tooltip="这是一个简单的提示信息"
-                    style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
+        <tooltip-demo data-tooltip="hello">hello
+            </tooltip-demo>
+            <tooltip-demo>
+                <div
+                    slot="info"
+                    style="padding: 4px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
-                    悬停查看提示
-                </button>
-                <auto-button
-                    data-tooltip="<h3>提示</h3><p>文字也可以有提示<p>"
-                    label="HTML弹出内容"
+                    <b>元素容器也可以添加提示</b>
+                    <p>提示信息可以是HTML内容，也可以是其他元素的slot</p>
+                </div>
+                <div
+                    style="display: flex; gap: 20px; flex-wrap: wrap; padding: 40px;flex-direction:column"
                 >
-                </auto-button>
-                <auto-button
-                    data-tooltip="slot://info"
-                    label="显示使用具名slot"
-                >
-                </auto-button>
-                <button
-                    data-tooltip="query://.content"
-                    style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
-                >
-                    查询指定元素内容
-                    <div class="content" style="display:none">
-                        <h3>默认从当前元素开始查找</h3>
-                        可以通过data-tooltip-selector指定查找范围
-                    </div>
-                </button>
-                <button
-                    data-tooltip="query://"
-                    style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
-                >
-                    没有内容
-                </button>
-            </div>
+                    <button
+                        data-tooltip="这是一个简单的提示信息"
+                        style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
+                    >
+                        悬停查看提示
+                    </button>
+                    <auto-button
+                        data-tooltip="<h3>提示</h3><p>文字也可以有提示<p>"
+                        label="HTML弹出内容"
+                    >
+                    </auto-button>
+                    <auto-button
+                        data-tooltip="slot://info"
+                        label="显示使用具名slot"
+                    >
+                    </auto-button>
+                    <button
+                        data-tooltip="query://.content"
+                        style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
+                    >
+                        查询指定元素内容
+                        <div class="content" style="display:none">
+                            <h3>默认从当前元素开始查找</h3>
+                            可以通过data-tooltip-selector指定查找范围
+                        </div>
+                    </button>
+                    <button
+                        data-tooltip="query://"
+                        style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
+                    >
+                        没有内容
+                    </button>
+                </div>
+            </tooltip-demo>
         </tooltip-demo>
     `,
     parameters: {

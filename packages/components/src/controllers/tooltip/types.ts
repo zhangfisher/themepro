@@ -59,6 +59,13 @@ export interface TooltipControllerOptions {
      */
     fit?: "none" | "auto" | "width" | "height";
     /**
+     * CSS类名控制
+     * 在tooltip显示/隐藏时在this.ref元素上添加/移除CSS类
+     * - 如果是 string：显示时添加该类，隐藏时移除该类
+     * - 如果是 [string, string]：第一个字符串为显示时添加的类，第二个字符串为隐藏时添加的类
+     */
+    cssClass?: string | [string, string];
+    /**
      * 最小宽度
      */
     minWidth?: string;
