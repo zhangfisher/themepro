@@ -29,11 +29,11 @@ export const baseVars = {
     "--t-font-weight-x-large": "600",
 
     /* 间距 */
-    "--t-spacing-x-small": "0.2rem",
-    "--t-spacing-small": "0.5rem",
+    "--t-spacing-x-small": "0.4rem",
+    "--t-spacing-small": "0.6rem",
     "--t-spacing-medium": "0.8rem",
-    "--t-spacing-large": "1.1rem",
-    "--t-spacing-x-large": "1.4rem",
+    "--t-spacing-large": "1.0rem",
+    "--t-spacing-x-large": "1.2rem",
 
     "--t-letter-spacing-x-small": "calc(var(--t-spacing-medium) * 0.01)",
     "--t-letter-spacing-small": "calc(var(--t-spacing-medium) * 0.02)",

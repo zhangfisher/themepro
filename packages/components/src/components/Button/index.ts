@@ -45,6 +45,9 @@ export type AutoButtonTag = {
      * 当checkable=true时，表示当前选中状态的值
      */
     value?: any;
+    /**
+     * 额外添加dataset数据
+     */
     dataset?: Record<string, string>;
     onClick?: (args: {
         tag: AutoButtonTag;
@@ -212,7 +215,7 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
     icon?: string;
 
     @property({ type: String, reflect: true })
-    variant?: "default" | "outline" | "ghost" | "link";
+    variant?: "default" | "outline" | "ghost" | "link" = "outline";
 
     @property({ type: String, reflect: true })
     shape?: "default" | "circle" | "pill" | "rectangle" | "rect";

@@ -114,7 +114,7 @@ export const styles = css`
         border-radius: 0px;
     }
 
-    :host ::slotted(*) {
+    :host::slotted(*) {
         min-width: 0px;
         min-height: 0px;
     }

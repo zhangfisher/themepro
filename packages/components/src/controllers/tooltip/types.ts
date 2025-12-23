@@ -144,6 +144,7 @@ export interface TooltipControllerOptions {
      * 注意：指的是内容区,即.content的宽度/高度
      */
     size?: [string | number, string | number];
+
     /**
      * 提示框显示时触发
      */
