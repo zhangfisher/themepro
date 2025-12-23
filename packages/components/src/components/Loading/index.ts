@@ -79,16 +79,28 @@ export class AutoLoading extends LitElement {
     light: boolean = false;
 
     /**
-     * 可关闭
+     * 显示一个{id:'cancel',label:'取消',icon:'no'}的action
+     * 可取消
      */
     @property({ type: Boolean, reflect: true })
     cancelable: boolean = false;
 
     /**
+     * 显示一个{id:'refresh',label:'重试',icon:'refresh'}的action
      * 可重试
      */
     @property({ type: Boolean, reflect: true })
     retryable: boolean = false;
+
+    @property({ type: String })
+    status?: "loading" | "error" | "success" = "loading";
+
+    /**
+     * 显示一个{id:'cancel',label:'重试',icon:'no'}的action
+     * 可重试
+     */
+    @property({ type: Boolean, reflect: true })
+    backable: boolean = false;
 
     updated(changedProperties: Map<string, any>) {
         super.updated(changedProperties);
