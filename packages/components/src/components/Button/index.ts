@@ -612,7 +612,8 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
                             "--label-width": this.labelWidth,
                         })}
                         >${this.label}</span
-                    >`
+                    >`,
+                () => html`<slot></slot>`
             )}
             ${this._renderBadge()} ${this._renderTags()}
             ${when(isChecked && this.checkPos === "after", () =>

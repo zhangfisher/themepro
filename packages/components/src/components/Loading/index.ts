@@ -1,14 +1,13 @@
 /**
  *
- *  loadingRef: Ref<HTMLInputElement> = createRef();
- *  <auto-loading ${ref(this.loadingRef)}></auto-loading>
- *  this.loadingRef.value
- *
- *  loadingEl = this.loadingRef.value
- *
- *  loadingEl
- *
- *
+ *  <auto-loading message="显示信息"></auto-loading>
+ *  <auto-loading message="显示信息" description="显示描述"></auto-loading>
+ *  // inline 模式下，loading 会显示在内容中，而不是覆盖内容
+ *  <auto-loading inline></auto-loading>
+ *  ...
+ * direction row,column: loading 的方向，默认 column
+ * row: 水平方向，loading 在右侧
+ * column: 垂直方向，loading 在下方
  *
  */
 import { LitElement, html } from "lit";
@@ -28,6 +27,7 @@ import { when } from "lit-html/directives/when.js";
 import { repeat } from "lit/directives/repeat.js";
 import { spread } from "@open-wc/lit-helpers";
 import "../Button";
+import "../Icon";
 import { triggerCustomEvent } from "@/utils/triggerCustomEvent";
 import { styles } from "./styles";
 
@@ -38,6 +38,7 @@ const presetSizes = {
     large: "var(--t-icon-size-large)",
     "x-large": "var(--t-icon-size-x-large)",
 };
+
 @customElement("auto-loading")
 export class AutoLoading extends LitElement {
     static styles = styles;
@@ -62,6 +63,11 @@ export class AutoLoading extends LitElement {
 
     @property({ type: String })
     message: string = "Loading...";
+    /**
+     * 当status='error'时，error 为错误信息
+     */
+    @property({ type: String })
+    error?: string;
 
     @property({ type: String })
     description?: string;
@@ -78,7 +84,11 @@ export class AutoLoading extends LitElement {
     @property({ type: Boolean, reflect: true })
     light: boolean = false;
 
+    @property({ type: String, reflect: true })
+    status: "loading" | "error" | "success" = "loading";
+
     /**
+     * 在status='loading'时是否显示一个cancel action
      * 显示一个{id:'cancel',label:'取消',icon:'no'}的action
      * 可取消
      */
@@ -86,21 +96,27 @@ export class AutoLoading extends LitElement {
     cancelable: boolean = false;
 
     /**
+     * 在status='error'时是否显示一个retry action
      * 显示一个{id:'refresh',label:'重试',icon:'refresh'}的action
      * 可重试
      */
     @property({ type: Boolean, reflect: true })
     retryable: boolean = false;
 
-    @property({ type: String })
-    status?: "loading" | "error" | "success" = "loading";
-
     /**
-     * 显示一个{id:'cancel',label:'重试',icon:'no'}的action
-     * 可重试
+     *  在status='error'时是否显示一个back action
+     * 显示一个{id:'back',label:'返回',icon:'back'}的action
+     * 可返回
      */
     @property({ type: Boolean, reflect: true })
     backable: boolean = false;
+    /**
+     *  在status='success'时是否显示一个close action
+     * 显示一个{id:'close',label:'关闭',icon:'no'}的action
+     * 可关闭
+     */
+    @property({ type: Boolean, reflect: true })
+    closeable: boolean = false;
 
     updated(changedProperties: Map<string, any>) {
         super.updated(changedProperties);
@@ -143,7 +159,7 @@ export class AutoLoading extends LitElement {
         if (actionEl?.classList.contains("action")) {
             const actionId = actionEl.dataset.id;
             // 处理取消按钮点击
-            if (actionId === "cancel") {
+            if (actionId === "cancel" || actionId === "close") {
                 this.hide = true;
             }
             triggerCustomEvent(
@@ -171,21 +187,105 @@ export class AutoLoading extends LitElement {
         }
     }
     private _getActions() {
-        if (this.cancelable) {
-            const displayActions = [...(this.actions || [])];
-            if (!displayActions.some((action) => action.label === "取消")) {
+        const displayActions = [...(this.actions || [])];
+
+        // 根据 status 自动添加对应的 action
+        if (this.status === "loading" && this.cancelable) {
+            if (!displayActions.some((action) => action.id === "cancel")) {
                 displayActions.push({
                     id: "cancel",
                     label: "取消",
+                    icon: "no",
                     type: "danger",
                 });
             }
-            return displayActions;
         }
-        return this.actions;
+
+        if (this.status === "error") {
+            if (
+                this.retryable &&
+                !displayActions.some((action) => action.id === "refresh")
+            ) {
+                displayActions.push({
+                    id: "refresh",
+                    label: "重试",
+                    icon: "refresh",
+                });
+            }
+            if (
+                this.backable &&
+                !displayActions.some((action) => action.id === "back")
+            ) {
+                displayActions.push({
+                    id: "back",
+                    label: "返回",
+                    icon: "back",
+                });
+            }
+        }
+
+        if (this.status === "success" && this.closeable) {
+            if (!displayActions.some((action) => action.id === "close")) {
+                displayActions.push({
+                    id: "close",
+                    label: "关闭",
+                    icon: "no",
+                });
+            }
+        }
+
+        return displayActions.length > 0 ? displayActions : undefined;
+    }
+
+    private _renderIcon() {
+        // 根据状态渲染不同的图标
+        if (this.status === "error") {
+            return html`<auto-icon
+                size="calc(2 * var(--auto-font-size))"
+                color="red"
+                name="error"
+            ></auto-icon>`;
+        }
+        if (this.status === "success") {
+            return html`<auto-icon
+                size="calc(2 * var(--auto-font-size))"
+                color="green"
+                name="success"
+            ></auto-icon>`;
+        }
+        // 默认 loading 状态使用 SVG 动画
+        const svgIcon = this.getSvgIcon();
+        return html`${unsafeHTML(svgIcon)}`;
+    }
+
+    private _renderMessage() {
+        if (!this.message && !this.error) return html``;
+        if (this.status === "error" && this.error) {
+            // 当 status 为 error 时，优先显示 error 属性的内容
+            return unsafeHTML(this.error);
+        }
+        return unsafeHTML(this.message);
+    }
+    private _renderActions() {
+        // 当 closeable 为 true 时，自动添加取消按钮到 actions 数组中
+        const displayActions = this._getActions();
+        if (!displayActions || displayActions.length === 0) return;
+        return html`<div class="actions">
+            ${repeat(displayActions!, (action: any) => {
+                return html`<auto-button
+                    class="action"
+                    ${spread(action)}
+                    data-id="${action.id || action.label}"
+                    ghost
+                ></auto-button>`;
+            })}
+        </div>`;
+    }
+    private _renderDescription() {
+        if (!this.description) return;
+        return html`<div class="memo">${this.description}</div>`;
     }
     render() {
-        const svgIcon = this.getSvgIcon();
         const iconColor = this.color || "var(--auto-theme-color)";
         const size = this.size
             ? this.size in presetSizes
@@ -201,8 +301,6 @@ export class AutoLoading extends LitElement {
                 ? "black"
                 : "transparent";
 
-        // 当 closeable 为 true 时，自动添加取消按钮到 actions 数组中
-        const displayActions = this._getActions();
         return html`
             <style>
                 :host {
@@ -213,28 +311,8 @@ export class AutoLoading extends LitElement {
             </style>
             <div class="mask"></div>
             <div class="content" style="color:${iconColor};">
-                ${html`${unsafeHTML(svgIcon)}`}
-                ${when(this.message, () => {
-                    return html`<span class="message"
-                        >${unsafeHTML(this.message)}</span
-                    >`;
-                })}
-                ${when(this.description, () => {
-                    return html`<span class="memo">${this.description}</span>`;
-                })}
-                ${when(displayActions && displayActions.length > 0, () => {
-                    return html`<div class="actions">
-                        ${repeat(displayActions!, (action: any) => {
-                            return html`<auto-button
-                                class="action"
-                                size="small"
-                                ${spread(action)}
-                                data-id="${action.id || action.label}"
-                                ghost
-                            ></auto-button>`;
-                        })}
-                    </div>`;
-                })}
+                ${this._renderIcon()} ${this._renderMessage()}
+                ${this._renderDescription()} ${this._renderActions()}
             </div>
         `;
     }

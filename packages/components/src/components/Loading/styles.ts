@@ -54,6 +54,7 @@ export const styles = css`
         align-items: center;
         justify-content: center;
         gap: 1em;
+        font-size: var(--auto-font-size);
         z-index: 1;
         & > .message,
         & > .memo {

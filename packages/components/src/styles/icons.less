@@ -54,6 +54,8 @@
     --auto-icon-focus: @auto-icon-focus;
     --auto-icon-empty: @auto-icon-empty;
     --auto-icon-cancel: @auto-icon-cancel;
+    --auto-icon-refresh: @auto-icon-refresh;
+    --auto-icon-back: @auto-icon-back;
 }
 
 .auto-icon {
@@ -197,5 +199,13 @@
 
     &.cancel {
         mask-image: var(--auto-icon-cancel);
+    }
+
+    &.refresh {
+        mask-image: var(--auto-icon-refresh);
+    }
+
+    &.back {
+        mask-image: var(--auto-icon-back);
     }
 }

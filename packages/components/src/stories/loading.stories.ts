@@ -692,3 +692,401 @@ export const LoadingTypes: Story = {
         `;
     },
 };
+
+export const LoadingStatus: Story = {
+    name: "状态展示",
+    render: () => {
+        return html`
+            <auto-flex direction="column" gap="2em">
+                <h3>不同状态展示</h3>
+                <auto-flex gap="2em" wrap>
+                    <!-- Loading 状态 -->
+                    <auto-flex
+                        direction="column"
+                        align="center"
+                        gap="0.5em"
+                        style="width: 250px; height: 180px; border: 1px solid #e0e0e0; position: relative; padding: 1em; border-radius: 8px;"
+                    >
+                        <auto-watermark text="loading"></auto-watermark>
+                        <auto-loading
+                            status="loading"
+                            message="正在加载..."
+                            color="#1890ff"
+                        ></auto-loading>
+                        <span
+                            style="position: absolute; bottom: 10px; font-size: 12px; color: #999;"
+                            >Loading 状态</span
+                        >
+                    </auto-flex>
+
+                    <!-- Error 状态 -->
+                    <auto-flex
+                        direction="column"
+                        align="center"
+                        gap="0.5em"
+                        style="width: 250px; height: 180px; border: 1px solid #e0e0e0; position: relative; padding: 1em; border-radius: 8px;"
+                    >
+                        <auto-watermark text="error"></auto-watermark>
+                        <auto-loading
+                            status="error"
+                            error="加载失败"
+                            color="#f5222d"
+                        ></auto-loading>
+                        <span
+                            style="position: absolute; bottom: 10px; font-size: 12px; color: #999;"
+                            >Error 状态</span
+                        >
+                    </auto-flex>
+
+                    <!-- Success 状态 -->
+                    <auto-flex
+                        direction="column"
+                        align="center"
+                        gap="0.5em"
+                        style="width: 250px; height: 180px; border: 1px solid #e0e0e0; position: relative; padding: 1em; border-radius: 8px;"
+                    >
+                        <auto-watermark text="success"></auto-watermark>
+                        <auto-loading
+                            status="success"
+                            message="操作成功！"
+                            color="#52c41a"
+                        ></auto-loading>
+                        <span
+                            style="position: absolute; bottom: 10px; font-size: 12px; color: #999;"
+                            >Success 状态</span
+                        >
+                    </auto-flex>
+                </auto-flex>
+            </auto-flex>
+        `;
+    },
+};
+
+export const LoadingStatusWithActions: Story = {
+    name: "状态与操作按钮",
+    render: () => {
+        return html`
+            <auto-flex direction="column" gap="2em">
+                <h3>Loading 状态 - 可取消</h3>
+                <auto-flex gap="2em" wrap>
+                    <auto-card
+                        title="可取消加载"
+                        style="position: relative; width: 300px; height: 150px;border:1px solid #ccc"
+                    >
+                        <auto-watermark text="cancelable"></auto-watermark>
+                        <auto-loading
+                            status="loading"
+                            message="正在处理..."
+                            cancelable
+                        ></auto-loading>
+                    </auto-card>
+                </auto-flex>
+
+                <h3>Error 状态 - 重试和返回</h3>
+                <auto-flex gap="2em" wrap>
+                    <auto-card
+                        title="可重试"
+                        style="position: relative; width: 300px; height: 150px;border:1px solid #ccc"
+                    >
+                        <auto-watermark text="retryable"></auto-watermark>
+                        <auto-loading
+                            status="error"
+                            error="网络连接失败"
+                            retryable
+                        ></auto-loading>
+                    </auto-card>
+
+                    <auto-card
+                        title="可返回"
+                        style="position: relative; width: 300px; height: 150px;border:1px solid #ccc"
+                    >
+                        <auto-watermark text="backable"></auto-watermark>
+                        <auto-loading
+                            status="error"
+                            error="加载失败，请返回"
+                            backable
+                        ></auto-loading>
+                    </auto-card>
+
+                    <auto-card
+                        title="可重试和返回"
+                        style="position: relative; width: 300px; height: 150px;border:1px solid #ccc"
+                    >
+                        <auto-watermark
+                            text="retryable+backable"
+                        ></auto-watermark>
+                        <auto-loading
+                            status="error"
+                            error="服务器错误"
+                            retryable
+                            backable
+                        ></auto-loading>
+                    </auto-card>
+                </auto-flex>
+
+                <h3>Success 状态 - 可关闭</h3>
+                <auto-flex gap="2em" wrap>
+                    <auto-card
+                        title="可关闭"
+                        style="position: relative; width: 300px; height: 150px;border:1px solid #ccc"
+                    >
+                        <auto-watermark text="closeable"></auto-watermark>
+                        <auto-loading
+                            status="success"
+                            message="保存成功！"
+                            closeable
+                        ></auto-loading>
+                    </auto-card>
+                </auto-flex>
+            </auto-flex>
+        `;
+    },
+};
+
+export const LoadingStatusInteractive: Story = {
+    name: "状态切换交互示例",
+    render: () => {
+        return html`
+            <style>
+                .demo-container {
+                    padding: 1.5em;
+                    border: 1px solid #e0e0e0;
+                    border-radius: 8px;
+                    background: #fafafa;
+                }
+                .demo-buttons {
+                    display: flex;
+                    gap: 1em;
+                    margin-top: 1em;
+                    flex-wrap: wrap;
+                }
+            </style>
+
+            <script>
+                window.loadingDemo = {
+                    // 模拟成功加载
+                    simulateSuccess: function (loadingId) {
+                        const loading = document.getElementById(loadingId);
+                        if (!loading) return;
+
+                        loading.status = "loading";
+                        loading.message = "正在加载...";
+
+                        setTimeout(() => {
+                            loading.status = "success";
+                            loading.message = "操作成功！";
+                        }, 1500);
+                    },
+
+                    // 模拟失败加载
+                    simulateError: function (loadingId) {
+                        const loading = document.getElementById(loadingId);
+                        if (!loading) return;
+
+                        loading.status = "loading";
+                        loading.message = "正在加载...";
+
+                        setTimeout(() => {
+                            loading.status = "error";
+                            loading.setAttribute("error", "加载失败，请重试");
+                        }, 1500);
+                    },
+
+                    // 随机加载结果
+                    simulateRandom: function (loadingId) {
+                        const loading = document.getElementById(loadingId);
+                        if (!loading) return;
+
+                        loading.status = "loading";
+                        loading.message = "正在加载...";
+                        loading.removeAttribute("error");
+
+                        setTimeout(() => {
+                            const isSuccess = Math.random() > 0.5;
+                            if (isSuccess) {
+                                loading.status = "success";
+                                loading.message = "加载成功！";
+                            } else {
+                                loading.status = "error";
+                                loading.setAttribute(
+                                    "error",
+                                    "网络错误，请重试"
+                                );
+                            }
+                        }, 1500);
+                    },
+
+                    // 重置状态
+                    reset: function (loadingId) {
+                        const loading = document.getElementById(loadingId);
+                        if (!loading) return;
+                        loading.status = "loading";
+                        loading.message = "准备就绪";
+                        loading.removeAttribute("error");
+                    },
+                };
+            </script>
+
+            <auto-flex direction="column" gap="3em" style="padding: 1em;">
+                <div>
+                    <h3 style="margin-bottom: 1em;">场景1: 可取消的加载操作</h3>
+                    <div class="demo-container">
+                        <div
+                            id="demo-cancel"
+                            style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
+                        >
+                            <auto-loading
+                                id="demo-cancel"
+                                status="loading"
+                                message="准备就绪"
+                                cancelable
+                            ></auto-loading>
+                        </div>
+                        <div class="demo-buttons">
+                            <auto-button
+                                type="primary"
+                                onclick="loadingDemo.simulateSuccess('demo-cancel')"
+                            >
+                                模拟成功
+                            </auto-button>
+                            <auto-button
+                                type="default"
+                                onclick="loadingDemo.simulateError('demo-cancel')"
+                            >
+                                模拟失败
+                            </auto-button>
+                            <auto-button
+                                type="default"
+                                onclick="loadingDemo.reset('demo-cancel')"
+                            >
+                                重置
+                            </auto-button>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="margin-bottom: 1em;">场景2: 可重试的错误处理</h3>
+                    <div class="demo-container">
+                        <div
+                            id="demo-retry"
+                            style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
+                        >
+                            <auto-loading
+                                id="demo-retry"
+                                status="loading"
+                                message="准备就绪"
+                                retryable
+                            ></auto-loading>
+                        </div>
+                        <div class="demo-buttons">
+                            <auto-button
+                                type="primary"
+                                onclick="loadingDemo.simulateRandom('demo-retry')"
+                            >
+                                随机加载结果
+                            </auto-button>
+                            <auto-button
+                                type="default"
+                                onclick="loadingDemo.reset('demo-retry')"
+                            >
+                                重置
+                            </auto-button>
+                        </div>
+                        <p
+                            style="color: #666; font-size: 12px; margin-top: 0.5em;"
+                        >
+                            提示: 失败时可点击"重试"按钮重新加载
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="margin-bottom: 1em;">场景3: 可关闭的成功提示</h3>
+                    <div class="demo-container">
+                        <div
+                            id="demo-close"
+                            style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
+                        >
+                            <auto-loading
+                                id="demo-close"
+                                status="loading"
+                                message="准备就绪"
+                                closeable
+                            ></auto-loading>
+                        </div>
+                        <div class="demo-buttons">
+                            <auto-button
+                                type="primary"
+                                onclick="loadingDemo.simulateSuccess('demo-close')"
+                            >
+                                保存操作
+                            </auto-button>
+                            <auto-button
+                                type="default"
+                                onclick="loadingDemo.reset('demo-close')"
+                            >
+                                重置
+                            </auto-button>
+                        </div>
+                        <p
+                            style="color: #666; font-size: 12px; margin-top: 0.5em;"
+                        >
+                            提示: 成功后可点击"关闭"按钮隐藏提示
+                        </p>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="margin-bottom: 1em;">场景4: 完整的状态流转</h3>
+                    <div class="demo-container">
+                        <div
+                            id="demo-full"
+                            style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
+                        >
+                            <auto-loading
+                                id="demo-full"
+                                status="loading"
+                                message="准备就绪"
+                                retryable
+                                backable
+                                closeable
+                            ></auto-loading>
+                        </div>
+                        <div class="demo-buttons">
+                            <auto-button
+                                type="primary"
+                                onclick="loadingDemo.simulateRandom('demo-full')"
+                            >
+                                开始加载
+                            </auto-button>
+                            <auto-button
+                                type="default"
+                                onclick="loadingDemo.simulateSuccess('demo-full')"
+                            >
+                                直接成功
+                            </auto-button>
+                            <auto-button
+                                type="default"
+                                onclick="loadingDemo.simulateError('demo-full')"
+                            >
+                                直接失败
+                            </auto-button>
+                            <auto-button
+                                type="default"
+                                onclick="loadingDemo.reset('demo-full')"
+                            >
+                                重置
+                            </auto-button>
+                        </div>
+                        <p
+                            style="color: #666; font-size: 12px; margin-top: 0.5em;"
+                        >
+                            提示: 失败时可"重试"或"返回"，成功时可"关闭"
+                        </p>
+                    </div>
+                </div>
+            </auto-flex>
+        `;
+    },
+};
