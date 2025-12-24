@@ -69,6 +69,7 @@ const meta: Meta = {
             ?disabled=${args.disabled}
             ?block=${args.block}
             variant=${args.variant}
+            @auto:click=${args.onAutoClick}
         >
         </auto-button>
     `,
@@ -111,13 +112,13 @@ export const ButtonSize: Story = {
                 <auto-button
                     icon="settings"
                     label="默认自动按钮"
-                    @click=${args.onClick}
+                    @auto:click=${args.onAutoClick}
                 ></auto-button>
                 <auto-button
                     icon="settings"
                     size="x-small"
                     label="微小按钮"
-                    @autoclick=${args.onAutoClick}
+                    @auto:click=${args.onAutoClick}
                 ></auto-button>
                 <auto-button
                     icon="home"
@@ -128,6 +129,7 @@ export const ButtonSize: Story = {
                     icon="tag"
                     size="medium"
                     label="默认尺寸按钮"
+                    @auto:click=${args.onAutoClick}
                 ></auto-button>
                 <auto-button
                     icon="settings"
@@ -1549,6 +1551,77 @@ export const TagButton: Story = {
                         size="x-large"
                         type="info"
                         label="成功按钮"
+                    ></auto-button>
+                </auto-flex>
+            </auto-flex>
+        `;
+    },
+};
+
+export const ButtonOnclickEvent: Story = {
+    name: "onclick 属性事件",
+    render: (args: any) => {
+        return html`
+            <auto-flex direction="column" gap="1em">
+                <auto-flex gap="1em">
+                    <auto-button
+                        label="普通点击"
+                        type="primary"
+                        onclick="console.log('onclick: 普通按钮点击', event)"
+                    ></auto-button>
+                    <auto-button
+                        label="可复选按钮"
+                        type="success"
+                        checkable
+                        onclick="console.log('onclick: 可复选按钮', this.checked, this.value, event)"
+                    ></auto-button>
+                    <auto-button
+                        label="带图标"
+                        icon="star"
+                        type="danger"
+                        onclick="console.log('onclick: 带图标按钮点击', event)"
+                    ></auto-button>
+                </auto-flex>
+                <auto-flex gap="1em">
+                    <auto-button
+                        label="微小按钮"
+                        size="x-small"
+                        type="info"
+                        onclick="console.log('onclick: 微小按钮点击', event)"
+                    ></auto-button>
+                    <auto-button
+                        label="小按钮"
+                        size="small"
+                        type="warning"
+                        onclick="console.log('onclick: 小按钮点击', event)"
+                    ></auto-button>
+                    <auto-button
+                        label="大按钮"
+                        size="large"
+                        type="primary"
+                        onclick="console.log('onclick: 大按钮点击', event)"
+                    ></auto-button>
+                </auto-flex>
+                <auto-flex gap="1em">
+                    <auto-button
+                        label="圆形按钮"
+                        shape="circle"
+                        icon="settings"
+                        type="success"
+                        onclick="console.log('onclick: 圆形按钮点击', event)"
+                    ></auto-button>
+                    <auto-button
+                        label="胶囊按钮"
+                        shape="pill"
+                        icon="tag"
+                        type="danger"
+                        onclick="console.log('onclick: 胶囊按钮点击', event)"
+                    ></auto-button>
+                    <auto-button
+                        label="禁用状态"
+                        disabled
+                        type="warning"
+                        onclick="console.log('这个不应该被触发')"
                     ></auto-button>
                 </auto-flex>
             </auto-flex>

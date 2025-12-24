@@ -431,15 +431,16 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
 
     private _onClick = (e: MouseEvent) => {
         if (this._isClickTag(e)) {
-            e.stopPropagation();
+            // e.stopPropagation();
             return;
         }
         if (this.disabled || this.loading) {
-            e.stopImmediatePropagation();
+            //e.stopImmediatePropagation();
             e.preventDefault();
             return;
         }
         this._handleCheckEvent(e);
+
         // 触发组件自定义点击事件，便于外部监听（如 Storybook actions）
         const params: Record<string, any> = {};
         if (this.checkable) params.checked = this.value;
