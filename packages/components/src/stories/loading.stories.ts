@@ -869,6 +869,8 @@ export const LoadingStatusInteractive: Story = {
                         const loading = document.getElementById(loadingId);
                         if (!loading) return;
 
+                        globalThis.a = loading;
+                        console.log("loading=", loading);
                         loading.status = "loading";
                         loading.message = "正在加载...";
 
@@ -882,7 +884,6 @@ export const LoadingStatusInteractive: Story = {
                     simulateError: function (loadingId) {
                         const loading = document.getElementById(loadingId);
                         if (!loading) return;
-
                         loading.status = "loading";
                         loading.message = "正在加载...";
 
@@ -932,7 +933,6 @@ export const LoadingStatusInteractive: Story = {
                     <h3 style="margin-bottom: 1em;">场景1: 可取消的加载操作</h3>
                     <div class="demo-container">
                         <div
-                            id="demo-cancel"
                             style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
                         >
                             <auto-loading
@@ -969,7 +969,6 @@ export const LoadingStatusInteractive: Story = {
                     <h3 style="margin-bottom: 1em;">场景2: 可重试的错误处理</h3>
                     <div class="demo-container">
                         <div
-                            id="demo-retry"
                             style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
                         >
                             <auto-loading
@@ -1005,7 +1004,6 @@ export const LoadingStatusInteractive: Story = {
                     <h3 style="margin-bottom: 1em;">场景3: 可关闭的成功提示</h3>
                     <div class="demo-container">
                         <div
-                            id="demo-close"
                             style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
                         >
                             <auto-loading
@@ -1041,7 +1039,6 @@ export const LoadingStatusInteractive: Story = {
                     <h3 style="margin-bottom: 1em;">场景4: 完整的状态流转</h3>
                     <div class="demo-container">
                         <div
-                            id="demo-full"
                             style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
                         >
                             <auto-loading

@@ -23,7 +23,6 @@ import {
 } from "./icons";
 import { objectProperty } from "@/utils/objectProperty";
 import type { AutoButtonProps } from "../Button";
-import { when } from "lit-html/directives/when.js";
 import { repeat } from "lit/directives/repeat.js";
 import { spread } from "@open-wc/lit-helpers";
 import "../Button";
@@ -38,6 +37,65 @@ const presetSizes = {
     large: "var(--t-icon-size-large)",
     "x-large": "var(--t-icon-size-x-large)",
 };
+
+/**
+ * AutoLoading 组件的属性类型
+ * 从组件类中提取所有 @property 装饰器定义的响应式属性
+ *
+ * 使用方法：
+ * ```ts
+ * const props: AutoLoadingProps = {
+ *   message: '加载中...',
+ *   status: 'loading',
+ *   size: 'large',
+ *   cancelable: true
+ * };
+ * ```
+ */
+export interface AutoLoadingProps {
+    /** 尺寸：可使用预设值或自定义 CSS 值 */
+    size?: string;
+    /** 内联模式：loading 显示在内容中，而不是覆盖内容 */
+    inline?: boolean;
+    /** 布局方向：row（水平）或 column（垂直），默认 column */
+    direction?: "row" | "column";
+    /** 水平方向别名（等同于 direction="row"） */
+    row?: boolean;
+    /** 垂直方向别名（等同于 direction="column"） */
+    column?: boolean;
+    /** 隐藏加载状态 */
+    hide?: boolean;
+    /** 主要消息文本，默认 "Loading..." */
+    message?: string;
+    /** 错误信息（当 status='error' 时显示） */
+    error?: string;
+    /** 成功信息（当 status='success' 时替代 message） */
+    success?: string;
+    /** 描述文本 */
+    description?: string;
+    /** 主题颜色，默认 "var(--auto-theme-color)" */
+    color?: string;
+    /** 遮罩层样式：none、light 或 dark，默认 "light" */
+    mask?: "none" | "light" | "dark";
+    /** 深色模式，默认 false */
+    dark?: boolean;
+    /** 浅色模式，默认 false */
+    light?: boolean;
+    /** 加载状态：loading、error 或 success */
+    status?: "loading" | "error" | "success";
+    /** 是否显示取消按钮（status='loading' 时），默认 false */
+    cancelable?: boolean;
+    /** 是否显示重试按钮（status='error' 时），默认 false */
+    retryable?: boolean;
+    /** 是否显示返回按钮（status='error' 时），默认 false */
+    backable?: boolean;
+    /** 是否显示关闭按钮（status='success' 时），默认 false */
+    closeable?: boolean;
+    /** 加载动画类型：spin、bars、bubbles、spinning-bubbles 或 spokes */
+    type?: "spin" | "bars" | "bubbles" | "spinning-bubbles" | "spokes";
+    /** 自定义操作按钮数组 */
+    actions?: Array<AutoButtonProps>;
+}
 
 @customElement("auto-loading")
 export class AutoLoading extends LitElement {
@@ -61,13 +119,20 @@ export class AutoLoading extends LitElement {
     @property({ type: Boolean, reflect: true })
     hide?: boolean;
 
-    @property({ type: String })
+    @property({
+        type: String,
+    })
     message: string = "Loading...";
     /**
      * 当status='error'时，error 为错误信息
      */
     @property({ type: String })
     error?: string;
+    /**
+     * 当status='success'时，success为用于替代message
+     */
+    @property({ type: String })
+    success?: string;
 
     @property({ type: String })
     description?: string;
@@ -84,8 +149,11 @@ export class AutoLoading extends LitElement {
     @property({ type: Boolean, reflect: true })
     light: boolean = false;
 
-    @property({ type: String, reflect: true })
-    status: "loading" | "error" | "success" = "loading";
+    @property({
+        type: String,
+        reflect: true,
+    })
+    status?: "loading" | "error" | "success";
 
     /**
      * 在status='loading'时是否显示一个cancel action
@@ -118,14 +186,6 @@ export class AutoLoading extends LitElement {
     @property({ type: Boolean, reflect: true })
     closeable: boolean = false;
 
-    updated(changedProperties: Map<string, any>) {
-        super.updated(changedProperties);
-        // 当 cancelable 属性变化时，确保组件重新渲染以显示/隐藏取消按钮
-        if (changedProperties.has("cancelable")) {
-            this.requestUpdate();
-        }
-    }
-
     @property({ type: String, reflect: true })
     type?: "spin" | "bars" | "bubbles" | "spinning-bubbles" | "spokes";
 
@@ -134,6 +194,21 @@ export class AutoLoading extends LitElement {
 
     @query(".actions")
     actionsEl?: HTMLElement;
+
+    updated(changedProperties: Map<string, any>) {
+        super.updated(changedProperties);
+        // 调试：打印属性变化
+        if (changedProperties.size > 0) {
+            console.log(
+                "[AutoLoading] updated, changedProperties:",
+                Array.from(changedProperties.keys())
+            );
+        }
+        // 当 cancelable 属性变化时，确保组件重新渲染以显示/隐藏取消按钮
+        if (changedProperties.has("cancelable")) {
+            this.requestUpdate();
+        }
+    }
 
     connectedCallback() {
         super.connectedCallback();
