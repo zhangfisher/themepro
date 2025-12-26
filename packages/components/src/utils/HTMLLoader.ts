@@ -1,10 +1,13 @@
 /**
  *
- *  从远程URL加载HTML到一个元素中
+ *  从远程URL加载HTML到一个container元素中
+ *
+ *  - 加载前显示一个Loading
+ *  - 加载失败时显示错误
  *
  *
  * const loader = new HTMLLoader({
- *    attach,
+ *    container,
  *    actions?: AutoButton[]
  * })
  *
@@ -36,8 +39,27 @@ export type HTMLLoaderOptions = {
     container?: HTMLElement;
     abortController?: AbortController;
     format?: "json" | "text";
+    /**
+     * 当出错时显示回退内容
+     */
+    fallback?: string;
+    /**
+     * 用于控制AutoLoading元素内容
+     */
     loading?: AutoLoadingProps;
-} & RequestInit;
+    /**
+     * 当加载失败时的处理行为
+     *
+     * - fallback: 显示fallback回退内容
+     * - retry:  显示重试按钮，允许让用户点击进行重试
+     *
+     */
+    fail?: "fallback";
+    /**
+     * 传递给fetch的参数
+     */
+    fetch?: RequestInit;
+};
 
 export class HTMLLoader<T> {
     private _resolve?: (value: T) => void;
@@ -99,9 +121,15 @@ export class HTMLLoader<T> {
             this._resolve = resolve;
             this._reject = reject;
             this._createLoading();
-            fetch(targetUrl, {
-                signal: this.options.abortController?.signal,
-            })
+            fetch(
+                targetUrl,
+                Object.assign(
+                    {
+                        signal: this.options.abortController?.signal,
+                    },
+                    this.options.fetch
+                )
+            )
                 .then((value) => {
                     const getResult =
                         this.options.format === "json"
