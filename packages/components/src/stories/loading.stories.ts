@@ -843,6 +843,218 @@ export const LoadingStatusWithActions: Story = {
     },
 };
 
+export const OnActionClickExample: Story = {
+    name: "onActionClick 事件示例",
+    render: () => {
+        return html`
+            <style>
+                .demo-container {
+                    padding: 1.5em;
+                    border: 1px solid #e0e0e0;
+                    border-radius: 8px;
+                    background: #fafafa;
+                }
+                .demo-buttons {
+                    display: flex;
+                    gap: 1em;
+                    margin-top: 1em;
+                    flex-wrap: wrap;
+                }
+                .event-log {
+                    margin-top: 1em;
+                    padding: 1em;
+                    background: #f5f5f5;
+                    border: 1px solid #d9d9d9;
+                    border-radius: 4px;
+                    max-height: 200px;
+                    overflow-y: auto;
+                    font-family: monospace;
+                    font-size: 12px;
+                }
+                .event-log-item {
+                    padding: 0.5em;
+                    border-bottom: 1px solid #e8e8e8;
+                }
+                .event-log-item:last-child {
+                    border-bottom: none;
+                }
+            </style>
+
+            <script>
+                window.actionClickDemo = {
+                    logContainer: null,
+
+                    init: function () {
+                        this.logContainer =
+                            document.getElementById("event-log");
+                    },
+
+                    log: function (message) {
+                        if (!this.logContainer) {
+                            this.logContainer =
+                                document.getElementById("event-log");
+                        }
+                        const time = new Date().toLocaleTimeString();
+                        const item = document.createElement("div");
+                        item.className = "event-log-item";
+                        item.innerHTML = \`[<strong>\${time}</strong>] \${message}\`;
+                        this.logContainer.insertBefore(
+                            item,
+                            this.logContainer.firstChild
+                        );
+
+                        // 保持最多 20 条日志
+                        while (this.logContainer.children.length > 20) {
+                            this.logContainer.removeChild(
+                                this.logContainer.lastChild
+                            );
+                        }
+                    },
+
+                    setupActionClick: function (loadingId) {
+                        const loading = document.getElementById(loadingId);
+                        if (!loading) return;
+
+                        // 监听 actionclick 事件
+                        loading.addEventListener("actionclick", (event) => {
+                            const { id, label, icon, action } = event.detail;
+                            this.log(
+                                \`actionclick 事件触发<br/>&nbsp;&nbsp;ID: \${id}<br/>&nbsp;&nbsp;Label: \${label}<br/>&nbsp;&nbsp;Icon: \${icon}\`
+                            );
+                        });
+                    },
+
+                    setupCustomActions: function (loadingId) {
+                        const loading = document.getElementById(loadingId);
+                        if (!loading) return;
+
+                        // 监听自定义 actions 的点击事件
+                        loading.addEventListener("actionclick", (event) => {
+                            const { id, label, icon, action } = event.detail;
+                            this.log(\`Action(id=\${id})被点击\`);
+                        });
+                    },
+
+                    simulateSuccess: function (loadingId) {
+                        const loading = document.getElementById(loadingId);
+                        if (!loading) return;
+
+                        loading.status = "loading";
+                        loading.message = "正在保存...";
+
+                        setTimeout(() => {
+                            loading.status = "success";
+                            loading.message = "保存成功！";
+                            this.log("状态更新为: success");
+                        }, 1500);
+                    },
+
+                    simulateError: function (loadingId) {
+                        const loading = document.getElementById(loadingId);
+                        if (!loading) return;
+                        loading.status = "loading";
+                        loading.message = "正在加载...";
+
+                        setTimeout(() => {
+                            loading.status = "error";
+                            loading.error = "网络连接失败";
+                            this.log("状态更新为: error");
+                        }, 1500);
+                    },
+
+                    reset: function (loadingId) {
+                        const loading = document.getElementById(loadingId);
+                        if (!loading) return;
+                        loading.status = "loading";
+                        loading.message = "准备就绪";
+                        loading.removeAttribute("error");
+                        this.log("状态已重置");
+                    },
+                };
+
+                // 页面加载完成后初始化
+                setTimeout(() => {
+                    actionClickDemo.init();
+                    actionClickDemo.setupActionClick("demo-action-click");
+                    actionClickDemo.setupCustomActions("demo-custom-actions");
+                    actionClickDemo.setupCustomActions("demo-action-click");
+
+                    actionClickDemo.log(
+                        "演示已初始化，点击下方加载组件的按钮查看事件"
+                    );
+                }, 100);
+            </script>
+
+            <auto-flex direction="column" gap="2em" style="padding: 1em;">
+                <div>
+                    <h3 style="margin-bottom: 1em;">onActionClick 事件演示</h3>
+                    <div class="demo-container">
+                        <div
+                            style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
+                        >
+                            <auto-loading
+                                id="demo-action-click"
+                                status="loading"
+                                message="准备就绪"
+                                retryable
+                                backable
+                                closeable
+                            ></auto-loading>
+                        </div>
+                        <div class="demo-buttons">
+                            <auto-button
+                                type="primary"
+                                onclick="actionClickDemo.simulateSuccess('demo-action-click')"
+                            >
+                                模拟成功
+                            </auto-button>
+                            <auto-button
+                                type="default"
+                                onclick="actionClickDemo.simulateError('demo-action-click')"
+                            >
+                                模拟失败
+                            </auto-button>
+                            <auto-button
+                                type="default"
+                                onclick="actionClickDemo.reset('demo-action-click')"
+                            >
+                                重置
+                            </auto-button>
+                        </div>
+                        <div id="event-log" class="event-log">
+                            <div class="event-log-item" style="color: #999;">
+                                事件日志将显示在这里...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="margin-bottom: 1em;">自定义 Actions 示例</h3>
+                    <div class="demo-container">
+                        <div
+                            style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
+                        >
+                            <auto-loading
+                                id="demo-custom-actions"
+                                status="loading"
+                                message="正在处理..."
+                                actions='[{"id":"view","label":"查看详情","icon":"eye"},{"id":"edit","label":"编辑","icon":"edit"},{"id":"delete","label":"删除","icon":"delete","type":"danger"}]'
+                            ></auto-loading>
+                        </div>
+                        <p
+                            style="color: #666; font-size: 12px; margin-top: 1em;"
+                        >
+                            提示: 点击上方的自定义按钮，事件日志会显示对应的
+                            action 信息
+                        </p>
+                    </div>
+                </div>
+            </auto-flex>
+        `;
+    },
+};
+
 export const LoadingStatusInteractive: Story = {
     name: "状态切换交互示例",
     render: () => {

@@ -31,30 +31,21 @@ export type HTMLLoaderOptions = {
     url?: string;
     /**
      * 用于搭建与加载逻辑相关联的元素
-     *
-     * - 当开始fetch时在在 attach显示加载中AutoLoading
-     * - 当fetch完成时在attach移除加载中AutoLoading
-     * - 当fetch错时，显示错误信息
      */
     container?: HTMLElement;
     abortController?: AbortController;
-    format?: "json" | "text";
-    /**
-     * 当出错时显示回退内容
-     */
     fallback?: string;
-    /**
-     * 用于控制AutoLoading元素内容
-     */
-    loading?: AutoLoadingProps;
-    /**
-     * 当加载失败时的处理行为
-     *
-     * - fallback: 显示fallback回退内容
-     * - retry:  显示重试按钮，允许让用户点击进行重试
-     *
-     */
-    fail?: "fallback";
+    onLoading?: Omit<AutoLoadingProps, "status"> & {
+        close?: boolean; // 显示关闭按钮
+        back?: boolean; // 显示回退按钮
+    };
+    onFail?: Omit<AutoLoadingProps, "status"> & {
+        retry?: boolean; // 显示重试按钮
+        close?: boolean; // 显示关闭按钮
+        back?: boolean; // 显示回退按钮
+        fallback?: string;
+    };
+    onSuccess?: (result: string) => Promise<string> | string;
     /**
      * 传递给fetch的参数
      */
@@ -82,15 +73,13 @@ export class HTMLLoader<T> {
     private _createLoading() {
         if (!this.options.container) return;
         const loading = document.createElement("auto-loading");
-        const loadingAttrs = this.options.loading || {};
+        const loadingAttrs = this.options.onLoading || {};
         Object.entries(loadingAttrs).forEach(([K, v]) => {
             loading.setAttribute(K, v);
         });
 
         if (this.options.abortController) {
-            loading.addEventListener("action:click", (e: Event) => {
-                const id = e;
-            });
+            loading.addEventListener("action:click", (e: Event) => {});
         }
         this.options.container.appendChild(loading);
 
@@ -130,11 +119,11 @@ export class HTMLLoader<T> {
                     this.options.fetch
                 )
             )
-                .then((value) => {
+                .then((response) => {
                     const getResult =
                         this.options.format === "json"
-                            ? value.json()
-                            : value.text();
+                            ? response.json()
+                            : response.text();
                     getResult
                         .then((r) => {
                             this._onLoadSuccess(r);

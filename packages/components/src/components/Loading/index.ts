@@ -30,6 +30,20 @@ import "../Icon";
 import { triggerCustomEvent } from "@/utils/triggerCustomEvent";
 import { styles } from "./styles";
 
+/**
+ * Action 点击事件的详细信息
+ */
+export interface ActionClickEventDetail {
+    /** 动作 ID */
+    id?: string;
+    /** 动作标签 */
+    label?: string;
+    /** 动作图标 */
+    icon?: string;
+    /** 完整的 action 对象 */
+    action: AutoButtonProps;
+}
+
 const presetSizes = {
     "x-small": "var(--t-icon-size-x-small)",
     small: "var(--t-icon-size-small)",
@@ -188,22 +202,20 @@ export class AutoLoading extends LitElement {
 
     @property({ type: String, reflect: true })
     type?: "spin" | "bars" | "bubbles" | "spinning-bubbles" | "spokes";
-
+    /**
+     * 提供额外的动作
+     */
     @objectProperty()
     actions?: Array<AutoButtonProps>;
 
     @query(".actions")
     actionsEl?: HTMLElement;
 
+    @query(".content")
+    contentEl?: HTMLElement;
+
     updated(changedProperties: Map<string, any>) {
         super.updated(changedProperties);
-        // 调试：打印属性变化
-        if (changedProperties.size > 0) {
-            console.log(
-                "[AutoLoading] updated, changedProperties:",
-                Array.from(changedProperties.keys())
-            );
-        }
         // 当 cancelable 属性变化时，确保组件重新渲染以显示/隐藏取消按钮
         if (changedProperties.has("cancelable")) {
             this.requestUpdate();
@@ -213,7 +225,9 @@ export class AutoLoading extends LitElement {
     connectedCallback() {
         super.connectedCallback();
         setTimeout(() => {
-            this.actionsEl?.addEventListener(
+            // 使用事件委托，将监听器绑定到始终存在的 .content 容器上
+            // 这样即使 .actions 元素动态创建/销毁，事件监听依然有效
+            this.contentEl?.addEventListener(
                 "click",
                 this._onActionClick as EventListener,
                 true
@@ -222,26 +236,58 @@ export class AutoLoading extends LitElement {
     }
 
     disconnectedCallback() {
-        this.actionsEl?.removeEventListener(
+        this.contentEl?.removeEventListener(
             "click",
             this._onActionClick as EventListener
         );
         super.disconnectedCallback();
     }
 
-    private _onActionClick = (event: CustomEvent) => {
+    /**
+     * 处理 action 按钮的 click 事件
+     *
+     * 使用事件委托机制：监听器绑定在 .content 容器上，
+     * 通过检查 event.target 是否包含 .action 类来过滤点击事件
+     *
+     * 优势：
+     * 1. 避免动态创建/销毁 .actions 元素时事件监听器失效
+     * 2. 减少事件监听器数量，提升性能
+     * 3. 无需在每次 actions 更新时重新绑定事件
+     *
+     * 1. 触发 action:click 事件（向后兼容）
+     * 2. 触发 actionclick 事件（新功能，传递完整 action 对象）
+     */
+    private _onActionClick = (event: Event) => {
         const actionEl = event.target as HTMLElement;
-        if (actionEl?.classList.contains("action")) {
-            const actionId = actionEl.dataset.id;
-            // 处理取消按钮点击
+
+        // 事件委托：只处理具有 .action 类的按钮元素
+        // closest() 方法确保即使点击的是按钮内部元素（如 icon、文本），也能正确识别
+        const actualButton = actionEl?.closest(".action");
+        if (!actualButton) {
+            return;
+        }
+
+        // 从实际的按钮元素上获取 data-id
+        const actionId = (actualButton as HTMLElement).dataset.id;
+
+        // 2. 查找对应的 action 对象
+        const displayActions = this._getActions();
+        const action = displayActions?.find(
+            (a) => a.id === actionId || a.label === actionId
+        );
+
+        if (action) {
+            // 处理取消和关闭按钮的默认行为
             if (actionId === "cancel" || actionId === "close") {
                 this.hide = true;
             }
-            triggerCustomEvent(
-                actionEl as HTMLElement,
-                "action:click",
-                actionId
-            );
+            // 3. 触发 actionclick 事件，传递完整的 action 对象
+            triggerCustomEvent(this, "actionclick", {
+                id: action.id,
+                label: action.label,
+                icon: action.icon,
+                action,
+            });
         }
 
         event.stopPropagation();
@@ -342,7 +388,6 @@ export class AutoLoading extends LitElement {
         return unsafeHTML(this.message);
     }
     private _renderActions() {
-        // 当 closeable 为 true 时，自动添加取消按钮到 actions 数组中
         const displayActions = this._getActions();
         if (!displayActions || displayActions.length === 0) return;
         return html`<div class="actions">
