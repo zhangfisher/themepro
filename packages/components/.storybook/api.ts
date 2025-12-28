@@ -1,5 +1,6 @@
 import { http, HttpResponse } from "msw";
 import { delay } from "flex-tools/async/delay";
+import { htmlloaderHandlers } from "./apis/htmlloader";
 // HTML内容生成函数
 const createPostHTML = (id: number) => `
 <div style="padding: 16px; font-family: Arial, sans-serif; line-height: 1.6;">
@@ -331,4 +332,7 @@ export const handlers = [
         await delay(1000);
         return HttpResponse.error();
     }),
+
+    // HTMLLoader API handlers
+    ...htmlloaderHandlers,
 ];

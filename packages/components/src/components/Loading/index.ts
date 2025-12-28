@@ -1,14 +1,27 @@
 /**
+ * AutoLoading 组件
  *
- *  <auto-loading message="显示信息"></auto-loading>
- *  <auto-loading message="显示信息" description="显示描述"></auto-loading>
- *  // inline 模式下，loading 会显示在内容中，而不是覆盖内容
- *  <auto-loading inline></auto-loading>
- *  ...
- * direction row,column: loading 的方向，默认 column
- * row: 水平方向，loading 在右侧
- * column: 垂直方向，loading 在下方
+ * @component
+ * @description 功能丰富的加载状态组件,支持加载中、错误、成功三种状态,提供多种动画效果和操作按钮
  *
+ * @example
+ * <!-- 基础加载 --><auto-loading message="加载中..."></auto-loading>
+ * <!-- 成功状态 --><auto-loading status="success" success="操作成功!" closeable></auto-loading>
+ * <!-- 错误状态 --><auto-loading status="error" error="加载失败" retryable backable></auto-loading>
+ * <!-- 内联模式 --><auto-loading inline message="处理中..." type="bars"></auto-loading>
+ * <!-- 水平布局 --><auto-loading row message="请稍候..." description="正在同步数据"></auto-loading>
+ * <!-- 自定义按钮 --><auto-loading status="loading" message="上传中..." .actions=${[{id:'pause',label:'暂停',icon:'pause'}]}></auto-loading>
+ * <!-- 事件监听 --><script>document.querySelector('auto-loading').addEventListener('actionclick',e=>console.log(e.detail))</script>
+ *
+ * @features
+ * - 三种状态: loading(加载中)、error(错误)、success(成功)
+ * - 五种动画: spin、bars、bubbles、spinning-bubbles、spokes
+ * - 内联/覆盖两种显示模式
+ * - 水平/垂直两种布局方向
+ * - 遮罩层: none/light/dark
+ * - 预设操作按钮: cancelable、retryable、backable、closeable
+ * - 自定义操作按钮数组,支持状态过滤
+ * - 事件委托机制处理按钮点击
  */
 import { LitElement, html } from "lit";
 import { property, query } from "lit/decorators.js";
@@ -29,21 +42,8 @@ import "../Button";
 import "../Icon";
 import { triggerCustomEvent } from "@/utils/triggerCustomEvent";
 import { styles } from "./styles";
-import { assignObject } from "flex-tools/object";
-
-/**
- * Action 点击事件的详细信息
- */
-export interface ActionClickEventDetail {
-    /** 动作 ID */
-    id?: string;
-    /** 动作标签 */
-    label?: string;
-    /** 动作图标 */
-    icon?: string;
-    /** 完整的 action 对象 */
-    action: AutoButtonProps;
-}
+import { assignObject } from "flex-tools/object/assignObject";
+import type { RequiredKeys } from "flex-tools/types";
 
 const presetSizes = {
     "x-small": "var(--t-icon-size-x-small)",
@@ -71,6 +71,12 @@ const presetSizes = {
 export type AutoLoadingStauts = "loading" | "error" | "success";
 export type AutoLoadingActions = Array<
     AutoButtonProps & { status?: AutoLoadingStauts[] }
+>;
+export type AutoLoadingActionEventDetail = RequiredKeys<
+    AutoButtonProps & {
+        status?: AutoLoadingStauts[];
+    },
+    "id"
 >;
 export interface AutoLoadingProps {
     /** 尺寸：可使用预设值或自定义 CSS 值 */
@@ -288,16 +294,11 @@ export class AutoLoading extends LitElement {
 
         if (action) {
             // 处理取消和关闭按钮的默认行为
-            if (actionId === "cancel" || actionId === "close") {
+            if (["cancel", "close", "back"].includes(actionId as any)) {
                 this.hide = true;
             }
             // 3. 触发 actionclick 事件，传递完整的 action 对象
-            triggerCustomEvent(this, "actionclick", {
-                id: action.id,
-                label: action.label,
-                icon: action.icon,
-                action,
-            });
+            triggerCustomEvent(this, "actionclick", action);
         }
 
         event.stopPropagation();
@@ -354,7 +355,7 @@ export class AutoLoading extends LitElement {
             if (index === -1) {
                 actions.push(presetAction);
             } else {
-                assignObject(actions[index], presetAction);
+                actions[index] = assignObject({}, presetAction, actions[index]);
             }
         });
         //
