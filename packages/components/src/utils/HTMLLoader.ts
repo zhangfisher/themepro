@@ -26,6 +26,7 @@
 
 import type { AutoLoading, AutoLoadingProps } from "@/components/Loading";
 import { removeUnescapedChars } from "./removeUnescapedChars";
+import { deepMerge } from "flex-tools/object/deepMerge";
 
 export type HTMLLoaderOptions = {
     url?: string;
@@ -34,18 +35,18 @@ export type HTMLLoaderOptions = {
      */
     container?: HTMLElement;
     abortController?: AbortController;
-    fallback?: string;
-    onLoading?: Omit<AutoLoadingProps, "status"> & {
-        close?: boolean; // 显示关闭按钮
-        back?: boolean; // 显示回退按钮
+    onLoading?: AutoLoadingProps;
+    onFail?: AutoLoadingProps & {
+        fallback?: string; // 当失败且不重试时的回退内容
     };
-    onFail?: Omit<AutoLoadingProps, "status"> & {
-        retry?: boolean; // 显示重试按钮
-        close?: boolean; // 显示关闭按钮
-        back?: boolean; // 显示回退按钮
-        fallback?: string;
-    };
-    onSuccess?: (result: string) => Promise<string> | string;
+    /**
+     * 当成功时调用
+     * @param result
+     * @returns
+     */
+    onSuccess?: (
+        result: Record<string, any> | string
+    ) => Promise<string> | string;
     /**
      * 传递给fetch的参数
      */
@@ -56,20 +57,25 @@ export class HTMLLoader<T> {
     private _resolve?: (value: T) => void;
     private _reject?: (reason?: any) => void;
     private _loading?: AutoLoading;
-    context?: HTMLElement;
+    container!: HTMLElement;
     options: HTMLLoaderOptions;
 
     constructor(options?: HTMLLoaderOptions) {
-        this.options = Object.assign(
+        this.options = deepMerge(
             {
-                format: "html",
+                onSuccess: (r: any) => r,
+                onFail: {
+                    retryable: true,
+                    closeable: true,
+                },
             },
             options
         );
-        if (this.options.container instanceof HTMLElement) {
-            this.context = this.options.container;
+        if (!(this.options.container instanceof HTMLElement)) {
+            throw new Error("container must be instance of HTMLElement");
         }
     }
+    private _onLoadingActionClick = (e: any) => {};
     private _createLoading() {
         if (!this.options.container) return;
         const loading = document.createElement("auto-loading");
@@ -79,7 +85,7 @@ export class HTMLLoader<T> {
         });
 
         if (this.options.abortController) {
-            loading.addEventListener("action:click", (e: Event) => {});
+            loading.addEventListener("actionclick", (e: Event) => {});
         }
         this.options.container.appendChild(loading);
 

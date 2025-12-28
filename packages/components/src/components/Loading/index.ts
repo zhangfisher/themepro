@@ -29,6 +29,7 @@ import "../Button";
 import "../Icon";
 import { triggerCustomEvent } from "@/utils/triggerCustomEvent";
 import { styles } from "./styles";
+import { assignObject } from "flex-tools/object";
 
 /**
  * Action 点击事件的详细信息
@@ -66,6 +67,11 @@ const presetSizes = {
  * };
  * ```
  */
+
+export type AutoLoadingStauts = "loading" | "error" | "success";
+export type AutoLoadingActions = Array<
+    AutoButtonProps & { status?: AutoLoadingStauts[] }
+>;
 export interface AutoLoadingProps {
     /** 尺寸：可使用预设值或自定义 CSS 值 */
     size?: string;
@@ -96,7 +102,7 @@ export interface AutoLoadingProps {
     /** 浅色模式，默认 false */
     light?: boolean;
     /** 加载状态：loading、error 或 success */
-    status?: "loading" | "error" | "success";
+    status?: AutoLoadingStauts;
     /** 是否显示取消按钮（status='loading' 时），默认 false */
     cancelable?: boolean;
     /** 是否显示重试按钮（status='error' 时），默认 false */
@@ -107,8 +113,13 @@ export interface AutoLoadingProps {
     closeable?: boolean;
     /** 加载动画类型：spin、bars、bubbles、spinning-bubbles 或 spokes */
     type?: "spin" | "bars" | "bubbles" | "spinning-bubbles" | "spokes";
-    /** 自定义操作按钮数组 */
-    actions?: Array<AutoButtonProps>;
+    /**
+     * 自定义操作按钮数组
+     * status决定actions在哪一种状态下显示
+     * - 如果为空则在所有状态显示
+     * - 如果是数组，则仅在指定状态下显示
+     */
+    actions?: AutoLoadingActions;
 }
 
 @customElement("auto-loading")
@@ -176,7 +187,6 @@ export class AutoLoading extends LitElement {
      */
     @property({ type: Boolean, reflect: true })
     cancelable: boolean = false;
-
     /**
      * 在status='error'时是否显示一个retry action
      * 显示一个{id:'refresh',label:'重试',icon:'refresh'}的action
@@ -206,7 +216,7 @@ export class AutoLoading extends LitElement {
      * 提供额外的动作
      */
     @objectProperty()
-    actions?: Array<AutoButtonProps>;
+    actions?: Array<AutoButtonProps & { status?: AutoLoadingStauts[] }>;
 
     @query(".actions")
     actionsEl?: HTMLElement;
@@ -308,52 +318,50 @@ export class AutoLoading extends LitElement {
         }
     }
     private _getActions() {
-        const displayActions = [...(this.actions || [])];
-
-        // 根据 status 自动添加对应的 action
-        if (this.status === "loading" && this.cancelable) {
-            if (!displayActions.some((action) => action.id === "cancel")) {
-                displayActions.push({
-                    id: "cancel",
-                    label: "取消",
-                    icon: "no",
-                    type: "danger",
-                });
+        const status = this.status;
+        const actions = [...(this.actions || [])];
+        const presetActions = [
+            {
+                id: "cancel",
+                label: "取消",
+                icon: "no",
+                type: "danger",
+                status: "loading",
+            },
+            {
+                id: "refresh",
+                label: "重试",
+                icon: "refresh",
+                status: "error",
+            },
+            {
+                id: "back",
+                label: "返回",
+                icon: "back",
+                status: [],
+            },
+            {
+                id: "close",
+                label: "关闭",
+                icon: "no",
+            },
+        ] as AutoLoadingActions;
+        //
+        presetActions.forEach((presetAction) => {
+            const index = actions.findIndex(
+                (act) => act.id === presetAction.id
+            );
+            if (index === -1) {
+                actions.push(presetAction);
+            } else {
+                assignObject(actions[index], presetAction);
             }
-        }
-
-        if (this.status === "error") {
-            if (
-                this.retryable &&
-                !displayActions.some((action) => action.id === "refresh")
-            ) {
-                displayActions.push({
-                    id: "refresh",
-                    label: "重试",
-                    icon: "refresh",
-                });
-            }
-            if (
-                this.backable &&
-                !displayActions.some((action) => action.id === "back")
-            ) {
-                displayActions.push({
-                    id: "back",
-                    label: "返回",
-                    icon: "back",
-                });
-            }
-        }
-
-        if (this.status === "success" && this.closeable) {
-            if (!displayActions.some((action) => action.id === "close")) {
-                displayActions.push({
-                    id: "close",
-                    label: "关闭",
-                    icon: "no",
-                });
-            }
-        }
+        });
+        //
+        const displayActions = actions.filter((action) => {
+            if (!action.status) return true;
+            return status ? action.status.includes(status) : false;
+        });
 
         return displayActions.length > 0 ? displayActions : undefined;
     }
