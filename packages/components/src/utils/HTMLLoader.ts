@@ -38,6 +38,10 @@ export type HTMLLoaderOptions = {
      * 用于搭建与加载逻辑相关联的元素
      */
     container?: HTMLElement;
+    /**
+     * 传递给 fetch 的选项
+     */
+    fetchOptions?: RequestInit;
     onLoading?: AutoLoadingProps;
     onFail?: AutoLoadingProps & {
         fallback?: string; // 当失败且不重试时的回退内容
@@ -57,7 +61,7 @@ export type HTMLLoaderOptions = {
      * - string: 将结果注入到container.querySelector(选择器)指定的元素
      */
     injectTo?: boolean | string;
-} & RequestInit;
+};
 
 export class HTMLLoader<T> {
     private _resolve?: (value: T) => void;
@@ -206,10 +210,34 @@ export class HTMLLoader<T> {
                 {
                     signal: this._abortController.signal,
                 },
-                this.options
+                this.options.fetchOptions || {}
             )
         )
-            .then((response) => {
+            .then(async (response) => {
+                // 检查 HTTP 状态码，处理错误响应（404, 500 等）
+                if (!response.ok) {
+                    // 尝试获取错误响应的文本内容
+                    let errorText = "";
+                    try {
+                        errorText = await response.text();
+                    } catch {
+                        errorText = response.statusText;
+                    }
+
+                    // 创建一个包含状态码和错误信息的 Error 对象
+                    const error = new Error(
+                        `HTTP ${response.status}: ${response.statusText}`
+                    );
+                    (error as any).message = response.statusText;
+                    (error as any).stack = errorText;
+
+                    this._onLoadError(error);
+                    this._isLoading = false;
+                    this._reject!(error);
+                    return;
+                }
+
+                // 成功响应，读取文本内容
                 response
                     .text()
                     .then((r) => {
@@ -246,10 +274,12 @@ export class HTMLLoader<T> {
         const targetUrl = url || this.options.url;
         if (!targetUrl) return;
 
+        console.log("[HTMLLoader] Starting load for URL:", targetUrl);
         this._isLoading = true;
         return new Promise((resolve, reject) => {
             this._resolve = resolve;
             this._reject = reject;
+            console.log("[HTMLLoader] Promise initialized, _reject:", typeof this._reject);
             this._createLoading();
             this._performFetch(targetUrl);
         });

@@ -39,7 +39,10 @@ export const Default: Story = {
             loader.load();
         }, 100);
 
-        return html`<div id="${containerId}" style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"></div>`;
+        return html`<div
+            id="${containerId}"
+            style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"
+        ></div>`;
     },
 };
 
@@ -67,7 +70,10 @@ export const SuccessCase: Story = {
             loader.load();
         }, 100);
 
-        return html`<div id="${containerId}" style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"></div>`;
+        return html`<div
+            id="${containerId}"
+            style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"
+        ></div>`;
     },
 };
 
@@ -102,7 +108,10 @@ export const ErrorRetry: Story = {
             <div style="margin-bottom: 10px; color: #666; font-size: 14px;">
                 💡 提示：这个示例会故意失败，点击"重试"按钮可以重新发起请求
             </div>
-            <div id="${containerId}" style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"></div>
+            <div
+                id="${containerId}"
+                style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"
+            ></div>
         `;
     },
 };
@@ -138,7 +147,10 @@ export const Cancelable: Story = {
             <div style="margin-bottom: 10px; color: #666; font-size: 14px;">
                 💡 提示：点击"取消"按钮可以中止加载
             </div>
-            <div id="${containerId}" style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"></div>
+            <div
+                id="${containerId}"
+                style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"
+            ></div>
         `;
     },
 };
@@ -178,9 +190,15 @@ export const CustomInject: Story = {
         }, 100);
 
         return html`
-            <div id="${containerId}" style="border: 1px dashed #ccc; padding: 20px;">
+            <div
+                id="${containerId}"
+                style="border: 1px dashed #ccc; padding: 20px;"
+            >
                 <h3 style="margin: 0 0 15px 0; color: #333;">页面布局</h3>
-                <div class="content-area" style="min-height: 100px; border: 2px dashed #999; padding: 10px; background: #fafafa;">
+                <div
+                    class="content-area"
+                    style="min-height: 100px; border: 2px dashed #999; padding: 10px; background: #fafafa;"
+                >
                     <em style="color: #999;">内容将加载到这里...</em>
                 </div>
             </div>
@@ -209,8 +227,10 @@ export const NoAutoInject: Story = {
                 onSuccess: (result) => {
                     // 自定义处理，不自动注入
                     const wrapper = document.createElement("div");
-                    wrapper.style.cssText = "padding: 15px; background: #fff3e0; border-left: 4px solid #ff9800; margin-top: 10px;";
-                    wrapper.innerHTML = "<strong>✓ 自定义处理:</strong> 内容已在 onSuccess 中手动处理";
+                    wrapper.style.cssText =
+                        "padding: 15px; background: #fff3e0; border-left: 4px solid #ff9800; margin-top: 10px;";
+                    wrapper.innerHTML =
+                        "<strong>✓ 自定义处理:</strong> 内容已在 onSuccess 中手动处理";
                     container?.appendChild(wrapper);
 
                     // 返回空字符串不注入
@@ -225,9 +245,13 @@ export const NoAutoInject: Story = {
 
         return html`
             <div style="margin-bottom: 10px; color: #666; font-size: 14px;">
-                💡 提示：injectTo=false，内容不会自动注入，而是在 onSuccess 中手动处理
+                💡 提示：injectTo=false，内容不会自动注入，而是在 onSuccess
+                中手动处理
             </div>
-            <div id="${containerId}" style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"></div>
+            <div
+                id="${containerId}"
+                style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"
+            ></div>
         `;
     },
 };
@@ -253,7 +277,8 @@ export const ReturnElement: Story = {
                 onSuccess: () => {
                     // 创建并返回 HTMLElement
                     const element = document.createElement("div");
-                    element.style.cssText = "padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);";
+                    element.style.cssText =
+                        "padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);";
                     element.innerHTML = `
                         <h3 style="margin: 0 0 10px 0;">🎨 自定义 HTMLElement</h3>
                         <p style="margin: 0; opacity: 0.9;">这是在 onSuccess 中创建并返回的 DOM 元素</p>
@@ -265,7 +290,10 @@ export const ReturnElement: Story = {
             loader.load();
         }, 100);
 
-        return html`<div id="${containerId}" style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"></div>`;
+        return html`<div
+            id="${containerId}"
+            style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"
+        ></div>`;
     },
 };
 
@@ -289,7 +317,7 @@ export const AsyncProcessing: Story = {
                 },
                 onSuccess: async (result) => {
                     // 模拟异步处理
-                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    await new Promise((resolve) => setTimeout(resolve, 1000));
 
                     return `
                         <div style="padding: 20px; background: #f1f8e9; border-radius: 8px;">
@@ -308,7 +336,10 @@ export const AsyncProcessing: Story = {
             <div style="margin-bottom: 10px; color: #666; font-size: 14px;">
                 💡 提示：onSuccess 返回 Promise，支持异步处理
             </div>
-            <div id="${containerId}" style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"></div>
+            <div
+                id="${containerId}"
+                style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"
+            ></div>
         `;
     },
 };
@@ -353,11 +384,17 @@ export const FullFeatured: Story = {
 
         return html`
             <div style="margin-bottom: 10px;">
-                <button id="load-btn" style="padding: 8px 16px; background: #2196f3; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">
+                <button
+                    id="load-btn"
+                    style="padding: 8px 16px; background: #2196f3; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+                >
                     开始加载
                 </button>
             </div>
-            <div id="${containerId}" style="min-height: 250px; position: relative; border: 1px dashed #ccc; padding: 20px;">
+            <div
+                id="${containerId}"
+                style="min-height: 250px; position: relative; border: 1px dashed #ccc; padding: 20px;"
+            >
                 <em style="color: #999;">点击上方按钮开始加载</em>
             </div>
         `;
@@ -399,22 +436,60 @@ export const ContentTypes: Story = {
         }, 100);
 
         return html`
-            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 16px; background: #f5f5f5;">
-                <div style="background: white; padding: 12px; border-radius: 8px;">
-                    <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #666;">📄 文章内容</h4>
-                    <div id="loader-1" style="min-height: 150px; position: relative; border: 1px dashed #ddd; padding: 10px;"></div>
+            <div
+                style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 16px; background: #f5f5f5;"
+            >
+                <div
+                    style="background: white; padding: 12px; border-radius: 8px;"
+                >
+                    <h4
+                        style="margin: 0 0 8px 0; font-size: 14px; color: #666;"
+                    >
+                        📄 文章内容
+                    </h4>
+                    <div
+                        id="loader-1"
+                        style="min-height: 150px; position: relative; border: 1px dashed #ddd; padding: 10px;"
+                    ></div>
                 </div>
-                <div style="background: white; padding: 12px; border-radius: 8px;">
-                    <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #666;">👤 用户卡片</h4>
-                    <div id="loader-2" style="min-height: 150px; position: relative; border: 1px dashed #ddd; padding: 10px;"></div>
+                <div
+                    style="background: white; padding: 12px; border-radius: 8px;"
+                >
+                    <h4
+                        style="margin: 0 0 8px 0; font-size: 14px; color: #666;"
+                    >
+                        👤 用户卡片
+                    </h4>
+                    <div
+                        id="loader-2"
+                        style="min-height: 150px; position: relative; border: 1px dashed #ddd; padding: 10px;"
+                    ></div>
                 </div>
-                <div style="background: white; padding: 12px; border-radius: 8px;">
-                    <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #666;">🎁 产品卡片</h4>
-                    <div id="loader-3" style="min-height: 150px; position: relative; border: 1px dashed #ddd; padding: 10px;"></div>
+                <div
+                    style="background: white; padding: 12px; border-radius: 8px;"
+                >
+                    <h4
+                        style="margin: 0 0 8px 0; font-size: 14px; color: #666;"
+                    >
+                        🎁 产品卡片
+                    </h4>
+                    <div
+                        id="loader-3"
+                        style="min-height: 150px; position: relative; border: 1px dashed #ddd; padding: 10px;"
+                    ></div>
                 </div>
-                <div style="background: white; padding: 12px; border-radius: 8px;">
-                    <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #666;">📊 统计数据</h4>
-                    <div id="loader-4" style="min-height: 150px; position: relative; border: 1px dashed #ddd; padding: 10px;"></div>
+                <div
+                    style="background: white; padding: 12px; border-radius: 8px;"
+                >
+                    <h4
+                        style="margin: 0 0 8px 0; font-size: 14px; color: #666;"
+                    >
+                        📊 统计数据
+                    </h4>
+                    <div
+                        id="loader-4"
+                        style="min-height: 150px; position: relative; border: 1px dashed #ddd; padding: 10px;"
+                    ></div>
                 </div>
             </div>
         `;
@@ -442,7 +517,7 @@ export const JsonData: Story = {
                 onFail: {
                     retryable: true,
                 },
-                onSuccess: (result) => {
+                onSuccess: (result: any) => {
                     const data = JSON.parse(result);
                     return `
                         <div style="padding: 20px; background: #e3f2fd; border-radius: 8px;">
@@ -450,10 +525,14 @@ export const JsonData: Story = {
                             <div style="background: white; padding: 12px; border-radius: 4px; font-family: monospace; font-size: 13px; color: #333;">
                                 <div><strong>ID:</strong> ${data.id}</div>
                                 <div><strong>标题:</strong> ${data.title}</div>
-                                <div><strong>内容:</strong> ${data.content}</div>
+                                <div><strong>内容:</strong> ${
+                                    data.content
+                                }</div>
                                 <div><strong>作者:</strong> ${data.author}</div>
                                 <div style="margin-top: 8px; color: #666; font-size: 12px;">
-                                    <strong>时间戳:</strong> ${new Date(data.timestamp).toLocaleString()}
+                                    <strong>时间戳:</strong> ${new Date(
+                                        data.timestamp
+                                    ).toLocaleString()}
                                 </div>
                             </div>
                         </div>
@@ -468,7 +547,10 @@ export const JsonData: Story = {
             <div style="margin-bottom: 10px; color: #666; font-size: 14px;">
                 💡 提示：加载 JSON 数据并在 onSuccess 中解析处理
             </div>
-            <div id="${containerId}" style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"></div>
+            <div
+                id="${containerId}"
+                style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"
+            ></div>
         `;
     },
 };
@@ -504,7 +586,10 @@ export const ErrorWithStack: Story = {
             <div style="margin-bottom: 10px; color: #666; font-size: 14px;">
                 💡 提示：模拟网络错误，显示错误信息和堆栈
             </div>
-            <div id="${containerId}" style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"></div>
+            <div
+                id="${containerId}"
+                style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"
+            ></div>
         `;
     },
 };
@@ -532,7 +617,227 @@ export const FeaturesList: Story = {
             loader.load();
         }, 100);
 
-        return html`<div id="${containerId}" style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"></div>`;
+        return html`<div
+            id="${containerId}"
+            style="min-height: 200px; position: relative; border: 1px dashed #ccc; padding: 20px;"
+        ></div>`;
     },
 };
 
+/**
+ * Loader 复用示例 - 展示可以多次调用 load 方法
+ */
+export const LoaderReuse: Story = {
+    name: "Loader 复用",
+    render: () => {
+        const containerId = "loader-demo-14";
+
+        setTimeout(() => {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            // 创建单个 HTMLLoader 实例
+            const loader = new HTMLLoader({
+                container,
+                url: "/api/htmlloader/success",
+                onLoading: {
+                    message: "正在加载...",
+                    type: "bars",
+                },
+                onFail: {
+                    retryable: true,
+                    closeable: true,
+                },
+            });
+
+            // 按钮事件监听
+            const loadSuccessBtn = document.getElementById("load-success-btn");
+            const loadPostBtn = document.getElementById("load-post-btn");
+            const loadUserBtn = document.getElementById("load-user-btn");
+            const loadErrorBtn = document.getElementById("load-error-btn");
+            const abortBtn = document.getElementById("abort-btn");
+
+            let currentUrl = "/api/htmlloader/success";
+
+            // 加载成功内容
+            loadSuccessBtn?.addEventListener("click", () => {
+                currentUrl = "/api/htmlloader/success";
+                container.innerHTML = ""; // 清空容器
+                loader.load(currentUrl);
+            });
+
+            // 加载文章内容
+            loadPostBtn?.addEventListener("click", () => {
+                currentUrl = "/api/htmlloader/post";
+                container.innerHTML = ""; // 清空容器
+                loader.load(currentUrl);
+            });
+
+            // 加载用户卡片
+            loadUserBtn?.addEventListener("click", () => {
+                currentUrl = "/api/htmlloader/user";
+                container.innerHTML = ""; // 清空容器
+                loader.load(currentUrl);
+            });
+
+            // 加载错误内容
+            loadErrorBtn?.addEventListener("click", () => {
+                currentUrl = "/api/htmlloader/server-error";
+                container.innerHTML = ""; // 清空容器
+                loader.load(currentUrl);
+            });
+
+            // 取消加载
+            abortBtn?.addEventListener("click", () => {
+                loader.abort();
+                container.innerHTML =
+                    '<em style="color: #999;">已取消加载</em>';
+            });
+
+            // 初始加载
+            loader.load(currentUrl);
+        }, 100);
+
+        return html`
+            <div style="margin-bottom: 16px;">
+                <div style="margin-bottom: 8px; color: #666; font-size: 14px;">
+                    💡 提示：点击不同按钮加载不同内容，展示 Loader 实例可重复使用
+                </div>
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button
+                        id="load-success-btn"
+                        style="padding: 8px 16px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+                    >
+                        加载成功页面
+                    </button>
+                    <button
+                        id="load-post-btn"
+                        style="padding: 8px 16px; background: #2196f3; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+                    >
+                        加载文章
+                    </button>
+                    <button
+                        id="load-user-btn"
+                        style="padding: 8px 16px; background: #ff9800; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+                    >
+                        加载用户卡片
+                    </button>
+                    <button
+                        id="load-error-btn"
+                        style="padding: 8px 16px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+                    >
+                        加载错误页面
+                    </button>
+                    <button
+                        id="abort-btn"
+                        style="padding: 8px 16px; background: #9e9e9e; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+                    >
+                        取消加载
+                    </button>
+                </div>
+            </div>
+            <div
+                id="${containerId}"
+                style="min-height: 250px; position: relative; border: 1px dashed #ccc; padding: 20px;"
+            >
+                <em style="color: #999;">点击上方按钮开始加载</em>
+            </div>
+        `;
+    },
+};
+
+/**
+ * 连续加载示例 - 展示自动连续加载不同内容
+ */
+export const SequentialLoading: Story = {
+    name: "连续加载",
+    render: () => {
+        const containerId = "loader-demo-15";
+
+        setTimeout(() => {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const urls = [
+                "/api/htmlloader/post",
+                "/api/htmlloader/user",
+                "/api/htmlloader/product",
+                "/api/htmlloader/stats",
+            ];
+
+            let currentIndex = 0;
+            const loader = new HTMLLoader({
+                container,
+                url: urls[0],
+                onLoading: {
+                    message: "正在加载...",
+                    cancelable: true,
+                },
+                onFail: {
+                    retryable: true,
+                    closeable: true,
+                },
+                onSuccess: (result) => {
+                    // 延迟后自动加载下一个
+                    setTimeout(() => {
+                        currentIndex = (currentIndex + 1) % urls.length;
+                        if (currentIndex !== 0) {
+                            // 只在前3次循环时自动加载
+                            container.innerHTML = ""; // 清空容器
+                            loader.load(urls[currentIndex]);
+                        }
+                    }, 3000);
+                    // 直接返回结果，不进行修改
+                    return result as string;
+                },
+            });
+
+            // 添加手动控制按钮
+            const startBtn = document.getElementById("start-sequence-btn");
+            const stopBtn = document.getElementById("stop-sequence-btn");
+
+            startBtn?.addEventListener("click", () => {
+                currentIndex = 0;
+                container.innerHTML = "";
+                loader.load(urls[currentIndex]);
+            });
+
+            stopBtn?.addEventListener("click", () => {
+                loader.abort();
+                container.innerHTML =
+                    '<em style="color: #999;">已停止连续加载</em>';
+            });
+
+            // 初始加载
+            loader.load(urls[0]);
+        }, 100);
+
+        return html`
+            <div style="margin-bottom: 16px;">
+                <div style="margin-bottom: 8px; color: #666; font-size: 14px;">
+                    💡 提示：自动连续加载 4 种不同内容，每次加载后等待 3 秒继续下一个
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button
+                        id="start-sequence-btn"
+                        style="padding: 8px 16px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+                    >
+                        重新开始
+                    </button>
+                    <button
+                        id="stop-sequence-btn"
+                        style="padding: 8px 16px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;"
+                    >
+                        停止
+                    </button>
+                </div>
+            </div>
+            <div
+                id="${containerId}"
+                style="min-height: 250px; position: relative; border: 1px dashed #ccc; padding: 20px;"
+            >
+                <em style="color: #999;">自动加载中...</em>
+            </div>
+        `;
+    },
+};

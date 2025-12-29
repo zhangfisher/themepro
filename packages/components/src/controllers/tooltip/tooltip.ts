@@ -57,7 +57,7 @@ export class Tooltip {
                 styles: undefined,
                 target: undefined,
                 querySelector: this._querySelector.bind(this),
-                predictSize: [100, 100],
+                predictSize: [300, 200],
                 loading: undefined,
                 cssClass: "tooltip-visible",
             },

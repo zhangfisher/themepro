@@ -184,7 +184,7 @@ export class AutoLoading extends LitElement {
         type: String,
         reflect: true,
     })
-    status?: "loading" | "error" | "success";
+    status?: "loading" | "error" | "success" = "loading";
 
     /**
      * 在status='loading'时是否显示一个cancel action
@@ -330,7 +330,7 @@ export class AutoLoading extends LitElement {
                 status: "loading",
             },
             {
-                id: "refresh",
+                id: "retry",
                 label: "重试",
                 icon: "refresh",
                 status: "error",
@@ -353,7 +353,10 @@ export class AutoLoading extends LitElement {
                 (act) => act.id === presetAction.id
             );
             if (index === -1) {
-                actions.push(presetAction);
+                // @ts-expect-error
+                if (this[`${presetAction.id}able`]) {
+                    actions.push(presetAction);
+                }
             } else {
                 actions[index] = assignObject({}, presetAction, actions[index]);
             }
@@ -390,11 +393,11 @@ export class AutoLoading extends LitElement {
 
     private _renderMessage() {
         if (!this.message && !this.error) return html``;
-        if (this.status === "error" && this.error) {
-            // 当 status 为 error 时，优先显示 error 属性的内容
-            return unsafeHTML(this.error);
-        }
-        return unsafeHTML(this.message);
+        const content = this.status === "error" && this.error
+            ? this.error  // 当 status 为 error 时，优先显示 error 属性的内容
+            : this.message;
+
+        return html`<div class="message">${unsafeHTML(content)}</div>`;
     }
     private _renderActions() {
         const displayActions = this._getActions();
@@ -405,7 +408,6 @@ export class AutoLoading extends LitElement {
                     class="action"
                     ${spread(action)}
                     data-id="${action.id || action.label}"
-                    ghost
                 ></auto-button>`;
             })}
         </div>`;
