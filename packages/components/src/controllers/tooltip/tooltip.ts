@@ -151,7 +151,7 @@ export class Tooltip {
     private _parsePredictSize(url?: string) {
         if (!url) return;
         const sizeArg = getURLQueryParams<string | undefined>(url, "_size");
-        if (!sizeArg) return;
+        if (sizeArg) return;
         const size = typeof sizeArg === "string" ? sizeArg.split(",") : [];
         if (!Array.isArray(this.options.predictSize)) {
             this.options.predictSize = [100, 100];
@@ -161,6 +161,22 @@ export class Tooltip {
         }
         if (size[1]) {
             this.options.predictSize[1] = size[1];
+        }
+    }
+    private _setPredictSize() {
+        if (this.contentElement) {
+            const w = this.options.predictSize[0];
+            const h = this.options.predictSize[1];
+            if (w)
+                this.contentElement.style.width = isNumber(
+                    this.options.predictSize[0]
+                )
+                    ? `${w}px`
+                    : String(w);
+            if (h)
+                this.contentElement.style.height = isNumber(h)
+                    ? `${h}px`
+                    : String(h);
         }
     }
     /**
@@ -228,6 +244,7 @@ export class Tooltip {
             }
             if (url.length === 0) return;
             this._parsePredictSize(url);
+            this._setPredictSize();
             this._htmlLoader = new HTMLLoader({
                 url,
                 container: this.contentElement,
