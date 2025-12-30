@@ -37,7 +37,7 @@ export type HTMLLoaderOptions = {
     /**
      * 用于搭建与加载逻辑相关联的元素
      */
-    container?: HTMLElement;
+    container?: HTMLElement | null;
     /**
      * 传递给 fetch 的选项
      */
@@ -63,18 +63,14 @@ export type HTMLLoaderOptions = {
     injectTo?: boolean | string;
 };
 
-export class HTMLLoader<T> {
-    private _resolve?: (value: T) => void;
+export class HTMLLoader {
+    options: HTMLLoaderOptions;
+    loading?: AutoLoading;
+    private _resolve?: () => void;
     private _reject?: (reason?: any) => void;
-    private _loading?: AutoLoading;
     private _isLoading: boolean = false;
-    /**
-     * 取消操作
-     */
     private _abortController?: AbortController;
     private _containerRef!: WeakRef<HTMLElement>;
-    options: HTMLLoaderOptions;
-
     constructor(options?: HTMLLoaderOptions) {
         this.options = deepMerge(
             {
@@ -116,11 +112,11 @@ export class HTMLLoader<T> {
                 // 检查是否允许重试（onFail.retryable 为 true）
                 if (this.options.onFail?.retryable && !this._isLoading) {
                     // 重置 loading 状态为 loading
-                    if (this._loading) {
-                        this._loading.status = "loading";
+                    if (this.loading) {
+                        this.loading.status = "loading";
                         // 清除之前的错误信息
-                        this._loading.error = undefined;
-                        this._loading.description = undefined;
+                        this.loading.error = undefined;
+                        this.loading.description = undefined;
                     }
                     // 重新开始 fetch
                     this._retryLoad();
@@ -141,61 +137,63 @@ export class HTMLLoader<T> {
         });
         loading.addEventListener("actionclick", this._onLoadingActionClick);
         this.options.container.appendChild(loading);
-        this._loading = loading;
+        this.loading = loading;
     }
 
     private _onLoadError(e: any) {
-        if (this._loading) {
-            this._loading.status = "error";
+        if (this.loading) {
+            this.loading.status = "error";
             // 合并 onFail 配置和错误信息
             const errorProps = {
                 error: e instanceof Error ? e.message : String(e),
                 description: e instanceof Error ? e.stack : String(e),
             };
-            Object.assign(this._loading, this.options.onFail || {}, errorProps);
+            Object.assign(this.loading, this.options.onFail || {}, errorProps);
+        }
+    }
+    private _injectToContainer(finalResult: any) {
+        const container = this.container;
+        if (!container) return;
+
+        // 根据 injectTo 参数决定如何注入
+        const injectTo = this.options.injectTo;
+
+        if (injectTo === false) {
+            // 不进行任何注入
+            return;
+        }
+
+        // 确定要注入的内容和目标元素
+        let content: string;
+        if (typeof finalResult === "string") {
+            content = removeUnescapedChars(finalResult);
+        } else if (finalResult instanceof HTMLElement) {
+            content = finalResult.outerHTML;
+        } else {
+            return;
+        }
+
+        // 根据 injectTo 的值选择目标元素
+        if (injectTo === true || injectTo === undefined) {
+            // 直接注入到 container.innerHTML
+            this.container.innerHTML = content;
+        } else if (typeof injectTo === "string") {
+            // 注入到 container.querySelector(选择器) 指定的元素
+            const targetElement = this.container.querySelector(injectTo);
+            if (targetElement) {
+                targetElement.innerHTML = content;
+            }
         }
     }
 
     private _onLoadSuccess(result: any) {
-        this._loading?.remove();
+        this.loading?.remove();
 
         // 调用 onSuccess 回调处理结果
         const processedResult = this.options.onSuccess?.(result);
-
         // 处理返回值（可能是同步或异步）
-        Promise.resolve(processedResult).then((finalResult) => {
-            const container = this.container;
-            if (!container) return;
-
-            // 根据 injectTo 参数决定如何注入
-            const injectTo = this.options.injectTo;
-
-            if (injectTo === false) {
-                // 不进行任何注入
-                return;
-            }
-
-            // 确定要注入的内容和目标元素
-            let content: string;
-            if (typeof finalResult === "string") {
-                content = removeUnescapedChars(finalResult);
-            } else if (finalResult instanceof HTMLElement) {
-                content = finalResult.outerHTML;
-            } else {
-                return;
-            }
-
-            // 根据 injectTo 的值选择目标元素
-            if (injectTo === true || injectTo === undefined) {
-                // 直接注入到 container.innerHTML
-                container.innerHTML = content;
-            } else if (typeof injectTo === "string") {
-                // 注入到 container.querySelector(选择器) 指定的元素
-                const targetElement = container.querySelector(injectTo);
-                if (targetElement) {
-                    targetElement.innerHTML = content;
-                }
-            }
+        Promise.resolve(processedResult).then((result) => {
+            this._injectToContainer(result);
         });
     }
 
@@ -243,7 +241,7 @@ export class HTMLLoader<T> {
                     .then((r) => {
                         this._onLoadSuccess(r);
                         this._isLoading = false;
-                        this._resolve!(r as T);
+                        this._resolve!();
                     })
                     .catch((e) => {
                         this._onLoadError(e);
@@ -273,13 +271,10 @@ export class HTMLLoader<T> {
         if (this._isLoading) return;
         const targetUrl = url || this.options.url;
         if (!targetUrl) return;
-
-        console.log("[HTMLLoader] Starting load for URL:", targetUrl);
         this._isLoading = true;
-        return new Promise((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             this._resolve = resolve;
             this._reject = reject;
-            console.log("[HTMLLoader] Promise initialized, _reject:", typeof this._reject);
             this._createLoading();
             this._performFetch(targetUrl);
         });
@@ -289,6 +284,6 @@ export class HTMLLoader<T> {
         this._isLoading = false;
         this._reject = undefined;
         this._resolve = undefined;
-        this._loading?.remove();
+        this.loading?.remove();
     }
 }

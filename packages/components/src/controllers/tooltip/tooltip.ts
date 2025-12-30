@@ -21,6 +21,7 @@ import { isPromiseLike } from "@/utils/isPromiseLike";
 import { getURLQueryParams } from "@/utils/getURLParams";
 import { isNumber } from "flex-tools/typecheck/isNumber";
 import "../../components/Loading";
+import { HTMLLoader } from "@/utils/HTMLLoader";
 
 export class Tooltip {
     options: Required<TooltipControllerOptions>;
@@ -33,6 +34,7 @@ export class Tooltip {
     private _isVisible: boolean = false;
     private _target?: HTMLElement;
     private _loadContent?: Promise<any>;
+    private _htmlLoader?: HTMLLoader;
     private _cleanup?: () => void;
     el: WeakRef<HTMLElement>;
     constructor(
@@ -116,12 +118,10 @@ export class Tooltip {
         );
     }
     private _initElements() {
+        this._container = this._createTooltipContainer();
         const content = this._getTooltipContent();
-        if (content) {
-            this._container = this._createTooltipContainer();
-            this._setTooltipContent(content);
-            this.controller.themeproContainer.appendChild(this._container);
-        }
+        this._setTooltipContent(content);
+        this.controller.themeproContainer.appendChild(this._container);
     }
     /**
      * 解析元素上的工具提示选项属性
@@ -215,7 +215,8 @@ export class Tooltip {
         let el: any = null;
         let getContent = this.options.getContent;
 
-        if (isAsyncContent && content) {
+        if (isFunction(this.options.getContent)) {
+        } else if (isAsyncContent && content) {
             let url: string;
             if (
                 content.startsWith("http://") ||
@@ -226,12 +227,13 @@ export class Tooltip {
                 url = content.substring(content.indexOf("://") + 3).trim();
             }
             if (url.length === 0) return;
-            el = this._createLoading();
             this._parsePredictSize(url);
-            getContent = async () => {
-                const res = await fetch(url);
-                return removeUnescapedChars(await res.text());
-            };
+            this._htmlLoader = new HTMLLoader({
+                url,
+                container: this.contentElement,
+            });
+            this._htmlLoader.load();
+            el = this._htmlLoader.loading;
         } else {
             if (content?.startsWith("slot://")) {
                 const slotName = content.substring(7);
@@ -245,15 +247,15 @@ export class Tooltip {
                 el = removeUnescapedChars(content || "");
             }
         }
-        if (isFunction(getContent)) {
-            const result = getContent.call(this, el, this.ref, this);
-            if (isPromiseLike(result)) {
-                this._loadContent = result as any;
-                el = this._createLoading();
-            } else {
-                el = result;
-            }
-        }
+        // if (isFunction(getContent)) {
+        //     const result = getContent.call(this, el, this.ref, this);
+        //     if (isPromiseLike(result)) {
+        //         this._loadContent = result as any;
+        //         el = this._createLoading();
+        //     } else {
+        //         el = result;
+        //     }
+        // }
         if (!el) return;
         if (el instanceof HTMLElement) {
             return el
