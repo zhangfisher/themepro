@@ -7,8 +7,8 @@ export const styles = css`
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: calc(0.3 * var(--t-spacing-medium))
-            calc(0.5 * var(--t-spacing-medium));
+        padding: calc(0.2 * var(--t-spacing-medium))
+            calc(0.8 * var(--t-spacing-medium));
         border-radius: var(--auto-border-radius);
         font: var(--auto-font);
         cursor: pointer;

@@ -3,6 +3,7 @@ import { css } from "lit";
 export const styles = css`
     :host {
         position: relative;
+        display: inline-flex;
     }
     .auto-icon {
         background-color: currentColor;

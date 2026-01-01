@@ -188,7 +188,15 @@ export class Tooltip {
         }
         return url;
     }
-
+    private _setContentSize() {
+        const el = this.contentElement;
+        if (!el) return;
+        const size = this.options.size || [];
+        if (!size[0]) size[0] = "auto";
+        if (!size[1]) size[1] = "auto";
+        el.style.width = isNumber(size[0]) ? `${size[0]}px` : String(size[0]);
+        el.style.height = isNumber(size[1]) ? `${size[1]}px` : String(size[1]);
+    }
     /**
      * 根据配置读取tooltip内容
      *
@@ -231,18 +239,16 @@ export class Tooltip {
             this._htmlLoader = new HTMLLoader({
                 url,
                 container: this.contentElement,
+                onLoading: {
+                    callback: () => {
+                        this._setPredictSize();
+                    },
+                },
+                onReject: {
+                    callback: () => {},
+                },
                 onResolve: () => {
-                    const el = this.contentElement;
-                    if (!el) return;
-                    const size = this.options.size || [];
-                    if (!size[0]) size[0] = "auto";
-                    if (!size[1]) size[1] = "auto";
-                    el.style.width = isNumber(size[0])
-                        ? `${size[0]}px`
-                        : String(size[0]);
-                    el.style.height = isNumber(size[1])
-                        ? `${size[1]}px`
-                        : String(size[1]);
+                    this._setContentSize();
                     return undefined;
                 },
             });

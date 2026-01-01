@@ -393,9 +393,10 @@ export class AutoLoading extends LitElement {
 
     private _renderMessage() {
         if (!this.message && !this.error) return html``;
-        const content = this.status === "error" && this.error
-            ? this.error  // 当 status 为 error 时，优先显示 error 属性的内容
-            : this.message;
+        const content =
+            this.status === "error" && this.error
+                ? this.error // 当 status 为 error 时，优先显示 error 属性的内容
+                : this.message;
 
         return html`<div class="message">${unsafeHTML(content)}</div>`;
     }
@@ -414,7 +415,7 @@ export class AutoLoading extends LitElement {
     }
     private _renderDescription() {
         if (!this.description) return;
-        return html`<div class="memo">${this.description}</div>`;
+        return html`<div class="memo">${unsafeHTML(this.description)}</div>`;
     }
     render() {
         const iconColor = this.color || "var(--auto-theme-color)";

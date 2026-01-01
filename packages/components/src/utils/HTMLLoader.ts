@@ -31,6 +31,7 @@ import type {
 } from "@/components/Loading";
 import { removeUnescapedChars } from "./removeUnescapedChars";
 import { deepMerge } from "flex-tools/object/deepMerge";
+import { isFunction } from "flex-tools/typecheck/isFunction";
 
 export type HTMLLoaderOptions = {
     url?: string;
@@ -42,22 +43,47 @@ export type HTMLLoaderOptions = {
      * 传递给 fetch 的选项
      */
     fetchOptions?: RequestInit;
-    onLoading?: AutoLoadingProps;
+    onLoading?: AutoLoadingProps & {
+        callback?: () => void;
+    };
     onReject?: AutoLoadingProps & {
         fallback?: string; // 当失败且不重试时的回退内容
+        callback?: (e: Error) => void;
     };
     /**
-     * 加载成功时的返回结果，可以返回HTMLElement或者string
-     * @param result
-     * @returns
+     * 加载成功时的回调函数
+     * @param result - 加载结果，可以是对象或字符串
+     * @returns 可以不返回任何内容、返回字符串、返回 HTMLElement，或它们的 Promise 形式
+     *
+     * @example
+     * // 不返回任何内容（使用原始结果）
+     * onResolve: (result) => { console.log(result); }
+     *
+     * @example
+     * // 返回字符串
+     * onResolve: (result) => "<div>处理后的内容</div>"
+     *
+     * @example
+     * // 返回 HTMLElement
+     * onResolve: () => {
+     *     const div = document.createElement("div");
+     *     div.textContent = "自定义元素";
+     *     return div;
+     * }
+     *
+     * @example
+     * // 返回 Promise
+     * onResolve: async (result) => {
+     *     return await processResult(result);
+     * }
      */
     onResolve?: (
         result: Record<string, any> | string
     ) =>
-        | undefined
-        | Promise<string | undefined>
+        | HTMLElement
         | string
-        | Promise<HTMLElement | string>;
+        | undefined
+        | Promise<HTMLElement | string | undefined>;
     /**
      * 将返回结果以HTML内容注入到container.innerHTML
      * - true : 默认注入到container.innerHTML
@@ -140,7 +166,7 @@ export class HTMLLoader {
         const loading = document.createElement("auto-loading");
         const loadingAttrs = this.options.onLoading || {};
         Object.entries(loadingAttrs).forEach(([K, v]) => {
-            loading.setAttribute(K, v);
+            if (!isFunction(v)) loading.setAttribute(K, v);
         });
         loading.addEventListener("actionclick", this._onLoadingActionClick);
         this.options.container.appendChild(loading);
@@ -153,12 +179,15 @@ export class HTMLLoader {
                 error: e instanceof Error ? e.message : String(e),
                 description: e instanceof Error ? e.stack : String(e),
             };
-            Object.assign(
-                this.loading,
-                this.options.onReject || {},
-                errorProps
-            );
+            const onReject = Object.assign({}, this.options.onReject);
+            delete onReject.callback;
+            Object.assign(this.loading, errorProps, onReject);
             this.loading.status = "error";
+            setTimeout(() => {
+                if (isFunction(this.options.onReject?.callback)) {
+                    this.options.onReject.callback(e);
+                }
+            });
         }
     }
     private _injectToContainer(finalResult: any) {
@@ -234,12 +263,10 @@ export class HTMLLoader {
                     } catch {
                         errorText = response.statusText;
                     }
-
                     // 创建一个包含状态码和错误信息的 Error 对象
                     const error = new Error(
                         `HTTP ${response.status}: ${response.statusText}`
                     );
-                    (error as any).message = response.statusText;
                     (error as any).stack = errorText;
 
                     this._onLoadReject(error);
@@ -277,6 +304,10 @@ export class HTMLLoader {
         if (!targetUrl) return;
 
         this._isLoading = true;
+
+        if (isFunction(this.options.onLoading?.callback)) {
+            this.options.onLoading.callback();
+        }
         this._performFetch(targetUrl);
     }
 
