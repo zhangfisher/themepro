@@ -1,4 +1,3 @@
-import { Tooltip } from "./../../controllers/tooltip/tooltip";
 import type { Meta, StoryObj } from "@storybook/web-components";
 import { html } from "lit";
 import "./TooltipDemo";
@@ -210,8 +209,9 @@ export const 错误处理示例: Story = {
                 <button
                     data-tooltip="link://api/tooltip/status/404"
                     data-tooltip-placement="top"
-                    data-tooltip-predict-size="[300,100]"
+                    data-tooltip-predict-size="[300,200]"
                     data-tooltip-loading='<div style="padding: 10px; color: #666;">⏳ 请求中...</div>'
+                    data-tooltip-trigger="click"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
                     404 错误示例

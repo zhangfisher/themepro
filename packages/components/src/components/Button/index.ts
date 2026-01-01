@@ -215,7 +215,7 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
     icon?: string;
 
     @property({ type: String, reflect: true })
-    variant?: "default" | "outline" | "ghost" | "link"; // = "outline";
+    variant?: "default" | "outline" | "ghost" | "link" = "outline";
 
     @property({ type: String, reflect: true })
     shape?: "default" | "circle" | "pill" | "rectangle" | "rect";

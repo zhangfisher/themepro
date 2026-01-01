@@ -53,9 +53,10 @@ export const styles = css`
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 1em;
+        gap: 0.6em;
         font-size: var(--auto-font-size);
         z-index: 1;
+        position: relative;
         & > .message,
         & > .memo {
             display: -webkit-box;

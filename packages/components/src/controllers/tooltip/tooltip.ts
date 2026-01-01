@@ -17,7 +17,6 @@ import { getDatasetFromElement } from "@/utils/getDatasetFromElement";
 import { removeUnescapedChars } from "../../utils/removeUnescapedChars";
 import { applyStylesToElement } from "@/utils/applyStylesToElement";
 import { isFunction } from "flex-tools/typecheck/isFunction";
-import { isPromiseLike } from "@/utils/isPromiseLike";
 import { getURLQueryParams } from "@/utils/getURLParams";
 import { isNumber } from "flex-tools/typecheck/isNumber";
 import "../../components/Loading";
@@ -59,7 +58,8 @@ export class Tooltip {
                 styles: undefined,
                 target: undefined,
                 querySelector: this._querySelector.bind(this),
-                predictSize: [300, 200],
+                predictSize: [200, 200],
+                size: ["auto", "auto"],
                 loading: undefined,
                 cssClass: "tooltip-visible",
             },
@@ -120,7 +120,7 @@ export class Tooltip {
     private _initElements() {
         this._container = this._createTooltipContainer();
         const content = this._getTooltipContent();
-        this._setTooltipContent(content);
+        if (content) this._setTooltipContent(content);
         this.controller.themeproContainer.appendChild(this._container);
     }
     /**
@@ -148,29 +148,28 @@ export class Tooltip {
             // 解析data-tooltip-<option>属性
         }
     }
-    private _parsePredictSize(url?: string) {
-        if (!url) return;
-        const sizeArg = getURLQueryParams<string | undefined>(url, "_size");
-        if (sizeArg) return;
-        const size = typeof sizeArg === "string" ? sizeArg.split(",") : [];
-        if (!Array.isArray(this.options.predictSize)) {
-            this.options.predictSize = [100, 100];
-        }
-        if (size[0]) {
-            this.options.predictSize[0] = size[0];
-        }
-        if (size[1]) {
-            this.options.predictSize[1] = size[1];
-        }
-    }
-    private _setPredictSize() {
+    /**
+     * 预测尺寸
+     * - 通过predictSize指定
+     * - 通过_size查询参数指定
+     * @param url
+     * @returns
+     */
+    private _setPredictSize(url?: string) {
         if (this.contentElement) {
+            if (!url) return;
+            const sizeArg = getURLQueryParams<string | undefined>(url, "_size");
+            const size = typeof sizeArg === "string" ? sizeArg.split(",") : [];
+            if (size[0]) {
+                this.options.predictSize[0] = size[0];
+            }
+            if (size[1]) {
+                this.options.predictSize[1] = size[1];
+            }
             const w = this.options.predictSize[0];
             const h = this.options.predictSize[1];
             if (w)
-                this.contentElement.style.width = isNumber(
-                    this.options.predictSize[0]
-                )
+                this.contentElement.style.width = isNumber(w)
                     ? `${w}px`
                     : String(w);
             if (h)
@@ -179,15 +178,15 @@ export class Tooltip {
                     : String(h);
         }
     }
-    /**
-     * 创建一个加载中的元素
-     */
-    private _createLoading() {
-        const loading = document.createElement("auto-loading");
-        if (typeof this.options.loading === "string") {
-            loading.setAttribute("message", this.options.loading);
+    private _getAsyncContentUrl(content: string | undefined) {
+        if (!content) return false;
+        let url: string | undefined;
+        if (content.startsWith("http://") || content.startsWith("https://")) {
+            url = content;
+        } else if (content.startsWith("link://")) {
+            url = content.substring(content.indexOf("://") + 3).trim();
         }
-        return loading;
+        return url;
     }
 
     /**
@@ -215,42 +214,38 @@ export class Tooltip {
             ? `query://${this.ref.dataset.tooltipQuery}`
             : undefined;
 
-        const url = this.ref.dataset.tooltipLink
+        const link = this.ref.dataset.tooltipLink
             ? `link://${this.ref.dataset.tooltipLink}`
             : undefined;
 
-        const content = url || slot || query || this.ref.dataset.tooltip;
+        const content = link || slot || query || this.ref.dataset.tooltip;
 
         if (!content && !isFunction(this.options.getContent)) return;
 
-        const isAsyncContent =
-            content?.startsWith("link://") ||
-            content?.startsWith("http://") ||
-            content?.startsWith("https://");
-
         let el: any = null;
-        let getContent = this.options.getContent;
-
+        const url = this._getAsyncContentUrl(content);
         if (isFunction(this.options.getContent)) {
-        } else if (isAsyncContent && content) {
-            let url: string;
-            if (
-                content.startsWith("http://") ||
-                content.startsWith("https://")
-            ) {
-                url = content;
-            } else {
-                url = content.substring(content.indexOf("://") + 3).trim();
-            }
+        } else if (url) {
             if (url.length === 0) return;
-            this._parsePredictSize(url);
-            this._setPredictSize();
+            this._setPredictSize(url);
             this._htmlLoader = new HTMLLoader({
                 url,
                 container: this.contentElement,
+                onResolve: () => {
+                    const el = this.contentElement;
+                    if (!el) return;
+                    const size = this.options.size || [];
+                    if (!size[0]) size[0] = "auto";
+                    if (!size[1]) size[1] = "auto";
+                    el.style.width = isNumber(size[0])
+                        ? `${size[0]}px`
+                        : String(size[0]);
+                    el.style.height = isNumber(size[1])
+                        ? `${size[1]}px`
+                        : String(size[1]);
+                    return undefined;
+                },
             });
-            this._htmlLoader.load();
-            el = this._htmlLoader.loading;
         } else {
             if (content?.startsWith("slot://")) {
                 const slotName = content.substring(7);
@@ -264,15 +259,6 @@ export class Tooltip {
                 el = removeUnescapedChars(content || "");
             }
         }
-        // if (isFunction(getContent)) {
-        //     const result = getContent.call(this, el, this.ref, this);
-        //     if (isPromiseLike(result)) {
-        //         this._loadContent = result as any;
-        //         el = this._createLoading();
-        //     } else {
-        //         el = result;
-        //     }
-        // }
         if (!el) return;
         if (el instanceof HTMLElement) {
             return el
@@ -696,7 +682,7 @@ export class Tooltip {
             easing: this.options.animationEasing || "easeOutQuart",
         });
 
-        this._loadAsyncContent();
+        // this._loadAsyncContent();
         this._isVisible = true;
         this.options.onShow?.();
         this._setDelayHide();
@@ -841,9 +827,7 @@ export class Tooltip {
     }
     destroy() {
         this._removeEventListeners();
-        //  如果有加载中的内容，则取消加载
-        this._loadContent = undefined;
-
+        this._htmlLoader?.abort();
         if (!this.options.cache) {
             setTimeout(() => {
                 this.controller.themeproContainer?.removeChild(this.container);

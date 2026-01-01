@@ -30,7 +30,7 @@ export const Default: Story = {
                 onLoading: {
                     message: "正在加载内容...",
                 },
-                onFail: {
+                onReject: {
                     retryable: true,
                     closeable: true,
                 },
@@ -95,7 +95,7 @@ export const ErrorRetry: Story = {
                 onLoading: {
                     message: "正在加载...",
                 },
-                onFail: {
+                onReject: {
                     retryable: true,
                     closeable: true,
                 },
@@ -135,7 +135,7 @@ export const Cancelable: Story = {
                     message: "正在加载，可以点击取消...",
                     cancelable: true,
                 },
-                onFail: {
+                onReject: {
                     closeable: true,
                 },
             });
@@ -173,10 +173,10 @@ export const CustomInject: Story = {
                 onLoading: {
                     message: "正在加载...",
                 },
-                onFail: {
+                onReject: {
                     retryable: true,
                 },
-                onSuccess: (html) => {
+                onResolve: (html) => {
                     return `<div style="padding: 15px; background: #e3f2fd; border-radius: 4px; color: #1976d2;">
                         <strong>✅ 加载完成！</strong><br>
                         用户卡片已注入到下方区域
@@ -224,7 +224,7 @@ export const NoAutoInject: Story = {
                 onLoading: {
                     message: "加载数据...",
                 },
-                onSuccess: (result) => {
+                onResolve: (result) => {
                     // 自定义处理，不自动注入
                     const wrapper = document.createElement("div");
                     wrapper.style.cssText =
@@ -274,7 +274,7 @@ export const ReturnElement: Story = {
                 onLoading: {
                     message: "加载中...",
                 },
-                onSuccess: () => {
+                onResolve: () => {
                     // 创建并返回 HTMLElement
                     const element = document.createElement("div");
                     element.style.cssText =
@@ -315,7 +315,7 @@ export const AsyncProcessing: Story = {
                 onLoading: {
                     message: "正在加载数据...",
                 },
-                onSuccess: async (result) => {
+                onResolve: async (result) => {
                     // 模拟异步处理
                     await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -370,7 +370,7 @@ export const FullFeatured: Story = {
                             message: "正在加载完整示例...",
                             type: "bubbles",
                         },
-                        onFail: {
+                        onReject: {
                             retryable: true,
                             closeable: true,
                             backable: true,
@@ -419,7 +419,7 @@ export const ContentTypes: Story = {
                         message: "加载中...",
                         inline: true,
                     },
-                    onFail: {
+                    onReject: {
                         retryable: true,
                     },
                 });
@@ -514,10 +514,10 @@ export const JsonData: Story = {
                 onLoading: {
                     message: "加载 JSON 数据...",
                 },
-                onFail: {
+                onReject: {
                     retryable: true,
                 },
-                onSuccess: (result: any) => {
+                onResolve: (result: any) => {
                     const data = JSON.parse(result);
                     return `
                         <div style="padding: 20px; background: #e3f2fd; border-radius: 8px;">
@@ -573,7 +573,7 @@ export const ErrorWithStack: Story = {
                 onLoading: {
                     message: "尝试加载网络错误...",
                 },
-                onFail: {
+                onReject: {
                     retryable: true,
                     closeable: true,
                 },
@@ -644,7 +644,7 @@ export const LoaderReuse: Story = {
                     message: "正在加载...",
                     type: "bars",
                 },
-                onFail: {
+                onReject: {
                     retryable: true,
                     closeable: true,
                 },
@@ -701,7 +701,8 @@ export const LoaderReuse: Story = {
         return html`
             <div style="margin-bottom: 16px;">
                 <div style="margin-bottom: 8px; color: #666; font-size: 14px;">
-                    💡 提示：点击不同按钮加载不同内容，展示 Loader 实例可重复使用
+                    💡 提示：点击不同按钮加载不同内容，展示 Loader
+                    实例可重复使用
                 </div>
                 <div style="display: flex; gap: 8px; flex-wrap: wrap;">
                     <button
@@ -773,11 +774,11 @@ export const SequentialLoading: Story = {
                     message: "正在加载...",
                     cancelable: true,
                 },
-                onFail: {
+                onReject: {
                     retryable: true,
                     closeable: true,
                 },
-                onSuccess: (result) => {
+                onResolve: (result) => {
                     // 延迟后自动加载下一个
                     setTimeout(() => {
                         currentIndex = (currentIndex + 1) % urls.length;
@@ -815,7 +816,8 @@ export const SequentialLoading: Story = {
         return html`
             <div style="margin-bottom: 16px;">
                 <div style="margin-bottom: 8px; color: #666; font-size: 14px;">
-                    💡 提示：自动连续加载 4 种不同内容，每次加载后等待 3 秒继续下一个
+                    💡 提示：自动连续加载 4 种不同内容，每次加载后等待 3
+                    秒继续下一个
                 </div>
                 <div style="display: flex; gap: 8px;">
                     <button

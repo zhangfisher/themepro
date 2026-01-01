@@ -43,7 +43,7 @@ export type HTMLLoaderOptions = {
      */
     fetchOptions?: RequestInit;
     onLoading?: AutoLoadingProps;
-    onFail?: AutoLoadingProps & {
+    onReject?: AutoLoadingProps & {
         fallback?: string; // 当失败且不重试时的回退内容
     };
     /**
@@ -51,9 +51,13 @@ export type HTMLLoaderOptions = {
      * @param result
      * @returns
      */
-    onSuccess?: (
+    onResolve?: (
         result: Record<string, any> | string
-    ) => Promise<string> | string | HTMLElement | Promise<HTMLElement>;
+    ) =>
+        | undefined
+        | Promise<string | undefined>
+        | string
+        | Promise<HTMLElement | string>;
     /**
      * 将返回结果以HTML内容注入到container.innerHTML
      * - true : 默认注入到container.innerHTML
@@ -74,7 +78,7 @@ export class HTMLLoader {
     constructor(options?: HTMLLoaderOptions) {
         this.options = deepMerge(
             {
-                onSuccess: (r: any) => r,
+                onResolve: (r: any) => r,
                 onFail: {
                     retryable: true,
                     closeable: false,
@@ -86,6 +90,9 @@ export class HTMLLoader {
             throw new Error("container must be instance of HTMLElement");
         }
         this._containerRef = new WeakRef(this.options.container);
+        if (this.options.url) {
+            this.load();
+        }
     }
     get container() {
         return this._containerRef.deref();
@@ -94,7 +101,6 @@ export class HTMLLoader {
     private _onLoadingActionClick = (e: any) => {
         const detail = e.detail as AutoLoadingActionEventDetail;
         const actionId = detail.id;
-
         switch (actionId) {
             case "close":
             case "cancel":
@@ -110,7 +116,7 @@ export class HTMLLoader {
             case "refresh":
             case "retry":
                 // 检查是否允许重试（onFail.retryable 为 true）
-                if (this.options.onFail?.retryable && !this._isLoading) {
+                if (this.options.onReject?.retryable && !this._isLoading) {
                     // 重置 loading 状态为 loading
                     if (this.loading) {
                         this.loading.status = "loading";
@@ -124,6 +130,7 @@ export class HTMLLoader {
                 break;
         }
     };
+
     /**
      * 创建AutoLoading元素
      * @returns
@@ -140,15 +147,18 @@ export class HTMLLoader {
         this.loading = loading;
     }
 
-    private _onLoadError(e: any) {
+    private _onLoadReject(e: any) {
         if (this.loading) {
-            this.loading.status = "error";
-            // 合并 onFail 配置和错误信息
             const errorProps = {
                 error: e instanceof Error ? e.message : String(e),
                 description: e instanceof Error ? e.stack : String(e),
             };
-            Object.assign(this.loading, this.options.onFail || {}, errorProps);
+            Object.assign(
+                this.loading,
+                this.options.onReject || {},
+                errorProps
+            );
+            this.loading.status = "error";
         }
     }
     private _injectToContainer(finalResult: any) {
@@ -186,15 +196,18 @@ export class HTMLLoader {
         }
     }
 
-    private _onLoadSuccess(result: any) {
+    private _onLoadResolve(result: any) {
         this.loading?.remove();
-
+        const onResolve = this.options.onResolve || ((r: any) => r);
         // 调用 onSuccess 回调处理结果
-        const processedResult = this.options.onSuccess?.(result);
-        // 处理返回值（可能是同步或异步）
-        Promise.resolve(processedResult).then((result) => {
+        const processedResult = onResolve?.(result);
+        if (processedResult === undefined) {
             this._injectToContainer(result);
-        });
+        } else {
+            Promise.resolve(processedResult).then((result) => {
+                this._injectToContainer(result);
+            });
+        }
     }
 
     /**
@@ -229,7 +242,7 @@ export class HTMLLoader {
                     (error as any).message = response.statusText;
                     (error as any).stack = errorText;
 
-                    this._onLoadError(error);
+                    this._onLoadReject(error);
                     this._isLoading = false;
                     this._reject!(error);
                     return;
@@ -239,18 +252,18 @@ export class HTMLLoader {
                 response
                     .text()
                     .then((r) => {
-                        this._onLoadSuccess(r);
+                        this._onLoadResolve(r);
                         this._isLoading = false;
                         this._resolve!();
                     })
                     .catch((e) => {
-                        this._onLoadError(e);
+                        this._onLoadReject(e);
                         this._isLoading = false;
                         this._reject!(e);
                     });
             })
             .catch((reason) => {
-                this._onLoadError(reason);
+                this._onLoadReject(reason);
                 this._isLoading = false;
                 this._reject!(reason);
             });
