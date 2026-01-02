@@ -105,10 +105,11 @@ export const styles = css`
     :host(:not([inline])[mask="light"]),
     :host(:not([inline])[light]) {
         & > .content > .message {
-            color: var(--auto-color) !important;
+            color: var(--auto-color);
         }
     }
 
-    :host([status="error"]) {
+    :host([status="error"]) > .content > .message {
+        color: red !important;
     }
 `;

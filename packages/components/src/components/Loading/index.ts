@@ -333,6 +333,7 @@ export class AutoLoading extends LitElement {
                 id: "retry",
                 label: "重试",
                 icon: "refresh",
+                type: "primary",
                 status: "error",
             },
             {

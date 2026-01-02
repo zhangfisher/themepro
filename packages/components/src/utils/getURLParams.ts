@@ -9,7 +9,7 @@
  * @param {string} [name] - 可选参数，指定要获取的特定参数名
  * @returns {Record<string, any>|any} 当name参数未提供时返回包含所有参数的键值对对象，否则返回指定参数的值
  */
-export function getURLQueryParams<R = Record<string, any>>(
+export function getURLQueryParams<R = string | undefined>(
     url: string | undefined | null,
     name?: string
 ): R | undefined {

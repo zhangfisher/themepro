@@ -146,6 +146,10 @@ export interface AutoButtonProps {
      */
     disabled?: boolean;
     /**
+     * 是否显示阴影
+     */
+    shadow?: boolean;
+    /**
      *  复选值
      */
     checkValues?: any[];
@@ -222,6 +226,9 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
 
     @property({ type: Boolean, reflect: true })
     loading?: boolean;
+
+    @property({ type: Boolean, reflect: true })
+    shadow?: boolean;
 
     @property({ type: Boolean, reflect: true })
     disabled?: boolean;

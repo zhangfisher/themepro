@@ -183,7 +183,7 @@ export const handlers = [
     // Tooltip 模拟API端点
     // 基础内容端点
     http.get("/api/tooltip/post", async () => {
-        await delay(2000000);
+        await delay(2000);
         return HttpResponse.html(createPostHTML(1));
     }),
 
@@ -240,7 +240,7 @@ export const handlers = [
     http.get("/api/tooltip/text-content", async () => {
         await delay(2000);
         return HttpResponse.html(`
-            <div style="padding: 15px; font-family: monospace; background: #2d3748; color: #e2e8f0; border-radius: 6px;">
+            <div style="padding: 15px; font-family: monospace;  color: #e2e8f0; border-radius: 4px;width: 400px">
                 <h4 style="margin: 0 0 10px 0; color: #4fd1c7;">📄 文本内容示例</h4>
                 <pre style="margin: 0; font-size: 12px; line-height: 1.4;">{
     "type": "text-content",

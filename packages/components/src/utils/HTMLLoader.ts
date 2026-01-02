@@ -105,7 +105,7 @@ export class HTMLLoader {
         this.options = deepMerge(
             {
                 onResolve: (r: any) => r,
-                onFail: {
+                onReject: {
                     retryable: true,
                     closeable: false,
                 },

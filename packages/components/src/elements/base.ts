@@ -27,9 +27,6 @@ export class AutoElementBase<
     @property({ type: Object })
     state?: State;
 
-    get shadow() {
-        return this.shadowRoot!;
-    }
     /**
      *
      * 初始化状态

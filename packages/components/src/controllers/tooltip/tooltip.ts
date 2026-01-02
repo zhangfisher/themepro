@@ -156,15 +156,18 @@ export class Tooltip {
      */
     private _setPredictSize(url?: string) {
         if (this.contentElement) {
-            if (!url) return;
-            const sizeArg = getURLQueryParams<string | undefined>(url, "_size");
-            const size = typeof sizeArg === "string" ? sizeArg.split(",") : [];
-            if (size[0]) {
-                this.options.predictSize[0] = size[0];
+            if (url) {
+                const sizeArg = getURLQueryParams(url, "_size");
+                const size =
+                    typeof sizeArg === "string" ? sizeArg.split(",") : [];
+                if (size[0]) {
+                    this.options.predictSize[0] = size[0];
+                }
+                if (size[1]) {
+                    this.options.predictSize[1] = size[1];
+                }
             }
-            if (size[1]) {
-                this.options.predictSize[1] = size[1];
-            }
+
             const w = this.options.predictSize[0];
             const h = this.options.predictSize[1];
             if (w)
@@ -239,13 +242,20 @@ export class Tooltip {
                 url,
                 container: this.contentElement,
                 onLoading: {
+                    message: this.options.loading || "Loading",
                     callback: () => {
                         this._setPredictSize();
                     },
                 },
                 onReject: {
                     retryable: true,
-                    callback: () => {},
+                    callback: () => {
+                        this._setContentSize();
+                        if (this._htmlLoader?.loading) {
+                            const loading = this._htmlLoader?.loading!;
+                            loading.style.position = "relative";
+                        }
+                    },
                 },
                 onResolve: () => {
                     this._setContentSize();

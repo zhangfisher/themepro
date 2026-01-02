@@ -7,7 +7,7 @@ export const styles = css`
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: calc(0.2 * var(--t-spacing-medium))
+        padding: calc(0.4 * var(--t-spacing-medium))
             calc(0.8 * var(--t-spacing-medium));
         border-radius: var(--auto-border-radius);
         font: var(--auto-font);
@@ -18,6 +18,9 @@ export const styles = css`
         vertical-align: bottom;
         gap: 0.3em;
         user-select: none;
+    }
+    :host([shadow]) {
+        box-shadow: var(--t-shadow-small);
     }
     :host(:hover),
     :host([variant="ghost"]:hover) {
@@ -39,7 +42,7 @@ export const styles = css`
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        width: var(--label-width);
+        width: var(--label-width, auto);
         min-width: 0;
         text-align: left;
     }
@@ -245,6 +248,7 @@ export const styles = css`
         border-radius: 50%;
         border: 1px solid transparent;
         aspect-ratio: 1;
+        display: inline-flex;
         &:hover {
             color: var(--auto-theme-color);
         }
