@@ -1,6 +1,7 @@
 import type { TooltipController } from "./controller";
 import { Tooltip } from "./tooltip";
 import type { TooltipControllerOptions } from "./types";
+
 export class TooltipManager extends Array<Tooltip> {
     constructor(public controller: TooltipController) {
         super();

@@ -153,4 +153,13 @@ export interface TooltipControllerOptions {
      * 提示框隐藏时触发
      */
     onHide?: () => void;
+    /**
+     * 用于定制data-tooltip-<名称>，默认是tooltip
+     * dataPrefix=popup,则所有data-tooltip-<名称>则替换为data-<dataPrefix>-<名称>
+     */
+    dataPrefix?: string;
 }
+
+export type PopupControllerOptions = TooltipControllerOptions;
+export type PopupPlacement = TooltipPlacement;
+export type PopupContent = TooltipContent;

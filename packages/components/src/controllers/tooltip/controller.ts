@@ -28,6 +28,7 @@ import type { LitElement } from "lit";
 import { parseObjectFromAttr } from "@/utils/parseObjectFromAttr";
 import type { TooltipControllerOptions, TooltipPlacement } from "./types";
 import { TooltipManager } from "./manager";
+
 export class TooltipController implements ReactiveController {
     host: ReactiveControllerHost;
     options: TooltipControllerOptions;
@@ -122,15 +123,21 @@ export class TooltipController implements ReactiveController {
         // 设置mouseover事件监听器
         this._setupMouseoverEventDelegation(hostElement);
     }
+    /**
+     * 检查元素是否为 tooltip 元素
+     * 根据配置的 dataPrefix 动态检查对应的 data 属性
+     */
     private _isTooltipElement(el: any): el is HTMLElement {
-        return (
-            el instanceof HTMLElement &&
-            !!(
-                el.dataset.tooltip ||
-                el.dataset.tooltipSlot ||
-                el.dataset.tooltipQuery ||
-                el.dataset.tooltipLink
-            )
+        if (!(el instanceof HTMLElement)) return false;
+
+        const prefix = this.options.dataPrefix || "tooltip";
+        const dataset = el.dataset as any;
+
+        return !!(
+            dataset[prefix] ||
+            dataset[`${prefix}Slot`] ||
+            dataset[`${prefix}Query`] ||
+            dataset[`${prefix}Link`]
         );
     }
 
@@ -158,8 +165,9 @@ export class TooltipController implements ReactiveController {
         this._tooltipDelegateHandler = (e: Event) => {
             const tooltipElement = this._getTooltipElement(e as any);
             if (tooltipElement) {
+                const prefix = this.options.dataPrefix || "tooltip";
                 const trigger =
-                    tooltipElement.dataset.tooltipTrigger ||
+                    (tooltipElement.dataset as any)[`${prefix}Trigger`] ||
                     this.options.trigger!;
                 if (trigger === "click") {
                     e.preventDefault();
@@ -198,8 +206,9 @@ export class TooltipController implements ReactiveController {
             const tooltipElement = this._getTooltipElement(e);
             // 处理data-tooltip元素的进入和离开事件
             if (tooltipElement) {
+                const prefix = this.options.dataPrefix || "tooltip";
                 const trigger =
-                    tooltipElement.dataset.tooltipTrigger ||
+                    (tooltipElement.dataset as any)[`${prefix}Trigger`] ||
                     this.options.trigger!;
                 if (trigger !== "click") {
                     // 该元素已经在overTooltips中
@@ -279,3 +288,4 @@ export class TooltipController implements ReactiveController {
         this._removeTriggerEvents();
     }
 }
+export const PopupController = TooltipController;

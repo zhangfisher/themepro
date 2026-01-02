@@ -104,6 +104,23 @@ export class Tooltip {
     }
 
     /**
+     * 获取当前使用的前缀名称
+     */
+    private _getPrefix(): string {
+        return this.options.dataPrefix || "tooltip";
+    }
+
+    /**
+     * 获取元素的 dataset 属性值
+     * @param key 属性键名(不含前缀)
+     */
+    private _getDataAttr(key: string): string | undefined {
+        const prefix = this._getPrefix();
+        const dataset = this.ref.dataset as any;
+        return dataset[`${prefix}${key}`];
+    }
+
+    /**
      * 查询匹配指定选择器的元素
      * 查询顺序：当前ref元素的最近匹配祖先 -> host元素内匹配元素 -> 文档范围内匹配元素
      * @param {string} selector - CSS选择器字符串
@@ -135,16 +152,18 @@ export class Tooltip {
         if (this.ref instanceof HTMLElement) {
             const optionAttr = this.options.optionAttr ?? "tooltipOptions";
             const attrOptions = parseObjectFromAttr(this.ref, optionAttr);
+
+            // 使用 dataPrefix 从 dataset 中解析选项
+            const prefix = this._getPrefix();
             Object.assign(
                 this.options,
                 attrOptions,
                 getDatasetFromElement(
                     this.ref,
                     Object.keys(this.options),
-                    "tooltip"
+                    prefix
                 )
             );
-            // 解析data-tooltip-<option>属性
         }
     }
     /**
@@ -213,22 +232,27 @@ export class Tooltip {
      * - data-tooltip="http://192.168.1.11?fields=a,b,c"
      * - data-tooltip="https://192.168.1.11"
      * - data-tooltip-link=""
+     * - 或者使用自定义前缀,如 dataPrefix="popup":
+     *   - data-popup="html字符串"
+     *   - data-popup-slot="slotname"
+     *   - data-popup-query="selector"
+     *   - data-popup-link="url"
      *
      */
     private _getTooltipContent(): string | HTMLElement | undefined | null {
-        const slot = this.ref.dataset.tooltipSlot
-            ? `slot://${this.ref.dataset.tooltipSlot}`
+        const slot = this._getDataAttr("Slot")
+            ? `slot://${this._getDataAttr("Slot")}`
             : undefined;
 
-        const query = this.ref.dataset.tooltipQuery
-            ? `query://${this.ref.dataset.tooltipQuery}`
+        const query = this._getDataAttr("Query")
+            ? `query://${this._getDataAttr("Query")}`
             : undefined;
 
-        const link = this.ref.dataset.tooltipLink
-            ? `link://${this.ref.dataset.tooltipLink}`
+        const link = this._getDataAttr("Link")
+            ? `link://${this._getDataAttr("Link")}`
             : undefined;
 
-        const content = link || slot || query || this.ref.dataset.tooltip;
+        const content = link || slot || query || this._getDataAttr("");
 
         if (!content && !isFunction(this.options.getContent)) return;
 
