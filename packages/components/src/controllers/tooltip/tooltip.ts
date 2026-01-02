@@ -32,7 +32,6 @@ export class Tooltip {
     private _mouseLeaveTimer?: NodeJS.Timeout;
     private _isVisible: boolean = false;
     private _target?: HTMLElement;
-    private _loadContent?: Promise<any>;
     private _htmlLoader?: HTMLLoader;
     private _cleanup?: () => void;
     el: WeakRef<HTMLElement>;
@@ -245,6 +244,7 @@ export class Tooltip {
                     },
                 },
                 onReject: {
+                    retryable: true,
                     callback: () => {},
                 },
                 onResolve: () => {
@@ -693,38 +693,6 @@ export class Tooltip {
         this.options.onShow?.();
         this._setDelayHide();
     }
-    private _loadAsyncContent() {
-        if (this._loadContent && this._loadContent instanceof Promise) {
-            if (Array.isArray(this.options.predictSize)) {
-                const [w, h] = this.options.predictSize;
-                const contentElement = this.contentElement;
-                if (contentElement) {
-                    if (w)
-                        contentElement.style.width = isNumber(w)
-                            ? `${w}px`
-                            : String(w);
-                    if (h)
-                        contentElement.style.height = isNumber(h)
-                            ? `${h}px`
-                            : String(h);
-                }
-            }
-            this._loadContent
-                .then((value: any) => {
-                    const el = this._setTooltipContent(value);
-                    if (el) {
-                        el.style.width = "auto";
-                        el.style.height = "auto";
-                    }
-                })
-                .catch((e: any) => {
-                    this._setTooltipContent(e.message);
-                })
-                .finally(() => {
-                    this._loadContent = undefined;
-                });
-        }
-    }
     private _fitContainer() {
         const fit = this.options.fit;
         if (fit !== "none" && this.container) {
@@ -814,7 +782,6 @@ export class Tooltip {
         if (this._hideAnimation?.finished) {
             this._hideAnimation.finished.then(() => {
                 container.style.visibility = "hidden";
-                ///container.style.pointerEvents = "none";
                 this._hideAnimation = undefined;
                 this.destroy();
             });
@@ -822,7 +789,6 @@ export class Tooltip {
             // 如果动画对象异常，直接执行完成逻辑
             setTimeout(() => {
                 container.style.visibility = "hidden";
-                //container.style.pointerEvents = "none";
                 this._hideAnimation = undefined;
                 this.destroy();
             }, options.animationDuration || options.animationDuration!);

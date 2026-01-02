@@ -29,7 +29,6 @@ export const styles = css`
             flex-direction: column;
         }
     }
-
     :host([inline]) {
         position: relative;
         display: inline-flex;
@@ -57,9 +56,13 @@ export const styles = css`
         font-size: var(--auto-font-size);
         z-index: 1;
         position: relative;
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 0px;
         & > .message,
-        & > .memo {
-            display: -webkit-box;
+        & > .detail {
+            display: flex;
+            position: relative;
             font-size: var(--auto-font-size);
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
@@ -70,15 +73,24 @@ export const styles = css`
             z-index: 1;
             color: var(--auto-color) !important;
         }
-        & > .memo {
+        & > .detail {
             color: var(--auto-secondary-color) !important;
             font-size: calc(0.9 * var(--auto-font-size));
+            width: 100%;
+            box-sizing: border-box;
+            min-height: 0px;
+            flex-shrink: 1;
+            display: none;
+        }
+        & > .message {
+            flex-shrink: 0;
         }
         & > .actions {
             display: flex;
             gap: 0.5em;
             flex-wrap: wrap;
             align-items: center;
+            flex-shrink: 0;
         }
         & > svg {
             font-size: var(--icon-size);
@@ -95,5 +107,8 @@ export const styles = css`
         & > .content > .message {
             color: var(--auto-color) !important;
         }
+    }
+
+    :host([status="error"]) {
     }
 `;

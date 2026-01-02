@@ -413,9 +413,9 @@ export class AutoLoading extends LitElement {
             })}
         </div>`;
     }
-    private _renderDescription() {
+    private _renderDetail() {
         if (!this.description) return;
-        return html`<div class="memo">${unsafeHTML(this.description)}</div>`;
+        return html`<div class="detail">${unsafeHTML(this.description)}</div>`;
     }
     render() {
         const iconColor = this.color || "var(--auto-theme-color)";
@@ -444,7 +444,7 @@ export class AutoLoading extends LitElement {
             <div class="mask"></div>
             <div class="content" style="color:${iconColor};">
                 ${this._renderIcon()} ${this._renderMessage()}
-                ${this._renderDescription()} ${this._renderActions()}
+                ${this._renderDetail()} ${this._renderActions()}
             </div>
         `;
     }

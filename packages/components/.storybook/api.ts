@@ -116,12 +116,12 @@ const createImageInfoHTML = () => `
 `;
 
 const createErrorHTML = (statusCode: number) => `
-<div style="padding: 12px; border-radius: 4px; font-family: Arial, sans-serif;">
-    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+<div style="padding: 0px; border-radius: 4px; font-family: Arial, sans-serif;width:100%">
+    <div style="display: flex; align-items: center; gap: 4px; margin-bottom: 2px;">
         <span style="font-size: 20px;">${
             statusCode === 404 ? "❌" : statusCode === 500 ? "💥" : "⚠️"
         }</span>
-        <strong style="color: #${
+        <span style="color: #${
             statusCode === 404
                 ? "#dc3545"
                 : statusCode === 500
@@ -129,9 +129,9 @@ const createErrorHTML = (statusCode: number) => `
                 : "#ffc107"
         };">
             错误 ${statusCode}
-        </strong>
+        </span>
     </div>
-    <p style="margin: 0; color: #666; font-size: 14px;">
+    <p style="margin: 0; color: #666; font-size: 8px;">
         ${
             statusCode === 404
                 ? "请求的资源不存在。这是MSW模拟的404错误。"
@@ -140,7 +140,7 @@ const createErrorHTML = (statusCode: number) => `
                 : "请求处理失败。这是MSW模拟的错误响应。"
         }
     </p>
-    <div style="margin-top: 8px; font-size: 12px; color: #999;">
+    <div style="margin-top: 2px; font-size: 12px; color: #999;">
         时间戳: ${new Date().toISOString()}
     </div>
 </div>

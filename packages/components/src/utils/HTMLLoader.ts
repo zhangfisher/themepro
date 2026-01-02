@@ -292,7 +292,7 @@ export class HTMLLoader {
             .catch((reason) => {
                 this._onLoadReject(reason);
                 this._isLoading = false;
-                this._reject!(reason);
+                this._reject?.(reason);
             });
     }
 
