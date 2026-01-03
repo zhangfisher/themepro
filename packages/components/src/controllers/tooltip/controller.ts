@@ -68,13 +68,12 @@ export class TooltipController implements ReactiveController {
         userOptions?: TooltipControllerOptions
     ): TooltipControllerOptions {
         const hostElement = this.host as any;
-        const optionAttr = userOptions?.optionAttr ?? "tooltipOptions";
+
         const defaultOptions: TooltipControllerOptions = {
             placement: "top" as TooltipPlacement,
             offset: [0, 4],
             animationDuration: 150,
             animationEasing: "easeOutQuart",
-            className: "tooltip",
             arrow: true,
             trigger: "mouseover",
             delayHide: 0,
@@ -83,15 +82,19 @@ export class TooltipController implements ReactiveController {
         // 从绑定属性读取配置
         const attrOptions = parseObjectFromAttr(
             hostElement,
-            optionAttr,
+            `data-${userOptions?.dataPrefix}-options`,
             defaultOptions
         );
 
         // 合并配置，用户选项优先级最高
-        return {
+        const opts = {
             ...userOptions, // 用户传入的配置（中间层）
             ...attrOptions, // 从属性读取的配置（最高优先级）
         };
+        if (!opts.dataPrefix) opts.dataPrefix = "tooltip";
+        if (!opts.className) opts.className = opts.dataPrefix;
+        if (!opts.cssClass) opts.cssClass = `${opts.dataPrefix}-visible`;
+        return opts;
     }
 
     /**

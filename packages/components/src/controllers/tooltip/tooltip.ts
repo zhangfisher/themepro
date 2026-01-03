@@ -106,20 +106,12 @@ export class Tooltip {
         }
         return this._target!;
     }
-
-    /**
-     * 获取当前使用的前缀名称
-     */
-    private _getPrefix(): string {
-        return this.options.dataPrefix || "tooltip";
-    }
-
     /**
      * 获取元素的 dataset 属性值
      * @param key 属性键名(不含前缀)
      */
     private _getDataAttr(key: string): string | undefined {
-        const prefix = this._getPrefix();
+        const prefix = this.options.dataPrefix;
         const dataset = this.ref.dataset as any;
         return dataset[`${prefix}${key}`];
     }
@@ -154,11 +146,11 @@ export class Tooltip {
      */
     private _parseAttrOptions() {
         if (this.ref instanceof HTMLElement) {
-            const optionAttr = this.options.optionAttr ?? "tooltipOptions";
+            const optionAttr = `${this.options.dataPrefix}Options`;
             const attrOptions = parseObjectFromAttr(this.ref, optionAttr);
 
             // 使用 dataPrefix 从 dataset 中解析选项
-            const prefix = this._getPrefix();
+            const prefix = this.options.dataPrefix;
             Object.assign(
                 this.options,
                 attrOptions,
