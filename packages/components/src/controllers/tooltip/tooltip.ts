@@ -47,7 +47,6 @@ export class Tooltip {
                 offset: [0, 4],
                 animationDuration: 150,
                 animationEasing: "easeOutQuart",
-                className: "tooltip",
                 fit: "none",
                 arrow: true,
                 trigger: "mouseover",
@@ -60,10 +59,15 @@ export class Tooltip {
                 predictSize: [200, 200],
                 size: ["auto", "auto"],
                 loading: undefined,
-                cssClass: "tooltip-visible",
+                dataPrefix: "tooltip",
             },
             options
         ) as Required<TooltipControllerOptions>;
+        if (!this.options.dataPrefix) this.options.dataPrefix = "tooltip";
+        if (!this.options.className)
+            this.options.className = this.options.dataPrefix;
+        if (!this.options.cssClass)
+            this.options.cssClass = `${this.options.dataPrefix}-visible`;
         if (typeof this.options.predictSize === "string") {
             //@ts-expect-error
             this.options.predictSize = this.options.predictSize.split(",");
@@ -240,16 +244,16 @@ export class Tooltip {
      *
      */
     private _getTooltipContent(): string | HTMLElement | undefined | null {
-        const slot = this._getDataAttr("Slot")
-            ? `slot://${this._getDataAttr("Slot")}`
+        const slot = this._getDataAttr("slot")
+            ? `slot://${this._getDataAttr("slot")}`
             : undefined;
 
-        const query = this._getDataAttr("Query")
-            ? `query://${this._getDataAttr("Query")}`
+        const query = this._getDataAttr("query")
+            ? `query://${this._getDataAttr("query")}`
             : undefined;
 
-        const link = this._getDataAttr("Link")
-            ? `link://${this._getDataAttr("Link")}`
+        const link = this._getDataAttr("link")
+            ? `link://${this._getDataAttr("link")}`
             : undefined;
 
         const content = link || slot || query || this._getDataAttr("");
@@ -289,11 +293,11 @@ export class Tooltip {
         } else {
             if (content?.startsWith("slot://")) {
                 const slotName = content.substring(7).trim();
-                const slotRef = this.ref;
                 if (slotName.length === 0 || slotName === "default") {
                     el = this.ref.innerHTML;
                 } else {
-                    el = this.host.querySelector(`[slot='${slotName}']`);
+                    el = this.ref.querySelector(`[slot='${slotName}']`);
+                    this.host.querySelector(`[slot='${slotName}']`);
                 }
             } else if (content?.startsWith("query://")) {
                 const selector = content.substring(8).trim();
