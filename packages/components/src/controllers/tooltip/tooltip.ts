@@ -288,9 +288,13 @@ export class Tooltip {
             });
         } else {
             if (content?.startsWith("slot://")) {
-                const slotName = content.substring(7);
-                if (slotName.length === 0) return;
-                el = this.host.querySelector(`[slot='${slotName}']`);
+                const slotName = content.substring(7).trim();
+                const slotRef = this.ref;
+                if (slotName.length === 0 || slotName === "default") {
+                    el = this.ref.innerHTML;
+                } else {
+                    el = this.host.querySelector(`[slot='${slotName}']`);
+                }
             } else if (content?.startsWith("query://")) {
                 const selector = content.substring(8).trim();
                 if (selector.length === 0) return;
