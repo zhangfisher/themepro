@@ -17,7 +17,7 @@ export const PersistentDropdown: Story = {
                     <auto-dropdown
                         label="持久化下拉菜单（点击外部不关闭）"
                         .popupOptions=${{
-                            persistent: true
+                            cache: true,
                         }}
                         type="danger"
                     >

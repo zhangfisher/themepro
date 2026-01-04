@@ -12,7 +12,8 @@ export const ComplexContent: Story = {
                         label="包含表单的复杂下拉内容"
                         .popupOptions=${{
                             placement: "bottom-start",
-                            fitWidth: true
+                            fit: true,
+                            cache: true,
                         }}
                         type="primary"
                         block
