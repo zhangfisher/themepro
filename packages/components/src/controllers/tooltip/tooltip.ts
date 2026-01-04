@@ -736,7 +736,7 @@ export class Tooltip {
                 this.container.style.width = `${targetRect.width}px`;
             } else if (fit === "height") {
                 this.container.style.height = `${targetRect.height}px`;
-            } else if (fit === "auto") {
+            } else if (fit === "auto" || fit === true) {
                 if (
                     placement.startsWith("left") ||
                     placement.startsWith("right")

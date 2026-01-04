@@ -13,18 +13,13 @@ export const BaseDropdown: Story = {
                     type="primary"
                     .open=${args.open}
                     .popupOptions=${{
-                        fitWidth: args.popupOptions?.fitWidth || false,
+                        fit: args.popupOptions?.fit || "auto",
                         placement:
                             args.popupOptions?.placement || "bottom-start",
-                        offset: args.popupOptions?.offset || [0, 4],
                         persistent: args.popupOptions?.persistent || false,
                         arrow: args.popupOptions?.arrow || false,
-                        animationDuration:
-                            args.popupOptions?.animationDuration || 300,
-                        animationEasing:
-                            args.popupOptions?.animationEasing ||
-                            "easeOutQuart",
                     }}
+                    data-popup="slot://more"
                 >
                     <div style="padding: 8px 16px; cursor: pointer; ">
                         选项 1
@@ -38,7 +33,10 @@ export const BaseDropdown: Story = {
                     <hr
                         style="margin: 4px 0; border: none; border-top: 1px solid #e0e0e0;"
                     />
-                    <div style="padding: 8px 16px; cursor: pointer; ">
+                    <div
+                        slot="more"
+                        style="padding: 8px 16px; cursor: pointer; "
+                    >
                         更多选项
                     </div>
                 </auto-dropdown>
@@ -91,7 +89,7 @@ export const BaseDropdown: Story = {
                     type="primary"
                     .open=${args.open}
                     .popupOptions=${{
-                        fitWidth: args.popupOptions?.fitWidth || false,
+                        fit: args.popupOptions?.fit || false,
                         placement:
                             args.popupOptions?.placement || "bottom-start",
                         offset: args.popupOptions?.offset || [0, 4],

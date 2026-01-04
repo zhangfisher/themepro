@@ -65,11 +65,6 @@ export class AutoDropdown extends AutoButton {
     @property({ type: String, reflect: true })
     caret?: AutoDropdownProps["caret"] = "auto";
     /**
-     * 用于指定弹出内容
-     */
-    @property({ type: String })
-    forSlot?: string;
-    /**
      * 使用 TooltipController 管理弹出层
      * 通过 dataPrefix="popup" 使其监听 data-popup-* 属性
      */
@@ -149,12 +144,14 @@ export class AutoDropdown extends AutoButton {
 
         this._popupController = new PopupController(this, {
             dataPrefix: "popup", // 关键: 使用 "popup" 作为 data 属性前缀
-            optionAttr: "popupOptions",
-            trigger: "click",
+            trigger: "mouseover",
             className: "dropdown",
             onShow: () => this._onPopupShow(),
             onHide: () => this._onPopupHide(),
             ...this.popupOptions,
+            dataset: {
+                popup: "slot://",
+            },
         });
     }
 
@@ -167,9 +164,6 @@ export class AutoDropdown extends AutoButton {
         // 更新基础配置
         Object.assign(this._popupController.options, {
             ...this.popupOptions,
-            dataPrefix: "popup",
-            trigger: "click",
-            className: "dropdown",
             onShow: () => this._onPopupShow(),
             onHide: () => this._onPopupHide(),
         });
@@ -210,10 +204,8 @@ export class AutoDropdown extends AutoButton {
             e.preventDefault();
             return;
         }
-
         // 阻止事件冒泡,避免触发其他点击事件
         e.stopPropagation();
-
         // 切换弹出层状态
         // TooltipController 会自动查找具有 data-popup 属性的元素并显示
         if (this._isPopupVisible) {
@@ -337,7 +329,6 @@ export class AutoDropdown extends AutoButton {
     render() {
         return html`
             ${super.render()}
-            <!-- 下拉内容插槽,通过 TooltipController 的 data-popup-slot 机制使用 -->
             <slot style="display:none"></slot>
         `;
     }

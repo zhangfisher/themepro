@@ -57,7 +57,7 @@ export interface TooltipControllerOptions {
      * - height: 高度适应
      * - auto: 根据弹出方向自动适应
      */
-    fit?: "none" | "auto" | "width" | "height";
+    fit?: "none" | "auto" | "width" | "height" | boolean;
     /**
      * CSS类名控制
      * 在tooltip显示/隐藏时在this.ref元素上添加/移除CSS类
@@ -158,6 +158,10 @@ export interface TooltipControllerOptions {
      * dataPrefix=popup,则所有data-tooltip-<名称>则替换为data-<dataPrefix>-<名称>
      */
     dataPrefix?: string;
+    /**
+     * 作用于host的默认
+     */
+    dataset?: Record<string, string>;
 }
 
 export type PopupControllerOptions = TooltipControllerOptions;

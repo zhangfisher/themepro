@@ -126,7 +126,7 @@ export const MouseOverDropdown: Story = {
                         label="点击显示菜单"
                         type="default"
                         .popupOptions=${{
-                            on: "click",
+                            trigger: "click",
                             placement: "bottom-start",
                             offset: [0, 8],
                             animationDuration: 200,

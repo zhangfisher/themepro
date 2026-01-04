@@ -28,6 +28,7 @@ import type { LitElement } from "lit";
 import { parseObjectFromAttr } from "@/utils/parseObjectFromAttr";
 import type { TooltipControllerOptions, TooltipPlacement } from "./types";
 import { TooltipManager } from "./manager";
+import { parseRelaxedJson } from "@/utils";
 
 export class TooltipController implements ReactiveController {
     host: ReactiveControllerHost;
@@ -102,6 +103,21 @@ export class TooltipController implements ReactiveController {
      */
     hostConnected(): void {
         this._setupTriggerEvents();
+        this._injectDataset();
+    }
+    private _injectDataset() {
+        const dataset: Record<string, any> =
+            typeof this.options.dataset === "object"
+                ? this.options.dataset
+                : typeof this.options.dataset === "string"
+                ? parseRelaxedJson(this.options.dataset)
+                : {};
+        if (this.host) {
+            Object.entries(dataset).forEach(([name, value]) => {
+                const v = (this.host as any).dataset[name];
+                if (!v) (this.host as any).dataset[name] = value;
+            });
+        }
     }
 
     /**
@@ -152,7 +168,12 @@ export class TooltipController implements ReactiveController {
             const el = composedPath[i];
             if (this._isTooltipElement(el)) {
                 // 确保元素在host范围内
-                if (el === this.hostElement || this.hostElement.contains(el)) {
+                if (
+                    el === this.hostElement ||
+                    this.hostElement.contains(el) ||
+                    // @ts-expect-error
+                    this.host?.renderRoot?.contains(el)
+                ) {
                     tooltipElement = el;
                     break;
                 }

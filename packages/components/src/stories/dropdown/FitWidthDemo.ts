@@ -6,13 +6,13 @@ export const FitWidthDemo: Story = {
     render: () => {
         return html`
             <div style="padding: 20px;">
-                <h3>fitWidth 属性演示</h3>
+                <h3>fit 属性演示</h3>
                 <p style="color: #666; margin: 10px 0;">
-                    fitWidth 属性控制下拉内容宽度是否匹配触发按钮的宽度
+                    fit 属性控制下拉内容宽度是否匹配触发按钮的宽度
                 </p>
 
                 <div style="margin-top: 30px;">
-                    <h4>不使用 fitWidth (默认行为)</h4>
+                    <h4>不使用 fit (默认行为)</h4>
                     <p
                         style="color: #666; font-size: 14px; margin-bottom: 15px;"
                     >
@@ -69,7 +69,7 @@ export const FitWidthDemo: Story = {
                         </auto-dropdown>
                     </div>
 
-                    <h4>使用 fitWidth="true"</h4>
+                    <h4>使用 fit="true"</h4>
                     <p
                         style="color: #666; font-size: 14px; margin-bottom: 15px;"
                     >
@@ -79,10 +79,10 @@ export const FitWidthDemo: Story = {
                         style="display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap;"
                     >
                         <auto-dropdown
-                        label="短按钮"
-                        type="primary"
-                        .popupOptions=${{ fitWidth: true }}
-                    >
+                            label="短按钮"
+                            type="primary"
+                            .popupOptions=${{ fit: true }}
+                        >
                             <div
                                 style="padding: 12px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
                             >
@@ -107,7 +107,7 @@ export const FitWidthDemo: Story = {
                         <auto-dropdown
                             label="这是一个很长的按钮文本"
                             type="success"
-                            .popupOptions=${{ fitWidth: true }}
+                            .popupOptions=${{ fit: true }}
                         >
                             <div
                                 style="padding: 12px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
@@ -135,15 +135,12 @@ export const FitWidthDemo: Story = {
                     <p
                         style="color: #666; font-size: 14px; margin-bottom: 15px;"
                     >
-                        相同内容，不同 fitWidth 设置的对比效果
+                        相同内容，不同 fit 设置的对比效果
                     </p>
                     <div
                         style="display: flex; gap: 20px; flex-direction: column; max-width: 500px;"
                     >
-                        <auto-dropdown
-                            label="fitWidth=false (默认)"
-                            type="warning"
-                        >
+                        <auto-dropdown label="fit=false (默认)" type="warning">
                             <div
                                 style="padding: 12px; min-width: 250px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
                             >
@@ -166,9 +163,9 @@ export const FitWidthDemo: Story = {
                         </auto-dropdown>
 
                         <auto-dropdown
-                            label="fitWidth=true"
+                            label="fit=true"
                             type="info"
-                            .popupOptions=${{ fitWidth: true }}
+                            .popupOptions=${{ fit: true }}
                         >
                             <div
                                 style="padding: 12px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
@@ -197,7 +194,7 @@ export const FitWidthDemo: Story = {
                         <auto-dropdown
                             label="选择用户角色"
                             type="primary"
-                            .popupOptions=${{ fitWidth: true }}
+                            .popupOptions=${{ fit: true }}
                             block
                         >
                             <div
