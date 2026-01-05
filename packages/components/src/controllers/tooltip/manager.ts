@@ -16,9 +16,19 @@ export class TooltipManager extends Array<Tooltip> {
         }
         return null;
     }
+    /**
+     * 隐藏所有
+     */
     hide() {
         this.forEach((t) => {
             t.hide();
+        });
+    }
+    show(all: boolean = false) {
+        this.forEach((t) => {
+            if (this.controller.hostElement === t.el.deref()) {
+                t.show();
+            }
         });
     }
     remove(tooltip: Tooltip) {

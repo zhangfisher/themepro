@@ -152,12 +152,17 @@ export class TooltipController implements ReactiveController {
         const prefix = this.options.dataPrefix || "tooltip";
         const dataset = el.dataset as any;
 
-        return !!(
+        let isTooltip = !!(
             dataset[prefix] ||
             dataset[`${prefix}Slot`] ||
             dataset[`${prefix}Query`] ||
             dataset[`${prefix}Link`]
         );
+        if (!isTooltip && typeof this.options.isTooltip === "function") {
+            isTooltip = this.options.isTooltip(el as HTMLElement);
+        }
+
+        return isTooltip;
     }
 
     private _getTooltipElement(e: MouseEvent) {
@@ -310,6 +315,12 @@ export class TooltipController implements ReactiveController {
     destroy(): void {
         this._clearMouseLeaveTimer();
         this._removeTriggerEvents();
+    }
+    hide() {
+        this.tooltips.hide();
+    }
+    show() {
+        this.tooltips.show();
     }
 }
 export const PopupController = TooltipController;

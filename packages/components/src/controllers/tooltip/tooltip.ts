@@ -392,8 +392,8 @@ export class Tooltip {
         return container;
     }
     private _onTooltipContainerEvents(container: HTMLElement) {
-        // 监听tooltip-close事件
-        container.addEventListener("tooltip:close", () => {
+        // 监听tooltip:close事件
+        container.addEventListener(`${this.options.dataPrefix}:close`, () => {
             this.hide();
         });
     }

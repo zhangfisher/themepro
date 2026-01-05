@@ -75,6 +75,7 @@ export const ComplexContent: Story = {
                                     取消
                                 </button>
                                 <button
+                                    onclick="this.dispatchEvent(new CustomEvent('popup:close', { bubbles: true, composed: true }))"
                                     style="padding: 8px 16px; border: 1px solid #1890ff; background: #1890ff; color: white; cursor: pointer; border-radius: 4px; font-size: 14px;"
                                 >
                                     保存

@@ -26,25 +26,25 @@ export const CaretDemo: Story = {
                             caret: "auto" as const,
                             name: "Auto (自动)",
                             description: "根据placement自动决定箭头位置和方向",
-                            color: "#28a745"
+                            color: "#28a745",
                         },
                         {
                             caret: "before" as const,
                             name: "Before (前缀)",
                             description: "强制在按钮前显示箭头",
-                            color: "#007bff"
+                            color: "#007bff",
                         },
                         {
                             caret: "after" as const,
                             name: "After (后缀)",
                             description: "强制在按钮后显示箭头",
-                            color: "#6f42c1"
+                            color: "#6f42c1",
                         },
                         {
                             caret: "none" as const,
                             name: "None (无箭头)",
                             description: "不显示箭头指示器",
-                            color: "#6c757d"
+                            color: "#6c757d",
                         },
                     ].map(
                         ({ caret, name, description, color }) => html`
@@ -64,12 +64,16 @@ export const CaretDemo: Story = {
                                         caret="${caret}"
                                         .popupOptions=${{
                                             placement: "bottom-start",
-                                            fitWidth: true,
+                                            fit: true,
                                         }}
                                     >
-                                        <div style="padding: 12px; min-width: 200px;">
+                                        <div
+                                            style="padding: 12px; min-width: 200px;"
+                                        >
                                             <strong>${name}</strong>
-                                            <div style="font-size: 12px; margin-top: 8px; color: #666;">
+                                            <div
+                                                style="font-size: 12px; margin-top: 8px; color: #666;"
+                                            >
                                                 ${description}
                                             </div>
                                         </div>
@@ -105,7 +109,9 @@ export const CaretDemo: Story = {
                                         background: #f8f9fa;
                                     "
                                 >
-                                    <div style="font-weight: 600; margin-bottom: 12px; color: #495057;">
+                                    <div
+                                        style="font-weight: 600; margin-bottom: 12px; color: #495057;"
+                                    >
                                         ${name}
                                     </div>
                                     <div
@@ -121,10 +127,12 @@ export const CaretDemo: Story = {
                                                 caret="auto"
                                                 .popupOptions=${{
                                                     placement,
-                                                    fitWidth: true,
+                                                    fit: true,
                                                 }}
                                             >
-                                                <div style="padding: 8px; font-size: 12px;">
+                                                <div
+                                                    style="padding: 8px; font-size: 12px;"
+                                                >
                                                     Placement: ${placement}
                                                 </div>
                                             </auto-dropdown>
@@ -165,22 +173,22 @@ export const CaretDemo: Story = {
                             {
                                 placement: "bottom-start",
                                 label: "底部弹出",
-                                icon: "👇"
+                                icon: "👇",
                             },
                             {
                                 placement: "top-start",
                                 label: "顶部弹出",
-                                icon: "👆"
+                                icon: "👆",
                             },
                             {
                                 placement: "left-start",
                                 label: "左侧弹出",
-                                icon: "👈"
+                                icon: "👈",
                             },
                             {
                                 placement: "right-start",
                                 label: "右侧弹出",
-                                icon: "👉"
+                                icon: "👉",
                             },
                         ].map(
                             ({ placement, label, icon }) => html`
@@ -191,13 +199,21 @@ export const CaretDemo: Story = {
                                     caret="auto"
                                     .popupOptions=${{
                                         placement,
-                                        fitWidth: true,
+                                        fit: true,
                                     }}
                                 >
-                                    <div style="padding: 16px; text-align: center; min-width: 180px;">
-                                        <div style="font-size: 20px; margin-bottom: 8px;">${icon}</div>
+                                    <div
+                                        style="padding: 16px; text-align: center; min-width: 180px;"
+                                    >
+                                        <div
+                                            style="font-size: 20px; margin-bottom: 8px;"
+                                        >
+                                            ${icon}
+                                        </div>
                                         <strong>${label}</strong>
-                                        <div style="font-size: 12px; margin-top: 8px; opacity: 0.8;">
+                                        <div
+                                            style="font-size: 12px; margin-top: 8px; opacity: 0.8;"
+                                        >
                                             Placement: ${placement}
                                         </div>
                                     </div>
@@ -218,7 +234,9 @@ export const CaretDemo: Story = {
                 >
                     <!-- Before 示例 -->
                     <div style="text-align: center;">
-                        <h4 style="margin: 0 0 16px 0; color: #007bff;">Before (前缀箭头)</h4>
+                        <h4 style="margin: 0 0 16px 0; color: #007bff;">
+                            Before (前缀箭头)
+                        </h4>
                         <auto-dropdown
                             label="前缀箭头按钮"
                             outline
@@ -226,12 +244,14 @@ export const CaretDemo: Story = {
                             caret="before"
                             .popupOptions=${{
                                 placement: "bottom-start",
-                                fitWidth: true,
+                                fit: true,
                             }}
                         >
                             <div style="padding: 16px; text-align: center;">
                                 <strong>箭头在按钮前</strong>
-                                <div style="font-size: 12px; margin-top: 8px; color: #666;">
+                                <div
+                                    style="font-size: 12px; margin-top: 8px; color: #666;"
+                                >
                                     Caret: before
                                 </div>
                             </div>
@@ -240,7 +260,9 @@ export const CaretDemo: Story = {
 
                     <!-- After 示例 -->
                     <div style="text-align: center;">
-                        <h4 style="margin: 0 0 16px 0; color: #6f42c1;">After (后缀箭头)</h4>
+                        <h4 style="margin: 0 0 16px 0; color: #6f42c1;">
+                            After (后缀箭头)
+                        </h4>
                         <auto-dropdown
                             label="后缀箭头按钮"
                             outline
@@ -248,12 +270,14 @@ export const CaretDemo: Story = {
                             caret="after"
                             .popupOptions=${{
                                 placement: "bottom-start",
-                                fitWidth: true,
+                                fit: true,
                             }}
                         >
                             <div style="padding: 16px; text-align: center;">
                                 <strong>箭头在按钮后</strong>
-                                <div style="font-size: 12px; margin-top: 8px; color: #666;">
+                                <div
+                                    style="font-size: 12px; margin-top: 8px; color: #666;"
+                                >
                                     Caret: after
                                 </div>
                             </div>
@@ -263,29 +287,48 @@ export const CaretDemo: Story = {
             </div>
 
             <!-- 使用说明 -->
-            <div style="background: #f8f9fa; border-radius: 8px; padding: 24px;">
+            <div
+                style="background: #f8f9fa; border-radius: 8px; padding: 24px;"
+            >
                 <h3 style="margin: 0 0 20px 0; color: #495057;">
                     📖 Caret 属性使用说明
                 </h3>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <div
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;"
+                >
                     <div>
-                        <h4 style="margin: 0 0 12px 0; color: #28a745;">属性值说明</h4>
-                        <ul style="margin: 0; padding-left: 20px; line-height: 1.8;">
-                            <li><strong>auto</strong>: 根据placement自动决定箭头位置和方向</li>
-                            <li><strong>before</strong>: 强制在按钮前显示箭头</li>
-                            <li><strong>after</strong>: 强制在按钮后显示箭头</li>
+                        <h4 style="margin: 0 0 12px 0; color: #28a745;">
+                            属性值说明
+                        </h4>
+                        <ul
+                            style="margin: 0; padding-left: 20px; line-height: 1.8;"
+                        >
+                            <li>
+                                <strong>auto</strong>:
+                                根据placement自动决定箭头位置和方向
+                            </li>
+                            <li>
+                                <strong>before</strong>: 强制在按钮前显示箭头
+                            </li>
+                            <li>
+                                <strong>after</strong>: 强制在按钮后显示箭头
+                            </li>
                             <li><strong>none</strong>: 不显示箭头指示器</li>
                         </ul>
                     </div>
                     <div>
-                        <h4 style="margin: 0 0 12px 0; color: #007bff;">代码示例</h4>
-                        <pre style="background: #2d3748; color: #e2e8f0; padding: 12px; border-radius: 4px; font-size: 13px; overflow-x: auto;"><code>&lt;auto-dropdown
+                        <h4 style="margin: 0 0 12px 0; color: #007bff;">
+                            代码示例
+                        </h4>
+                        <pre
+                            style="background: #2d3748; color: #e2e8f0; padding: 12px; border-radius: 4px; font-size: 13px; overflow-x: auto;"
+                        ><code>&lt;auto-dropdown
   label="选择选项"
   caret="auto"
   .popupOptions=${{
-    placement: "bottom-start",
-    fitWidth: true
-  }}
+                            placement: "bottom-start",
+                            fit: true,
+                        }}
 &gt;
   &lt;!-- 下拉内容 --&gt;
 &lt;/auto-dropdown&gt;</code></pre>

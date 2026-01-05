@@ -162,8 +162,9 @@ export interface TooltipControllerOptions {
      * 作用于host的默认
      */
     dataset?: Record<string, string>;
+    isTooltip?: (el: HTMLElement) => boolean;
 }
-
+export type TooltipOptions = TooltipControllerOptions;
 export type PopupControllerOptions = TooltipControllerOptions;
 export type PopupPlacement = TooltipPlacement;
 export type PopupContent = TooltipContent;

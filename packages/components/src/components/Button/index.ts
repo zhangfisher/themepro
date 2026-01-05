@@ -514,7 +514,7 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
             });
     }
 
-    private _renderTag(tag: AutoButtonTag) {
+    protected _renderTag(tag: AutoButtonTag) {
         const icons = tag.icon!.split(",");
 
         if (icons.length < 2) icons.push(icons[0]);

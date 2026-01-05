@@ -61,7 +61,8 @@ export class AutoDropdown extends AutoButton {
 
     @property({ type: Boolean, reflect: true })
     open?: boolean = false;
-
+    @property({ type: Boolean, reflect: true })
+    cache?: boolean = false;
     @property({ type: String, reflect: true })
     caret?: AutoDropdownProps["caret"] = "auto";
     /**
@@ -80,27 +81,11 @@ export class AutoDropdown extends AutoButton {
 
     connectedCallback(): void {
         super.connectedCallback();
-        this.addEventListener("click", this._onTriggerClick as EventListener);
-        this.addEventListener("keydown", this._onKeydown as EventListener);
-        this.addEventListener(
-            "tooltip:close",
-            this._onCloseEvent as EventListener
-        );
-
         // 初始化 TooltipController
         this._initializePopupController();
     }
 
     disconnectedCallback(): void {
-        this.removeEventListener(
-            "click",
-            this._onTriggerClick as EventListener
-        );
-        this.removeEventListener("keydown", this._onKeydown as EventListener);
-        this.removeEventListener(
-            "tooltip:close",
-            this._onCloseEvent as EventListener
-        );
         this._popupController = undefined;
         super.disconnectedCallback();
     }
@@ -109,17 +94,16 @@ export class AutoDropdown extends AutoButton {
         // 只在非内部更新时响应 open 属性变化
         if (changed.has("open") && !this._isInternalUpdate) {
             if (this.open) {
-                this._showDropdown();
+                this.show();
             } else {
-                this._hideDropdown();
+                this.hide();
             }
         }
 
         // 如果 popupOptions 发生变化,更新控制器配置
         if (changed.has("popupOptions") && this._popupController) {
             this._updateControllerOptions();
-            // placement 可能变化,需要更新箭头方向
-            this._updateArrowRotation();
+            this._updateArrowRotation(); // placement 可能变化,需要更新箭头方向
         }
 
         // 如果 caret 属性发生变化,更新箭头方向
@@ -149,6 +133,7 @@ export class AutoDropdown extends AutoButton {
             onShow: () => this._onPopupShow(),
             onHide: () => this._onPopupHide(),
             ...this.popupOptions,
+            cache: this.cache,
             dataset: {
                 popup: "slot://",
             },
@@ -176,7 +161,6 @@ export class AutoDropdown extends AutoButton {
         if (this._isPopupVisible) return;
 
         this._isInternalUpdate = true;
-        this._isPopupVisible = true;
         this.open = true;
 
         // 更新箭头旋转角度并触发重新渲染
@@ -199,73 +183,21 @@ export class AutoDropdown extends AutoButton {
         this.requestUpdate();
     }
 
-    private _onTriggerClick = (e: MouseEvent) => {
-        if (this.disabled) {
-            e.preventDefault();
-            return;
-        }
-        // 阻止事件冒泡,避免触发其他点击事件
-        e.stopPropagation();
-        // 切换弹出层状态
-        // TooltipController 会自动查找具有 data-popup 属性的元素并显示
-        if (this._isPopupVisible) {
-            this._hideDropdown();
-        } else {
-            this._showDropdown();
-        }
-    };
-
-    private _onCloseEvent = (_e: CustomEvent): void => {
-        if (this.open) {
-            this._hideDropdown();
-        }
-    };
-
-    private _onKeydown = (e: KeyboardEvent) => {
-        if (this.disabled) return;
-
-        if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            if (this._isPopupVisible) {
-                this._hideDropdown();
-            } else {
-                this._showDropdown();
-            }
-        } else if (e.key === "Escape" && this.open) {
-            e.preventDefault();
-            this._hideDropdown();
-        }
-    };
-
     /**
      * 显示下拉菜单
      * 通过 TooltipController 的 tooltips 管理器添加并显示当前元素
      */
-    private async _showDropdown(): Promise<void> {
+    show() {
         if (!this._popupController) {
             this._initializePopupController();
         }
-
-        if (this._popupController && !this._isPopupVisible) {
-            // 添加当前元素到 tooltips 管理器并显示
-            // TooltipController 会查找元素上的 data-popup-* 属性
-            this._popupController.tooltips
-                .add(this, {
-                    ...this._popupController.options,
-                    trigger: "click",
-                })
-                .show();
-        }
+        this._popupController?.show();
     }
-
     /**
      * 隐藏下拉菜单
      */
-    private _hideDropdown(): void {
-        if (this._isPopupVisible) {
-            // 隐藏所有 tooltips
-            this._popupController?.tooltips.hide();
-        }
+    hide(): void {
+        this._popupController?.hide();
     }
 
     protected override renderAfter() {
@@ -274,7 +206,7 @@ export class AutoDropdown extends AutoButton {
             return html``;
 
         return html`<auto-icon
-            name="arrow"
+            name="triangle"
             rotate="${this._currentRotate}"
         ></auto-icon>`;
     }
@@ -285,7 +217,7 @@ export class AutoDropdown extends AutoButton {
             return html``;
 
         return html`<auto-icon
-            name="arrow"
+            name="triangle"
             rotate="${this._currentRotate}"
         ></auto-icon>`;
     }
@@ -321,7 +253,6 @@ export class AutoDropdown extends AutoButton {
         } else if (placement.startsWith("top")) {
             return isOpen ? 90 : -90; // open: 向上(-90°), close: 向下(90°)
         } else {
-            // bottom (默认)
             return isOpen ? -90 : 90; // open: 向下(90°), close: 向上(-90°)
         }
     }
