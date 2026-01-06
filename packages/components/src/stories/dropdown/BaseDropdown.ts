@@ -14,6 +14,7 @@ export const BaseDropdown: Story = {
                     .open=${args.open}
                     .popupOptions=${{
                         fit: args.popupOptions?.fit || "auto",
+                        trigger: "click",
                         placement:
                             args.popupOptions?.placement || "bottom-start",
                         persistent: args.popupOptions?.persistent || false,
@@ -90,6 +91,7 @@ export const BaseDropdown: Story = {
                     .open=${args.open}
                     .popupOptions=${{
                         fit: args.popupOptions?.fit || false,
+                        trigger: "click",
                         placement:
                             args.popupOptions?.placement || "bottom-start",
                         offset: args.popupOptions?.offset || [0, 4],

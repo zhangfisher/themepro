@@ -1,26 +1,5 @@
 /**
  * TooltipController - 轻量级提示框控制器
- *
- * 为组件内的任意元素添加tooltip功能
- *
- * 使用方法：
- *
- * class MyComponent extends LitElement {
- *   tooltip = new TooltipController(this, {
- *      trigger: 'mouseover' | 'click',
- *      placement: 'top',
- *   })
- * }
- *
- * 工作方式：
- * - host元素侦听click和mousemove事件，包括冒泡委托事件，
- *   当trigger为mouseover时，鼠标进入时调用tooltip.show()，离开时调用tooltip.hide()，控制tooltip显示和隐藏
- *   当trigger为click时，点击时调用tooltip.show()，再次点击时调用tooltip.hide()，控制tooltip显示和隐藏
- * - 当触发元素具有data-tooltip属性时，在进入时调用tooltip.show()，离开时调用tooltip.hide()
- * - data-tooltip属性支持html内容，也可以形如data-tooltip="slot::<slotname>"，从host内部具名slot作为提示信息
- * - data-tooltip-options用于传入TooltipOptions，覆盖全局TooltipControllerOptions，这样可以为不同的元素设置不同的提示信息和样式
- * - 也支持为data-tooltip-options每一个成员单独指定data-tooltip-<options.key>属性，用于覆盖全局TooltipControllerOptions的对应成员，比如data-tooltip-placement="bottom"
- * - data-tooltip-options支持json格式，比如data-tooltip-options='{"placement":"bottom"}'
  */
 import type { ReactiveController, ReactiveControllerHost } from "lit";
 import { createThemeproContainer } from "../../utils/createThemeproContainer";
@@ -83,12 +62,12 @@ export class TooltipController implements ReactiveController {
         // 从绑定属性读取配置
         const attrOptions = parseObjectFromAttr(
             hostElement,
-            `data-${userOptions?.dataPrefix}-options`,
-            defaultOptions
+            `data-${userOptions?.dataPrefix}-options`
         );
 
         // 合并配置，用户选项优先级最高
         const opts = {
+            ...defaultOptions,
             ...userOptions, // 用户传入的配置（中间层）
             ...attrOptions, // 从属性读取的配置（最高优先级）
         };
@@ -192,22 +171,18 @@ export class TooltipController implements ReactiveController {
      */
     private _setupClickEventDelegation(hostElement: HTMLElement): void {
         this._tooltipDelegateHandler = (e: Event) => {
-            const tooltipElement = this._getTooltipElement(e as any);
-            if (tooltipElement) {
-                const prefix = this.options.dataPrefix || "tooltip";
-                const trigger =
-                    (tooltipElement.dataset as any)[`${prefix}Trigger`] ||
-                    this.options.trigger!;
+            const tooltipEl = this._getTooltipElement(e as any);
+            if (tooltipEl) {
+                const trigger = this._getTrigger(tooltipEl);
                 if (trigger === "click") {
                     e.preventDefault();
                     e.stopPropagation();
-                    if (this.tooltips.has(tooltipElement)) {
-                        this.tooltips.get(tooltipElement)?.show();
+                    if (this.tooltips.has(tooltipEl)) {
+                        this.tooltips.get(tooltipEl)?.show();
                     } else {
-                        // 马上隐藏已经显示的Tooltip
                         this.tooltips.hide();
                         this.tooltips
-                            .add(tooltipElement, {
+                            .add(tooltipEl, {
                                 ...this.options,
                                 trigger: "click",
                             })
@@ -223,6 +198,10 @@ export class TooltipController implements ReactiveController {
             true
         );
     }
+    private _getTrigger(el: HTMLElement) {
+        const prefix = this.options.dataPrefix || "tooltip";
+        return (el.dataset as any)[`${prefix}Trigger`] || this.options.trigger!;
+    }
 
     /**
      * 为mouseover触发的tooltip元素添加统一的事件监听器
@@ -232,22 +211,18 @@ export class TooltipController implements ReactiveController {
         this._removeMouseMoveEventListeners();
 
         this._onMouseMove = (e: MouseEvent) => {
-            const tooltipElement = this._getTooltipElement(e);
+            const tooltipEl = this._getTooltipElement(e);
             // 处理data-tooltip元素的进入和离开事件
-            if (tooltipElement) {
-                const prefix = this.options.dataPrefix || "tooltip";
-                const trigger =
-                    (tooltipElement.dataset as any)[`${prefix}Trigger`] ||
-                    this.options.trigger!;
+            if (tooltipEl) {
+                const trigger = this._getTrigger(tooltipEl);
                 if (trigger !== "click") {
-                    // 该元素已经在overTooltips中
-                    if (this.tooltips.has(tooltipElement)) {
-                        this.tooltips.get(tooltipElement)?.show();
+                    if (this.tooltips.has(tooltipEl)) {
+                        this.tooltips.get(tooltipEl)?.show();
                     } else {
                         // 马上隐藏已经显示的Tooltip
                         this.tooltips.hide();
                         this.tooltips
-                            .add(tooltipElement, {
+                            .add(tooltipEl, {
                                 ...this.options,
                                 trigger: "mouseover",
                             })
