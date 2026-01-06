@@ -103,8 +103,16 @@ export class TooltipController implements ReactiveController {
      * ReactiveController 生命周期 - host 更新时调用
      */
     hostUpdate(): void {
-        this._setupTriggerEvents();
+        // 只在 trigger 选项改变时才重新设置事件监听器
+        const currentTrigger = this.options.trigger;
+        if (currentTrigger !== this._lastTrigger) {
+            console.log("[hostUpdate] Trigger changed from", this._lastTrigger, "to", currentTrigger);
+            this._setupTriggerEvents();
+            this._lastTrigger = currentTrigger;
+        }
     }
+
+    private _lastTrigger?: string;
 
     /**
      * 设置tooltip事件监听
@@ -131,12 +139,29 @@ export class TooltipController implements ReactiveController {
         const prefix = this.options.dataPrefix || "tooltip";
         const dataset = el.dataset as any;
 
+        // 检查 dataset
         let isTooltip = !!(
             dataset[prefix] ||
             dataset[`${prefix}Slot`] ||
             dataset[`${prefix}Query`] ||
             dataset[`${prefix}Link`]
         );
+
+        // 如果 dataset 中没有，检查 attributes（兼容 Web Components）
+        if (!isTooltip) {
+            const dataAttr = `data-${prefix}`;
+            const dataSlotAttr = `data-${prefix}-slot`;
+            const dataQueryAttr = `data-${prefix}-query`;
+            const dataLinkAttr = `data-${prefix}-link`;
+
+            isTooltip = !!(
+                el.hasAttribute(dataAttr) ||
+                el.hasAttribute(dataSlotAttr) ||
+                el.hasAttribute(dataQueryAttr) ||
+                el.hasAttribute(dataLinkAttr)
+            );
+        }
+
         if (!isTooltip && typeof this.options.isTooltip === "function") {
             isTooltip = this.options.isTooltip(el as HTMLElement);
         }
