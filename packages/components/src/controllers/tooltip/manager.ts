@@ -24,7 +24,7 @@ export class TooltipManager extends Array<Tooltip> {
             t.hide();
         });
     }
-    show(all: boolean = false) {
+    show() {
         this.forEach((t) => {
             if (this.controller.hostElement === t.el.deref()) {
                 t.show();

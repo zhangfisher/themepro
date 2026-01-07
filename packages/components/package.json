@@ -33,6 +33,7 @@
     "build": "tsup"
   },
   "devDependencies": {
+    "@interactjs/types": "^1.10.27",
     "@storybook/addon-docs": "^9.1.16",
     "@storybook/components": "^8.6.14",
     "@storybook/manager-api": "^8.6.14",
@@ -64,6 +65,7 @@
     "@open-wc/lit-helpers": "^0.7.0",
     "animejs": "^4.2.2",
     "flex-tools": "^1.5.9",
+    "interactjs": "^1.10.27",
     "really-relaxed-json": "latest"
   },
   "packageManager": "bun@1.2.23",
