@@ -162,12 +162,6 @@ export interface TooltipControllerOptions {
      * 作用于host的默认
      */
     dataset?: Record<string, string>;
-    /**
-     * 用于判断是否是toolip
-     * @param el
-     * @returns
-     */
-    isTooltip?: (el: HTMLElement) => boolean;
 }
 export type TooltipOptions = TooltipControllerOptions;
 export type PopupControllerOptions = TooltipControllerOptions;

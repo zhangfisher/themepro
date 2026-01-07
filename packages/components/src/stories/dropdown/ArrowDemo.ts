@@ -21,7 +21,7 @@ export const ArrowDemo: Story = {
                             type="primary"
                             .popupOptions=${{
                                 placement: "bottom-start",
-                                arrow: true
+                                arrow: true,
                             }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
@@ -37,7 +37,7 @@ export const ArrowDemo: Story = {
                             type="success"
                             .popupOptions=${{
                                 placement: "top-start",
-                                arrow: true
+                                arrow: true,
                             }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
@@ -53,7 +53,7 @@ export const ArrowDemo: Story = {
                             type="warning"
                             .popupOptions=${{
                                 placement: "right-start",
-                                arrow: true
+                                arrow: true,
                             }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
@@ -69,7 +69,7 @@ export const ArrowDemo: Story = {
                             type="info"
                             .popupOptions=${{
                                 placement: "left-start",
-                                arrow: true
+                                arrow: true,
                             }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
@@ -185,15 +185,15 @@ export const ArrowDemo: Story = {
                         style="display: flex; gap: 20px; flex-direction: column; max-width: 400px;"
                     >
                         <auto-dropdown
-                            label="箭头 + fitWidth"
+                            label="箭头 + fit"
                             type="primary"
                             .popupOptions=${{
                                 arrow: true,
-                                fitWidth: true
+                                fit: true,
                             }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
-                                🎯 fitWidth + 箭头
+                                🎯 fit + 箭头
                             </div>
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 宽度匹配按钮
@@ -209,7 +209,7 @@ export const ArrowDemo: Story = {
                             .popupOptions=${{
                                 arrow: true,
                                 animationDuration: 500,
-                                animationEasing: "easeOutBack(1.7)"
+                                animationEasing: "easeOutBack(1.7)",
                             }}
                         >
                             <div style="padding: 8px 12px; cursor: pointer;">
