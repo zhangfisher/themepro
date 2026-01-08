@@ -1,6 +1,5 @@
 import { html } from "lit";
 import type { Story } from "./types";
-
 export const ArrowDemo: Story = {
     name: "指示箭头演示",
     render: (args: any) => {
@@ -12,7 +11,9 @@ export const ArrowDemo: Story = {
                 </p>
 
                 <div style="margin-top: 30px;">
-                    <h4>不同位置的箭头演示</h4>
+                    <h4 data-tooltip="不同位置的箭头演示">
+                        不同位置的箭头演示
+                    </h4>
                     <div
                         style="display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap;"
                     >

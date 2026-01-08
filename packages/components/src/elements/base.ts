@@ -3,6 +3,7 @@ import { property } from "lit/decorators.js";
 import { toKebabCase } from "@/utils/toKebabCase";
 import { getVal } from "autostore";
 import { isPrimitive } from "@/utils/isPrimitive";
+import { parseRelaxedJson } from "@/utils/parseRelaxedJson";
 
 /**
  *
@@ -25,7 +26,7 @@ export class AutoElementBase<
     reflectAttrs: string = "all";
 
     @property({ type: Object })
-    state?: State;
+    state: State = {} as State;
 
     /**
      *
@@ -74,9 +75,14 @@ export class AutoElementBase<
      */
     private syncStateToAttrs() {
         if (!this.renderRoot) return;
-        if (typeof this.state !== "object") return;
+        const state =
+            typeof this.state === "object"
+                ? this.state
+                : ((typeof this.state === "string"
+                      ? parseRelaxedJson(this.state)
+                      : {}) as Record<string, any>);
         if (this.reflectAttrs === "all") {
-            Object.entries(this.state ?? {}).forEach(([key, value]) => {
+            Object.entries(state).forEach(([key, value]) => {
                 this.applyValueToElement(key, value);
             });
         } else if (typeof this.reflectAttrs === "string") {

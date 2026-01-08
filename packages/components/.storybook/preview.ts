@@ -4,6 +4,8 @@ import "../../core/src/styles/index.less";
 import "../../core/src/index.ts";
 import "../src/styles/icons.less";
 import { handlers } from "./api.ts";
+import "../src/components/Application/index";
+import { html } from "lit-html";
 
 initialize({}, handlers);
 
@@ -19,7 +21,11 @@ const preview: Preview = {
             },
         },
     },
-    decorators: [],
+    decorators: [
+        (Story) => {
+            return html`<auto-application> ${Story()} </auto-application>`;
+        },
+    ],
     loaders: [mswLoader],
 };
 
