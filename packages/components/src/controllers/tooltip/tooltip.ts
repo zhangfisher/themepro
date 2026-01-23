@@ -836,7 +836,11 @@ export class Tooltip {
         this._htmlLoader?.abort();
         if (!this.options.cache) {
             setTimeout(() => {
-                this.controller.themeproContainer?.removeChild(this.container);
+                // 检查容器是否仍然在 DOM 中，避免重复移除导致错误
+                if (this.container &&
+                    this.controller.themeproContainer?.contains(this.container)) {
+                    this.controller.themeproContainer?.removeChild(this.container);
+                }
                 this.controller.tooltips.remove(this);
             });
         }
