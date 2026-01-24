@@ -932,6 +932,44 @@ export interface TooltipControllerOptions {
      * ```
      */
     dataset?: Record<string, string>;
+
+    /**
+     * ## 扩展查找范围
+     *
+     * 控制 `_getTooltipElement` 方法的查找行为
+     *
+     * **工作原理：**
+     * - `true` (默认): 从事件的 `composedPath` 中查找 TooltipElement
+     *   - 可以处理 host 内部的所有 TooltipElement
+     *   - 支持嵌套结构
+     *   - 适用于复杂的 DOM 结构
+     * - `false`: 直接返回 host 元素
+     *   - 仅处理 host 元素本身的 tooltip
+     *   - 不处理内部元素的 tooltip
+     *   - 适用于简单的单元素场景
+     *
+     * **使用场景：**
+     * - `extend=true`: 需要处理容器内多个子元素的 tooltip
+     * - `extend=false`: 只需要为当前元素添加 tooltip
+     *
+     * **默认值：** `true`
+     *
+     * **实现位置：** [controller.ts:148-168](controller.ts#L148-L168)
+     *
+     * @example
+     * ```typescript
+     * // 扩展模式（默认）- 处理所有内部元素
+     * const controller1 = new TooltipController(host, {
+     *   extend: true
+     * });
+     *
+     * // 仅 host 模式 - 只处理 host 元素
+     * const controller2 = new TooltipController(host, {
+     *   extend: false
+     * });
+     * ```
+     */
+    extend?: boolean;
 }
 export type TooltipOptions = TooltipControllerOptions;
 export type PopupControllerOptions = TooltipControllerOptions;
