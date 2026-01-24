@@ -122,7 +122,8 @@ export class Tooltip {
     private _getDataAttr(key: string): string | undefined {
         const prefix = this.options.dataPrefix
         const dataset = this.ref.dataset as any
-        return dataset[`${prefix}${key}`]
+        const val = dataset[`${prefix}${key}`]
+        return val && val.trim().length === 0 ? undefined : val
     }
 
     /**
@@ -141,8 +142,12 @@ export class Tooltip {
     private _initElements() {
         this._container = this._createTooltipContainer()
         const content = this._getTooltipContent()
-        if (content) this._setTooltipContent(content)
-        this.controller.themeproContainer.appendChild(this._container)
+        if (content) {
+            this._setTooltipContent(content)
+            this.controller.themeproContainer.appendChild(this._container)
+        } else {
+            if (this._htmlLoader) this.controller.themeproContainer.appendChild(this._container)
+        }
     }
     /**
      * 解析元素上的工具提示选项属性
@@ -393,7 +398,7 @@ export class Tooltip {
         clearTimeout(this._mouseLeaveTimer)
         // 当鼠标进入当前 tooltip 容器时，清除所有父级 tooltip 的 _mouseLeaveTimer
         // 这样可以防止在 tooltip 之间移动时触发隐藏
-        this.controller.tooltips.forEach(t => {
+        this.controller.tooltips.forEach((t) => {
             if (t !== this) {
                 clearTimeout(t._mouseLeaveTimer)
                 t._mouseLeaveTimer = undefined
@@ -410,7 +415,7 @@ export class Tooltip {
         this._mouseLeaveTimer = setTimeout(() => {
             // 在隐藏前检查鼠标是否在更深层级的 tooltip 上
             // 只有当鼠标在更深层的子tooltip上时，当前tooltip才不隐藏
-            const hasDeepestTooltipHover = this.controller.tooltips.some(t => {
+            const hasDeepestTooltipHover = this.controller.tooltips.some((t) => {
                 if (!t.isVisible) return false
                 if (t === this) return false // 跳过自己
 
@@ -422,7 +427,7 @@ export class Tooltip {
 
                 // 如果是子tooltip，并且鼠标在子tooltip的触发元素或容器上
                 // 则说明鼠标在更深层的tooltip上，当前tooltip不隐藏
-                return isNestedTooltip && ((t.container?.matches(':hover') || false) || tooltipEl.matches(':hover'))
+                return isNestedTooltip && (t.container?.matches(':hover') || false || tooltipEl.matches(':hover'))
             })
 
             if (!hasDeepestTooltipHover) {

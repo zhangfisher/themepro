@@ -1,30 +1,27 @@
-import type { Meta, StoryObj } from "@storybook/web-components";
-import { html } from "lit";
-import "./TooltipDemo";
-import "../../components/Button/index";
+import type { Meta, StoryObj } from '@storybook/web-components'
+import { html } from 'lit'
+import './TooltipDemo'
+import '../../components/Button/index'
 
 const meta: Meta = {
-    title: "控制器/Tooltip",
-    tags: ["autodocs"],
+    title: '控制器/Tooltip',
+    tags: ['autodocs'],
     render: () => html`<tooltip-basic-demo></tooltip-basic-demo>`,
     parameters: {
-        layout: "centered",
+        layout: 'centered',
         docs: {
             description: {
-                story: "基础提示框功能演示，包括简单的文本提示和基本的悬停交互。",
+                story: '基础提示框功能演示，包括简单的文本提示和基本的悬停交互。',
             },
         },
     },
-};
-export default meta;
-type Story = StoryObj;
+}
+export default meta
+type Story = StoryObj
 
 export const 默认提示框: Story = {
-    name: "默认提示框",
-    render: () => html`
-        <tooltip-demo data-tooltip="hello">hello
-            </tooltip-demo>
-            <tooltip-demo>
+    name: '默认提示框',
+    render: () => html` 
                 <div
                     slot="info"
                     style="padding: 4px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
@@ -67,21 +64,19 @@ export const 默认提示框: Story = {
                     >
                         没有内容
                     </button>
-                </div>
-            </tooltip-demo>
-        </tooltip-demo>
+                </div> 
     `,
     parameters: {
         docs: {
             description: {
-                story: "最基础的提示框，只需在元素上添加 `data-tooltip` 属性即可。鼠标悬停时显示提示信息。",
+                story: '最基础的提示框，只需在元素上添加 `data-tooltip` 属性即可。鼠标悬停时显示提示信息。',
             },
         },
     },
-};
+}
 
 export const 带箭头的提示框: Story = {
-    name: "带箭头的提示框",
+    name: '带箭头的提示框',
     render: () => html`
         <tooltip-demo>
             <div
@@ -127,10 +122,10 @@ export const 带箭头的提示框: Story = {
             },
         },
     },
-};
+}
 
 export const 延迟隐藏提示框: Story = {
-    name: "延迟自动隐藏",
+    name: '延迟自动隐藏',
     render: () => html`<tooltip-demo>
         <div style="display: flex; gap: 20px; flex-wrap: wrap; padding: 40px;">
             <button
@@ -164,8 +159,8 @@ export const 延迟隐藏提示框: Story = {
     parameters: {
         docs: {
             description: {
-                story: "使用 `data-tooltip-delay-hide` 属性设置提示框在鼠标离开后延迟隐藏的时间（毫秒），方便用户阅读较长的提示信息。",
+                story: '使用 `data-tooltip-delay-hide` 属性设置提示框在鼠标离开后延迟隐藏的时间（毫秒），方便用户阅读较长的提示信息。',
             },
         },
     },
-};
+}

@@ -25,7 +25,6 @@ type Story = StoryObj
 export const 基础嵌套场景: Story = {
     name: '基础嵌套场景',
     render: () => html`
-        <nested-tooltip-extend-true>
             <div style="padding: 40px;">
                 <button
                     data-tooltip="query://.tooltip-content"
@@ -51,7 +50,6 @@ export const 基础嵌套场景: Story = {
                     </div>
                 </div>
             </div>
-        </nested-tooltip-extend-true>
     `,
     parameters: {
         docs: {
