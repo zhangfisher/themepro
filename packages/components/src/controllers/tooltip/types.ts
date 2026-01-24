@@ -1,25 +1,21 @@
-import type { Tooltip } from "./tooltip";
+import type { VirtualElement } from '@floating-ui/dom'
+import type { Tooltip } from './tooltip'
 
 export type TooltipPlacement =
-    | "top"
-    | "bottom"
-    | "left"
-    | "right"
-    | "top-start"
-    | "top-end"
-    | "bottom-start"
-    | "bottom-end"
-    | "left-start"
-    | "left-end"
-    | "right-start"
-    | "right-end";
+    | 'top'
+    | 'bottom'
+    | 'left'
+    | 'right'
+    | 'top-start'
+    | 'top-end'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'left-start'
+    | 'left-end'
+    | 'right-start'
+    | 'right-end'
 
-export type TooltipContent =
-    | string
-    | HTMLElement
-    | undefined
-    | null
-    | Promise<string | HTMLElement | undefined | null>;
+export type TooltipContent = string | HTMLElement | undefined | null | Promise<string | HTMLElement | undefined | null>
 
 /**
  * TooltipController 配置选项接口
@@ -79,7 +75,7 @@ export interface TooltipControllerOptions {
      *
      * @see {@link https://floating-ui.com/docs/flip | Floating UI Flip Middleware}
      */
-    placement?: TooltipPlacement;
+    placement?: TooltipPlacement
 
     /**
      * ## 提示框偏移量
@@ -108,7 +104,7 @@ export interface TooltipControllerOptions {
      * <div data-tooltip="提示" data-tooltip-offset="5,8">目标</div>
      * ```
      */
-    offset?: [number, number];
+    offset?: [number, number]
 
     /**
      * ## 动画持续时间
@@ -139,7 +135,7 @@ export interface TooltipControllerOptions {
      *
      * @see animationEasing
      */
-    animationDuration?: number;
+    animationDuration?: number
 
     /**
      * ## 动画缓动函数
@@ -170,7 +166,7 @@ export interface TooltipControllerOptions {
      * <div data-tooltip="提示" data-tooltip-animation-easing="linear">目标</div>
      * ```
      */
-    animationEasing?: string;
+    animationEasing?: string
 
     /**
      * ## 自定义样式类名
@@ -200,7 +196,7 @@ export interface TooltipControllerOptions {
      * }
      * ```
      */
-    className?: string;
+    className?: string
 
     /**
      * ## 是否显示指示箭头
@@ -230,7 +226,7 @@ export interface TooltipControllerOptions {
      * <div data-tooltip="提示" data-tooltip-arrow="true">目标</div>
      * ```
      */
-    arrow?: boolean;
+    arrow?: boolean
 
     /**
      * ## 绑定属性名称（已废弃）
@@ -248,7 +244,7 @@ export interface TooltipControllerOptions {
      *
      * @deprecated 此选项未实现，请使用其他配置方式
      */
-    optionAttr?: string;
+    optionAttr?: string
 
     /**
      * ## 尺寸适配模式
@@ -282,7 +278,7 @@ export interface TooltipControllerOptions {
      * <div data-tooltip="提示" data-tooltip-fit="auto">目标</div>
      * ```
      */
-    fit?: "none" | "auto" | "width" | "height" | boolean;
+    fit?: 'none' | 'auto' | 'width' | 'height' | boolean
 
     /**
      * ## CSS 类名控制
@@ -329,7 +325,7 @@ export interface TooltipControllerOptions {
      * }
      * ```
      */
-    cssClass?: string | [string, string];
+    cssClass?: string | [string, string]
 
     /**
      * ## 最小宽度
@@ -351,7 +347,7 @@ export interface TooltipControllerOptions {
      * <div data-tooltip="提示" data-tooltip-min-width="200px">目标</div>
      * ```
      */
-    minWidth?: string;
+    minWidth?: string
 
     /**
      * ## 最小高度
@@ -373,7 +369,7 @@ export interface TooltipControllerOptions {
      * <div data-tooltip="提示" data-tooltip-min-height="100px">目标</div>
      * ```
      */
-    minHeight?: string;
+    minHeight?: string
 
     /**
      * ## 触发方式
@@ -413,7 +409,7 @@ export interface TooltipControllerOptions {
      *
      * @see delayHide
      */
-    trigger?: "click" | "mouseover";
+    trigger?: 'click' | 'mouseover'
 
     /**
      * ## 延迟隐藏时间
@@ -448,7 +444,7 @@ export interface TooltipControllerOptions {
      *
      * @see trigger
      */
-    delayHide?: number;
+    delayHide?: number
 
     /**
      * ## 是否缓存组件
@@ -480,7 +476,7 @@ export interface TooltipControllerOptions {
      * <div data-tooltip="提示" data-tooltip-cache="true">目标</div>
      * ```
      */
-    cache?: boolean;
+    cache?: boolean
 
     /**
      * ## 自定义定位目标
@@ -517,7 +513,7 @@ export interface TooltipControllerOptions {
      *
      * @see querySelector
      */
-    target?: string;
+    target?: string
 
     /**
      * ## 提示框内边距
@@ -549,7 +545,7 @@ export interface TooltipControllerOptions {
      * }
      * ```
      */
-    padding?: number;
+    padding?: number
 
     /**
      * ## 自定义样式
@@ -592,7 +588,7 @@ export interface TooltipControllerOptions {
      * });
      * ```
      */
-    styles?: Record<string, any>;
+    styles?: Record<string, any>
 
     /**
      * ## 动态内容获取
@@ -633,11 +629,7 @@ export interface TooltipControllerOptions {
      * });
      * ```
      */
-    getContent?: (
-        content: HTMLElement | null | undefined,
-        ref: HTMLElement,
-        tooltip: Tooltip
-    ) => TooltipContent;
+    getContent?: (content: HTMLElement | null | undefined, ref: HTMLElement, tooltip: Tooltip) => TooltipContent
 
     /**
      * ## 自定义查询选择器
@@ -675,7 +667,7 @@ export interface TooltipControllerOptions {
      *
      * @see target
      */
-    querySelector?: (selector: string) => HTMLElement | null | undefined;
+    querySelector?: (selector: string) => HTMLElement | VirtualElement | null | undefined
 
     /**
      * ## 加载状态内容
@@ -704,7 +696,7 @@ export interface TooltipControllerOptions {
      * </div>
      * ```
      */
-    loading?: string;
+    loading?: string
 
     /**
      * ## 预测尺寸
@@ -746,7 +738,7 @@ export interface TooltipControllerOptions {
      *
      * @see size
      */
-    predictSize?: [string | number, string | number];
+    predictSize?: [string | number, string | number]
 
     /**
      * ## 内容尺寸
@@ -787,7 +779,7 @@ export interface TooltipControllerOptions {
      *
      * @see predictSize
      */
-    size?: [string | number, string | number];
+    size?: [string | number, string | number]
 
     /**
      * ## 显示回调
@@ -819,7 +811,7 @@ export interface TooltipControllerOptions {
      *
      * @see onHide
      */
-    onShow?: () => void;
+    onShow?: () => void
 
     /**
      * ## 隐藏回调
@@ -852,7 +844,7 @@ export interface TooltipControllerOptions {
      *
      * @see onShow
      */
-    onHide?: () => void;
+    onHide?: () => void
 
     /**
      * ## 数据属性前缀
@@ -895,7 +887,7 @@ export interface TooltipControllerOptions {
      * });
      * ```
      */
-    dataPrefix?: string;
+    dataPrefix?: string
 
     /**
      * ## 默认数据集
@@ -931,7 +923,7 @@ export interface TooltipControllerOptions {
      * // <host data-tooltip-theme="dark" data-tooltip-animation="fade">
      * ```
      */
-    dataset?: Record<string, string>;
+    dataset?: Record<string, string>
 
     /**
      * ## 扩展查找范围
@@ -969,9 +961,9 @@ export interface TooltipControllerOptions {
      * });
      * ```
      */
-    extend?: boolean;
+    extend?: boolean
 }
-export type TooltipOptions = TooltipControllerOptions;
-export type PopupControllerOptions = TooltipControllerOptions;
-export type PopupPlacement = TooltipPlacement;
-export type PopupContent = TooltipContent;
+export type TooltipOptions = TooltipControllerOptions
+export type PopupControllerOptions = TooltipControllerOptions
+export type PopupPlacement = TooltipPlacement
+export type PopupContent = TooltipContent

@@ -6,6 +6,7 @@ import {
     autoUpdate,
     computePosition,
     type ComputePositionReturn,
+    type VirtualElement,
     flip,
     hide,
     offset,
@@ -31,7 +32,7 @@ export class Tooltip {
     private _delayHideTimer?: NodeJS.Timeout
     private _mouseLeaveTimer?: NodeJS.Timeout
     private _isVisible: boolean = false
-    private _target?: HTMLElement
+    private _target?: HTMLElement | VirtualElement
     private _htmlLoader?: HTMLLoader
     private _cleanup?: () => void
     private _containerEventHandlers?: {
@@ -106,7 +107,7 @@ export class Tooltip {
         if (!this._target) {
             if (typeof this.options.target === 'string') {
                 const target = this.options.querySelector(this.options.target)
-                if (target instanceof HTMLElement) {
+                if (target) {
                     this._target = target
                     return this._target
                 }
@@ -281,8 +282,9 @@ export class Tooltip {
                 if (slotName.length === 0 || slotName === 'default') {
                     el = this.ref.innerHTML
                 } else {
-                    el = this.ref.querySelector(`[slot='${slotName}']`)
-                    this.host.querySelector(`[slot='${slotName}']`)
+                    el =
+                        this.ref.querySelector(`[slot='${slotName}']`) ||
+                        this.host.querySelector(`[slot='${slotName}']`)
                 }
             } else if (content?.startsWith('query://')) {
                 const selector = content.substring(8).trim()
