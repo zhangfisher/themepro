@@ -78,13 +78,13 @@ video {
 
 /* 所有主流浏览器 */
 ::selection {
-  background-color: var(--t-color-theme-3);
-  color: var(--t-theme-color);
+  background-color: var(--k-color-theme-3);
+  color: var(--k-theme-color);
 }
 
 ::-moz-selection {
-  background-color: var(--t-color-theme-3);
-  color: var(--t-theme-color);
+  background-color: var(--k-color-theme-3);
+  color: var(--k-theme-color);
   /* WebKit/Blink Browsers */
 }
 
@@ -188,7 +188,7 @@ select:hover,
 option:hover,
 textarea:hover {
   background: var(--auto-bgcolor);
-  border: 1px solid var(--t-color-theme-3);
+  border: 1px solid var(--k-color-theme-3);
 }
 
 input[type=checkbox] {
@@ -378,10 +378,10 @@ input::-moz-focus-inner {
 
 .auto-disabled {
   color: color-mix(in srgb, var(--auto-theme-color) 50%, transparent 10%) !important;
-  background: color-mix(in srgb, var(--t-color-theme-1), white 28%) !important;
+  background: color-mix(in srgb, var(--k-color-theme-1), white 28%) !important;
 }
 
 .auto-selected {
   color: color-mix(in srgb, var(--auto-theme-color) 0%, white 100%) !important;
-  background: var(--t-color-theme-5) !important;
+  background: var(--k-color-theme-5) !important;
 }

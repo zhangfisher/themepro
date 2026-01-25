@@ -68,7 +68,7 @@
 		"interactjs": "^1.10.27",
 		"really-relaxed-json": "latest"
 	},
-	"packageManager": "bun@1.2.23",
+	"packageManager": "^bun@1.3.6",
 	"msw": {
 		"workerDirectory": [
 			"public"

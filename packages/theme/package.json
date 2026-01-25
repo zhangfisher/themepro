@@ -54,5 +54,5 @@
 		"@ant-design/fast-color": "^3.0.0",
 		"@yosulramp/material-color-palette-js": "^1.0.4"
 	},
-	"packageManager": "bun@1.2.23"
+	"packageManager": "^bun@1.3.6"
 }

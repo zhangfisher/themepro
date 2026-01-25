@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from 'lit'
 
 export const styles = css`
     :host {
@@ -19,7 +19,7 @@ export const styles = css`
     .shape {
         display: inline-block;
         position: relative;
-        background-color: var(--t-theme-color-2);
+        background-color: var(--k-theme-color-2);
         aspect-ratio: 1;
         padding: calc(0.5 * var(--auto-padding));
         &.circle {
@@ -32,4 +32,4 @@ export const styles = css`
     :host([inherit]) .kylin-icon {
         font-size: inherit;
     }
-`;
+`

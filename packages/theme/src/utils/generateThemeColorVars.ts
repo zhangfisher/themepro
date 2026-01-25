@@ -19,4 +19,4 @@ export function generateThemeColorVars(color: string, options?: ThemeVariantOpti
     return vars
 }
 
-console.log(generateThemeColorVars('#f2f2f2', { prefix: '--t-color-gray-' }))
+console.log(generateThemeColorVars('#f2f2f2', { prefix: '--k-color-gray-' }))

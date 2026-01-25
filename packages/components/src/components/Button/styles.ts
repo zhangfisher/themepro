@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from 'lit'
 
 export const styles = css`
     :host {
@@ -7,8 +7,8 @@ export const styles = css`
         align-items: center;
         justify-content: center;
         text-align: center;
-        padding: calc(0.4 * var(--t-spacing-medium))
-            calc(0.8 * var(--t-spacing-medium));
+        padding: calc(0.4 * var(--k-spacing-medium))
+            calc(0.8 * var(--k-spacing-medium));
         border-radius: var(--auto-border-radius);
         font: var(--auto-font);
         cursor: pointer;
@@ -20,11 +20,11 @@ export const styles = css`
         user-select: none;
     }
     :host([shadow]) {
-        box-shadow: var(--t-shadow-small);
+        box-shadow: var(--k-shadow-small);
     }
     :host(:hover),
     :host([variant="ghost"]:hover) {
-        background-color: var(--t-color-theme-1);
+        background-color: var(--k-color-theme-1);
     }
     :host(:not(.label)) {
         flex-grow: 0;
@@ -32,7 +32,7 @@ export const styles = css`
     }
     :host([variant="outline"]) {
         border: 1px solid
-            color-mix(in srgb, var(--t-theme-color) 30%, white 10%);
+            color-mix(in srgb, var(--k-theme-color) 30%, white 10%);
     }
 
     /**
@@ -81,20 +81,20 @@ export const styles = css`
 
     /* 按钮尺寸 */
     :host([x-small]) {
-        font-size: var(--t-font-size-x-small);
-        padding: calc(0.3 * var(--t-spacing-x-small)) var(--t-spacing-x-small);
+        font-size: var(--k-font-size-x-small);
+        padding: calc(0.3 * var(--k-spacing-x-small)) var(--k-spacing-x-small);
     }
     :host([small]) {
-        font-size: var(--t-font-size-small);
-        padding: calc(0.3 * var(--t-spacing-small)) var(--t-spacing-small);
+        font-size: var(--k-font-size-small);
+        padding: calc(0.3 * var(--k-spacing-small)) var(--k-spacing-small);
     }
     :host([large]) {
-        font-size: var(--t-font-size-large);
-        padding: calc(0.3 * var(--t-spacing-large)) var(--t-spacing-large);
+        font-size: var(--k-font-size-large);
+        padding: calc(0.3 * var(--k-spacing-large)) var(--k-spacing-large);
     }
     :host([x-large]) {
-        font-size: var(--t-font-size-x-large);
-        padding: calc(0.3 * var(--t-spacing-x-large)) var(--t-spacing-x-large);
+        font-size: var(--k-font-size-x-large);
+        padding: calc(0.3 * var(--k-spacing-x-large)) var(--k-spacing-x-large);
     }
 
     /**
@@ -103,95 +103,95 @@ export const styles = css`
 
     /**按钮类型 */
     :host([type="primary"]) {
-        background-color: var(--t-color-primary);
-        color: color-mix(in srgb, var(--t-color-primary) 0%, white 100%);
+        background-color: var(--k-color-primary);
+        color: color-mix(in srgb, var(--k-color-primary) 0%, white 100%);
     }
     :host([type="primary"]:hover) {
-        background-color: color-mix(in srgb, var(--t-color-primary), white 10%);
+        background-color: color-mix(in srgb, var(--k-color-primary), white 10%);
     }
     :host([type="primary"][variant="outline"]) {
-        border-color: color-mix(in srgb, var(--t-color-primary), black 10%);
+        border-color: color-mix(in srgb, var(--k-color-primary), black 10%);
     }
 
     /*  */
     :host([variant="ghost"][type="primary"]) {
-        color: var(--t-color-primary);
+        color: var(--k-color-primary);
     }
     :host([variant="ghost"][type="primary"]:hover) {
         background-color: color-mix(
             in srgb,
-            var(--t-color-primary) 15%,
+            var(--k-color-primary) 15%,
             white 5%
         ) !important;
     }
 
     :host([type="success"]) {
-        background-color: var(--t-color-success);
-        color: color-mix(in srgb, var(--t-color-success) 0%, white 100%);
+        background-color: var(--k-color-success);
+        color: color-mix(in srgb, var(--k-color-success) 0%, white 100%);
     }
     :host([type="success"]:hover) {
-        background-color: color-mix(in srgb, var(--t-color-success), white 10%);
+        background-color: color-mix(in srgb, var(--k-color-success), white 10%);
     }
 
     :host([variant="ghost"][type="success"]) {
-        color: var(--t-color-success);
+        color: var(--k-color-success);
     }
     :host([variant="ghost"][type="success"]:hover) {
         background-color: color-mix(
             in srgb,
-            var(--t-color-success) 15%,
+            var(--k-color-success) 15%,
             white 5%
         ) !important;
     }
 
     :host([type="warning"]) {
-        background-color: var(--t-color-warning);
-        color: color-mix(in srgb, var(--t-color-warning) 0%, white 100%);
+        background-color: var(--k-color-warning);
+        color: color-mix(in srgb, var(--k-color-warning) 0%, white 100%);
     }
     :host([type="warning"]:hover) {
-        background-color: color-mix(in srgb, var(--t-color-warning), white 10%);
+        background-color: color-mix(in srgb, var(--k-color-warning), white 10%);
     }
 
     :host([variant="ghost"][type="warning"]) {
-        color: var(--t-color-warning);
+        color: var(--k-color-warning);
     }
     :host([variant="ghost"][type="warning"]:hover) {
         background-color: color-mix(
             in srgb,
-            var(--t-color-warning) 15%,
+            var(--k-color-warning) 15%,
             white 5%
         ) !important;
     }
 
     :host([type="error"]),
     :host([type="danger"]) {
-        background-color: var(--t-color-danger);
-        color: color-mix(in srgb, var(--t-color-danger) 0%, white 100%);
+        background-color: var(--k-color-danger);
+        color: color-mix(in srgb, var(--k-color-danger) 0%, white 100%);
     }
     :host([type="error"]:hover),
     :host([type="danger"]:hover) {
-        background-color: color-mix(in srgb, var(--t-color-danger), white 10%);
+        background-color: color-mix(in srgb, var(--k-color-danger), white 10%);
     }
 
     :host([variant="ghost"][type="danger"]),
     :host([variant="ghost"][type="error"]) {
-        color: var(--t-color-danger);
+        color: var(--k-color-danger);
     }
     :host([variant="ghost"][type="danger"]:hover),
     :host([variant="ghost"][type="error"]:hover) {
         background-color: color-mix(
             in srgb,
-            var(--t-color-danger) 15%,
+            var(--k-color-danger) 15%,
             white 5%
         ) !important;
     }
 
     :host([type="info"]) {
-        background-color: var(--t-color-info);
-        color: color-mix(in srgb, var(--t-color-info) 0%, white 100%);
+        background-color: var(--k-color-info);
+        color: color-mix(in srgb, var(--k-color-info) 0%, white 100%);
     }
     :host([type="info"]:hover) {
-        background-color: color-mix(in srgb, var(--t-color-info), white 10%);
+        background-color: color-mix(in srgb, var(--k-color-info), white 10%);
     }
 
     :host([variant="ghost"]) {
@@ -219,14 +219,14 @@ export const styles = css`
                     [checkPos="corner"]
                 )
         ) {
-        background-color: var(--t-color-primary);
-        color: color-mix(in srgb, var(--t-color-primary) 0%, white 100%);
+        background-color: var(--k-color-primary);
+        color: color-mix(in srgb, var(--k-color-primary) 0%, white 100%);
     }
     :host([checkable]) .checked {
-        color: var(--t-color-primary);
+        color: var(--k-color-primary);
     }
     :host([checkable][checkPos="before"]) {
-        padding-left: calc(0.5 * var(--t-spacing-medium));
+        padding-left: calc(0.5 * var(--k-spacing-medium));
     }
 
     :host .badge {
@@ -278,7 +278,7 @@ export const styles = css`
     :host([type="danger"]) .tags > .tag,
     :host([type="error"]) .tags > .tag,
     :host([type="info"]) .tags > .tag {
-        color: color-mix(in srgb, var(--t-color-primary) 0%, white 100%);
+        color: color-mix(in srgb, var(--k-color-primary) 0%, white 100%);
     }
     :host([type="primary"]) .tags > .tag {
         &:hover {
@@ -393,4 +393,4 @@ export const styles = css`
             opacity: 0;
         }
     }
-`;
+`

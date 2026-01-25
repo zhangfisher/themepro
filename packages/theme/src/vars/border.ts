@@ -1,7 +1,7 @@
 function getBorderVars(size: number) {
     return {
         /** 段落与字体 */
-        '--auto-border-color': `var(--t-theme-color-${size})`,
+        '--auto-border-color': `var(--k-theme-color-${size})`,
     }
 }
 

@@ -6,18 +6,18 @@ import { toVarStyles } from './toVarStyles'
  * @example
  *
  * const vars = {
- *   '--t-color-primary': '#000',
- *   '--t-color-secondary': '#333',
- *   '--t-color-tertiary': '#666',
+ *   '--k-color-primary': '#000',
+ *   '--k-color-secondary': '#333',
+ *   '--k-color-tertiary': '#666',
  * }
  *
  * const styles = getVarsStyles(vars, [':host', ':root'], 'data-theme')
  * console.log(styles)
  * 输出：
  * :host([data-theme='primary']),:root([data-theme='primary']) {
- *   --t-color-primary: #000;
- *   --t-color-secondary: #333;
- *   --t-color-tertiary: #666;
+ *   --k-color-primary: #000;
+ *   --k-color-secondary: #333;
+ *   --k-color-tertiary: #666;
  * }
  *
  * @param {Record<string, Record<string, string>>} vars - 包含CSS变量键值对的对象

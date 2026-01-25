@@ -1005,134 +1005,134 @@ ${toVarStyles(value)}
 
     // src/vars/base.ts
     var baseVars = {
-        '--t-border-radius-x-small': '0.2rem',
-        '--t-border-radius-small': '0.3rem',
-        '--t-border-radius-medium': '0.5rem',
-        '--t-border-radius-large': '1rem',
-        '--t-border-radius-x-large': '1.2rem',
-        '--t-border-radius-circle': '50%',
-        '--t-border-radius-pill': '9999px',
-        '--t-shadow-x-small': '0 1px 2px hsl(240 3.8% 46.1% / 6%)',
-        '--t-shadow-small': '0 1px 2px hsl(240 3.8% 46.1% / 12%)',
-        '--t-shadow-medium': '0 2px 4px hsl(240 3.8% 46.1% / 12%)',
-        '--t-shadow-large': '0 2px 8px hsl(240 3.8% 46.1% / 12%)',
-        '--t-shadow-x-large': '0 4px 16px hsl(240 3.8% 46.1% / 12%)',
-        '--t-font-size-x-small': '0.75rem',
-        '--t-font-size-small': '0.875rem',
-        '--t-font-size-medium': '1rem',
-        '--t-font-size-large': '1.25rem',
-        '--t-font-size-x-large': '1.5rem',
-        '--t-font-weight-x-small': '100',
-        '--t-font-weight-small': '200',
-        '--t-font-weight-medium': '300',
-        '--t-font-weight-large': '400',
-        '--t-font-weight-x-large': '500',
+        '--k-border-radius-x-small': '0.2rem',
+        '--k-border-radius-small': '0.3rem',
+        '--k-border-radius-medium': '0.5rem',
+        '--k-border-radius-large': '1rem',
+        '--k-border-radius-x-large': '1.2rem',
+        '--k-border-radius-circle': '50%',
+        '--k-border-radius-pill': '9999px',
+        '--k-shadow-x-small': '0 1px 2px hsl(240 3.8% 46.1% / 6%)',
+        '--k-shadow-small': '0 1px 2px hsl(240 3.8% 46.1% / 12%)',
+        '--k-shadow-medium': '0 2px 4px hsl(240 3.8% 46.1% / 12%)',
+        '--k-shadow-large': '0 2px 8px hsl(240 3.8% 46.1% / 12%)',
+        '--k-shadow-x-large': '0 4px 16px hsl(240 3.8% 46.1% / 12%)',
+        '--k-font-size-x-small': '0.75rem',
+        '--k-font-size-small': '0.875rem',
+        '--k-font-size-medium': '1rem',
+        '--k-font-size-large': '1.25rem',
+        '--k-font-size-x-large': '1.5rem',
+        '--k-font-weight-x-small': '100',
+        '--k-font-weight-small': '200',
+        '--k-font-weight-medium': '300',
+        '--k-font-weight-large': '400',
+        '--k-font-weight-x-large': '500',
         /* 间距 */
-        '--t-spacing-x-small': '0.5rem',
-        '--t-spacing-small': '0.75rem',
-        '--t-spacing-medium': '1rem',
-        '--t-spacing-large': '1.25rem',
-        '--t-spacing-x-large': '1.75rem',
-        '--t-letter-spacing-x-small': 'calc(var(--t-spacing-medium) * 0.01)',
-        '--t-letter-spacing-small': 'calc(var(--t-spacing-medium) * 0.02)',
-        '--t-letter-spacing-medium': 'calc(var(--t-spacing-medium) * 0.05)',
-        '--t-letter-spacing-large': 'calc(var(--t-spacing-medium) * 0.1)',
-        '--t-letter-spacing-x-large': 'calc(var(--t-spacing-medium) * 0.1)',
-        '--t-line-height-x-small': 'var(--t-spacing-medium)',
-        '--t-line-height-small': 'calc(var(--t-spacing-medium) * 1.2)',
-        '--t-line-height-medium': 'calc(var(--t-spacing-medium) * 1.5)',
-        '--t-line-height-large': 'calc(var(--t-spacing-medium) * 1.8)',
-        '--t-line-height-x-large': 'calc(var(--t-spacing-medium) * 2)',
+        '--k-spacing-x-small': '0.5rem',
+        '--k-spacing-small': '0.75rem',
+        '--k-spacing-medium': '1rem',
+        '--k-spacing-large': '1.25rem',
+        '--k-spacing-x-large': '1.75rem',
+        '--k-letter-spacing-x-small': 'calc(var(--k-spacing-medium) * 0.01)',
+        '--k-letter-spacing-small': 'calc(var(--k-spacing-medium) * 0.02)',
+        '--k-letter-spacing-medium': 'calc(var(--k-spacing-medium) * 0.05)',
+        '--k-letter-spacing-large': 'calc(var(--k-spacing-medium) * 0.1)',
+        '--k-letter-spacing-x-large': 'calc(var(--k-spacing-medium) * 0.1)',
+        '--k-line-height-x-small': 'var(--k-spacing-medium)',
+        '--k-line-height-small': 'calc(var(--k-spacing-medium) * 1.2)',
+        '--k-line-height-medium': 'calc(var(--k-spacing-medium) * 1.5)',
+        '--k-line-height-large': 'calc(var(--k-spacing-medium) * 1.8)',
+        '--k-line-height-x-large': 'calc(var(--k-spacing-medium) * 2)',
     }
 
     // src/vars/derived.ts
     var derivedVars = {
         /* 主题色 */
-        '--t-theme-color': 'var(--t-color-theme-8)',
-        '--t-theme-bgcolor': 'var(--t-color-theme-0)',
-        '--t-theme-bgcolor-1': 'var(--t-color-theme-1)',
-        '--t-theme-bgcolor-2': 'var(--t-color-theme-2)',
-        '--t-theme-bgcolor-3': 'var(--t-color-theme-3)',
-        '--t-theme-bgcolor-4': 'var(--t-color-theme-4)',
-        '--t-theme-bgcolor-5': 'var(--t-color-theme-5)',
+        '--k-theme-color': 'var(--k-color-theme-8)',
+        '--k-theme-bgcolor': 'var(--k-color-theme-0)',
+        '--k-theme-bgcolor-1': 'var(--k-color-theme-1)',
+        '--k-theme-bgcolor-2': 'var(--k-color-theme-2)',
+        '--k-theme-bgcolor-3': 'var(--k-color-theme-3)',
+        '--k-theme-bgcolor-4': 'var(--k-color-theme-4)',
+        '--k-theme-bgcolor-5': 'var(--k-color-theme-5)',
         /* 主色调 */
-        '--auto-primary-color': 'var(--t-color-primary-5)',
-        '--auto-success-color': 'var(--t-color-success-5)',
-        '--auto-danger-color': 'var(--t-color-danger-5)',
-        '--auto-warning-color': 'var(--t-color-warning-5)',
-        '--auto-info-color': 'var(--t-color-info-5)',
-        '--auto-theme-color': 'var(--t-color-theme-5)',
+        '--auto-primary-color': 'var(--k-color-primary-5)',
+        '--auto-success-color': 'var(--k-color-success-5)',
+        '--auto-danger-color': 'var(--k-color-danger-5)',
+        '--auto-warning-color': 'var(--k-color-warning-5)',
+        '--auto-info-color': 'var(--k-color-info-5)',
+        '--auto-theme-color': 'var(--k-color-theme-5)',
         /* 字体颜色 */
-        '--auto-color': 'var(--t-theme-color)',
-        '--auto-secondary-color': 'var(--t-color-theme-4)',
-        '--auto-disable-color': 'var(--t-color-theme-3)',
-        '--auto-hover-color': 'var(--t-color-theme-4)',
+        '--auto-color': 'var(--k-theme-color)',
+        '--auto-secondary-color': 'var(--k-color-theme-4)',
+        '--auto-disable-color': 'var(--k-color-theme-3)',
+        '--auto-hover-color': 'var(--k-color-theme-4)',
         '--auto-dark-color': 'color-mix(in srgb, var(--auto-color), black 10%)',
         '--auto-light-color': 'color-mix(in srgb, var(--auto-color), white 10%)',
         /* 背景颜色: 用于面板/对话框/组件的背景 */
-        '--auto-bgcolor': 'var(--t-theme-bgcolor)',
-        '--auto-workspace-bgcolor': 'var(--t-color-theme-1)',
+        '--auto-bgcolor': 'var(--k-theme-bgcolor)',
+        '--auto-workspace-bgcolor': 'var(--k-color-theme-1)',
         /* 亮色: 相对于背景的亮色*/
         '--auto-light-bgcolor': 'color-mix(in hsl, var(--auto-bgcolor), white 20%)',
         /* 暗色: 相对于背景的暗色背景*/
         '--auto-dark-bgcolor': 'color-mix(in hsl, var(--auto-bgcolor), black 10%)',
         /** 随随色背景颜色：用于自动选中颜色，或根据背景颜色自动匹配背景颜色*/
-        '--auto-selected-bgcolor': 'var(--t-color-theme-5)',
-        '--auto-hover-bgcolor': 'color-mix(in srgb, var(--t-color-theme-5), transparent 85%)',
+        '--auto-selected-bgcolor': 'var(--k-color-theme-5)',
+        '--auto-hover-bgcolor': 'color-mix(in srgb, var(--k-color-theme-5), transparent 85%)',
         /* 边框 */
         '--auto-border': '1px solid var(--auto-border-color)',
-        '--auto-border-color': 'var(--t-color-theme-2)',
-        '--auto-selected-border': '1px solid var(--t-color-theme-6)',
-        '--auto-active-border': '1px solid var(--t-color-theme-6)',
+        '--auto-border-color': 'var(--k-color-theme-2)',
+        '--auto-selected-border': '1px solid var(--k-color-theme-6)',
+        '--auto-active-border': '1px solid var(--k-color-theme-6)',
         '--auto-disable-border': '1px solid var(--auto-disable-color)',
-        '--auto-border-active-color': 'var(--t-color-primary-3)',
+        '--auto-border-active-color': 'var(--k-color-primary-3)',
         /* 排版/字体 */
         '--auto-font': 'var(--auto-font-weight) var(--auto-font-size)/1.5 var(--auto-font-family)',
         '--auto-font-family':
             'Lantinghei SC,Microsoft Yahei,Hiragino Sans GB,Microsoft Sans Serif,WenQuanYi Micro Hei,sans-serif',
-        '--auto-font-size': 'var(--t-font-size-medium)',
-        '--auto-font-weight': 'var(--t-font-weight-medium)',
-        '--auto-letter-spacing': 'var(--t-letter-spacing-medium)',
-        '--auto-line-height': 'var(--t-line-height-medium)',
+        '--auto-font-size': 'var(--k-font-size-medium)',
+        '--auto-font-weight': 'var(--k-font-weight-medium)',
+        '--auto-letter-spacing': 'var(--k-letter-spacing-medium)',
+        '--auto-line-height': 'var(--k-line-height-medium)',
         '--auto-title-font':
             'calc(var(--auto-font-weight) + 200) calc(var(--auto-font-size) * 1.1)/1.5 var(--auto-font-family)',
         /* 面板: 用于导航/标题栏/标签页标题 */
-        '--auto-panel-header-color': 'var(--t-theme-color-6)',
+        '--auto-panel-header-color': 'var(--k-theme-color-6)',
         /** 标题背景颜色：用于标题/标题栏的背景颜色*/
         '--auto-panel-header-bgcolor': 'color-mix(in hsl, var(--auto-bgcolor), black 5%)',
         /* 面板背景颜色：用于面板/区块/Drawer等背景颜色*/
         '--auto-panel-bgcolor': 'var(--auto-light-bgcolor)',
         /* 边框/间距 */
-        '--auto-border-radius': 'var(--t-border-radius-medium)',
-        '--auto-spacing': 'var(--t-spacing-medium)',
-        '--auto-padding': 'var(--t-spacing-medium)',
-        '--auto-margin': 'var(--t-spacing-medium)',
-        '--auto-shadow': 'var(--t-shadow-medium)',
+        '--auto-border-radius': 'var(--k-border-radius-medium)',
+        '--auto-spacing': 'var(--k-spacing-medium)',
+        '--auto-padding': 'var(--k-spacing-medium)',
+        '--auto-margin': 'var(--k-spacing-medium)',
+        '--auto-shadow': 'var(--k-shadow-medium)',
         /* 输入框 */
         /** 输入框背景颜色：用于输入框背景颜色*/
-        '--auto-input-bgcolor': 'var(--t-theme-bgcolor)',
+        '--auto-input-bgcolor': 'var(--k-theme-bgcolor)',
         '--auto-input-padding': 'calc(0.5 * var(--auto-padding))',
-        '--auto-input-height': 'var(--t-line-height-medium)',
+        '--auto-input-height': 'var(--k-line-height-medium)',
         /** 其他 */
-        '--auto-icon-size': 'calc(1.2 * var(--t-font-size-medium))',
+        '--auto-icon-size': 'calc(1.2 * var(--k-font-size-medium))',
     }
 
     // src/vars/size.ts
     function getSizeVars(size) {
         return {
             /** 段落与字体 */
-            '--auto-font-size': `var(--t-font-size-${size})`,
-            '--auto-font-weight': `var(--t-font-weight-${size})`,
-            '--auto-letter-spacing': `var(--t-letter-spacing-${size})`,
-            '--auto-line-height': `var(--t-line-height-${size})`,
+            '--auto-font-size': `var(--k-font-size-${size})`,
+            '--auto-font-weight': `var(--k-font-weight-${size})`,
+            '--auto-letter-spacing': `var(--k-letter-spacing-${size})`,
+            '--auto-line-height': `var(--k-line-height-${size})`,
             /* 用于内边距和外边距 */
-            '--auto-spacing': `var(--t-spacing-${size})`,
-            '--auto-padding': `var(--t-spacing-${size})`,
-            '--auto-margin': `var(--t-spacing-${size})`,
-            '--auto-shadow': `var(--t-shadow-${size})`,
-            '--auto-icon-size': `calc(1.5 * var(--t-font-size-${size}))`,
+            '--auto-spacing': `var(--k-spacing-${size})`,
+            '--auto-padding': `var(--k-spacing-${size})`,
+            '--auto-margin': `var(--k-spacing-${size})`,
+            '--auto-shadow': `var(--k-shadow-${size})`,
+            '--auto-icon-size': `calc(1.5 * var(--k-font-size-${size}))`,
             /* 输入框 */
-            '--auto-input-height': `var(--t-input-height-${size})`,
+            '--auto-input-height': `var(--k-input-height-${size})`,
         }
     }
     var sizeVars = {
@@ -1146,7 +1146,7 @@ ${toVarStyles(value)}
     // src/vars/radius.ts
     function getRadiusVars(radius) {
         return {
-            '--auto-border-radius': `var(--t-border-radius-${radius})!important`,
+            '--auto-border-radius': `var(--k-border-radius-${radius})!important`,
         }
     }
     var radiusVars = {
@@ -1160,9 +1160,9 @@ ${toVarStyles(value)}
     // src/vars/spacing.ts
     function getSpacingVars(spacing) {
         return {
-            '--auto-spacing': `var(--t-spacing-${spacing}) !important`,
-            '--auto-padding': `var(--t-spacing-${spacing}) !important`,
-            '--auto-margin': `var(--t-spacing-${spacing}) !important`,
+            '--auto-spacing': `var(--k-spacing-${spacing}) !important`,
+            '--auto-padding': `var(--k-spacing-${spacing}) !important`,
+            '--auto-margin': `var(--k-spacing-${spacing}) !important`,
         }
     }
     var spacingVars = {
@@ -1176,7 +1176,7 @@ ${toVarStyles(value)}
     // src/vars/shadow.ts
     function getShadowVars(size) {
         return {
-            '--auto-shadow': `var(--t-shadow-${size})!important`,
+            '--auto-shadow': `var(--k-shadow-${size})!important`,
         }
     }
     var shadowVars = {
@@ -1334,7 +1334,7 @@ ${toVarStyles(this._createThemeColorVars(presetThemes.light.baseColor))}
         _createThemeColorVars(theme = this.theme) {
             const themeColor = theme in presetThemes ? presetThemes[theme].baseColor : theme
             const vars = generateGradientVars(themeColor, {
-                prefix: '--t-color-theme-',
+                prefix: '--k-color-theme-',
             })
             return vars
         }
@@ -1343,7 +1343,7 @@ ${toVarStyles(this._createThemeColorVars(presetThemes.light.baseColor))}
             const vars = {}
             variants.forEach((name) => {
                 if (this.options[name]) {
-                    Object.assign(vars, generateGradientVars(this.options[name], { prefix: `--t-color-${name}-` }))
+                    Object.assign(vars, generateGradientVars(this.options[name], { prefix: `--k-color-${name}-` }))
                 }
             })
             injectStylesheet(

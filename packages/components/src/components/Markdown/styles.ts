@@ -1,4 +1,4 @@
-import { css } from "lit";
+import { css } from 'lit'
 
 export const styles = css`
     .auto-btn {
@@ -20,37 +20,37 @@ export const styles = css`
         user-select: none;
         &:hover {
             border: var(--auto-active-border);
-            background-color: var(--t-color-theme-1);
+            background-color: var(--k-color-theme-1);
             color: var(--auto-primary-color);
         }
 
         &:active {
-            background: var(--t-color-theme-2);
+            background: var(--k-color-theme-2);
         }
 
         &.x-small {
-            font-size: var(--t-font-size-x-small);
-            padding: calc(0.5 * var(--t-spacing-x-small)) var(--t-spacing-x-small);
+            font-size: var(--k-font-size-x-small);
+            padding: calc(0.5 * var(--k-spacing-x-small)) var(--k-spacing-x-small);
         }
 
         &.small {
-            font-size: var(--t-font-size-small);
-            padding: calc(0.5 * var(--t-spacing-small)) var(--t-spacing-small);
+            font-size: var(--k-font-size-small);
+            padding: calc(0.5 * var(--k-spacing-small)) var(--k-spacing-small);
         }
 
         &.medium {
-            font-size: var(--t-font-size-medium);
-            padding: calc(0.5* var(--t-spacing-medium)) var(--t-spacing-medium);
+            font-size: var(--k-font-size-medium);
+            padding: calc(0.5* var(--k-spacing-medium)) var(--k-spacing-medium);
         }
 
         &.large {
-            font-size: var(--t-font-size-large);
-            padding: calc(0.5* var(--t-spacing-large)) var(--t-spacing-large);
+            font-size: var(--k-font-size-large);
+            padding: calc(0.5* var(--k-spacing-large)) var(--k-spacing-large);
         }
 
         &.x-large {
-            font-size: var(--t-font-size-x-large);
-            padding: calc(0.5* var(--t-spacing-x-large)) var(--t-spacing-x-large);
+            font-size: var(--k-font-size-x-large);
+            padding: calc(0.5* var(--k-spacing-x-large)) var(--k-spacing-x-large);
         }
 
         &.compact {
@@ -73,7 +73,7 @@ export const styles = css`
             border: 1px solid var(--auto-primary-color);
 
             &:hover {
-                background-color: var(--t-color-primary-4);
+                background-color: var(--k-color-primary-4);
             }
 
             &:active {
@@ -82,12 +82,12 @@ export const styles = css`
         }
 
         &.success {
-            background-color: var(--t-color-success-5);
-            color: color-mix(in srgb, var(--t-color-success-5) 0%, white 100%);
-            border: 1px solid var(--t-color-success-5);
+            background-color: var(--k-color-success-5);
+            color: color-mix(in srgb, var(--k-color-success-5) 0%, white 100%);
+            border: 1px solid var(--k-color-success-5);
 
             &:hover {
-                background-color: var(--t-color-success-4);
+                background-color: var(--k-color-success-4);
             }
 
             &:active {
@@ -96,12 +96,12 @@ export const styles = css`
         }
 
         &.warning {
-            background-color: var(--t-color-warning-5);
-            color: color-mix(in srgb, var(--t-color-warning-5) 0%, white 100%);
-            border: 1px solid var(--t-color-warning-5);
+            background-color: var(--k-color-warning-5);
+            color: color-mix(in srgb, var(--k-color-warning-5) 0%, white 100%);
+            border: 1px solid var(--k-color-warning-5);
 
             &:hover {
-                background-color: var(--t-color-warning-4);
+                background-color: var(--k-color-warning-4);
             }
 
             &:active {
@@ -111,12 +111,12 @@ export const styles = css`
 
         &.error,
         &.danger {
-            background-color: var(--t-color-danger-5);
-            color: color-mix(in srgb, var(--t-color-danger-5) 0%, white 100%);
-            border: 1px solid var(--t-color-danger-5);
+            background-color: var(--k-color-danger-5);
+            color: color-mix(in srgb, var(--k-color-danger-5) 0%, white 100%);
+            border: 1px solid var(--k-color-danger-5);
 
             &:hover {
-                background-color: var(--t-color-danger-4);
+                background-color: var(--k-color-danger-4);
             }
 
             &:active {
@@ -125,16 +125,16 @@ export const styles = css`
         }
 
         &.info {
-            background-color: var(--t-color-info-4);
-            color: color-mix(in srgb, var(--t-color-info-4) 0%, white 100%);
-            border: 1px solid var(--t-color-info-4);
+            background-color: var(--k-color-info-4);
+            color: color-mix(in srgb, var(--k-color-info-4) 0%, white 100%);
+            border: 1px solid var(--k-color-info-4);
 
             &:hover {
-                background-color: var(--t-color-info-3);
+                background-color: var(--k-color-info-3);
             }
 
             &:active {
                 background-color: var(--auto-info-color);
             }
         }
-}`;
+}`

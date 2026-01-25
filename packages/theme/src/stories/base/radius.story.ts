@@ -7,26 +7,26 @@ export const renderBorderRadiusStory = () => {
             <div class="auto-card">
                 <div class="auto-card-header">圆角大小</div>
                 <div class="auto-card-body col">                    
-                    <div class="auto-card-body-item " style="border-radius:var(--t-border-radius-none)">
-                        --t-border-radius-none
+                    <div class="auto-card-body-item " style="border-radius:var(--k-border-radius-none)">
+                        --k-border-radius-none
                     </div>
-                    <div class="auto-card-body-item " style="border-radius:var(--t-border-radius-x-small)">
-                        --t-border-radius-x-small
+                    <div class="auto-card-body-item " style="border-radius:var(--k-border-radius-x-small)">
+                        --k-border-radius-x-small
                     </div>
-                    <div class="auto-card-body-item " style="border-radius:var(--t-border-radius-small)">
-                        --t-border-radius-small
+                    <div class="auto-card-body-item " style="border-radius:var(--k-border-radius-small)">
+                        --k-border-radius-small
                     </div>
-                    <div class="auto-card-body-item " style="border-radius:var(--t-border-radius-medium)">
-                        --t-border-radius-medium
+                    <div class="auto-card-body-item " style="border-radius:var(--k-border-radius-medium)">
+                        --k-border-radius-medium
                     </div>
-                    <div class="auto-card-body-item " style="border-radius:var(--t-border-radius-large)">
-                        --t-border-radius-x-large
+                    <div class="auto-card-body-item " style="border-radius:var(--k-border-radius-large)">
+                        --k-border-radius-x-large
                     </div>
-                    <div class="auto-card-body-item " style="border-radius:var(--t-border-radius-x-large)">
-                        --t-border-radius-x-large
+                    <div class="auto-card-body-item " style="border-radius:var(--k-border-radius-x-large)">
+                        --k-border-radius-x-large
                     </div>
-                    <div class="auto-card-body-item " style="border-radius:var(--t-border-radius-pill)">
-                        --t-border-radius-pill
+                    <div class="auto-card-body-item " style="border-radius:var(--k-border-radius-pill)">
+                        --k-border-radius-pill
                     </div>
                 </div>                
             </div>

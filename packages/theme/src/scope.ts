@@ -196,16 +196,16 @@ export class ThemeScope {
         const themeColor = this.options.themeColor
 
         const darkStyleFix = toVarStyles({
-            '--t-theme-bgcolor': 'var(--t-color-theme-1)',
-            '--t-theme-bgcolor-1': 'var(--t-color-theme-0)',
+            '--k-theme-bgcolor': 'var(--k-color-theme-1)',
+            '--k-theme-bgcolor-1': 'var(--k-color-theme-0)',
         })
         const lightBorderFix = `:host(:not([dark])[data-theme='${themeColor}']),:root:not([dark])[data-theme='${themeColor}']{${toVarStyles(
             {
-                '--auto-border-color': 'var(--t-theme-color-3)',
+                '--auto-border-color': 'var(--k-theme-color-3)',
             },
         )}}\n:host(:not([dark])[data-theme='${themeColor}'][colorized]),:root:not([dark])[data-theme='${themeColor}'][colorized]{${toVarStyles(
             {
-                '--auto-border-color': 'var(--t-theme-color-1)',
+                '--auto-border-color': 'var(--k-theme-color-1)',
             },
         )}}`
         return `${this._selectors}[data-theme='${themeColor}']{
@@ -253,7 +253,7 @@ export class ThemeScope {
         const darkSelector2 = mapCssSelector(this._selectors, { dark: '' })
         const lightBorderFixs = `:host(:not([data-theme]):not([dark])),:root:not([data-theme]):not([dark]){${toVarStyles(
             {
-                '--auto-border-color': 'var(--t-theme-color-3)',
+                '--auto-border-color': 'var(--k-theme-color-3)',
             },
         )}}\n`
         return `${lightSelector}{\ncolor-scheme: light;\n${toVarStyles(this._createThemeColorVars(themeColor))}\n}\n
@@ -286,11 +286,11 @@ export class ThemeScope {
      */
     protected _generateSemanticColorStyles() {
         const vars: Record<string, string> = {
-            '--t-color-primary': this.options.primary,
-            '--t-color-success': this.options.success,
-            '--t-color-warning': this.options.warning,
-            '--t-color-danger': this.options.danger,
-            '--t-color-info': this.options.info,
+            '--k-color-primary': this.options.primary,
+            '--k-color-success': this.options.success,
+            '--k-color-warning': this.options.warning,
+            '--k-color-danger': this.options.danger,
+            '--k-color-info': this.options.info,
         }
         const isOverride = !!(
             this.options.primary ||
@@ -312,7 +312,7 @@ export class ThemeScope {
     protected _createThemeColorVars(color: string = this.options.themeColor, reverse: boolean = false) {
         const themeColor = color in presetThemes ? presetThemes[color].color : color
         const vars: Record<string, string> = generateThemeColorVars(themeColor, {
-            prefix: '--t-color-theme-',
+            prefix: '--k-color-theme-',
             reverse,
         })
         return vars

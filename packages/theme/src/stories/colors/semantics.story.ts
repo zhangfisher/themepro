@@ -9,22 +9,22 @@ export const renderSemanticsColorStory = () => {
                 <div class="auto-card-body col">                  
                     <pre><code>HueUI</code>支持primary,success,danger,warning,info</pre>  
                     <div class="auto-card-body-item center " style="color:white;background-color:var(--auto-primary-color)">
-                        --auto-primary-color: var(--t-color-primary)
+                        --auto-primary-color: var(--k-color-primary)
                     </div>
                     <div class="auto-card-body-item  center" style="color:white;background-color:var(--auto-secondary-color)">
-                        --auto-secondary-color: var(--t-color-secondary)
+                        --auto-secondary-color: var(--k-color-secondary)
                     </div>                    
                     <div class="auto-card-body-item center " style="color:white;background-color:var(--auto-success-color)">
-                        --auto-success-color: var(--t-color-success)                        
+                        --auto-success-color: var(--k-color-success)                        
                     </div>
                     <div class="auto-card-body-item center " style="color:white;background-color:var(--auto-danger-color)">
-                        --auto-danger-color: var(--t-color-danger)                        
+                        --auto-danger-color: var(--k-color-danger)                        
                     </div>
                     <div class="auto-card-body-item center" style="color:white;background-color:var(--auto-warning-color)">
-                        --auto-warning-color: var(--t-color-warning)                        
+                        --auto-warning-color: var(--k-color-warning)                        
                     </div>
                     <div class="auto-card-body-item center " style="color:white;background-color:var(--auto-info-color)">
-                        --auto-info-color: var(--t-color-info)                        
+                        --auto-info-color: var(--k-color-info)                        
                     </div>
                      
                 </div>

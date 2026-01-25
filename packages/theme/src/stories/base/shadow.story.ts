@@ -7,23 +7,23 @@ export const renderShadowStory = () => {
             <div class="auto-card">
                 <div class="auto-card-header">阴影大小</div>
                 <div class="auto-card-body col">                    
-                    <div class="auto-card-body-item " style="box-shadow:var(--t-shadow-none)">
-                        --t-shadow-none
+                    <div class="auto-card-body-item " style="box-shadow:var(--k-shadow-none)">
+                        --k-shadow-none
                     </div>
-                    <div class="auto-card-body-item " style="box-shadow:var(--t-shadow-x-small)">
-                        --t-shadow-x-small
+                    <div class="auto-card-body-item " style="box-shadow:var(--k-shadow-x-small)">
+                        --k-shadow-x-small
                     </div>
-                    <div class="auto-card-body-item " style="box-shadow:var(--t-shadow-small)">
-                        --t-shadow-small
+                    <div class="auto-card-body-item " style="box-shadow:var(--k-shadow-small)">
+                        --k-shadow-small
                     </div>
-                    <div class="auto-card-body-item " style="box-shadow:var(--t-shadow-medium)">
-                        --t-shadow-medium
+                    <div class="auto-card-body-item " style="box-shadow:var(--k-shadow-medium)">
+                        --k-shadow-medium
                     </div>
-                    <div class="auto-card-body-item " style="box-shadow:var(--t-shadow-large)">
-                        --t-shadow-x-large
+                    <div class="auto-card-body-item " style="box-shadow:var(--k-shadow-large)">
+                        --k-shadow-x-large
                     </div>
-                    <div class="auto-card-body-item " style="box-shadow:var(--t-shadow-x-large)">
-                        --t-shadow-x-large
+                    <div class="auto-card-body-item " style="box-shadow:var(--k-shadow-x-large)">
+                        --k-shadow-x-large
                     </div> 
                 </div>
                 

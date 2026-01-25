@@ -36,28 +36,28 @@
 }
 
 .auto-alert.warning {
-    background: var(--t-color-warning-1);
-    border: 1px solid var(--t-color-warning-3);
-    color: var(--t-color-warning-9);
+    background: var(--k-color-warning-1);
+    border: 1px solid var(--k-color-warning-3);
+    color: var(--k-color-warning-9);
 }
 
 .auto-alert.success {
-    background: var(--t-color-success-1);
-    border: 1px solid var(--t-color-success-3);
-    color: var(--t-color-success-9);
+    background: var(--k-color-success-1);
+    border: 1px solid var(--k-color-success-3);
+    color: var(--k-color-success-9);
 }
 
 .auto-alert.primary {
-    background: var(--t-color-primary-1);
-    border: 1px solid var(--t-color-primary-3);
-    color: var(--t-color-primary-9);
+    background: var(--k-color-primary-1);
+    border: 1px solid var(--k-color-primary-3);
+    color: var(--k-color-primary-9);
 }
 
 .auto-alert.error,
 .auto-alert.danger {
-    background: var(--t-color-danger-1);
-    border: 1px solid var(--t-color-danger-3);
-    color: var(--t-color-danger-9);
+    background: var(--k-color-danger-1);
+    border: 1px solid var(--k-color-danger-3);
+    color: var(--k-color-danger-9);
 }
 
 .closeable {
@@ -183,43 +183,43 @@
 .auto-btn:hover,
 .auto-btn button:hover {
     border: var(--auto-active-border);
-    background-color: var(--t-color-theme-1);
+    background-color: var(--k-color-theme-1);
     color: var(--auto-primary-color);
 }
 
 .auto-btn:active,
 .auto-btn button:active {
-    background: var(--t-color-theme-2);
+    background: var(--k-color-theme-2);
 }
 
 .auto-btn.x-small,
 .auto-btn button.x-small {
-    font-size: var(--t-font-size-x-small);
-    padding: calc(0.5 * var(--t-spacing-x-small)) var(--t-spacing-x-small);
+    font-size: var(--k-font-size-x-small);
+    padding: calc(0.5 * var(--k-spacing-x-small)) var(--k-spacing-x-small);
 }
 
 .auto-btn.small,
 .auto-btn button.small {
-    font-size: var(--t-font-size-small);
-    padding: calc(0.5 * var(--t-spacing-small)) var(--t-spacing-small);
+    font-size: var(--k-font-size-small);
+    padding: calc(0.5 * var(--k-spacing-small)) var(--k-spacing-small);
 }
 
 .auto-btn.medium,
 .auto-btn button.medium {
-    font-size: var(--t-font-size-medium);
-    padding: calc(0.5*var(--t-spacing-medium)) var(--t-spacing-medium);
+    font-size: var(--k-font-size-medium);
+    padding: calc(0.5*var(--k-spacing-medium)) var(--k-spacing-medium);
 }
 
 .auto-btn.large,
 .auto-btn button.large {
-    font-size: var(--t-font-size-large);
-    padding: calc(0.5*var(--t-spacing-large)) var(--t-spacing-large);
+    font-size: var(--k-font-size-large);
+    padding: calc(0.5*var(--k-spacing-large)) var(--k-spacing-large);
 }
 
 .auto-btn.x-large,
 .auto-btn button.x-large {
-    font-size: var(--t-font-size-x-large);
-    padding: calc(0.5*var(--t-spacing-x-large)) var(--t-spacing-x-large);
+    font-size: var(--k-font-size-x-large);
+    padding: calc(0.5*var(--k-spacing-x-large)) var(--k-spacing-x-large);
 }
 
 .auto-btn.compact,
@@ -248,7 +248,7 @@
 
 .auto-btn.primary:hover,
 .auto-btn button.primary:hover {
-    background-color: var(--t-color-primary-4);
+    background-color: var(--k-color-primary-4);
 }
 
 .auto-btn.primary:active,
@@ -258,14 +258,14 @@
 
 .auto-btn.success,
 .auto-btn button.success {
-    background-color: var(--t-color-success-5);
-    color: color-mix(in srgb, var(--t-color-success-5) 0%, white 100%);
-    border: 1px solid var(--t-color-success-5);
+    background-color: var(--k-color-success-5);
+    color: color-mix(in srgb, var(--k-color-success-5) 0%, white 100%);
+    border: 1px solid var(--k-color-success-5);
 }
 
 .auto-btn.success:hover,
 .auto-btn button.success:hover {
-    background-color: var(--t-color-success-4);
+    background-color: var(--k-color-success-4);
 }
 
 .auto-btn.success:active,
@@ -275,14 +275,14 @@
 
 .auto-btn.warning,
 .auto-btn button.warning {
-    background-color: var(--t-color-warning-5);
-    color: color-mix(in srgb, var(--t-color-warning-5) 0%, white 100%);
-    border: 1px solid var(--t-color-warning-5);
+    background-color: var(--k-color-warning-5);
+    color: color-mix(in srgb, var(--k-color-warning-5) 0%, white 100%);
+    border: 1px solid var(--k-color-warning-5);
 }
 
 .auto-btn.warning:hover,
 .auto-btn button.warning:hover {
-    background-color: var(--t-color-warning-4);
+    background-color: var(--k-color-warning-4);
 }
 
 .auto-btn.warning:active,
@@ -294,16 +294,16 @@
 .auto-btn button.error,
 .auto-btn.danger,
 .auto-btn button.danger {
-    background-color: var(--t-color-danger-5);
-    color: color-mix(in srgb, var(--t-color-danger-5) 0%, white 100%);
-    border: 1px solid var(--t-color-danger-5);
+    background-color: var(--k-color-danger-5);
+    color: color-mix(in srgb, var(--k-color-danger-5) 0%, white 100%);
+    border: 1px solid var(--k-color-danger-5);
 }
 
 .auto-btn.error:hover,
 .auto-btn button.error:hover,
 .auto-btn.danger:hover,
 .auto-btn button.danger:hover {
-    background-color: var(--t-color-danger-4);
+    background-color: var(--k-color-danger-4);
 }
 
 .auto-btn.error:active,
@@ -315,14 +315,14 @@
 
 .auto-btn.info,
 .auto-btn button.info {
-    background-color: var(--t-color-info-4);
-    color: color-mix(in srgb, var(--t-color-info-4) 0%, white 100%);
-    border: 1px solid var(--t-color-info-4);
+    background-color: var(--k-color-info-4);
+    color: color-mix(in srgb, var(--k-color-info-4) 0%, white 100%);
+    border: 1px solid var(--k-color-info-4);
 }
 
 .auto-btn.info:hover,
 .auto-btn button.info:hover {
-    background-color: var(--t-color-info-3);
+    background-color: var(--k-color-info-3);
 }
 
 .auto-btn.info:active,

@@ -10,20 +10,20 @@ export const renderFontStory = () => {
             <div class="auto-card">
                 <div class="auto-card-header">间距</div>
                 <div class="auto-card-body col">                    
-                    <div class="auto-card-body-item " style="font-size:var(--t-font-size-x-small)">
-                        道可道非常道，名可名非常名。--t-font-size-x-small 
+                    <div class="auto-card-body-item " style="font-size:var(--k-font-size-x-small)">
+                        道可道非常道，名可名非常名。--k-font-size-x-small 
                     </div>
-                    <div class="auto-card-body-item " style="font-size:var(--t-font-size-small)">
-                        道可道非常道，名可名非常名。--t-font-size-small
+                    <div class="auto-card-body-item " style="font-size:var(--k-font-size-small)">
+                        道可道非常道，名可名非常名。--k-font-size-small
                     </div>
-                    <div class="auto-card-body-item " style="font-size:var(--t-font-size-medium)">
-                        道可道非常道，名可名非常名。--t-font-size-medium
+                    <div class="auto-card-body-item " style="font-size:var(--k-font-size-medium)">
+                        道可道非常道，名可名非常名。--k-font-size-medium
                     </div>
-                    <div class="auto-card-body-item " style="font-size:var(--t-font-size-large)">
-                        道可道非常道，名可名非常名。--t-font-size-x-large
+                    <div class="auto-card-body-item " style="font-size:var(--k-font-size-large)">
+                        道可道非常道，名可名非常名。--k-font-size-x-large
                     </div>
-                    <div class="auto-card-body-item " style="font-size:var(--t-font-size-x-large)">
-                        道可道非常道，名可名非常名。--t-font-size-x-large
+                    <div class="auto-card-body-item " style="font-size:var(--k-font-size-x-large)">
+                        道可道非常道，名可名非常名。--k-font-size-x-large
                     </div> 
                 </div>                
             </div> 

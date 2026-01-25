@@ -9,7 +9,7 @@ export const renderAutoColorStory = () => {
                 <div class="auto-card-body">                    
                       <div id="themeSelector" style="padding:1em;display: flex; gap: 0.5rem;align-items: center;" >
                         ${repeat(Array.from({ length: 10 }), (_, i) => {
-                            return html`<span class="theme-color" style="width: 100%;height: 2em;background-color:var(--t-color-theme-${i});">${i}</span>`
+                            return html`<span class="theme-color" style="width: 100%;height: 2em;background-color:var(--k-color-theme-${i});">${i}</span>`
                         })}        
                     </div>   
                 </div>                
