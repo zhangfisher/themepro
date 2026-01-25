@@ -1,15 +1,15 @@
-import type { Meta, StoryObj } from "@storybook/web-components";
-import { html } from "lit";
-import { ifDefined } from "lit/directives/if-defined.js";
-import "../components/Button/index";
-import { fn } from "storybook/test";
+import type { Meta, StoryObj } from '@storybook/web-components'
+import { html } from 'lit'
+import { ifDefined } from 'lit/directives/if-defined.js'
+import '../components/Button/index'
+import { fn } from 'storybook/test'
 
 const meta: Meta = {
-    title: "通用/AutoButton",
+    title: '通用/AutoButton',
     args: {
-        label: "按钮",
-        type: "default",
-        size: "medium",
+        label: '按钮',
+        type: 'default',
+        size: 'medium',
         shape: undefined,
         loading: false,
         disabled: false,
@@ -23,40 +23,32 @@ const meta: Meta = {
         onAutoClick: fn(),
     },
     argTypes: {
-        label: { control: "text" },
+        label: { control: 'text' },
         checkPos: {
-            control: "select",
-            options: ["default", "before", "after", "corner"],
+            control: 'select',
+            options: ['default', 'before', 'after', 'corner'],
         },
         type: {
-            control: "select",
-            options: [
-                "default",
-                "primary",
-                "info",
-                "danger",
-                "warning",
-                "success",
-                "link",
-            ],
+            control: 'select',
+            options: ['default', 'primary', 'info', 'danger', 'warning', 'success', 'link'],
         },
         size: {
-            control: "select",
-            options: ["x-small", "small", "medium", "large", "x-large"],
+            control: 'select',
+            options: ['x-small', 'small', 'medium', 'large', 'x-large'],
         },
-        shape: { control: "select", options: ["circle", "pill", undefined] },
-        loading: { control: "boolean" },
-        disabled: { control: "boolean" },
-        value: { control: "text" },
-        checked: { control: "boolean" },
-        checkValues: { control: "text" },
-        block: { control: "boolean" },
+        shape: { control: 'select', options: ['circle', 'pill', undefined] },
+        loading: { control: 'boolean' },
+        disabled: { control: 'boolean' },
+        value: { control: 'text' },
+        checked: { control: 'boolean' },
+        checkValues: { control: 'text' },
+        block: { control: 'boolean' },
         variant: {
-            control: "select",
-            options: [undefined, "default", "ghost", "link", "outline"],
+            control: 'select',
+            options: [undefined, 'default', 'ghost', 'link', 'outline'],
         },
-        icon: { control: "text" },
-        labelGrow: { control: "boolean" },
+        icon: { control: 'text' },
+        labelGrow: { control: 'boolean' },
     },
     render: (args: any) => html`
         <auto-button
@@ -73,14 +65,14 @@ const meta: Meta = {
         >
         </auto-button>
     `,
-} satisfies Meta;
+} satisfies Meta
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const ButtonType: Story = {
-    name: "语义按钮",
+    name: '语义按钮',
     render: (args: any) => {
         return html`
             <auto-flex gap="1em">
@@ -101,11 +93,11 @@ export const ButtonType: Story = {
                     >信息按钮</auto-button
                 >
             </auto-flex>
-        `;
+        `
     },
-};
+}
 export const ButtonSize: Story = {
-    name: "按钮尺寸",
+    name: '按钮尺寸',
     render: (args: any) => {
         return html`
             <auto-flex gap="1em">
@@ -142,11 +134,11 @@ export const ButtonSize: Story = {
                     label="超大按钮"
                 ></auto-button>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 export const ButtonShape: Story = {
-    name: "按钮形状",
+    name: '按钮形状',
     render: (args: any) => {
         return html`
             <auto-flex gap="0.5em" direction="column">
@@ -212,11 +204,11 @@ export const ButtonShape: Story = {
                     ></auto-button>
                 </auto-flex>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 export const ButtonIcon: Story = {
-    name: "按钮图标",
+    name: '按钮图标',
     render: (args: any) => {
         return html`
             <auto-flex gap="0.5em" direction="column">
@@ -419,11 +411,11 @@ export const ButtonIcon: Story = {
                     >
                 </auto-flex>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 export const ButtonDisabled: Story = {
-    name: "禁用按钮",
+    name: '禁用按钮',
     render: () => {
         return html`
             <auto-flex gap="1em">
@@ -454,11 +446,11 @@ export const ButtonDisabled: Story = {
                     label="信息按钮"
                 ></auto-button>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 export const ButtonVeriDisabled: Story = {
-    name: "垂直布局按钮",
+    name: '垂直布局按钮',
     render: () => {
         return html`
             <auto-flex gap="1em">
@@ -495,11 +487,11 @@ export const ButtonVeriDisabled: Story = {
                     label="文件"
                 ></auto-button>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 export const ButtonLoading: Story = {
-    name: "加载中",
+    name: '加载中',
     render: () => {
         return html`
             <auto-flex direction="column" gap="1em">
@@ -569,11 +561,11 @@ export const ButtonLoading: Story = {
                     ></auto-button>
                 </auto-flex>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 export const ButtonGHost: Story = {
-    name: "幽灵按钮",
+    name: '幽灵按钮',
     render: () => {
         return html`
             <auto-flex direction="column" gap="1em">
@@ -658,11 +650,11 @@ export const ButtonGHost: Story = {
                     ></auto-button>
                 </auto-flex>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 export const ButtonOutline: Story = {
-    name: "边框按钮",
+    name: '边框按钮',
     render: () => {
         return html`
             <auto-flex direction="column" gap="1em">
@@ -790,11 +782,11 @@ export const ButtonOutline: Story = {
                     ></auto-button>
                 </auto-flex>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 export const ButtonChecked: Story = {
-    name: "复选按钮",
+    name: '复选按钮',
     render: (args: any) => {
         return html`
             <auto-flex direction="column" gap="1em">
@@ -970,11 +962,11 @@ export const ButtonChecked: Story = {
                     ></auto-button>
                 </auto-flex>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 export const ButtonBadge: Story = {
-    name: "带Badge按钮",
+    name: '带Badge按钮',
     render: (args: any) => {
         return html`
             <auto-flex direction="column" gap="1em">
@@ -1036,7 +1028,7 @@ export const ButtonBadge: Story = {
                     <auto-button
                         badge="8999"
                         style="width: 200px;"
-                        .props=${{ label: "aaaa" }}
+                        .props=${{ label: 'aaaa' }}
                         icon="home"
                         label="默认"
                     ></auto-button>
@@ -1108,11 +1100,11 @@ export const ButtonBadge: Story = {
                     ></auto-button>
                 </auto-flex>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 export const LabelGrowButton: Story = {
-    name: "控制LabelGrow按钮",
+    name: '控制LabelGrow按钮',
     render: (args: any) => {
         return html`
             <auto-flex direction="column" gap="1em">
@@ -1170,7 +1162,7 @@ export const LabelGrowButton: Story = {
                     <auto-button
                         .labelGrow=${args.labelGrow}
                         style="width: 200px;"
-                        .props=${{ label: "aaaa" }}
+                        .props=${{ label: 'aaaa' }}
                         icon="home"
                         label="默认"
                     ></auto-button>
@@ -1242,12 +1234,12 @@ export const LabelGrowButton: Story = {
                     ></auto-button>
                 </auto-flex>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 
 export const TagButton: Story = {
-    name: "带Tag按钮",
+    name: '带Tag按钮',
     args: {
         //@ts-expect-error
         labelGrow: true,
@@ -1257,10 +1249,7 @@ export const TagButton: Story = {
             <auto-flex direction="column" gap="1em">
                 <auto-flex gap="1em">
                     <auto-button
-                        .tags=${[
-                            { icon: "settings", checkable: true },
-                            { icon: "tag", checkable: true, value: true },
-                        ]}
+                        .tags=${[{ icon: 'settings', checkable: true }, { icon: 'tag', checkable: true, value: true }]}
                         .labelGrow=${args.labelGrow}
                         style="width: 200px;"
                         icon="home"
@@ -1288,10 +1277,12 @@ export const TagButton: Story = {
                 </auto-flex>
                 <auto-flex gap="1em">
                     <auto-button
-                        .tags=${[
-                            { icon: "settings", checkable: true },
-                            { icon: "tag", checkable: true, value: true },
-                        ] as any}
+                        .tags=${
+                            [
+                                { icon: 'settings', checkable: true },
+                                { icon: 'tag', checkable: true, value: true },
+                            ] as any
+                        }
                         .labelGrow=${args.labelGrow}
                         style="width: 200px;"
                         icon="home"
@@ -1322,7 +1313,7 @@ export const TagButton: Story = {
                         tags="settings,tag"
                         .labelGrow=${args.labelGrow}
                         style="width: 200px;"
-                        .props=${{ label: "aaaa" }}
+                        .props=${{ label: 'aaaa' }}
                         icon="home"
                         label="默认"
                     ></auto-button>
@@ -1346,25 +1337,30 @@ export const TagButton: Story = {
 
                 <auto-flex gap="1em">
                     <auto-button
-                        .tags=${[
-                            {
-                                icon: "folder,folder-open",
-                                tips: "文件夹",
-                                checkable: true,
-                            },
-                            { icon: "tag", tips: "标签" },
-                        ] as any}
+                        data-tooltip="默认带提示"
+                        .tags=${
+                            [
+                                {
+                                    icon: 'folder,folder-open',
+                                    tooltip: '文件夹',
+                                    checkable: true,
+                                },
+                                { icon: 'tag', tooltip: '标签' },
+                            ] as any
+                        }
                         .labelGrow=${args.labelGrow}
                         style="width: 200px;"
                         size="large"
                         icon="home"
-                        label="默认"
+                        label="默认带提示"
                     ></auto-button>
                     <auto-button
-                        .tags=${[
-                            { icon: "settings", checkable: true },
-                            { icon: "tag", checkable: true, value: true },
-                        ] as any}
+                        .tags=${
+                            [
+                                { icon: 'settings', checkable: true },
+                                { icon: 'tag', checkable: true, value: true },
+                            ] as any
+                        }
                         .labelGrow=${args.labelGrow}
                         style="width: 200px;"
                         size="large"
@@ -1445,7 +1441,7 @@ export const TagButton: Story = {
                         tags="settings,tag"
                         .labelGrow=${args.labelGrow}
                         style="width: 200px;"
-                        .props=${{ label: "aaaa" }}
+                        .props=${{ label: 'aaaa' }}
                         icon="home"
                         label="默认"
                     ></auto-button>
@@ -1554,12 +1550,12 @@ export const TagButton: Story = {
                     ></auto-button>
                 </auto-flex>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 
 export const ButtonOnclickEvent: Story = {
-    name: "onclick 属性事件",
+    name: 'onclick 属性事件',
     render: (args: any) => {
         return html`
             <auto-flex direction="column" gap="1em">
@@ -1625,6 +1621,6 @@ export const ButtonOnclickEvent: Story = {
                     ></auto-button>
                 </auto-flex>
             </auto-flex>
-        `;
+        `
     },
-};
+}

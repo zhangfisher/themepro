@@ -1,26 +1,26 @@
-import type { Meta, StoryObj } from "@storybook/web-components";
-import { html } from "lit";
-import "./TooltipDemo";
+import type { Meta, StoryObj } from '@storybook/web-components'
+import { html } from 'lit'
+import './TooltipDemo'
 
 const meta: Meta = {
-    title: "控制器/Tooltip/默认Slot内容",
-    tags: ["autodocs"],
+    title: '控制器/Tooltip/默认Slot内容',
+    tags: ['autodocs'],
     render: () => html`<tooltip-demo></tooltip-demo>`,
     parameters: {
-        layout: "centered",
+        layout: 'centered',
         docs: {
             description: {
                 story: "演示如何使用默认 slot(unnamed slot)来作为 tooltip 的内容来源。当 slot 名称为空或 'default' 时，会读取 host 元素中没有 slot 属性的默认子元素。",
             },
         },
     },
-};
+}
 
-export default meta;
-type Story = StoryObj;
+export default meta
+type Story = StoryObj
 
 export const 默认Slot基本用法: Story = {
-    name: "默认Slot基本用法",
+    name: '默认Slot基本用法',
     render: () => html`
         <tooltip-demo>
             <div style="display: flex; gap: 20px; flex-wrap: wrap; padding: 40px;">
@@ -65,10 +65,10 @@ export const 默认Slot基本用法: Story = {
             },
         },
     },
-};
+}
 
 export const 默认Slot和命名Slot混用: Story = {
-    name: "默认Slot和命名Slot混用",
+    name: '默认Slot和命名Slot混用',
     render: () => html`
         <tooltip-demo>
             <div style="display: flex; gap: 20px; flex-wrap: wrap; padding: 40px;">
@@ -133,14 +133,14 @@ export const 默认Slot和命名Slot混用: Story = {
     parameters: {
         docs: {
             description: {
-                story: "演示如何在同一个组件中同时使用默认 slot 和多个命名 slot。默认 slot 不设置 slot 属性，命名 slot 需要指定 slot 属性。",
+                story: '演示如何在同一个组件中同时使用默认 slot 和多个命名 slot。默认 slot 不设置 slot 属性，命名 slot 需要指定 slot 属性。',
             },
         },
     },
-};
+}
 
 export const 默认Slot复杂内容: Story = {
-    name: "默认Slot复杂内容",
+    name: '默认Slot复杂内容',
     render: () => html`
         <tooltip-demo>
             <div style="display: flex; gap: 20px; flex-wrap: wrap; padding: 40px;">
@@ -194,31 +194,25 @@ export const 默认Slot复杂内容: Story = {
     parameters: {
         docs: {
             description: {
-                story: "默认 slot 可以包含复杂的 HTML 结构，包括布局、样式和交互元素。适用于展示用户资料、产品信息等需要富文本展示的场景。",
+                story: '默认 slot 可以包含复杂的 HTML 结构，包括布局、样式和交互元素。适用于展示用户资料、产品信息等需要富文本展示的场景。',
             },
         },
     },
-};
+}
 
 export const 默认Slot动态内容示例: Story = {
-    name: "默认Slot动态内容示例",
+    name: '默认Slot动态内容示例',
     render: () => html`
         <tooltip-demo>
             <div style="display: flex; gap: 20px; flex-wrap: wrap; padding: 40px;">
                 <div style="display: flex; gap: 12px; align-items: center;">
-                    <button
+                    <div
                         data-tooltip="slot://"
                         data-tooltip-placement="right"
                         style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                     >
-                        状态信息
-                    </button>
-
-                    <span style="font-size: 13px; color: #666;">悬停查看实时状态</span>
-                </div>
-
-                <!-- 默认 slot 内容：实时状态 -->
-                <div style="padding: 12px; background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; min-width: 200px;">
+                        <!-- 默认 slot 内容：实时状态 -->
+                <div  style="display:none;padding: 12px; background: #fff; border: 1px solid #e0e0e0; border-radius: 6px; min-width: 200px;">
                     <div style="font-weight: bold; margin-bottom: 10px; color: #333; display: flex; align-items: center; gap: 6px;">
                         <span style="font-size: 16px;">📊</span>
                         系统状态
@@ -260,21 +254,23 @@ export const 默认Slot动态内容示例: Story = {
                         <span>运行时间: 15天 8小时</span>
                         <span style="color: #4caf50;">● 正常</span>
                     </div>
+                </div><span style="font-size: 13px; color: #666;">悬停查看实时状态</span>
                 </div>
+                </div>                
             </div>
         </tooltip-demo>
     `,
     parameters: {
         docs: {
             description: {
-                story: "默认 slot 可以展示动态更新的信息，如系统状态、进度条、数据统计等。内容可以是静态的，也可以通过 JavaScript 动态更新。",
+                story: '默认 slot 可以展示动态更新的信息，如系统状态、进度条、数据统计等。内容可以是静态的，也可以通过 JavaScript 动态更新。',
             },
         },
     },
-};
+}
 
 export const 多个默认Slot示例: Story = {
-    name: "多个默认Slot示例",
+    name: '多个默认Slot示例',
     render: () => html`
         <div style="display: flex; flex-direction: column; gap: 20px; padding: 40px;">
             <!-- 示例 1 -->
@@ -341,8 +337,8 @@ export const 多个默认Slot示例: Story = {
     parameters: {
         docs: {
             description: {
-                story: "演示如何在不同的 tooltip-demo 组件中各自使用独立的默认 slot。每个组件的默认 slot 内容是相互独立的。",
+                story: '演示如何在不同的 tooltip-demo 组件中各自使用独立的默认 slot。每个组件的默认 slot 内容是相互独立的。',
             },
         },
     },
-};
+}

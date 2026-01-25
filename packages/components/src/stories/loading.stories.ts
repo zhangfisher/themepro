@@ -1,48 +1,40 @@
-import type { Meta, StoryObj } from "@storybook/web-components";
-import { html } from "lit";
-import { ifDefined } from "lit/directives/if-defined.js";
-import "../components/Loading/index";
-import "../components/Watermark/index";
+import type { Meta, StoryObj } from '@storybook/web-components'
+import { html } from 'lit'
+import { ifDefined } from 'lit/directives/if-defined.js'
+import '../components/Loading/index'
+import '../components/Watermark/index'
 
 const meta: Meta = {
-    title: "通用/AutoLoading",
+    title: '通用/AutoLoading',
     args: {
         size: undefined,
         tips: undefined,
         color: undefined,
-        direction: "column",
+        direction: 'column',
         fit: false,
         mask: false,
         type: undefined,
     },
     argTypes: {
         size: {
-            control: "select",
-            options: ["x-small", "small", "medium", "large", "x-large"],
+            control: 'select',
+            options: ['x-small', 'small', 'medium', 'large', 'x-large'],
         },
-        tips: { control: "text" },
-        color: { control: "color" },
+        tips: { control: 'text' },
+        color: { control: 'color' },
         direction: {
-            control: "select",
-            options: ["row", "column"],
+            control: 'select',
+            options: ['row', 'column'],
         },
-        fit: { control: "boolean" },
-        mask: { control: "text" },
+        fit: { control: 'boolean' },
+        mask: { control: 'text' },
         type: {
-            control: "select",
-            options: [
-                "balls",
-                "bars",
-                "bubbles",
-                "cubes",
-                "cylon",
-                "spin",
-                "spinning-bubbles",
-                "spokes",
-            ],
+            control: 'select',
+            options: ['balls', 'bars', 'bubbles', 'cubes', 'cylon', 'spin', 'spinning-bubbles', 'spokes'],
         },
     },
     render: (args: any) => html`
+        <div style="width:500px;height:300px;">
         <auto-loading
             size=${ifDefined(args.size)}
             message=${ifDefined(args.tips)}
@@ -51,20 +43,20 @@ const meta: Meta = {
             ?fit=${args.fit}
             maskColor="${args.mask}"
             type=${ifDefined(args.type)}
-        ></auto-loading>
+        ></auto-loading></div>
     `,
-} satisfies Meta;
+} satisfies Meta
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
-    name: "默认加载",
-};
+    name: '默认加载',
+}
 
 export const LoadingSizes: Story = {
-    name: "不同尺寸",
+    name: '不同尺寸',
     render: () => {
         return html`
             <auto-flex gap="2em" align="center" style="padding:2em">
@@ -136,12 +128,12 @@ export const LoadingSizes: Story = {
                     message="X-Large"
                 ></auto-loading>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 
 export const LoadingWithTips: Story = {
-    name: "带提示文字",
+    name: '带提示文字',
     render: () => {
         return html`
             <auto-flex direction="column" gap="1.5em" align="center">
@@ -176,12 +168,12 @@ export const LoadingWithTips: Story = {
                     message="加载中..."
                 ></auto-loading>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 
 export const LoadingWithColors: Story = {
-    name: "自定义颜色",
+    name: '自定义颜色',
     render: () => {
         return html`
             <auto-flex gap="1.5em" align="center">
@@ -243,12 +235,12 @@ export const LoadingWithColors: Story = {
                     message="紫色"
                 ></auto-loading>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 
 export const LoadingDirections: Story = {
-    name: "布局方向",
+    name: '布局方向',
     render: () => {
         return html`
             <auto-flex direction="column" gap="3em">
@@ -328,12 +320,12 @@ export const LoadingDirections: Story = {
                     ></auto-loading>
                 </auto-flex>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 
 export const LoadingFit: Story = {
-    name: "充满容器",
+    name: '充满容器',
     render: () => {
         return html`
             <auto-flex
@@ -395,12 +387,12 @@ export const LoadingFit: Story = {
                     ></auto-loading>
                 </auto-card>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 
 export const LoadingTextOverflow: Story = {
-    name: "文本截断",
+    name: '文本截断',
     render: () => {
         return html`
             <div style="width:400px;margin:0 auto">
@@ -462,12 +454,12 @@ export const LoadingTextOverflow: Story = {
                     </auto-card>
                 </auto-flex>
             </div>
-        `;
+        `
     },
-};
+}
 
 export const LoadingMask: Story = {
-    name: "遮盖模式",
+    name: '遮盖模式',
     render: () => {
         return html`
             <auto-flex direction="column" gap="2em">
@@ -576,16 +568,16 @@ export const LoadingMask: Story = {
                 <!-- 不同类型的遮盖加载 -->
                 <auto-flex gap="1.5em" wrap>
                     ${[
-                        { type: "", label: "默认", color: "#1890ff" },
-                        { type: "bars", label: "条形", color: "#52c41a" },
-                        { type: "bubbles", label: "气泡", color: "#faad14" },
-                        { type: "spin", label: "旋转", color: "#13c2c2" },
+                        { type: '', label: '默认', color: '#1890ff' },
+                        { type: 'bars', label: '条形', color: '#52c41a' },
+                        { type: 'bubbles', label: '气泡', color: '#faad14' },
+                        { type: 'spin', label: '旋转', color: '#13c2c2' },
                         {
-                            type: "spinning-bubbles",
-                            label: "旋转气泡",
-                            color: "#eb2f96",
+                            type: 'spinning-bubbles',
+                            label: '旋转气泡',
+                            color: '#eb2f96',
                         },
-                        { type: "spokes", label: "辐射", color: "#595959" },
+                        { type: 'spokes', label: '辐射', color: '#595959' },
                     ].map(
                         (item) => html`
                             <auto-flex
@@ -609,16 +601,16 @@ export const LoadingMask: Story = {
                                     ></auto-loading>
                                 </div>
                             </auto-flex>
-                        `
+                        `,
                     )}
                 </auto-flex>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 
 export const LoadingTypes: Story = {
-    name: "加载图标类型",
+    name: '加载图标类型',
     render: () => {
         return html`
             <auto-flex gap="2em" wrap>
@@ -689,12 +681,12 @@ export const LoadingTypes: Story = {
                     ></auto-loading>
                 </auto-flex>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 
 export const LoadingStatus: Story = {
-    name: "状态展示",
+    name: '状态展示',
     render: () => {
         return html`
             <auto-flex direction="column" gap="2em">
@@ -758,12 +750,12 @@ export const LoadingStatus: Story = {
                     </auto-flex>
                 </auto-flex>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 
 export const LoadingStatusWithActions: Story = {
-    name: "状态与操作按钮",
+    name: '状态与操作按钮',
     render: () => {
         return html`
             <auto-flex direction="column" gap="2em">
@@ -839,12 +831,12 @@ export const LoadingStatusWithActions: Story = {
                     </auto-card>
                 </auto-flex>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 
 export const OnActionClickExample: Story = {
-    name: "onActionClick 事件示例",
+    name: 'onActionClick 事件示例',
     render: () => {
         return html`
             <style>
@@ -1009,13 +1001,11 @@ export const OnActionClickExample: Story = {
                                 模拟成功
                             </auto-button>
                             <auto-button
-                                type="default"
                                 onclick="actionClickDemo.simulateError('demo-action-click')"
                             >
                                 模拟失败
                             </auto-button>
                             <auto-button
-                                type="default"
                                 onclick="actionClickDemo.reset('demo-action-click')"
                             >
                                 重置
@@ -1051,12 +1041,12 @@ export const OnActionClickExample: Story = {
                     </div>
                 </div>
             </auto-flex>
-        `;
+        `
     },
-};
+}
 
 export const LoadingStatusInteractive: Story = {
-    name: "状态切换交互示例",
+    name: '状态切换交互示例',
     render: () => {
         return html`
             <style>
@@ -1161,14 +1151,12 @@ export const LoadingStatusInteractive: Story = {
                             >
                                 模拟成功
                             </auto-button>
-                            <auto-button
-                                type="default"
+                            <auto-button 
                                 onclick="loadingDemo.simulateError('demo-cancel')"
                             >
                                 模拟失败
                             </auto-button>
-                            <auto-button
-                                type="default"
+                            <auto-button 
                                 onclick="loadingDemo.reset('demo-cancel')"
                             >
                                 重置
@@ -1296,6 +1284,6 @@ export const LoadingStatusInteractive: Story = {
                     </div>
                 </div>
             </auto-flex>
-        `;
+        `
     },
-};
+}
