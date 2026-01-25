@@ -31,45 +31,45 @@ const icons: string[] = [
 ];
 
 const renderIcon = (args: any) => html`
-    <h3>默认自动尺寸: 由var(--auto-icon-size)控制</h3>
-    <auto-flex
+    <h3>默认自动尺寸: 由var(--kylin-icon-size)控制</h3>
+    <kylin-flex
         wrap
         gap="1em"
         style="border: var(--auto-border);padding:1em;font-size:2em"
     >
         ${repeat(icons, (name) => {
-            return html`<auto-icon name=${name}></auto-icon>`;
+            return html`<kylin-icon name=${name}></kylin-icon>`;
         })}
-    </auto-flex>
+    </kylin-flex>
     <h3>继承尺寸: 继承容器字体尺寸</h3>
     <div style="border: var(--auto-border);padding:1em;margin-bottom:1em;">
         <p style="margin-bottom:0.5em;color:var(--auto-text-secondary);">
             调整容器字体大小来控制图标尺寸（当前: ${args.inheritContainerFontSize}px）
         </p>
-        <auto-flex
+        <kylin-flex
             wrap
             gap="1em"
             style="font-size:${args.inheritContainerFontSize}px"
         >
             ${repeat(icons, (name) => {
-                return html`<auto-icon inherit name=${name}></auto-icon>`;
+                return html`<kylin-icon inherit name=${name}></kylin-icon>`;
             })}
-        </auto-flex>
+        </kylin-flex>
     </div>
     <h3>指定尺寸: 通过size属性指定</h3>
-    <auto-flex
+    <kylin-flex
         wrap
         gap="1em"
         style="border: var(--auto-border);padding:1em;font-size:2em"
     >
         ${repeat(icons, (name) => {
-            return html`<auto-icon ze="12px" name=${name}></auto-icon>`;
+            return html`<kylin-icon ze="12px" name=${name}></kylin-icon>`;
         })}
-    </auto-flex>
+    </kylin-flex>
     <h3>圆形</h3>
-    <auto-flex wrap gap="1em" style="border: var(--auto-border);padding:1em;">
+    <kylin-flex wrap gap="1em" style="border: var(--auto-border);padding:1em;">
         ${repeat(icons, (name) => {
-            return html`<auto-icon
+            return html`<kylin-icon
                 size=${args.size}
                 name=${name}
                 title="${name}"
@@ -79,13 +79,13 @@ const renderIcon = (args: any) => html`
                 .strokeWidth=${typeof args.strokeWidth === "number"
                     ? args.strokeWidth
                     : undefined}
-            ></auto-icon>`;
+            ></kylin-icon>`;
         })}
-    </auto-flex>
+    </kylin-flex>
     <h3>圆角矩形</h3>
-    <auto-flex wrap gap="1em" style="border: var(--auto-border);padding:1em;">
+    <kylin-flex wrap gap="1em" style="border: var(--auto-border);padding:1em;">
         ${repeat(icons, (name) => {
-            return html`<auto-icon
+            return html`<kylin-icon
                 size=${args.size}
                 name=${name}
                 title="${name}"
@@ -95,19 +95,19 @@ const renderIcon = (args: any) => html`
                 .strokeWidth=${typeof args.strokeWidth === "number"
                     ? args.strokeWidth
                     : undefined}
-            ></auto-icon>`;
+            ></kylin-icon>`;
         })}
-    </auto-flex>
+    </kylin-flex>
 `;
 
 const meta = {
-    title: "通用/AutoIcon",
+    title: "通用/KylinIcon",
     tags: ["autodocs"],
     render: renderIcon,
     argTypes: {
         name: {
             control: "text",
-            description: "图标名称，对应 CSS 变量 --auto-icon-{name}",
+            description: "图标名称，对应 CSS 变量 --kylin-icon-{name}",
         },
         shape: {
             control: "select",

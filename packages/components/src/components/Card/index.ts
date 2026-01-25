@@ -1,12 +1,12 @@
 /**
  *
- * <auto-card>
+ * <kylin-card>
  *    <div slot='header'></div>
  *    <div slot='title'></div>
  *    <div slot='actions'></div>
  *    <div slot='body'></div>
  *    <div slot='footer'></div>
- * </auto-card>
+ * </kylin-card>
  *
  */
 import { LitElement, html } from 'lit'
@@ -16,8 +16,8 @@ import { when } from 'lit/directives/when.js'
 
 import { styles } from './styles'
 
-@customElement('auto-card')
-export class AutoCard extends LitElement {
+@customElement('kylin-card')
+export class KylinCard extends LitElement {
     static styles = styles
 
     @property({ type: String })
@@ -42,6 +42,6 @@ export class AutoCard extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'auto-card': AutoCard
+        'kylin-card': KylinCard
     }
 }

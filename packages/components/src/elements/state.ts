@@ -2,10 +2,10 @@ import { consume } from "@lit/context";
 import { ThemeProContext, type ThemeProStore } from "../context";
 import { property } from "lit/decorators.js";
 import { getVal, type StateOperate } from "autostore";
-import { AutoElementBase } from "./base";
-export class AutoStateElement<
+import { KylinElementBase } from "./base";
+export class KylinStateElement<
     State extends Record<string, any> = Record<string, any>
-> extends AutoElementBase<State> {
+> extends KylinElementBase<State> {
     @consume({ context: ThemeProContext })
     @property({ attribute: false })
     store!: ThemeProStore;

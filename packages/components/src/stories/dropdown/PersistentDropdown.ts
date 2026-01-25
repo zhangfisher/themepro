@@ -14,7 +14,7 @@ export const PersistentDropdown: Story = {
                     需要通过按钮或按ESC键手动关闭
                 </p>
                 <div style="margin-top: 20px;">
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="持久化下拉菜单（点击外部不关闭）"
                         .popupOptions=${{
                             cache: true,
@@ -36,7 +36,7 @@ export const PersistentDropdown: Story = {
                                 手动关闭
                             </button>
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
                 </div>
             </div>
         `;

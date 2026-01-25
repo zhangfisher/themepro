@@ -14,7 +14,7 @@ export const MouseOverDropdown: Story = {
                         将鼠标移到按钮上会自动显示下拉内容，移开时会自动隐藏
                     </p>
 
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="悬停显示菜单"
                         type="primary"
                         .popupOptions=${{
@@ -48,9 +48,9 @@ export const MouseOverDropdown: Story = {
                         >
                             🚪 退出
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
 
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="用户信息"
                         type="info"
                         .popupOptions=${{
@@ -93,9 +93,9 @@ export const MouseOverDropdown: Story = {
                         >
                             🚪 退出登录
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
 
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="工具提示"
                         type="warning"
                         .popupOptions=${{
@@ -113,7 +113,7 @@ export const MouseOverDropdown: Story = {
                             <strong>提示:</strong>
                             这是一个通过鼠标悬停触发的工具提示，适用于简短的辅助信息展示。
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
                 </div>
 
                 <div style="display: flex; flex-direction: column; gap: 20px;">
@@ -122,7 +122,7 @@ export const MouseOverDropdown: Story = {
                         传统的点击触发模式，需要点击按钮才会显示下拉内容
                     </p>
 
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="点击显示菜单"
                         type="default"
                         .popupOptions=${{
@@ -153,7 +153,7 @@ export const MouseOverDropdown: Story = {
                                 🚪 退出
                             </div>
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
                 </div>
             </div>
 

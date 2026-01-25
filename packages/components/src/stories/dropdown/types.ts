@@ -3,8 +3,8 @@ import { fn } from "storybook/test";
 import "../../components/Dropdown/index";
 
 export const meta: Meta = {
-    title: "通用/AutoDropdown",
-    component: "auto-dropdown",
+    title: "通用/KylinDropdown",
+    component: "kylin-dropdown",
     args: {
         label: "按钮",
         type: "default",

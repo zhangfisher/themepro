@@ -1,11 +1,11 @@
 /**
  *
- * <auto-button>确定</auto-button>
- * <auto-button type="primary">取消</auto-button>
- * <auto-button type="success">确定</auto-button>
- * <auto-button type="warning">确定</auto-button>
- * <auto-button type="d">确定</auto-button>
- * <auto-button type="info">确定</auto-button>
+ * <kylin-button>确定</kylin-button>
+ * <kylin-button type="primary">取消</kylin-button>
+ * <kylin-button type="success">确定</kylin-button>
+ * <kylin-button type="warning">确定</kylin-button>
+ * <kylin-button type="d">确定</kylin-button>
+ * <kylin-button type="info">确定</kylin-button>
  *
  *
  */
@@ -16,8 +16,8 @@ import { styleMap } from "lit/directives/style-map.js";
 import { classMap } from "lit/directives/class-map.js";
 import { styles } from "./styles";
 
-@customElement("auto-icon-button")
-export class AutoIconButton extends LitElement {
+@customElement("kylin-icon-button")
+export class KylinIconButton extends LitElement {
     static styles = styles;
 
     @property({ type: String })
@@ -39,10 +39,10 @@ export class AutoIconButton extends LitElement {
         return html`
             <div
                 class="${classMap({
-                    "auto-icon": true,
+                    "kylin-icon": true,
                 })} "
                 style="${styleMap({
-                    "mask-image": `var(--auto-icon-${this.name})`,
+                    "mask-image": `var(--kylin-icon-${this.name})`,
                     color: this.color,
                     "font-size": this.size,
                     "--stroke-width": this.strokeWidth,
@@ -57,6 +57,6 @@ export class AutoIconButton extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        "auto-icon-button": AutoIconButton;
+        "kylin-icon-button": KylinIconButton;
     }
 }

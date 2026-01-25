@@ -64,7 +64,7 @@ export class NestedTestContent extends LitElement {
                 <div class="position-indicator">L1</div>
                 <h4 class="test-title">单层嵌套测试</h4>
                 <div class="dropdown-row">
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="底部弹出"
                         type="primary"
                         .popupOptions=${{
@@ -81,9 +81,9 @@ export class NestedTestContent extends LitElement {
                         <div style="padding: 8px 12px; cursor: pointer;">
                             📍 底部选项 2
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
 
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="右侧弹出"
                         type="success"
                         .popupOptions=${{
@@ -100,9 +100,9 @@ export class NestedTestContent extends LitElement {
                         <div style="padding: 8px 12px; cursor: pointer;">
                             ➡️ 右侧选项 2
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
 
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="顶部弹出"
                         type="warning"
                         .popupOptions=${{
@@ -119,9 +119,9 @@ export class NestedTestContent extends LitElement {
                         <div style="padding: 8px 12px; cursor: pointer;">
                             ⬆️ 顶部选项 2
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
 
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="左侧弹出"
                         type="info"
                         .popupOptions=${{
@@ -138,7 +138,7 @@ export class NestedTestContent extends LitElement {
                         <div style="padding: 8px 12px; cursor: pointer;">
                             ⬅️ 左侧选项 2
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
                 </div>
             </div>
 
@@ -147,7 +147,7 @@ export class NestedTestContent extends LitElement {
                 <div class="position-indicator">L1</div>
                 <h4 class="test-title">多层嵌套测试 - 第一层</h4>
                 <div class="dropdown-row">
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="二层嵌套"
                         type="primary"
                         .popupOptions=${{
@@ -162,7 +162,7 @@ export class NestedTestContent extends LitElement {
                             <h5 style="margin: 0 0 10px 0; color: #0066cc;">
                                 第二层嵌套
                             </h5>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="三层嵌套"
                                 type="success"
                                 .popupOptions=${{
@@ -179,7 +179,7 @@ export class NestedTestContent extends LitElement {
                                     >
                                         第三层嵌套
                                     </h6>
-                                    <auto-dropdown
+                                    <kylin-dropdown
                                         label="四层嵌套"
                                         type="warning"
                                         .popupOptions=${{
@@ -198,9 +198,9 @@ export class NestedTestContent extends LitElement {
                                         >
                                             🎯 最深层选项 2
                                         </div>
-                                    </auto-dropdown>
+                                    </kylin-dropdown>
                                     <div style="margin-top: 10px;">
-                                        <auto-dropdown
+                                        <kylin-dropdown
                                             label="左侧弹出"
                                             type="info"
                                             .popupOptions=${{
@@ -214,13 +214,13 @@ export class NestedTestContent extends LitElement {
                                             >
                                                 ⬅️ L3 左侧选项
                                             </div>
-                                        </auto-dropdown>
+                                        </kylin-dropdown>
                                         </div>
                                     </div>
-                                </auto-dropdown>
+                                </kylin-dropdown>
 
                                 <div style="margin-top: 10px;">
-                                    <auto-dropdown
+                                    <kylin-dropdown
                                         label="L2 底部弹出"
                                         type="info"
                                         .popupOptions=${{
@@ -239,10 +239,10 @@ export class NestedTestContent extends LitElement {
                                         >
                                             ⬇️ L2 底部选项 2
                                         </div>
-                                    </auto-dropdown>
+                                    </kylin-dropdown>
                                 </div>
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
                     </div>
                 </div>
             </div>
@@ -252,7 +252,7 @@ export class NestedTestContent extends LitElement {
                 <div class="position-indicator">边界</div>
                 <h4 class="test-title">边界位置测试</h4>
                 <div class="dropdown-row">
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="右下角弹出"
                         type="danger"
                         .popupOptions=${{
@@ -269,9 +269,9 @@ export class NestedTestContent extends LitElement {
                         <div style="padding: 8px 12px; cursor: pointer;">
                             🎯 边界选项 2
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
 
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="左上角弹出"
                         type="primary"
                         .popupOptions=${{
@@ -288,7 +288,7 @@ export class NestedTestContent extends LitElement {
                         <div style="padding: 8px 12px; cursor: pointer;">
                             🎯 对角选项 2
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
                 </div>
             </div>
 
@@ -305,7 +305,7 @@ export class NestedTestContent extends LitElement {
                     class="dropdown-row"
                     style="justify-content: flex-end;"
                 >
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="右侧自动反转"
                         type="success"
                         .popupOptions=${{
@@ -325,7 +325,7 @@ export class NestedTestContent extends LitElement {
                         <div style="padding: 8px 12px; cursor: pointer;">
                             🔄 选项 3
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
                 </div>
             </div>
         `;
@@ -366,9 +366,9 @@ export class NestedDropdownTest extends LitElement {
     render() {
         return html`
             <div class="test-container">
-                <h3 class="test-title">🎯 AutoDropdown 嵌套弹出位置测试</h3>
+                <h3 class="test-title">🎯 KylinDropdown 嵌套弹出位置测试</h3>
                 <p class="test-description">
-                    测试 AutoDropdown
+                    测试 KylinDropdown
                     组件在不同嵌套层级下的弹出位置计算是否正确，
                     包括单层嵌套和多层嵌套的情况。
                 </p>

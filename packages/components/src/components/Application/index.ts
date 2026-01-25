@@ -1,6 +1,6 @@
 import { customElement } from "lit/decorators/custom-element.js";
 import { html } from "lit";
-import { AutoStateElement } from "../../elements/state";
+import { KylinStateElement } from "../../elements/state";
 import { TooltipController } from "../../controllers/tooltip/controller";
 import type {
     TooltipControllerOptions,
@@ -8,7 +8,7 @@ import type {
 } from "../../controllers/tooltip/types";
 import { styles } from "./styles";
 
-export interface AutoApplicationrops {
+export interface KylinApplicationrops {
     tooltip?: TooltipOptions;
 }
 /**a
@@ -16,9 +16,9 @@ export interface AutoApplicationrops {
  *
  * @example
  * ```html
- * <auto-application>
- *   <auto-button data-tooltip="提示内容">悬停我</auto-button>
- * </auto-application>
+ * <kylin-application>
+ *   <kylin-button data-tooltip="提示内容">悬停我</kylin-button>
+ * </kylin-application>
  * ```
  *
  * @example
@@ -29,8 +29,8 @@ export interface AutoApplicationrops {
  * </div>
  * ```
  */
-@customElement("auto-application")
-export class AutoApplication extends AutoStateElement<AutoApplicationrops> {
+@customElement("kylin-application")
+export class KylinApplication extends KylinStateElement<KylinApplicationrops> {
     static styles = styles;
 
     /**
@@ -77,6 +77,6 @@ export class AutoApplication extends AutoStateElement<AutoApplicationrops> {
 
 declare global {
     interface HTMLElementTagNameMap {
-        "auto-application": AutoApplication;
+        "kylin-application": KylinApplication;
     }
 }

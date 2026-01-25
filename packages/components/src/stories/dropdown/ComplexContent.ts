@@ -8,7 +8,7 @@ export const ComplexContent: Story = {
             <div style="padding: 20px;">
                 <h3>包含表单的复杂下拉内容</h3>
                 <div style="margin-top: 20px;">
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="包含表单的复杂下拉内容"
                         .popupOptions=${{
                             placement: "bottom-start",
@@ -82,7 +82,7 @@ export const ComplexContent: Story = {
                                 </button>
                             </div>
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
                 </div>
             </div>
         `;

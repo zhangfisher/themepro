@@ -8,7 +8,7 @@
  *
  * const loader = new HTMLLoader({
  *    container,
- *    actions?: AutoButton[]
+ *    actions?: KylinButton[]
  * })
  *
  * loader.load(url).then((v)=>{
@@ -25,9 +25,9 @@
  */
 
 import type {
-    AutoLoading,
-    AutoLoadingActionEventDetail,
-    AutoLoadingProps,
+    KylinLoading,
+    KylinLoadingActionEventDetail,
+    KylinLoadingProps,
 } from "@/components/Loading";
 import { removeUnescapedChars } from "./removeUnescapedChars";
 import { deepMerge } from "flex-tools/object/deepMerge";
@@ -43,10 +43,10 @@ export type HTMLLoaderOptions = {
      * 传递给 fetch 的选项
      */
     fetchOptions?: RequestInit;
-    onLoading?: AutoLoadingProps & {
+    onLoading?: KylinLoadingProps & {
         callback?: () => void;
     };
-    onReject?: AutoLoadingProps & {
+    onReject?: KylinLoadingProps & {
         fallback?: string; // 当失败且不重试时的回退内容
         callback?: (e: Error) => void;
     };
@@ -95,7 +95,7 @@ export type HTMLLoaderOptions = {
 
 export class HTMLLoader {
     options: HTMLLoaderOptions;
-    loading?: AutoLoading;
+    loading?: KylinLoading;
     private _resolve?: () => void;
     private _reject?: (reason?: any) => void;
     private _isLoading: boolean = false;
@@ -125,7 +125,7 @@ export class HTMLLoader {
     }
 
     private _onLoadingActionClick = (e: any) => {
-        const detail = e.detail as AutoLoadingActionEventDetail;
+        const detail = e.detail as KylinLoadingActionEventDetail;
         const actionId = detail.id;
         switch (actionId) {
             case "close":
@@ -158,19 +158,19 @@ export class HTMLLoader {
     };
 
     /**
-     * 创建AutoLoading元素
+     * 创建KylinLoading元素
      * @returns
      */
     private _createLoading() {
         if (!this.options.container) return;
-        const loading = document.createElement("auto-loading");
+        const loading = document.createElement("kylin-loading") as any;
         const loadingAttrs = this.options.onLoading || {};
         Object.entries(loadingAttrs).forEach(([K, v]) => {
             if (!isFunction(v)) loading.setAttribute(K, v);
         });
         loading.addEventListener("actionclick", this._onLoadingActionClick);
         this.options.container.appendChild(loading);
-        this.loading = loading;
+        this.loading = loading as KylinLoading;
     }
 
     private _onLoadReject(e: any) {

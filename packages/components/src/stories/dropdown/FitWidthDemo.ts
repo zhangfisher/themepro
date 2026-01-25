@@ -21,7 +21,7 @@ export const FitWidthDemo: Story = {
                     <div
                         style="display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap;"
                     >
-                        <auto-dropdown label="短按钮" type="primary">
+                        <kylin-dropdown label="短按钮" type="primary">
                             <div
                                 style="padding: 12px; min-width: 200px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
                             >
@@ -41,9 +41,9 @@ export const FitWidthDemo: Story = {
                                     短选项
                                 </div>
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
 
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="这是一个很长的按钮文本"
                             type="success"
                         >
@@ -66,7 +66,7 @@ export const FitWidthDemo: Story = {
                                     选项 3
                                 </div>
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
                     </div>
 
                     <h4>使用 fit="true"</h4>
@@ -78,7 +78,7 @@ export const FitWidthDemo: Story = {
                     <div
                         style="display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap;"
                     >
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="短按钮"
                             type="primary"
                             .popupOptions=${{ fit: true }}
@@ -102,9 +102,9 @@ export const FitWidthDemo: Story = {
                                     短选项
                                 </div>
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
 
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="这是一个很长的按钮文本"
                             type="success"
                             .popupOptions=${{ fit: true }}
@@ -128,7 +128,7 @@ export const FitWidthDemo: Story = {
                                     选项 3
                                 </div>
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
                     </div>
 
                     <h4>对比演示</h4>
@@ -140,7 +140,7 @@ export const FitWidthDemo: Story = {
                     <div
                         style="display: flex; gap: 20px; flex-direction: column; max-width: 500px;"
                     >
-                        <auto-dropdown label="fit=false (默认)" type="warning">
+                        <kylin-dropdown label="fit=false (默认)" type="warning">
                             <div
                                 style="padding: 12px; min-width: 250px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
                             >
@@ -160,9 +160,9 @@ export const FitWidthDemo: Story = {
                                     短
                                 </div>
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
 
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="fit=true"
                             type="info"
                             .popupOptions=${{ fit: true }}
@@ -186,12 +186,12 @@ export const FitWidthDemo: Story = {
                                     短
                                 </div>
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
                     </div>
 
                     <h4>在表单中的应用示例</h4>
                     <div style="margin-top: 30px; max-width: 400px;">
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="选择用户角色"
                             type="primary"
                             .popupOptions=${{ fit: true }}
@@ -231,7 +231,7 @@ export const FitWidthDemo: Story = {
                                     </div>
                                 </div>
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
                     </div>
                 </div>
             </div>

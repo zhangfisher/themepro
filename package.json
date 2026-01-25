@@ -1,8 +1,7 @@
 {
-	"name": "themepro",
-	"module": "dist/index.js",
+	"name": "kylinbits-packages",
 	"type": "module",
-	"version": "1.0.7",
+	"private": true,
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/zhangfisher/themepro.git"

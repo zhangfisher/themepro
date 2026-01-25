@@ -1,5 +1,5 @@
 /**
- * CaretDemo - AutoDropdown caret 属性完整功能演示
+ * CaretDemo - KylinDropdown caret 属性完整功能演示
  * 全面展示caret属性的各种配置选项和效果
  */
 import { html } from "lit";
@@ -10,7 +10,7 @@ export const CaretDemo: Story = {
     render: (args: any) => html`
         <div style="max-width: 1400px; margin: 0 auto; padding: 20px;">
             <h1 style="text-align: center; color: #333; margin-bottom: 40px;">
-                🎯 AutoDropdown Caret 完整功能演示
+                🎯 KylinDropdown Caret 完整功能演示
             </h1>
 
             <!-- Caret 值对比展示 -->
@@ -57,7 +57,7 @@ export const CaretDemo: Story = {
                                         background: rgba(${color}, 0.05);
                                     "
                                 >
-                                    <auto-dropdown
+                                    <kylin-dropdown
                                         label="${name}"
                                         outline
                                         variant="outline"
@@ -77,7 +77,7 @@ export const CaretDemo: Story = {
                                                 ${description}
                                             </div>
                                         </div>
-                                    </auto-dropdown>
+                                    </kylin-dropdown>
                                 </div>
                             </div>
                         `
@@ -119,7 +119,7 @@ export const CaretDemo: Story = {
                                     >
                                         <!-- Auto 模式 -->
                                         <div style="text-align: center;">
-                                            <auto-dropdown
+                                            <kylin-dropdown
                                                 label="Auto"
                                                 outline
                                                 variant="outline"
@@ -135,7 +135,7 @@ export const CaretDemo: Story = {
                                                 >
                                                     Placement: ${placement}
                                                 </div>
-                                            </auto-dropdown>
+                                            </kylin-dropdown>
                                         </div>
                                     </div>
                                 </div>
@@ -192,7 +192,7 @@ export const CaretDemo: Story = {
                             },
                         ].map(
                             ({ placement, label, icon }) => html`
-                                <auto-dropdown
+                                <kylin-dropdown
                                     label="${icon} ${label}"
                                     outline
                                     variant="default"
@@ -217,7 +217,7 @@ export const CaretDemo: Story = {
                                             Placement: ${placement}
                                         </div>
                                     </div>
-                                </auto-dropdown>
+                                </kylin-dropdown>
                             `
                         )}
                     </div>
@@ -237,7 +237,7 @@ export const CaretDemo: Story = {
                         <h4 style="margin: 0 0 16px 0; color: #007bff;">
                             Before (前缀箭头)
                         </h4>
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="前缀箭头按钮"
                             outline
                             variant="default"
@@ -255,7 +255,7 @@ export const CaretDemo: Story = {
                                     Caret: before
                                 </div>
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
                     </div>
 
                     <!-- After 示例 -->
@@ -263,7 +263,7 @@ export const CaretDemo: Story = {
                         <h4 style="margin: 0 0 16px 0; color: #6f42c1;">
                             After (后缀箭头)
                         </h4>
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="后缀箭头按钮"
                             outline
                             variant="default"
@@ -281,7 +281,7 @@ export const CaretDemo: Story = {
                                     Caret: after
                                 </div>
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
                     </div>
                 </div>
             </div>
@@ -322,7 +322,7 @@ export const CaretDemo: Story = {
                         </h4>
                         <pre
                             style="background: #2d3748; color: #e2e8f0; padding: 12px; border-radius: 4px; font-size: 13px; overflow-x: auto;"
-                        ><code>&lt;auto-dropdown
+                        ><code>&lt;kylin-dropdown
   label="选择选项"
   caret="auto"
   .popupOptions=${{
@@ -331,7 +331,7 @@ export const CaretDemo: Story = {
                         }}
 &gt;
   &lt;!-- 下拉内容 --&gt;
-&lt;/auto-dropdown&gt;</code></pre>
+&lt;/kylin-dropdown&gt;</code></pre>
                     </div>
                 </div>
             </div>

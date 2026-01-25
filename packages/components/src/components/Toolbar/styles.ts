@@ -55,7 +55,7 @@ export const styles = css`
         gap:0;
     }
     :host([shape='circle']){
-       --auto-icon-size:2em;
+       --kylin-icon-size:2em;
     }
     :host([shape='pill']) {
         border-radius: 9999px!important;

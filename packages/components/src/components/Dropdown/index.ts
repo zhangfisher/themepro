@@ -14,7 +14,7 @@ import { html } from "lit";
 import { property, state } from "lit/decorators.js";
 import { customElement } from "lit/decorators/custom-element.js";
 import { styles } from "./styles";
-import { AutoButton, type AutoButtonProps } from "../Button";
+import { KylinButton, type KylinButtonProps } from "../Button";
 import {
     type PopupControllerOptions,
     PopupController,
@@ -22,7 +22,7 @@ import {
 } from "../../controllers/tooltip";
 import { objectProperty } from "@/utils";
 
-export interface AutoDropdownProps extends AutoButtonProps {
+export interface KylinDropdownProps extends KylinButtonProps {
     /**
      * 弹出层配置选项,所有弹出相关的配置都通过此属性设置
      */
@@ -33,7 +33,7 @@ export interface AutoDropdownProps extends AutoButtonProps {
     open?: boolean;
     /**
      * 显示一个下拉方向指示箭头
-     * 使用<auto-icon name="arrow" rotate="<角度>"></auto-icon>
+     * 使用<kylin-icon name="arrow" rotate="<角度>"></kylin-icon>
      *
      * - none: 不显示箭头
      * - auto: 会根据_tooltipController.options.placement的值来自动决定显示的指示箭头的方向和显示位置
@@ -52,9 +52,9 @@ export interface AutoDropdownProps extends AutoButtonProps {
     forSlot?: string;
 }
 
-@customElement("auto-dropdown")
-export class AutoDropdown extends AutoButton {
-    static styles = [AutoButton.styles, styles] as any;
+@customElement("kylin-dropdown")
+export class KylinDropdown extends KylinButton {
+    static styles = [KylinButton.styles, styles] as any;
 
     @objectProperty()
     popupOptions?: Partial<PopupControllerOptions>;
@@ -64,7 +64,7 @@ export class AutoDropdown extends AutoButton {
     @property({ type: Boolean, reflect: true })
     cache?: boolean = false;
     @property({ type: String, reflect: true })
-    caret?: AutoDropdownProps["caret"] = "auto";
+    caret?: KylinDropdownProps["caret"] = "auto";
     /**
      * 使用 TooltipController 管理弹出层
      * 通过 dataPrefix="popup" 使其监听 data-popup-* 属性
@@ -205,10 +205,10 @@ export class AutoDropdown extends AutoButton {
         if (this.caret === "auto" && this._shouldRenderInBefore())
             return html``;
 
-        return html`<auto-icon
+        return html`<kylin-icon
             name="triangle"
             rotate="${this._currentRotate}"
-        ></auto-icon>`;
+        ></kylin-icon>`;
     }
 
     protected override renderBefore() {
@@ -216,10 +216,10 @@ export class AutoDropdown extends AutoButton {
         if (this.caret === "auto" && !this._shouldRenderInBefore())
             return html``;
 
-        return html`<auto-icon
+        return html`<kylin-icon
             name="triangle"
             rotate="${this._currentRotate}"
-        ></auto-icon>`;
+        ></kylin-icon>`;
     }
 
     /**

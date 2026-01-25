@@ -10,16 +10,16 @@
  *      <auto-list-item title="标题6">内容6</auto-list-item>
  * </auto-list>
  */
-import { LitElement, html, css } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import { ThemeProController } from "../src/webcomponent/lit";
+import { LitElement, html, css } from 'lit'
+import { customElement, property } from 'lit/decorators.js'
+import { ThemeProController } from '../src/webcomponent/lit'
 
-@customElement("auto-list")
+@customElement('auto-list')
 export class AutoListComponent extends LitElement {
-	themepro = new ThemeProController(this);
+    kylinbits = new ThemeProController(this)
 
-	static styles = [
-		css`
+    static styles = [
+        css`
     :host {
       display: block;
       width: 100%;
@@ -43,22 +43,22 @@ export class AutoListComponent extends LitElement {
       border-bottom: none;
     }
   `,
-	];
+    ]
 
-	render() {
-		return html`
+    render() {
+        return html`
       <div class="auto-list">
         <slot></slot>
       </div>
-    `;
-	}
+    `
+    }
 }
 
-@customElement("auto-list-item")
+@customElement('auto-list-item')
 export class AutoListItemComponent extends LitElement {
-	@property() title = "";
+    @property() title = ''
 
-	static styles = css`
+    static styles = css`
     :host {
       display: block;
     }
@@ -81,10 +81,10 @@ export class AutoListItemComponent extends LitElement {
       padding: var(--auto-spacing-x-small);
       color: var(--auto-secondary-color); 
     }
-  `;
+  `
 
-	render() {
-		return html`
+    render() {
+        return html`
       <div class="list-item">
         <div class="list-item-header">${this.title}</div>
         <div class="list-item-body">
@@ -99,13 +99,13 @@ export class AutoListItemComponent extends LitElement {
             </span>
         </div>
       </div>
-    `;
-	}
+    `
+    }
 }
 
 declare global {
-	interface HTMLElementTagNameMap {
-		"auto-list": AutoListComponent;
-		"auto-list-item": AutoListItemComponent;
-	}
+    interface HTMLElementTagNameMap {
+        'auto-list': AutoListComponent
+        'auto-list-item': AutoListItemComponent
+    }
 }

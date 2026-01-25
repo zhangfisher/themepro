@@ -81,7 +81,7 @@ export const styles = css`
         height: 100%;
     }
 
-    /* When auto-flex is used as flex item */
+    /* When kylin-flex is used as flex item */
     /* grow 改为子元素选择语义，不再作用于宿主 */
     :host([shrink]) {
         flex-shrink: var(--flex-shrink, 1);

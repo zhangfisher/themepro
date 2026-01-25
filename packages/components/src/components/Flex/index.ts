@@ -1,5 +1,5 @@
 /**
- * AutoFlex - 基于 Web Components 的灵活布局容器
+ * KylinFlex - 基于 Web Components 的灵活布局容器
  */
 import { LitElement, type PropertyValues, html } from "lit";
 import { property } from "lit/decorators.js";
@@ -11,8 +11,8 @@ import type {
     FlexJustifyContent,
 } from "@/types/csstypes";
 
-@customElement("auto-flex")
-export class AutoFlex extends LitElement {
+@customElement("kylin-flex")
+export class KylinFlex extends LitElement {
     static styles = styles;
     /** 显示边框 */
     @property({ type: Number })
@@ -140,6 +140,6 @@ export class AutoFlex extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        "auto-flex": AutoFlex;
+        "kylin-flex": KylinFlex;
     }
 }

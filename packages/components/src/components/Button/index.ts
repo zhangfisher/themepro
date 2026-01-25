@@ -5,7 +5,7 @@ import { property } from 'lit/decorators.js'
 import { customElement } from 'lit/decorators/custom-element.js'
 import { when } from 'lit/directives/when.js'
 import { styles } from './styles'
-import { AutoElementBase } from '../../elements/base'
+import { KylinElementBase } from '../../elements/base'
 import { styleMap } from 'lit/directives/style-map.js'
 import { ClickRipple } from '@/controllers/clickRipple'
 import { ifDefined } from 'lit/directives/if-defined.js'
@@ -16,7 +16,7 @@ import { camelToKebab } from '@/utils/camelToKebab'
 import '../Flex'
 import '../Icon'
 
-export type AutoButtonTag = {
+export type KylinButtonTag = {
     id?: string
     /**
      * 如果checkable=true
@@ -49,18 +49,18 @@ export type AutoButtonTag = {
      * 额外添加dataset数据
      */
     dataset?: Record<string, string>
-    onClick?: (args: { tag: AutoButtonTag; button: AutoButton; event: MouseEvent }) => void
+    onClick?: (args: { tag: KylinButtonTag; button: KylinButton; event: MouseEvent }) => void
     /**
      * 可复选时
      * @param e
      * @returns
      */
-    onChange?: (args: { tag: AutoButtonTag; button: AutoButton; event: MouseEvent }) => void
+    onChange?: (args: { tag: KylinButtonTag; button: KylinButton; event: MouseEvent }) => void
 }
 
-export type AutoButtonTags = AutoButtonTag[]
+export type KylinButtonTags = KylinButtonTag[]
 
-export interface AutoButtonProps {
+export interface KylinButtonProps {
     id?: string
     /**
      * 按钮尺寸
@@ -165,15 +165,15 @@ export interface AutoButtonProps {
      * - 图标:
      * - 文字:
      */
-    tags?: AutoButtonTags
+    tags?: KylinButtonTags
 
-    onClick?: (args: AutoButton) => void
+    onClick?: (args: KylinButton) => void
 
-    onChange?: (args: AutoButton) => void
+    onChange?: (args: KylinButton) => void
 }
 
-@customElement('auto-button')
-export class AutoButton extends AutoElementBase<AutoButtonProps> {
+@customElement('kylin-button')
+export class KylinButton extends KylinElementBase<KylinButtonProps> {
     static styles = [styles, ClickRipple.styles]
 
     ripple = new ClickRipple(this)
@@ -244,7 +244,7 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
     badge: number = 0
 
     @property({ type: String })
-    tags?: string | string[] | AutoButtonTags
+    tags?: string | string[] | KylinButtonTags
 
     @property()
     value?: any = false
@@ -407,7 +407,7 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
         if (this.checkable) params.checked = this.value
 
         this.dispatchEvent(
-            new CustomEvent('auto:click', {
+            new CustomEvent('kylin:click', {
                 detail: params,
                 bubbles: true,
                 composed: true,
@@ -434,7 +434,7 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
         return html`${when(this.badge > 0, () => html`<span class="badge"></span>`)}`
     }
 
-    private _getTags(): AutoButtonTags {
+    private _getTags(): KylinButtonTags {
         // 如果是字符串，则以逗号分隔
         const tags = (typeof this.tags === 'string' ? this.tags.split(',') : this.tags || []) as any[]
         return tags
@@ -452,14 +452,14 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
                             ? { label: tagArgs.substring(1) }
                             : { icon: tagArgs }
                         : tagArgs,
-                ) as Required<AutoButtonTag>
+                ) as Required<KylinButtonTag>
                 if (tag.checkValues.length === 0) tag.checkValues.push(true, false)
                 if (tag.checkValues.length === 1) tag.checkValues.push(tag.checkValues[0])
                 return tag
             })
     }
 
-    protected _renderTag(tag: AutoButtonTag) {
+    protected _renderTag(tag: KylinButtonTag) {
         const icons = tag.icon!.split(',')
 
         if (icons.length < 2) icons.push(icons[0])
@@ -486,7 +486,7 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
             data-tooltip=${ifDefined(tag.tooltip)}
             ${spread(dataset)}
         >
-            ${when(tag.icon, () => html`<auto-icon inherit name="${icon!}"> </auto-icon>`)}
+            ${when(tag.icon, () => html`<kylin-icon inherit name="${icon!}"> </kylin-icon>`)}
             ${tag.label}
         </span>`
     }
@@ -494,25 +494,25 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
     private _renderTags() {
         const tags = this.state?.tags || []
         if (tags.length === 0) return
-        return html`<auto-flex class="tags" gap="0.1em">
+        return html`<kylin-flex class="tags" gap="0.1em">
             ${repeat(tags, (tag) => {
                 return html`${this._renderTag(tag)}`
             })}
-        </auto-flex>`
+        </kylin-flex>`
     }
     private _renderChecked(before: boolean = false) {
-        return html`<auto-icon
+        return html`<kylin-icon
             class="checked ${before ? 'before' : 'after'}"
             inherit
             name="yes"
-        ></auto-icon>`
+        ></kylin-icon>`
     }
     private _renderUnchecked(before: boolean = false) {
-        return html`<auto-icon
+        return html`<kylin-icon
             class="checked ${before ? 'before' : 'after'}"
             inherit
             name="empty"
-        ></auto-icon>`
+        ></kylin-icon>`
     }
     protected renderBefore() {}
     protected renderAfter() {}
@@ -521,17 +521,17 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
         const isChecked = this.checkable && this.checked
         return html`
             ${this.renderBefore()}
-            ${when(this.loading, () => html`<auto-icon inherit name="loading"></auto-icon>`)}
+            ${when(this.loading, () => html`<kylin-icon inherit name="loading"></kylin-icon>`)}
             ${when(!this.loading && !isChecked && this.checkPos === 'before', () => this._renderUnchecked())}
             ${when(!this.loading && isChecked && this.checkPos === 'before', () => this._renderChecked(true))}
             ${when(
                 this.icon,
                 () =>
-                    html`<auto-icon
+                    html`<kylin-icon
                         inherit
                         size=${ifDefined(this.vertical || this.shape === 'circle' ? '1.5em' : undefined)}
                         name="${this.icon!}"
-                    ></auto-icon>`,
+                    ></kylin-icon>`,
             )}
             ${when(
                 this.label,
@@ -554,6 +554,6 @@ export class AutoButton extends AutoElementBase<AutoButtonProps> {
 
 declare global {
     interface HTMLElementTagNameMap {
-        'auto-button': AutoButton
+        'kylin-button': KylinButton
     }
 }

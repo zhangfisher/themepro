@@ -1,7 +1,7 @@
 import { css } from 'lit'
 
 export const styles = css`
-    .auto-icon {
+    .kylin-icon {
         display: inline-block;
         position: relative;
         background-color: currentColor;
@@ -9,7 +9,7 @@ export const styles = css`
         -webkit-mask-size: cover;
         vertical-align: text-bottom;
         position: relative; 
-        font-size:var(--auto-icon-size);
+        font-size:var(--kylin-icon-size);
         width: 1em;
         height: 1em;
         stroke-width: var(--stroke-width,1);        

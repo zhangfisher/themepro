@@ -52,41 +52,41 @@ export const FitNone: Story = {
                 <h4>Fit: None - 不启用适应</h4>
                 <p>Tooltip 将使用内容自适应尺寸</p>
                 <div style="margin-top: 1em;">
-                    <auto-button
+                    <kylin-button
                         label="悬停查看 Tooltip (Fit: None)"
                         data-tooltip="这是一个不适应目标元素尺寸的提示内容，会根据文本内容自动调整宽度"
                         data-tooltip-fit="none"
-                    ></auto-button>
+                    ></kylin-button>
                 </div>
             </div>
 
             <div>
                 <h4>不同位置 - Fit: None</h4>
                 <div style="display: flex; gap: 1em; margin-top: 1em;">
-                    <auto-button
+                    <kylin-button
                         label="上方"
                         data-tooltip="上方提示"
                         data-tooltip-placement="top"
                         data-tooltip-fit="none"
-                    ></auto-button>
-                    <auto-button
+                    ></kylin-button>
+                    <kylin-button
                         label="右侧"
                         data-tooltip="右侧提示"
                         data-tooltip-placement="right"
                         data-tooltip-fit="none"
-                    ></auto-button>
-                    <auto-button
+                    ></kylin-button>
+                    <kylin-button
                         label="下方"
                         data-tooltip="下方提示"
                         data-tooltip-placement="bottom"
                         data-tooltip-fit="none"
-                    ></auto-button>
-                    <auto-button
+                    ></kylin-button>
+                    <kylin-button
                         label="左侧"
                         data-tooltip="左侧提示"
                         data-tooltip-placement="left"
                         data-tooltip-fit="none"
-                    ></auto-button>
+                    ></kylin-button>
                 </div>
             </div>
         </div>
@@ -103,19 +103,19 @@ export const FitWidth: Story = {
                 <div
                     style="margin-top: 1em; display: flex; flex-direction: column; gap: 1em;"
                 >
-                    <auto-button
+                    <kylin-button
                         label="小按钮 (150px)"
                         data-tooltip="这个提示内容的宽度会适应按钮的宽度"
                         data-tooltip-fit="width"
                         style="width: 150px;"
-                    ></auto-button>
+                    ></kylin-button>
 
-                    <auto-button
+                    <kylin-button
                         label="大按钮 (300px)"
                         data-tooltip="这个提示内容的宽度会适应按钮的宽度，无论内容多长都会被限制在这个宽度内"
                         data-tooltip-fit="width"
                         style="width: 300px;"
-                    ></auto-button>
+                    ></kylin-button>
                 </div>
             </div>
 
@@ -159,26 +159,26 @@ export const FitHeight: Story = {
                 <div
                     style="margin-top: 1em; display: flex; align-items: center; gap: 1em;"
                 >
-                    <auto-button
+                    <kylin-button
                         label="普通高度"
                         data-tooltip="高度适应的提示"
                         data-tooltip-fit="height"
                         style="height: 40px;"
-                    ></auto-button>
+                    ></kylin-button>
 
-                    <auto-button
+                    <kylin-button
                         label="高按钮"
                         data-tooltip="这个tooltip的高度会适应按钮的高度"
                         data-tooltip-fit="height"
                         style="height: 80px; padding: 0 20px;"
-                    ></auto-button>
+                    ></kylin-button>
 
-                    <auto-button
+                    <kylin-button
                         label="超高按钮"
                         data-tooltip="超高高按钮的tooltip"
                         data-tooltip-fit="height"
                         style="height: 120px; padding: 0 20px;"
-                    ></auto-button>
+                    ></kylin-button>
                 </div>
             </div>
 
@@ -187,21 +187,21 @@ export const FitHeight: Story = {
                 <div
                     style="margin-top: 1em; display: flex; align-items: center; gap: 1em;"
                 >
-                    <auto-button
+                    <kylin-button
                         label="高按钮"
                         data-tooltip="左侧提示，高度适应"
                         data-tooltip-fit="height"
                         data-tooltip-placement="left"
                         style="height: 100px; width: 80px;"
-                    ></auto-button>
+                    ></kylin-button>
 
-                    <auto-button
+                    <kylin-button
                         label="高按钮"
                         data-tooltip="右侧提示，高度适应"
                         data-tooltip-fit="height"
                         data-tooltip-placement="right"
                         style="height: 100px; width: 80px;"
-                    ></auto-button>
+                    ></kylin-button>
                 </div>
             </div>
         </div>
@@ -220,40 +220,40 @@ export const FitAuto: Story = {
                 <div
                     style="display: flex; gap: 1em; align-items: center; margin-bottom: 2em;"
                 >
-                    <auto-button
+                    <kylin-button
                         label="上方 (200px 宽)"
                         data-tooltip="这个提示在上方，自动适应按钮宽度"
                         data-tooltip-fit="auto"
                         data-tooltip-placement="top"
                         style="width: 200px;"
-                    ></auto-button>
+                    ></kylin-button>
 
-                    <auto-button
+                    <kylin-button
                         label="下方 (300px 宽)"
                         data-tooltip="这个提示在下方，自动适应按钮宽度"
                         data-tooltip-fit="auto"
                         data-tooltip-placement="bottom"
                         style="width: 300px;"
-                    ></auto-button>
+                    ></kylin-button>
                 </div>
 
                 <h5>左右位置 (适应高度)</h5>
                 <div style="display: flex; gap: 2em; align-items: center;">
-                    <auto-button
+                    <kylin-button
                         label="高按钮"
                         data-tooltip="左侧提示，自动适应高度"
                         data-tooltip-fit="auto"
                         data-tooltip-placement="left"
                         style="height: 80px; width: 100px;"
-                    ></auto-button>
+                    ></kylin-button>
 
-                    <auto-button
+                    <kylin-button
                         label="超高按钮"
                         data-tooltip="右侧提示，自动适应高度"
                         data-tooltip-fit="auto"
                         data-tooltip-placement="right"
                         style="height: 120px; width: 100px;"
-                    ></auto-button>
+                    ></kylin-button>
                 </div>
             </div>
 
@@ -263,33 +263,33 @@ export const FitAuto: Story = {
                     style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2em; margin-top: 1em;"
                 >
                     <div style="text-align: center;">
-                        <auto-button
+                        <kylin-button
                             label="Top-Start"
                             data-tooltip="顶部起始位置"
                             data-tooltip-fit="auto"
                             data-tooltip-placement="top-start"
                             style="width: 120px;"
-                        ></auto-button>
+                        ></kylin-button>
                     </div>
 
                     <div style="text-align: center;">
-                        <auto-button
+                        <kylin-button
                             label="Right-Start"
                             data-tooltip="右侧起始位置，高度适应"
                             data-tooltip-fit="auto"
                             data-tooltip-placement="right-start"
                             style="height: 60px; width: 100px;"
-                        ></auto-button>
+                        ></kylin-button>
                     </div>
 
                     <div style="text-align: center;">
-                        <auto-button
+                        <kylin-button
                             label="Bottom-End"
                             data-tooltip="底部结束位置"
                             data-tooltip-fit="auto"
                             data-tooltip-placement="bottom-end"
                             style="width: 120px;"
-                        ></auto-button>
+                        ></kylin-button>
                     </div>
                 </div>
             </div>
@@ -311,37 +311,37 @@ export const ComparisonDemo: Story = {
                         <div style="margin-bottom: 1em; font-weight: bold;">
                             Fit: None
                         </div>
-                        <auto-button
+                        <kylin-button
                             label="按钮 (200px)"
                             data-tooltip="这是相同内容的提示文本，用于对比不同fit模式的效果差异"
                             data-tooltip-fit="none"
                             style="width: 200px;"
-                        ></auto-button>
+                        ></kylin-button>
                     </div>
 
                     <div>
                         <div style="margin-bottom: 1em; font-weight: bold;">
                             Fit: Width
                         </div>
-                        <auto-button
+                        <kylin-button
                             label="按钮 (200px)"
                             data-tooltip="这是相同内容的提示文本，用于对比不同fit模式的效果差异"
                             data-tooltip-fit="width"
                             style="width: 200px;"
-                        ></auto-button>
+                        ></kylin-button>
                     </div>
 
                     <div>
                         <div style="margin-bottom: 1em; font-weight: bold;">
                             Fit: Auto
                         </div>
-                        <auto-button
+                        <kylin-button
                             label="按钮 (200px)"
                             data-tooltip="这是相同内容的提示文本，用于对比不同fit模式的效果差异"
                             data-tooltip-fit="auto"
                             data-tooltip-placement="top"
                             style="width: 200px;"
-                        ></auto-button>
+                        ></kylin-button>
                     </div>
                 </div>
             </div>
@@ -355,39 +355,39 @@ export const ComparisonDemo: Story = {
                         <div style="margin-bottom: 1em; font-weight: bold;">
                             Fit: None (Left)
                         </div>
-                        <auto-button
+                        <kylin-button
                             label="按钮"
                             data-tooltip="适应模式对比"
                             data-tooltip-fit="none"
                             data-tooltip-placement="left"
                             style="height: 60px; width: 80px;"
-                        ></auto-button>
+                        ></kylin-button>
                     </div>
 
                     <div>
                         <div style="margin-bottom: 1em; font-weight: bold;">
                             Fit: Height (Left)
                         </div>
-                        <auto-button
+                        <kylin-button
                             label="按钮"
                             data-tooltip="适应模式对比"
                             data-tooltip-fit="height"
                             data-tooltip-placement="left"
                             style="height: 60px; width: 80px;"
-                        ></auto-button>
+                        ></kylin-button>
                     </div>
 
                     <div>
                         <div style="margin-bottom: 1em; font-weight: bold;">
                             Fit: Auto (Right)
                         </div>
-                        <auto-button
+                        <kylin-button
                             label="按钮"
                             data-tooltip="适应模式对比"
                             data-tooltip-fit="auto"
                             data-tooltip-placement="right"
                             style="height: 60px; width: 80px;"
-                        ></auto-button>
+                        ></kylin-button>
                     </div>
                 </div>
             </div>
@@ -407,37 +407,37 @@ export const ComplexContent: Story = {
                 <div>
                     <h5>HTML 内容 - Fit Width</h5>
                     <div style="margin-top: 1em;">
-                        <auto-button
+                        <kylin-button
                             label="HTML 内容"
                             data-tooltip="<div style='padding: 8px;'><strong>标题</strong><br/><em>斜体文本</em><br/><span style='color: red;'>红色文本</span></div>"
                             data-tooltip-fit="width"
                             style="width: 200px;"
-                        ></auto-button>
+                        ></kylin-button>
                     </div>
                 </div>
 
                 <div>
                     <h5>长文本 - Fit Width</h5>
                     <div style="margin-top: 1em;">
-                        <auto-button
+                        <kylin-button
                             label="长文本测试"
                             data-tooltip="这是一个很长的提示内容，用于测试在宽度适应模式下的文本换行效果，看看是否能正确处理长文本的显示"
                             data-tooltip-fit="width"
                             style="width: 180px;"
-                        ></auto-button>
+                        ></kylin-button>
                     </div>
                 </div>
 
                 <div>
                     <h5>列表内容 - Fit Auto</h5>
                     <div style="margin-top: 1em;">
-                        <auto-button
+                        <kylin-button
                             label="列表内容"
                             data-tooltip="<ul style='margin: 0; padding-left: 20px;'><li>第一项</li><li>第二项</li><li>第三项</li></ul>"
                             data-tooltip-fit="auto"
                             data-tooltip-placement="top"
                             style="width: 150px;"
-                        ></auto-button>
+                        ></kylin-button>
                     </div>
                 </div>
             </div>
@@ -447,32 +447,32 @@ export const ComplexContent: Story = {
                 <div
                     style="display: flex; gap: 1em; align-items: center; margin-top: 1em;"
                 >
-                    <auto-button
+                    <kylin-button
                         label="小按钮"
                         data-tooltip="小按钮的提示"
                         data-tooltip-fit="auto"
                         data-tooltip-placement="right"
                         size="small"
                         style="height: 32px;"
-                    ></auto-button>
+                    ></kylin-button>
 
-                    <auto-button
+                    <kylin-button
                         label="中等按钮"
                         data-tooltip="中等大小按钮的提示内容"
                         data-tooltip-fit="auto"
                         data-tooltip-placement="right"
                         size="medium"
                         style="height: 40px;"
-                    ></auto-button>
+                    ></kylin-button>
 
-                    <auto-button
+                    <kylin-button
                         label="大按钮"
                         data-tooltip="大型按钮的提示内容展示"
                         data-tooltip-fit="auto"
                         data-tooltip-placement="right"
                         size="large"
                         style="height: 48px;"
-                    ></auto-button>
+                    ></kylin-button>
                 </div>
             </div>
         </div>

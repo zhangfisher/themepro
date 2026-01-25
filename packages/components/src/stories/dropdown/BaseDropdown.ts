@@ -8,7 +8,7 @@ export const BaseDropdown: Story = {
             <div
                 style="padding: 20px; display: flex; gap: 20px; flex-wrap: wrap;"
             >
-                <auto-dropdown
+                <kylin-dropdown
                     label="点击我"
                     type="primary"
                     .open=${args.open}
@@ -40,9 +40,9 @@ export const BaseDropdown: Story = {
                     >
                         更多选项
                     </div>
-                </auto-dropdown>
+                </kylin-dropdown>
 
-                <auto-dropdown
+                <kylin-dropdown
                     label="右侧菜单"
                     .popupOptions=${{
                         placement: "right-start",
@@ -60,9 +60,9 @@ export const BaseDropdown: Story = {
                             右侧选项 2
                         </div>
                     </div>
-                </auto-dropdown>
+                </kylin-dropdown>
 
-                <auto-dropdown
+                <kylin-dropdown
                     label="上方菜单自动反转"
                     .popupOptions=${{
                         placement: "top",
@@ -80,12 +80,12 @@ export const BaseDropdown: Story = {
                             上方选项 2
                         </div>
                     </div>
-                </auto-dropdown>
+                </kylin-dropdown>
             </div>
             <div
                 style="padding: 20px; display: flex; gap: 20px; flex-wrap: wrap;"
             >
-                <auto-dropdown
+                <kylin-dropdown
                     label="点击我"
                     type="primary"
                     .open=${args.open}
@@ -132,9 +132,9 @@ export const BaseDropdown: Story = {
                             更多选项
                         </div>
                     </div>
-                </auto-dropdown>
+                </kylin-dropdown>
 
-                <auto-dropdown
+                <kylin-dropdown
                     label="右侧菜单"
                     .popupOptions="${{
                         placement: "right-start",
@@ -152,9 +152,9 @@ export const BaseDropdown: Story = {
                             右侧选项 2
                         </div>
                     </div>
-                </auto-dropdown>
+                </kylin-dropdown>
 
-                <auto-dropdown label="上方菜单2" placement="top" type="warning">
+                <kylin-dropdown label="上方菜单2" placement="top" type="warning">
                     <div
                         class="dropdown"
                         style="padding: 8px 0; background: white; border: 1px solid #d9d9d9; border-radius: 6px;"
@@ -166,7 +166,7 @@ export const BaseDropdown: Story = {
                             上方选项 2
                         </div>
                     </div>
-                </auto-dropdown>
+                </kylin-dropdown>
             </div>
         `;
     },

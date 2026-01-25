@@ -5,7 +5,7 @@ import '../components/Loading/index'
 import '../components/Watermark/index'
 
 const meta: Meta = {
-    title: '通用/AutoLoading',
+    title: '通用/KylinLoading',
     args: {
         size: undefined,
         tips: undefined,
@@ -35,7 +35,7 @@ const meta: Meta = {
     },
     render: (args: any) => html`
         <div style="width:500px;height:300px;">
-        <auto-loading
+        <kylin-loading
             size=${ifDefined(args.size)}
             message=${ifDefined(args.tips)}
             color=${ifDefined(args.color)}
@@ -43,7 +43,7 @@ const meta: Meta = {
             ?fit=${args.fit}
             maskColor="${args.mask}"
             type=${ifDefined(args.type)}
-        ></auto-loading></div>
+        ></kylin-loading></div>
     `,
 } satisfies Meta
 
@@ -59,75 +59,75 @@ export const LoadingSizes: Story = {
     name: '不同尺寸',
     render: () => {
         return html`
-            <auto-flex gap="2em" align="center" style="padding:2em">
-                <auto-loading
+            <kylin-flex gap="2em" align="center" style="padding:2em">
+                <kylin-loading
                     inline
                     direction="row"
                     message="默认"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     size="8px"
                     message="微小"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     size="12px"
                     message="小"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     size="16px"
                     message="默认"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     size="24px"
                     message="大"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     size="32px"
                     message="超大"
-                ></auto-loading>
-            </auto-flex>
-            <auto-flex gap="2em" align="center" style="padding:2em">
-                <auto-loading
+                ></kylin-loading>
+            </kylin-flex>
+            <kylin-flex gap="2em" align="center" style="padding:2em">
+                <kylin-loading
                     inline
                     direction="row"
                     size="x-small"
                     message="X-Small"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     size="small"
                     message="Small"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     size="medium"
                     message="Medium"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     size="large"
                     message="Large"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     size="x-large"
                     message="X-Large"
-                ></auto-loading>
-            </auto-flex>
+                ></kylin-loading>
+            </kylin-flex>
         `
     },
 }
@@ -136,38 +136,38 @@ export const LoadingWithTips: Story = {
     name: '带提示文字',
     render: () => {
         return html`
-            <auto-flex direction="column" gap="1.5em" align="center">
-                <auto-loading
+            <kylin-flex direction="column" gap="1.5em" align="center">
+                <kylin-loading
                     inline
                     direction="row"
                     size="x-small"
                     message="加载中..."
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     size="small"
                     message="加载中..."
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     size="medium"
                     message="正在处理您的请求"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     size="large"
                     message="请稍候，系统正在加载资源"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     size="x-large"
                     message="加载中..."
-                ></auto-loading>
-            </auto-flex>
+                ></kylin-loading>
+            </kylin-flex>
         `
     },
 }
@@ -176,65 +176,65 @@ export const LoadingWithColors: Story = {
     name: '自定义颜色',
     render: () => {
         return html`
-            <auto-flex gap="1.5em" align="center">
-                <auto-loading
+            <kylin-flex gap="1.5em" align="center">
+                <kylin-loading
                     inline
                     color="#1890ff"
                     message="主要颜色"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     color="#52c41a"
                     message="成功颜色"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     color="#faad14"
                     message="警告颜色"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     color="#f5222d"
                     message="错误颜色"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     color="#722ed1"
                     message="紫色"
-                ></auto-loading>
-            </auto-flex>
-            <auto-flex gap="1.5em" align="center" style="margin-top:2em">
-                <auto-loading
+                ></kylin-loading>
+            </kylin-flex>
+            <kylin-flex gap="1.5em" align="center" style="margin-top:2em">
+                <kylin-loading
                     inline
                     direction="row"
                     color="#1890ff"
                     message="主要颜色"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     color="#52c41a"
                     message="成功颜色"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     color="#faad14"
                     message="警告颜色"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     color="#f5222d"
                     message="错误颜色"
-                ></auto-loading>
-                <auto-loading
+                ></kylin-loading>
+                <kylin-loading
                     inline
                     direction="row"
                     color="#722ed1"
                     message="紫色"
-                ></auto-loading>
-            </auto-flex>
+                ></kylin-loading>
+            </kylin-flex>
         `
     },
 }
@@ -243,83 +243,83 @@ export const LoadingDirections: Story = {
     name: '布局方向',
     render: () => {
         return html`
-            <auto-flex direction="column" gap="3em">
-                <auto-flex gap="2em" align="center">
-                    <auto-loading
+            <kylin-flex direction="column" gap="3em">
+                <kylin-flex gap="2em" align="center">
+                    <kylin-loading
                         inline
                         direction="column"
                         size="x-small"
                         message="垂直布局"
                         color="#1890ff"
-                    ></auto-loading>
-                    <auto-loading
+                    ></kylin-loading>
+                    <kylin-loading
                         inline
                         direction="column"
                         size="small"
                         message="垂直加载中..."
                         color="#faad14"
-                    ></auto-loading>
-                    <auto-loading
+                    ></kylin-loading>
+                    <kylin-loading
                         inline
                         direction="column"
                         size="medium"
                         message="水平布局"
                         color="#52c41a"
-                    ></auto-loading>
-                    <auto-loading
+                    ></kylin-loading>
+                    <kylin-loading
                         inline
                         size="large"
                         direction="column"
                         message="水平加载中..."
                         color="#f5222d"
-                    ></auto-loading>
-                    <auto-loading
+                    ></kylin-loading>
+                    <kylin-loading
                         inline
                         size="x-large"
                         direction="column"
                         message="水平加载中..."
                         color="#f5222d"
-                    ></auto-loading>
-                </auto-flex>
+                    ></kylin-loading>
+                </kylin-flex>
 
-                <auto-flex gap="2em" align="center">
-                    <auto-loading
+                <kylin-flex gap="2em" align="center">
+                    <kylin-loading
                         inline
                         size="x-small"
                         direction="row"
                         message="垂直布局"
                         color="#1890ff"
-                    ></auto-loading>
-                    <auto-loading
+                    ></kylin-loading>
+                    <kylin-loading
                         inline
                         size="small"
                         direction="row"
                         message="垂直加载中..."
                         color="#faad14"
-                    ></auto-loading>
-                    <auto-loading
+                    ></kylin-loading>
+                    <kylin-loading
                         inline
                         size="medium"
                         direction="row"
                         message="水平布局"
                         color="#52c41a"
-                    ></auto-loading>
-                    <auto-loading
+                    ></kylin-loading>
+                    <kylin-loading
                         inline
                         size="large"
                         direction="row"
                         message="水平加载中..."
                         color="#f5222d"
-                    ></auto-loading>
-                    <auto-loading
+                    ></kylin-loading>
+                    <kylin-loading
                         inline
                         size="x-large"
                         direction="row"
                         message="水平加载中..."
                         color="#f5222d"
-                    ></auto-loading>
-                </auto-flex>
-            </auto-flex>
+                    ></kylin-loading>
+                </kylin-flex>
+            </kylin-flex>
         `
     },
 }
@@ -328,65 +328,65 @@ export const LoadingFit: Story = {
     name: '充满容器',
     render: () => {
         return html`
-            <auto-flex
+            <kylin-flex
                 column
                 gap="1.5em"
                 style="width: 500px;width: 100%;position: relative;"
-                ><auto-card
+                ><kylin-card
                     title="垂直充满"
                     style="height: 200px;border:1px solid #ccc;width: 100%;position: relative;"
                 >
-                    <auto-watermark></auto-watermark>
-                    <auto-loading
+                    <kylin-watermark></kylin-watermark>
+                    <kylin-loading
                         direction="column"
                         size="x-small"
                         message="垂直居中加载..."
-                    ></auto-loading>
-                </auto-card>
-                <auto-card
+                    ></kylin-loading>
+                </kylin-card>
+                <kylin-card
                     title="垂直充满"
                     style="height: 200px;border:1px solid #ccc;width: 100%;position: relative;"
-                    ><auto-watermark></auto-watermark>
-                    <auto-loading
+                    ><kylin-watermark></kylin-watermark>
+                    <kylin-loading
                         direction="column"
                         size="small"
                         message="垂直居中加载..."
-                    ></auto-loading>
-                </auto-card>
-                <auto-card
+                    ></kylin-loading>
+                </kylin-card>
+                <kylin-card
                     title="垂直充满"
                     style="height: 200px;border:1px solid #ccc;width: 100%;position: relative;"
-                    ><auto-watermark></auto-watermark>
-                    <auto-loading
+                    ><kylin-watermark></kylin-watermark>
+                    <kylin-loading
                         direction="column"
                         size="medium"
                         message="垂直居中加载..."
-                    ></auto-loading>
-                </auto-card>
+                    ></kylin-loading>
+                </kylin-card>
 
-                <auto-card
+                <kylin-card
                     title="水平充满"
                     style="height: 200px;border:1px solid #ccc;width: 100%;;position: relative;"
-                    ><auto-watermark></auto-watermark>
-                    <auto-loading
+                    ><kylin-watermark></kylin-watermark>
+                    <kylin-loading
                         direction="row"
                         size="large"
                         message="水平居中加载..."
                         color="#52c41a"
-                    ></auto-loading>
-                </auto-card>
+                    ></kylin-loading>
+                </kylin-card>
 
-                <auto-card
+                <kylin-card
                     title="表单加载"
                     style="height: 300px;border:1px solid #ccc;width: 100%;position: relative;"
-                    ><auto-watermark></auto-watermark>
-                    <auto-loading
+                    ><kylin-watermark></kylin-watermark>
+                    <kylin-loading
                         direction="column"
                         size="x-large"
                         message="表单提交中，请稍候..."
-                    ></auto-loading>
-                </auto-card>
-            </auto-flex>
+                    ></kylin-loading>
+                </kylin-card>
+            </kylin-flex>
         `
     },
 }
@@ -396,63 +396,63 @@ export const LoadingTextOverflow: Story = {
     render: () => {
         return html`
             <div style="width:400px;margin:0 auto">
-                <auto-flex
+                <kylin-flex
                     column
                     gap="1.5em"
                     style="width: 500px;width: 100%;position: relative;"
-                    ><auto-card
+                    ><kylin-card
                         title="垂直充满"
                         style="height: 200px;border:1px solid #ccc;width: 100%;position: relative;"
-                        ><auto-watermark></auto-watermark>
-                        <auto-loading
+                        ><kylin-watermark></kylin-watermark>
+                        <kylin-loading
                             direction="column"
                             size="x-small"
                             message="这是一段非常长的文本内容，用来测试文本截断功能，当文本超过两行时会显示省略号，这样可以保持界面整洁"
-                        ></auto-loading>
-                    </auto-card>
-                    <auto-card
+                        ></kylin-loading>
+                    </kylin-card>
+                    <kylin-card
                         title="垂直充满"
                         style="height: 200px;border:1px solid #ccc;width: 100%;position: relative;"
-                        ><auto-watermark></auto-watermark>
-                        <auto-loading
+                        ><kylin-watermark></kylin-watermark>
+                        <kylin-loading
                             direction="column"
                             size="small"
                             message="这是一段非常长的文本内容，用来测试文本截断功能，当文本超过两行时会显示省略号，这样可以保持界面整洁"
-                        ></auto-loading>
-                    </auto-card>
-                    <auto-card
+                        ></kylin-loading>
+                    </kylin-card>
+                    <kylin-card
                         title="垂直充满"
                         style="height: 200px;border:1px solid #ccc;width: 100%;position: relative;"
-                        ><auto-watermark></auto-watermark>
-                        <auto-loading
+                        ><kylin-watermark></kylin-watermark>
+                        <kylin-loading
                             direction="column"
                             size="medium"
                             message="这是一段非常长的文本内容，用来测试文本截断功能，当文本超过两行时会显示省略号，这样可以保持界面整洁"
-                        ></auto-loading>
-                    </auto-card>
+                        ></kylin-loading>
+                    </kylin-card>
 
-                    <auto-card
+                    <kylin-card
                         title="水平充满"
                         style="height: 200px;border:1px solid #ccc;width: 100%;;position: relative;"
-                        ><auto-watermark></auto-watermark>
-                        <auto-loading
+                        ><kylin-watermark></kylin-watermark>
+                        <kylin-loading
                             direction="row"
                             size="large"
                             message="这是一段非常长的文本内容，用来测试文本截断功能，当文本超过两行时会显示省略号，这样可以保持界面整洁"
-                        ></auto-loading>
-                    </auto-card>
+                        ></kylin-loading>
+                    </kylin-card>
 
-                    <auto-card
+                    <kylin-card
                         title="表单加载"
                         style="height: 300px;border:1px solid #ccc;width: 100%;position: relative;"
-                        ><auto-watermark></auto-watermark>
-                        <auto-loading
+                        ><kylin-watermark></kylin-watermark>
+                        <kylin-loading
                             direction="column"
                             size="x-large"
                             message="这是一段非常长的文本内容，用来测试文本截断功能，当文本超过两行时会显示省略号，这样可以保持界面整洁"
-                        ></auto-loading>
-                    </auto-card>
-                </auto-flex>
+                        ></kylin-loading>
+                    </kylin-card>
+                </kylin-flex>
             </div>
         `
     },
@@ -462,111 +462,111 @@ export const LoadingMask: Story = {
     name: '遮盖模式',
     render: () => {
         return html`
-            <auto-flex direction="column" gap="2em">
+            <kylin-flex direction="column" gap="2em">
                 <!-- 遮盖模式对比 -->
-                <auto-flex gap="2em" wrap>
+                <kylin-flex gap="2em" wrap>
                     <!-- 普通模式 -->
-                    <auto-flex
+                    <kylin-flex
                         direction="column"
                         align="center"
                         gap="0.5em"
                         style="width: 200px; height: 150px; border: 1px solid #e0e0e0; position: relative; padding: 1em; border-radius: 8px;"
                     >
-                        <auto-watermark text="themepro"></auto-watermark>
-                        <auto-loading
+                        <kylin-watermark text="kylinbits"></kylin-watermark>
+                        <kylin-loading
                             direction="column"
                             size="small"
                             message="加载中"
                             color="#1890ff"
-                        ></auto-loading>
-                    </auto-flex>
+                        ></kylin-loading>
+                    </kylin-flex>
 
                     <!-- 遮盖模式 -->
-                    <auto-flex
+                    <kylin-flex
                         direction="column"
                         align="center"
                         gap="0.5em"
                         style="width: 200px; height: 150px; border: 1px solid #e0e0e0; position: relative; padding: 1em; border-radius: 8px;"
                     >
-                        <auto-watermark text="themepro"></auto-watermark>
-                        <auto-loading
+                        <kylin-watermark text="kylinbits"></kylin-watermark>
+                        <kylin-loading
                             mask="dark"
                             fit
                             direction="column"
                             size="small"
                             message="加载中"
                             color="#1890ff"
-                        ></auto-loading>
-                    </auto-flex>
-                </auto-flex>
+                        ></kylin-loading>
+                    </kylin-flex>
+                </kylin-flex>
 
                 <!-- 实际应用场景 -->
-                <auto-flex direction="column" gap="1.5em">
+                <kylin-flex direction="column" gap="1.5em">
                     <!-- 表单提交场景 -->
-                    <auto-card
+                    <kylin-card
                         title="表单提交"
                         style="position: relative; width: 100%; height:200px;max-width: 500px;border:1px solid #ccc"
                     >
-                        <auto-watermark text="themepro"></auto-watermark>
-                        <auto-loading
+                        <kylin-watermark text="kylinbits"></kylin-watermark>
+                        <kylin-loading
                             fit
                             direction="row"
                             size="medium"
                             message="正在保存..."
                             color="#52c41a"
-                        ></auto-loading>
-                    </auto-card>
+                        ></kylin-loading>
+                    </kylin-card>
 
                     <!-- 数据表格场景 -->
-                    <auto-card
+                    <kylin-card
                         title="数据加载"
                         style="position: relative; width: 100%; height:200px;max-width: 700px;border:1px solid #ccc"
                     >
-                        <auto-watermark text="themepro"></auto-watermark>
-                        <auto-loading
+                        <kylin-watermark text="kylinbits"></kylin-watermark>
+                        <kylin-loading
                             fit
                             direction="column"
                             size="large"
                             message="正在加载数据..."
                             color="#1890ff"
                             type="spinning-bubbles"
-                        ></auto-loading>
-                    </auto-card>
+                        ></kylin-loading>
+                    </kylin-card>
 
                     <!-- 按钮操作场景 -->
-                    <auto-flex gap="2em" wrap equal>
-                        <auto-card
+                    <kylin-flex gap="2em" wrap equal>
+                        <kylin-card
                             title="按钮操作"
                             style="position: relative; width: 200px;height: 100px;border:1px solid #ccc"
                         >
-                            <auto-watermark text="themepro"></auto-watermark>
-                            <auto-loading
+                            <kylin-watermark text="kylinbits"></kylin-watermark>
+                            <kylin-loading
                                 fit
                                 direction="row"
                                 size="small"
                                 message="提交中..."
                                 color="#1890ff"
-                            ></auto-loading>
-                        </auto-card>
+                            ></kylin-loading>
+                        </kylin-card>
 
-                        <auto-card
+                        <kylin-card
                             title="文件上传"
                             style="position: relative; width: 200px; height: 100px;border: 1px solid #ccc"
                         >
-                            <auto-watermark text="themepro"></auto-watermark>
-                            <auto-loading
+                            <kylin-watermark text="kylinbits"></kylin-watermark>
+                            <kylin-loading
                                 fit
                                 direction="column"
                                 size="small"
                                 message="上传中..."
                                 color="#52c41a"
-                            ></auto-loading>
-                        </auto-card>
-                    </auto-flex>
-                </auto-flex>
+                            ></kylin-loading>
+                        </kylin-card>
+                    </kylin-flex>
+                </kylin-flex>
 
                 <!-- 不同类型的遮盖加载 -->
-                <auto-flex gap="1.5em" wrap>
+                <kylin-flex gap="1.5em" wrap>
                     ${[
                         { type: '', label: '默认', color: '#1890ff' },
                         { type: 'bars', label: '条形', color: '#52c41a' },
@@ -580,7 +580,7 @@ export const LoadingMask: Story = {
                         { type: 'spokes', label: '辐射', color: '#595959' },
                     ].map(
                         (item) => html`
-                            <auto-flex
+                            <kylin-flex
                                 direction="column"
                                 align="center"
                                 gap="0.5em"
@@ -588,23 +588,23 @@ export const LoadingMask: Story = {
                                 <div
                                     style="width: 160px; height: 100px; border: 1px solid #e0e0e0; position: relative; border-radius: 6px;"
                                 >
-                                    <auto-watermark
-                                        text="themepro"
-                                    ></auto-watermark>
-                                    <auto-loading
+                                    <kylin-watermark
+                                        text="kylinbits"
+                                    ></kylin-watermark>
+                                    <kylin-loading
                                         fit
                                         type=${item.type as any}
                                         direction="column"
                                         size="small"
                                         message="加载中..."
                                         color=${item.color}
-                                    ></auto-loading>
+                                    ></kylin-loading>
                                 </div>
-                            </auto-flex>
+                            </kylin-flex>
                         `,
                     )}
-                </auto-flex>
-            </auto-flex>
+                </kylin-flex>
+            </kylin-flex>
         `
     },
 }
@@ -613,74 +613,74 @@ export const LoadingTypes: Story = {
     name: '加载图标类型',
     render: () => {
         return html`
-            <auto-flex gap="2em" wrap>
-                <auto-flex
+            <kylin-flex gap="2em" wrap>
+                <kylin-flex
                     gap="1em"
                     style="position: relative; width: 30%; height: 200px;border:1px solid #ccc"
-                    ><auto-watermark text="themepro"></auto-watermark>
-                    <auto-loading
+                    ><kylin-watermark text="kylinbits"></kylin-watermark>
+                    <kylin-loading
                         message="小球"
                         description="旋转气泡旋转气泡旋转气泡旋转气泡旋转气泡"
                         color="#eb2f96"
                         actions="[{label:'确认'},{label:'取消'}]"
-                    ></auto-loading
-                ></auto-flex>
-                <auto-flex
+                    ></kylin-loading
+                ></kylin-flex>
+                <kylin-flex
                     gap="1em"
                     style="position: relative; width: 30%; height: 200px;border:1px solid #ccc"
-                    ><auto-watermark text="themepro"></auto-watermark>
-                    <auto-loading
+                    ><kylin-watermark text="kylinbits"></kylin-watermark>
+                    <kylin-loading
                         type="bars"
                         message="条形"
                         color="#52c41a"
                         cancelable
-                    ></auto-loading
-                ></auto-flex>
-                <auto-flex
+                    ></kylin-loading
+                ></kylin-flex>
+                <kylin-flex
                     gap="1em"
                     style="position: relative; width: 30%; height: 200px;border:1px solid #ccc"
-                    ><auto-watermark text="themepro"></auto-watermark>
-                    <auto-loading
+                    ><kylin-watermark text="kylinbits"></kylin-watermark>
+                    <kylin-loading
                         type="bubbles"
                         message="气泡"
                         color="#faad14"
-                    ></auto-loading
-                ></auto-flex>
-                <auto-flex
+                    ></kylin-loading
+                ></kylin-flex>
+                <kylin-flex
                     gap="1em"
                     style="position: relative; width: 30%; height: 200px;border:1px solid #ccc"
-                    ><auto-watermark text="themepro"></auto-watermark>
-                    <auto-loading
+                    ><kylin-watermark text="kylinbits"></kylin-watermark>
+                    <kylin-loading
                         type="spin"
                         message="旋转"
                         color="#13c2c2"
                         mask="dark"
-                    ></auto-loading
-                ></auto-flex>
-                <auto-flex
+                    ></kylin-loading
+                ></kylin-flex>
+                <kylin-flex
                     gap="1em"
                     style="position: relative; width: 30%; height: 200px;border:1px solid #ccc"
-                    ><auto-watermark text="themepro"></auto-watermark>
-                    <auto-loading
+                    ><kylin-watermark text="kylinbits"></kylin-watermark>
+                    <kylin-loading
                         type="spinning-bubbles"
                         message="旋转气泡"
                         description="旋转气泡旋转气泡旋转气泡旋转气泡旋转气泡"
                         color="#eb2f96"
                         mask="dark"
-                    ></auto-loading
-                ></auto-flex>
-                <auto-flex
+                    ></kylin-loading
+                ></kylin-flex>
+                <kylin-flex
                     gap="1em"
                     style="position: relative; width: 30%; height: 200px;border:1px solid #ccc"
-                    ><auto-watermark text="themepro"></auto-watermark>
-                    <auto-loading
+                    ><kylin-watermark text="kylinbits"></kylin-watermark>
+                    <kylin-loading
                         type="spokes"
                         message="辐射"
                         color="#fefefe"
                         mask="dark"
-                    ></auto-loading>
-                </auto-flex>
-            </auto-flex>
+                    ></kylin-loading>
+                </kylin-flex>
+            </kylin-flex>
         `
     },
 }
@@ -689,67 +689,67 @@ export const LoadingStatus: Story = {
     name: '状态展示',
     render: () => {
         return html`
-            <auto-flex direction="column" gap="2em">
+            <kylin-flex direction="column" gap="2em">
                 <h3>不同状态展示</h3>
-                <auto-flex gap="2em" wrap>
+                <kylin-flex gap="2em" wrap>
                     <!-- Loading 状态 -->
-                    <auto-flex
+                    <kylin-flex
                         direction="column"
                         align="center"
                         gap="0.5em"
                         style="width: 250px; height: 180px; border: 1px solid #e0e0e0; position: relative; padding: 1em; border-radius: 8px;"
                     >
-                        <auto-watermark text="loading"></auto-watermark>
-                        <auto-loading
+                        <kylin-watermark text="loading"></kylin-watermark>
+                        <kylin-loading
                             status="loading"
                             message="正在加载..."
                             color="#1890ff"
-                        ></auto-loading>
+                        ></kylin-loading>
                         <span
                             style="position: absolute; bottom: 10px; font-size: 12px; color: #999;"
                             >Loading 状态</span
                         >
-                    </auto-flex>
+                    </kylin-flex>
 
                     <!-- Error 状态 -->
-                    <auto-flex
+                    <kylin-flex
                         direction="column"
                         align="center"
                         gap="0.5em"
                         style="width: 250px; height: 180px; border: 1px solid #e0e0e0; position: relative; padding: 1em; border-radius: 8px;"
                     >
-                        <auto-watermark text="error"></auto-watermark>
-                        <auto-loading
+                        <kylin-watermark text="error"></kylin-watermark>
+                        <kylin-loading
                             status="error"
                             error="加载失败"
                             color="#f5222d"
-                        ></auto-loading>
+                        ></kylin-loading>
                         <span
                             style="position: absolute; bottom: 10px; font-size: 12px; color: #999;"
                             >Error 状态</span
                         >
-                    </auto-flex>
+                    </kylin-flex>
 
                     <!-- Success 状态 -->
-                    <auto-flex
+                    <kylin-flex
                         direction="column"
                         align="center"
                         gap="0.5em"
                         style="width: 250px; height: 180px; border: 1px solid #e0e0e0; position: relative; padding: 1em; border-radius: 8px;"
                     >
-                        <auto-watermark text="success"></auto-watermark>
-                        <auto-loading
+                        <kylin-watermark text="success"></kylin-watermark>
+                        <kylin-loading
                             status="success"
                             message="操作成功！"
                             color="#52c41a"
-                        ></auto-loading>
+                        ></kylin-loading>
                         <span
                             style="position: absolute; bottom: 10px; font-size: 12px; color: #999;"
                             >Success 状态</span
                         >
-                    </auto-flex>
-                </auto-flex>
-            </auto-flex>
+                    </kylin-flex>
+                </kylin-flex>
+            </kylin-flex>
         `
     },
 }
@@ -758,79 +758,79 @@ export const LoadingStatusWithActions: Story = {
     name: '状态与操作按钮',
     render: () => {
         return html`
-            <auto-flex direction="column" gap="2em">
+            <kylin-flex direction="column" gap="2em">
                 <h3>Loading 状态 - 可取消</h3>
-                <auto-flex gap="2em" wrap>
-                    <auto-card
+                <kylin-flex gap="2em" wrap>
+                    <kylin-card
                         title="可取消加载"
                         style="position: relative; width: 300px; height: 150px;border:1px solid #ccc"
                     >
-                        <auto-watermark text="cancelable"></auto-watermark>
-                        <auto-loading
+                        <kylin-watermark text="cancelable"></kylin-watermark>
+                        <kylin-loading
                             status="loading"
                             message="正在处理..."
                             cancelable
-                        ></auto-loading>
-                    </auto-card>
-                </auto-flex>
+                        ></kylin-loading>
+                    </kylin-card>
+                </kylin-flex>
 
                 <h3>Error 状态 - 重试和返回</h3>
-                <auto-flex gap="2em" wrap>
-                    <auto-card
+                <kylin-flex gap="2em" wrap>
+                    <kylin-card
                         title="可重试"
                         style="position: relative; width: 300px; height: 150px;border:1px solid #ccc"
                     >
-                        <auto-watermark text="retryable"></auto-watermark>
-                        <auto-loading
+                        <kylin-watermark text="retryable"></kylin-watermark>
+                        <kylin-loading
                             status="error"
                             error="网络连接失败"
                             retryable
-                        ></auto-loading>
-                    </auto-card>
+                        ></kylin-loading>
+                    </kylin-card>
 
-                    <auto-card
+                    <kylin-card
                         title="可返回"
                         style="position: relative; width: 300px; height: 150px;border:1px solid #ccc"
                     >
-                        <auto-watermark text="backable"></auto-watermark>
-                        <auto-loading
+                        <kylin-watermark text="backable"></kylin-watermark>
+                        <kylin-loading
                             status="error"
                             error="加载失败，请返回"
                             backable
-                        ></auto-loading>
-                    </auto-card>
+                        ></kylin-loading>
+                    </kylin-card>
 
-                    <auto-card
+                    <kylin-card
                         title="可重试和返回"
                         style="position: relative; width: 300px; height: 150px;border:1px solid #ccc"
                     >
-                        <auto-watermark
+                        <kylin-watermark
                             text="retryable+backable"
-                        ></auto-watermark>
-                        <auto-loading
+                        ></kylin-watermark>
+                        <kylin-loading
                             status="error"
                             error="服务器错误"
                             retryable
                             backable
-                        ></auto-loading>
-                    </auto-card>
-                </auto-flex>
+                        ></kylin-loading>
+                    </kylin-card>
+                </kylin-flex>
 
                 <h3>Success 状态 - 可关闭</h3>
-                <auto-flex gap="2em" wrap>
-                    <auto-card
+                <kylin-flex gap="2em" wrap>
+                    <kylin-card
                         title="可关闭"
                         style="position: relative; width: 300px; height: 150px;border:1px solid #ccc"
                     >
-                        <auto-watermark text="closeable"></auto-watermark>
-                        <auto-loading
+                        <kylin-watermark text="closeable"></kylin-watermark>
+                        <kylin-loading
                             status="success"
                             message="保存成功！"
                             closeable
-                        ></auto-loading>
-                    </auto-card>
-                </auto-flex>
-            </auto-flex>
+                        ></kylin-loading>
+                    </kylin-card>
+                </kylin-flex>
+            </kylin-flex>
         `
     },
 }
@@ -977,39 +977,39 @@ export const OnActionClickExample: Story = {
                 }, 100);
             </script>
 
-            <auto-flex direction="column" gap="2em" style="padding: 1em;">
+            <kylin-flex direction="column" gap="2em" style="padding: 1em;">
                 <div>
                     <h3 style="margin-bottom: 1em;">onActionClick 事件演示</h3>
                     <div class="demo-container">
                         <div
                             style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
                         >
-                            <auto-loading
+                            <kylin-loading
                                 id="demo-action-click"
                                 status="loading"
                                 message="准备就绪"
                                 retryable
                                 backable
                                 closeable
-                            ></auto-loading>
+                            ></kylin-loading>
                         </div>
                         <div class="demo-buttons">
-                            <auto-button
+                            <kylin-button
                                 type="primary"
                                 onclick="actionClickDemo.simulateSuccess('demo-action-click')"
                             >
                                 模拟成功
-                            </auto-button>
-                            <auto-button
+                            </kylin-button>
+                            <kylin-button
                                 onclick="actionClickDemo.simulateError('demo-action-click')"
                             >
                                 模拟失败
-                            </auto-button>
-                            <auto-button
+                            </kylin-button>
+                            <kylin-button
                                 onclick="actionClickDemo.reset('demo-action-click')"
                             >
                                 重置
-                            </auto-button>
+                            </kylin-button>
                         </div>
                         <div id="event-log" class="event-log">
                             <div class="event-log-item" style="color: #999;">
@@ -1025,12 +1025,12 @@ export const OnActionClickExample: Story = {
                         <div
                             style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
                         >
-                            <auto-loading
+                            <kylin-loading
                                 id="demo-custom-actions"
                                 status="loading"
                                 message="正在处理..."
                                 actions='[{"id":"view","label":"查看详情","icon":"eye"},{"id":"edit","label":"编辑","icon":"edit"},{"id":"delete","label":"删除","icon":"delete","type":"danger"}]'
-                            ></auto-loading>
+                            ></kylin-loading>
                         </div>
                         <p
                             style="color: #666; font-size: 12px; margin-top: 1em;"
@@ -1040,7 +1040,7 @@ export const OnActionClickExample: Story = {
                         </p>
                     </div>
                 </div>
-            </auto-flex>
+            </kylin-flex>
         `
     },
 }
@@ -1130,37 +1130,37 @@ export const LoadingStatusInteractive: Story = {
                 };
             </script>
 
-            <auto-flex direction="column" gap="3em" style="padding: 1em;">
+            <kylin-flex direction="column" gap="3em" style="padding: 1em;">
                 <div>
                     <h3 style="margin-bottom: 1em;">场景1: 可取消的加载操作</h3>
                     <div class="demo-container">
                         <div
                             style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
                         >
-                            <auto-loading
+                            <kylin-loading
                                 id="demo-cancel"
                                 status="loading"
                                 message="准备就绪"
                                 cancelable
-                            ></auto-loading>
+                            ></kylin-loading>
                         </div>
                         <div class="demo-buttons">
-                            <auto-button
+                            <kylin-button
                                 type="primary"
                                 onclick="loadingDemo.simulateSuccess('demo-cancel')"
                             >
                                 模拟成功
-                            </auto-button>
-                            <auto-button 
+                            </kylin-button>
+                            <kylin-button 
                                 onclick="loadingDemo.simulateError('demo-cancel')"
                             >
                                 模拟失败
-                            </auto-button>
-                            <auto-button 
+                            </kylin-button>
+                            <kylin-button 
                                 onclick="loadingDemo.reset('demo-cancel')"
                             >
                                 重置
-                            </auto-button>
+                            </kylin-button>
                         </div>
                     </div>
                 </div>
@@ -1171,26 +1171,26 @@ export const LoadingStatusInteractive: Story = {
                         <div
                             style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
                         >
-                            <auto-loading
+                            <kylin-loading
                                 id="demo-retry"
                                 status="loading"
                                 message="准备就绪"
                                 retryable
-                            ></auto-loading>
+                            ></kylin-loading>
                         </div>
                         <div class="demo-buttons">
-                            <auto-button
+                            <kylin-button
                                 type="primary"
                                 onclick="loadingDemo.simulateRandom('demo-retry')"
                             >
                                 随机加载结果
-                            </auto-button>
-                            <auto-button
+                            </kylin-button>
+                            <kylin-button
                                 type="default"
                                 onclick="loadingDemo.reset('demo-retry')"
                             >
                                 重置
-                            </auto-button>
+                            </kylin-button>
                         </div>
                         <p
                             style="color: #666; font-size: 12px; margin-top: 0.5em;"
@@ -1206,26 +1206,26 @@ export const LoadingStatusInteractive: Story = {
                         <div
                             style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
                         >
-                            <auto-loading
+                            <kylin-loading
                                 id="demo-close"
                                 status="loading"
                                 message="准备就绪"
                                 closeable
-                            ></auto-loading>
+                            ></kylin-loading>
                         </div>
                         <div class="demo-buttons">
-                            <auto-button
+                            <kylin-button
                                 type="primary"
                                 onclick="loadingDemo.simulateSuccess('demo-close')"
                             >
                                 保存操作
-                            </auto-button>
-                            <auto-button
+                            </kylin-button>
+                            <kylin-button
                                 type="default"
                                 onclick="loadingDemo.reset('demo-close')"
                             >
                                 重置
-                            </auto-button>
+                            </kylin-button>
                         </div>
                         <p
                             style="color: #666; font-size: 12px; margin-top: 0.5em;"
@@ -1241,40 +1241,40 @@ export const LoadingStatusInteractive: Story = {
                         <div
                             style="position: relative; height: 200px; border: 1px dashed #d9d9d9; border-radius: 4px;"
                         >
-                            <auto-loading
+                            <kylin-loading
                                 id="demo-full"
                                 status="loading"
                                 message="准备就绪"
                                 retryable
                                 backable
                                 closeable
-                            ></auto-loading>
+                            ></kylin-loading>
                         </div>
                         <div class="demo-buttons">
-                            <auto-button
+                            <kylin-button
                                 type="primary"
                                 onclick="loadingDemo.simulateRandom('demo-full')"
                             >
                                 开始加载
-                            </auto-button>
-                            <auto-button
+                            </kylin-button>
+                            <kylin-button
                                 type="default"
                                 onclick="loadingDemo.simulateSuccess('demo-full')"
                             >
                                 直接成功
-                            </auto-button>
-                            <auto-button
+                            </kylin-button>
+                            <kylin-button
                                 type="default"
                                 onclick="loadingDemo.simulateError('demo-full')"
                             >
                                 直接失败
-                            </auto-button>
-                            <auto-button
+                            </kylin-button>
+                            <kylin-button
                                 type="default"
                                 onclick="loadingDemo.reset('demo-full')"
                             >
                                 重置
-                            </auto-button>
+                            </kylin-button>
                         </div>
                         <p
                             style="color: #666; font-size: 12px; margin-top: 0.5em;"
@@ -1283,7 +1283,7 @@ export const LoadingStatusInteractive: Story = {
                         </p>
                     </div>
                 </div>
-            </auto-flex>
+            </kylin-flex>
         `
     },
 }

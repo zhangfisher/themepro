@@ -1,18 +1,18 @@
 /**
  *
- * <auto-button>确定</auto-button>
- * <auto-button type="primary">取消</auto-button>
- * <auto-button type="success">确定</auto-button>
- * <auto-button type="warning">确定</auto-button>
- * <auto-button type="d">确定</auto-button>
- * <auto-button type="info">确定</auto-button>
+ * <kylin-button>确定</kylin-button>
+ * <kylin-button type="primary">取消</kylin-button>
+ * <kylin-button type="success">确定</kylin-button>
+ * <kylin-button type="warning">确定</kylin-button>
+ * <kylin-button type="d">确定</kylin-button>
+ * <kylin-button type="info">确定</kylin-button>
  *
  * - 图标默认尺寸
- * <auto-icon auto></auto-icon>
+ * <kylin-icon auto></kylin-icon>
  * - inherit
  * 由图标容器的font-size
  * - 指定尺寸
- * <auto-icon size="32px"></auto-icon>
+ * <kylin-icon size="32px"></kylin-icon>
  *
  */
 import { LitElement, type TemplateResult, html } from "lit";
@@ -24,8 +24,8 @@ import { when } from "lit/directives/when.js";
 import { styles } from "./styles";
 import { toggleWrapper } from "../../utils/toggleWrapper";
 
-@customElement("auto-icon")
-export class AutoIcon extends LitElement {
+@customElement("kylin-icon")
+export class KylinIcon extends LitElement {
     static styles = styles;
 
     /**
@@ -56,7 +56,7 @@ export class AutoIcon extends LitElement {
 
     private _renderIcon() {
         const style: Record<string, any> = {
-            "mask-image": `var(--auto-icon-${this.name})`,
+            "mask-image": `var(--kylin-icon-${this.name})`,
         };
         if (this.size) {
             style["font-size"] = this.size;
@@ -74,7 +74,7 @@ export class AutoIcon extends LitElement {
         return html`
             <div
                 class="${classMap({
-                    "auto-icon": true,
+                    "kylin-icon": true,
                 })} "
                 style="${styleMap(style)}"
             ></div>
@@ -97,6 +97,6 @@ export class AutoIcon extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        "auto-icon": AutoIcon;
+        "kylin-icon": KylinIcon;
     }
 }

@@ -25,7 +25,7 @@ const Boxes = (count = 6) => html`
 `;
 
 const renderFlex = (args: any) => html`
-    <auto-flex
+    <kylin-flex
         ?wrap=${args.wrap}
         justify=${args.justify}
         direction=${args.direction}
@@ -42,9 +42,9 @@ const renderFlex = (args: any) => html`
         style="width:100%;max-width:960px;padding:12px;"
     >
         ${Boxes(8)}
-    </auto-flex>
+    </kylin-flex>
     <br />
-    <auto-flex
+    <kylin-flex
         justify=${args.justify}
         direction=${args.direction}
         align=${args.align}
@@ -57,7 +57,7 @@ const renderFlex = (args: any) => html`
         style="width:100%;max-width:960px;padding:12px;"
     >
         ${Boxes(5)}
-    </auto-flex>
+    </kylin-flex>
 `;
 
 const meta = {

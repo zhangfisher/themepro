@@ -1,5 +1,5 @@
 module.exports = {
-    name: 'themepro-tools',
+    name: 'kylinbits-tools',
     managerEntries: (entry = []) => {
         return [...entry, require.resolve('./manager.js')]
     },

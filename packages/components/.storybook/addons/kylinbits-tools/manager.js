@@ -3,14 +3,14 @@
 const React = require('react')
 const { addons, types } = require('@storybook/manager-api')
 
-const ADDON_ID = 'themepro-tools'
+const ADDON_ID = 'kylinbits-tools'
 
 function getThemePro() {
     try {
         const iframe = document.getElementById('storybook-preview-iframe')
         return iframe.contentWindow.ThemePro
     } catch (err) {
-        console.error('获取预览区ThemePro失败', err)
+        console.error('获取预览区KylinBits失败', err)
     }
 }
 
@@ -74,7 +74,7 @@ const presets = {
 }
 
 function createThemeColorButton(color) {
-    const toolId = `themepro/${color.title}`
+    const toolId = `kylinbits/${color.title}`
     return [
         toolId,
         {
@@ -86,8 +86,8 @@ function createThemeColorButton(color) {
                     key: toolId,
                     title: color.title,
                     onClick: () => {
-                        const themepro = getThemePro()
-                        themepro.themeColor = color.color
+                        const kylinbits = getThemePro()
+                        kylinbits.themeColor = color.color
                     },
                     style: {
                         width: '1.2em',
@@ -102,7 +102,7 @@ function createThemeColorButton(color) {
     ]
 }
 function createThemeCheckbox(name) {
-    const toolId = `themepro/${name}`
+    const toolId = `kylinbits/${name}`
     return [
         toolId,
         {
@@ -116,8 +116,8 @@ function createThemeCheckbox(name) {
                         key: toolId,
                         title: name,
                         onClick: () => {
-                            const themepro = getThemePro()
-                            themepro[name] = !themepro[name]
+                            const kylinbits = getThemePro()
+                            kylinbits[name] = !kylinbits[name]
                         },
                         style: {
                             width: 'auto',

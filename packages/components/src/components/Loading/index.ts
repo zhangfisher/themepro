@@ -1,17 +1,17 @@
 /**
- * AutoLoading 组件
+ * KylinLoading 组件
  *
  * @component
  * @description 功能丰富的加载状态组件,支持加载中、错误、成功三种状态,提供多种动画效果和操作按钮
  *
  * @example
- * <!-- 基础加载 --><auto-loading message="加载中..."></auto-loading>
- * <!-- 成功状态 --><auto-loading status="success" success="操作成功!" closeable></auto-loading>
- * <!-- 错误状态 --><auto-loading status="error" error="加载失败" retryable backable></auto-loading>
- * <!-- 内联模式 --><auto-loading inline message="处理中..." type="bars"></auto-loading>
- * <!-- 水平布局 --><auto-loading row message="请稍候..." description="正在同步数据"></auto-loading>
- * <!-- 自定义按钮 --><auto-loading status="loading" message="上传中..." .actions=${[{id:'pause',label:'暂停',icon:'pause'}]}></auto-loading>
- * <!-- 事件监听 --><script>document.querySelector('auto-loading').addEventListener('actionclick',e=>console.log(e.detail))</script>
+ * <!-- 基础加载 --><kylin-loading message="加载中..."></kylin-loading>
+ * <!-- 成功状态 --><kylin-loading status="success" success="操作成功!" closeable></kylin-loading>
+ * <!-- 错误状态 --><kylin-loading status="error" error="加载失败" retryable backable></kylin-loading>
+ * <!-- 内联模式 --><kylin-loading inline message="处理中..." type="bars"></kylin-loading>
+ * <!-- 水平布局 --><kylin-loading row message="请稍候..." description="正在同步数据"></kylin-loading>
+ * <!-- 自定义按钮 --><kylin-loading status="loading" message="上传中..." .actions=${[{id:'pause',label:'暂停',icon:'pause'}]}></kylin-loading>
+ * <!-- 事件监听 --><script>document.querySelector('kylin-loading').addEventListener('actionclick',e=>console.log(e.detail))</script>
  *
  * @features
  * - 三种状态: loading(加载中)、error(错误)、success(成功)
@@ -35,7 +35,7 @@ import {
     SPOKES,
 } from "./icons";
 import { objectProperty } from "@/utils/objectProperty";
-import type { AutoButtonProps } from "../Button";
+import type { KylinButtonProps } from "../Button";
 import { repeat } from "lit/directives/repeat.js";
 import { spread } from "@open-wc/lit-helpers";
 import "../Button";
@@ -54,12 +54,12 @@ const presetSizes = {
 };
 
 /**
- * AutoLoading 组件的属性类型
+ * KylinLoading 组件的属性类型
  * 从组件类中提取所有 @property 装饰器定义的响应式属性
  *
  * 使用方法：
  * ```ts
- * const props: AutoLoadingProps = {
+ * const props: KylinLoadingProps = {
  *   message: '加载中...',
  *   status: 'loading',
  *   size: 'large',
@@ -68,17 +68,17 @@ const presetSizes = {
  * ```
  */
 
-export type AutoLoadingStauts = "loading" | "error" | "success";
-export type AutoLoadingActions = Array<
-    AutoButtonProps & { status?: AutoLoadingStauts[] }
+export type KylinLoadingStauts = "loading" | "error" | "success";
+export type KylinLoadingActions = Array<
+    KylinButtonProps & { status?: KylinLoadingStauts[] }
 >;
-export type AutoLoadingActionEventDetail = RequiredKeys<
-    AutoButtonProps & {
-        status?: AutoLoadingStauts[];
+export type KylinLoadingActionEventDetail = RequiredKeys<
+    KylinButtonProps & {
+        status?: KylinLoadingStauts[];
     },
     "id"
 >;
-export interface AutoLoadingProps {
+export interface KylinLoadingProps {
     /** 尺寸：可使用预设值或自定义 CSS 值 */
     size?: string;
     /** 内联模式：loading 显示在内容中，而不是覆盖内容 */
@@ -108,7 +108,7 @@ export interface AutoLoadingProps {
     /** 浅色模式，默认 false */
     light?: boolean;
     /** 加载状态：loading、error 或 success */
-    status?: AutoLoadingStauts;
+    status?: KylinLoadingStauts;
     /** 是否显示取消按钮（status='loading' 时），默认 false */
     cancelable?: boolean;
     /** 是否显示重试按钮（status='error' 时），默认 false */
@@ -125,11 +125,11 @@ export interface AutoLoadingProps {
      * - 如果为空则在所有状态显示
      * - 如果是数组，则仅在指定状态下显示
      */
-    actions?: AutoLoadingActions;
+    actions?: KylinLoadingActions;
 }
 
-@customElement("auto-loading")
-export class AutoLoading extends LitElement {
+@customElement("kylin-loading")
+export class KylinLoading extends LitElement {
     static styles = styles;
 
     @property({ type: String })
@@ -222,7 +222,7 @@ export class AutoLoading extends LitElement {
      * 提供额外的动作
      */
     @objectProperty()
-    actions?: Array<AutoButtonProps & { status?: AutoLoadingStauts[] }>;
+    actions?: Array<KylinButtonProps & { status?: KylinLoadingStauts[] }>;
 
     @query(".actions")
     actionsEl?: HTMLElement;
@@ -347,7 +347,7 @@ export class AutoLoading extends LitElement {
                 label: "关闭",
                 icon: "no",
             },
-        ] as AutoLoadingActions;
+        ] as KylinLoadingActions;
         //
         presetActions.forEach((presetAction) => {
             const index = actions.findIndex(
@@ -374,18 +374,18 @@ export class AutoLoading extends LitElement {
     private _renderIcon() {
         // 根据状态渲染不同的图标
         if (this.status === "error") {
-            return html`<auto-icon
+            return html`<kylin-icon
                 size="calc(2 * var(--auto-font-size))"
                 color="red"
                 name="error"
-            ></auto-icon>`;
+            ></kylin-icon>`;
         }
         if (this.status === "success") {
-            return html`<auto-icon
+            return html`<kylin-icon
                 size="calc(2 * var(--auto-font-size))"
                 color="green"
                 name="success"
-            ></auto-icon>`;
+            ></kylin-icon>`;
         }
         // 默认 loading 状态使用 SVG 动画
         const svgIcon = this.getSvgIcon();
@@ -406,11 +406,11 @@ export class AutoLoading extends LitElement {
         if (!displayActions || displayActions.length === 0) return;
         return html`<div class="actions">
             ${repeat(displayActions!, (action: any) => {
-                return html`<auto-button
+                return html`<kylin-button
                     class="action"
                     ${spread(action)}
                     data-id="${action.id || action.label}"
-                ></auto-button>`;
+                ></kylin-button>`;
             })}
         </div>`;
     }
@@ -453,6 +453,6 @@ export class AutoLoading extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        "auto-loading": AutoLoading;
+        "kylin-loading": KylinLoading;
     }
 }

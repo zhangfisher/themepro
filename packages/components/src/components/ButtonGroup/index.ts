@@ -7,13 +7,13 @@ import { html } from 'lit'
 import { property } from 'lit/decorators.js'
 import { customElement } from 'lit/decorators/custom-element.js'
 import { styles } from './styles'
-import { AutoElementBase } from '../../elements/base'
+import { KylinElementBase } from '../../elements/base'
 
-import type { AutoButtonProps } from '../Button'
+import type { KylinButtonProps } from '../Button'
 import { repeat } from 'lit/directives/repeat.js'
 
-export interface AutoButtonGroupProps {
-    items: AutoButtonProps[]
+export interface KylinButtonGroupProps {
+    items: KylinButtonProps[]
     gap?: number
     pill?: boolean
     variant?: 'outline' | 'text' | 'ghost'
@@ -24,8 +24,8 @@ export interface AutoButtonGroupProps {
     block?: boolean
 }
 
-@customElement('auto-button-group')
-export class AutoButtonGroup extends AutoElementBase<AutoButtonGroupProps> {
+@customElement('kylin-button-group')
+export class KylinButtonGroup extends KylinElementBase<KylinButtonGroupProps> {
     static styles = styles
 
     @property({ type: String })
@@ -66,8 +66,8 @@ export class AutoButtonGroup extends AutoElementBase<AutoButtonGroupProps> {
     disconnectedCallback(): void {
         super.disconnectedCallback()
     }
-    private _renderButton(btn: AutoButtonProps, i: number) {
-        return html`<auto-button
+    private _renderButton(btn: KylinButtonProps, i: number) {
+        return html`<kylin-button
             label="${btn.label!}"
             icon="${btn.icon!}"
             size="${this.size!}"
@@ -76,22 +76,22 @@ export class AutoButtonGroup extends AutoElementBase<AutoButtonGroupProps> {
             .vertical=${btn.vertical!}
             labelWidth="${this.labelWidth!}"
             variant="${this.variant!}"                    
-        ></auto-button>`
+        ></kylin-button>`
     }
     render() {
         const buttons = this._getButtons()
         return html`
-            <auto-flex direction="${this.direction!}" gap="${this.gap!}">
+            <kylin-flex direction="${this.direction!}" gap="${this.gap!}">
                 ${repeat(buttons, (btn, i) => {
                     return this._renderButton(btn, i)
                 })}
-            </auto-flex>
+            </kylin-flex>
         `
     }
 }
 
 declare global {
     interface HTMLElementTagNameMap {
-        'auto-button-group': AutoButtonGroup
+        'kylin-button-group': KylinButtonGroup
     }
 }

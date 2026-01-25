@@ -38,16 +38,16 @@ export const 默认提示框: Story = {
                     >
                         悬停查看提示
                     </button>
-                    <auto-button
+                    <kylin-button
                         data-tooltip="<h3>提示</h3><p>文字也可以有提示<p>"
                         label="HTML弹出内容"
                     >
-                    </auto-button>
-                    <auto-button
+                    </kylin-button>
+                    <kylin-button
                         data-tooltip="slot://info"
                         label="显示使用具名slot"
                     >
-                    </auto-button>
+                    </kylin-button>
                     <button
                         data-tooltip="query://.content"
                         style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"

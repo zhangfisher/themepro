@@ -130,7 +130,7 @@ export const OpenControlDemo: Story = {
                         </div>
 
                         <div class="button-group">
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="开关控制 (当前: ${args.open ? '显示' : '隐藏'})"
                                 type="primary"
                                 .open=${args.open}
@@ -155,7 +155,7 @@ export const OpenControlDemo: Story = {
                                         <button style="padding: 6px 12px; border: 1px solid #e8e8e8; border-radius: 4px; background: white; cursor: pointer; text-align: left;">🔐 隐私设置</button>
                                     </div>
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
 
                             <span class="state-indicator ${args.open ? 'state-open' : 'state-closed'}">
                                 ${args.open ? '🟢 显示中' : '🔴 已隐藏'}
@@ -165,8 +165,8 @@ export const OpenControlDemo: Story = {
                         <div class="code-example">
                             <strong>代码示例:</strong><br>
                             <code>
-                                &lt;auto-dropdown .open=${args.open ? 'true' : 'false'}&gt;<br>
-                                &nbsp;&nbsp;弹出内容&lt;/auto-dropdown&gt;
+                                &lt;kylin-dropdown .open=${args.open ? 'true' : 'false'}&gt;<br>
+                                &nbsp;&nbsp;弹出内容&lt;/kylin-dropdown&gt;
                             </code>
                         </div>
                     </div>
@@ -194,7 +194,7 @@ export const OpenControlDemo: Story = {
                             </div>
 
                             <div class="button-group" style="justify-content: flex-start;">
-                                <auto-dropdown
+                                <kylin-dropdown
                                     label="👤 用户菜单"
                                     type="default"
                                     .open=${args.open}  // 受控于open属性
@@ -214,9 +214,9 @@ export const OpenControlDemo: Story = {
                                         <div style="padding: 6px 12px; cursor: pointer; color: #666; font-size: 12px;">📊 活动日志</div>
                                         <div style="padding: 6px 12px; cursor: pointer; color: #ff4d4f; font-size: 12px;">🚪 退出登录</div>
                                     </div>
-                                </auto-dropdown>
+                                </kylin-dropdown>
 
-                                <auto-dropdown
+                                <kylin-dropdown
                                     label="⚙️ 权限设置"
                                     type="warning"
                                     .open=${args.open}  // 受控于open属性
@@ -249,7 +249,7 @@ export const OpenControlDemo: Story = {
                                             <button style="padding: 4px 8px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">保存权限</button>
                                         </div>
                                     </div>
-                                </auto-dropdown>
+                                </kylin-dropdown>
                             </div>
 
                             <div class="tooltip">
@@ -266,7 +266,7 @@ export const OpenControlDemo: Story = {
                         </div>
 
                         <div class="button-group" style="margin-bottom: 20px;">
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="📁 文件管理"
                                 type="info"
                                 .open=${args.open}
@@ -284,7 +284,7 @@ export const OpenControlDemo: Story = {
 
                                     <div style="display: flex; flex-direction: column; gap: 4px; padding: 0 8px;">
                                         <!-- 嵌套的弹出层 -->
-                                        <auto-dropdown
+                                        <kylin-dropdown
                                             label="📄 新建文件"
                                             type="default"
                                             size="small"
@@ -302,9 +302,9 @@ export const OpenControlDemo: Story = {
                                                 <div style="padding: 4px 8px; cursor: pointer; font-size: 12px;">🖼️ 图片</div>
                                                 <div style="padding: 4px 8px; cursor: pointer; font-size: 12px;">📦 压缩包</div>
                                             </div>
-                                        </auto-dropdown>
+                                        </kylin-dropdown>
 
-                                        <auto-dropdown
+                                        <kylin-dropdown
                                             label="📁 新建文件夹"
                                             type="default"
                                             size="small"
@@ -321,7 +321,7 @@ export const OpenControlDemo: Story = {
                                                 <div style="padding: 4px 8px; cursor: pointer; font-size: 12px;">🔒 加密文件夹</div>
                                                 <div style="padding: 4px 8px; cursor: pointer; font-size: 12px;">🔗 快捷方式</div>
                                             </div>
-                                        </auto-dropdown>
+                                        </kylin-dropdown>
                                     </div>
 
                                     <hr style="margin: 8px 0; border: none; border-top: 1px solid #f0f0f0;" />
@@ -332,7 +332,7 @@ export const OpenControlDemo: Story = {
                                         <button style="padding: 6px 12px; border: 1px solid #e8e8e8; border-radius: 4px; background: white; cursor: pointer; text-align: left; font-size: 14px;">🗑️ 回收站</button>
                                     </div>
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div class="tooltip">
@@ -348,7 +348,7 @@ export const OpenControlDemo: Story = {
                         </div>
 
                         <div class="button-group">
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="📊 实时监控面板"
                                 type="primary"
                                 .open=${args.open}
@@ -423,15 +423,15 @@ export const OpenControlDemo: Story = {
                                         <button style="padding: 6px 12px; background: #ff4d4f; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 12px;">🔄 刷新数据</button>
                                     </div>
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div class="code-example">
                             <strong>动态内容示例:</strong><br>
                             <code>
-                                &lt;auto-dropdown .open=${args.open}&gt;<br>
+                                &lt;kylin-dropdown .open=${args.open}&gt;<br>
                                 &nbsp;&nbsp;实时数据显示: ${args.open ? '📊 监控中' : '❌ 已停止'}<br>
-                                &lt;/auto-dropdown&gt;
+                                &lt;/kylin-dropdown&gt;
                             </code>
                         </div>
                     </div>
@@ -446,7 +446,7 @@ export const OpenControlDemo: Story = {
                         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px;">
                             <div style="text-align: center; padding: 12px; background: #f6f8fa; border-radius: 6px;">
                                 <div style="font-weight: bold; margin-bottom: 8px;">🎨 颜色面板</div>
-                                <auto-dropdown
+                                <kylin-dropdown
                                     label="选择颜色"
                                     type="default"
                                     size="small"
@@ -471,12 +471,12 @@ export const OpenControlDemo: Story = {
                                             <div style="width: 24px; height: 24px; background: #b7eb8f; border-radius: 2px; cursor: pointer;"></div>
                                         </div>
                                     </div>
-                                </auto-dropdown>
+                                </kylin-dropdown>
                             </div>
 
                             <div style="text-align: center; padding: 12px; background: #f6f8fa; border-radius: 6px;">
                                 <div style="font-weight: bold; margin-bottom: 8px;">🔤 字体设置</div>
-                                <auto-dropdown
+                                <kylin-dropdown
                                     label="选择字体"
                                     type="default"
                                     size="small"
@@ -495,12 +495,12 @@ export const OpenControlDemo: Story = {
                                         <div style="padding: 4px 8px; cursor: pointer; font-size: 12px;">Times New Roman</div>
                                         <div style="padding: 4px 8px; cursor: pointer; font-size: 12px;">Georgia</div>
                                     </div>
-                                </auto-dropdown>
+                                </kylin-dropdown>
                             </div>
 
                             <div style="text-align: center; padding: 12px; background: #f6f8fa; border-radius: 6px;">
                                 <div style="font-weight: bold; margin-bottom: 8px;">📏 字体大小</div>
-                                <auto-dropdown
+                                <kylin-dropdown
                                     label="选择大小"
                                     type="default"
                                     size="small"
@@ -519,7 +519,7 @@ export const OpenControlDemo: Story = {
                                         <div style="padding: 4px 8px; cursor: pointer; font-size: 12px;">16px</div>
                                         <div style="padding: 4px 8px; cursor: pointer; font-size: 12px;">18px</div>
                                     </div>
-                                </auto-dropdown>
+                                </kylin-dropdown>
                             </div>
                         </div>
 
@@ -545,7 +545,7 @@ export const OpenControlDemo: Story = {
                             <strong>JavaScript 控制示例:</strong><br>
                             <code>
                                 // 获取元素<br>
-                                const dropdown = document.querySelector('auto-dropdown');<br><br>
+                                const dropdown = document.querySelector('kylin-dropdown');<br><br>
 
                                 // 显示弹出层<br>
                                 dropdown.open = true;<br><br>

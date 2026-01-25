@@ -26,9 +26,9 @@ function createCheckbox(label, value, listener) {
 }
 
 function renderThemeProSettings() {
-    const themepro = getThemePro()
+    const kylinbits = getThemePro()
     const settings = document.createElement('div')
-    settings.classList.add('themepro-settings')
+    settings.classList.add('kylinbits-settings')
     settings.style.display = 'flex'
     settings.style.flexDirection = 'column'
     settings.style.gap = '4px'
@@ -39,7 +39,7 @@ function renderThemeProSettings() {
     presetColorSelector.style.flexWrap = 'wrap'
     presetColorSelector.style.gap = '4px'
 
-    const colors = Object.values(themepro.presets).map((p) => {
+    const colors = Object.values(kylinbits.presets).map((p) => {
         const color = document.createElement('div')
         color.classList.add('color')
         color.style.background = p.color
@@ -60,19 +60,19 @@ function renderThemeProSettings() {
     presetColorSelector.addEventListener('click', (evt) => {
         if (evt.target.classList.contains('color')) {
             const color = evt.target.style.background
-            themepro.themeColor = color
+            kylinbits.themeColor = color
         }
         evt.stopPropagation()
     })
 
     settings.appendChild(presetColorSelector)
 
-    const darkCheckbox = createCheckbox('暗色模式', themepro.dark, (e) => {
-        themepro.dark = e.target.checked
+    const darkCheckbox = createCheckbox('暗色模式', kylinbits.dark, (e) => {
+        kylinbits.dark = e.target.checked
     })
     settings.appendChild(darkCheckbox)
-    const colorizedCheckbox = createCheckbox('多彩模式', themepro.colorized, (e) => {
-        themepro.colorized = e.target.checked
+    const colorizedCheckbox = createCheckbox('多彩模式', kylinbits.colorized, (e) => {
+        kylinbits.colorized = e.target.checked
     })
     settings.appendChild(colorizedCheckbox)
 

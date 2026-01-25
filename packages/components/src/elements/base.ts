@@ -8,7 +8,7 @@ import { parseRelaxedJson } from "@/utils/parseRelaxedJson";
 /**
  *
  */
-export class AutoElementBase<
+export class KylinElementBase<
     State extends Record<string, any> = Record<string, any>
 > extends LitElement {
     /**

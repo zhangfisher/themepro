@@ -41,11 +41,11 @@ class BoxComponent extends LitElement {
     ripple = new ClickRipple(this);
     render() {
         return html`
-            <auto-flex
+            <kylin-flex
                 style="width:100%;height:100px;border:var(--auto-border);"
             >
                 单击涟漪动画
-            </auto-flex>
+            </kylin-flex>
         `;
     }
 }

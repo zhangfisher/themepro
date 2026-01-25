@@ -1,8 +1,8 @@
-import { AutoElementBase } from "@/elements/base";
+import { KylinElementBase } from "@/elements/base";
 import { customElement } from "lit/decorators.js";
 import { property } from "lit/decorators.js";
 import { styles } from "./styles";
-import type { AutoButtonProps } from "../Button";
+import type { KylinButtonProps } from "../Button";
 import { html } from "lit";
 import { repeat } from "lit/directives/repeat.js";
 import "../Icon";
@@ -29,7 +29,7 @@ export type AutoFeedbackProps = {
     description?: string;
     /**
      * 自定义图标
-     * 可以是图标名称（使用 auto-icon 显示）
+     * 可以是图标名称（使用 kylin-icon 显示）
      * 或者是图片地址
      */
     icon?: string;
@@ -40,15 +40,15 @@ export type AutoFeedbackProps = {
     /**
      * 操作按钮列表
      */
-    actions?: AutoButtonProps[];
+    actions?: KylinButtonProps[];
     /**
      * 是否充满父容器
      */
     fit?: boolean;
 };
 
-@customElement("auto-feedback")
-export class AutoFeedBack extends AutoElementBase<AutoFeedbackProps> {
+@customElement("kylin-feedback")
+export class KylinFeedBack extends KylinElementBase<AutoFeedbackProps> {
     static styles = [styles];
 
     @property({ type: String })
@@ -64,7 +64,7 @@ export class AutoFeedBack extends AutoElementBase<AutoFeedbackProps> {
     type?: "info" | "success" | "warning" | "error";
 
     @property({ type: Array })
-    actions?: Partial<AutoButtonProps>[];
+    actions?: Partial<KylinButtonProps>[];
 
     @property({ type: Boolean, reflect: true })
     fit: boolean = false;
@@ -122,13 +122,13 @@ export class AutoFeedBack extends AutoElementBase<AutoFeedbackProps> {
             </div>`;
         }
 
-        // 使用 auto-icon 组件，并应用颜色
+        // 使用 kylin-icon 组件，并应用颜色
         return html`<div class="feedback-icon">
-            <auto-icon
+            <kylin-icon
                 name="${icon}"
                 size="4em"
                 style="color: ${iconColor || "var(--auto-theme-color)"}"
-            ></auto-icon>
+            ></kylin-icon>
         </div>`;
     }
 
@@ -167,11 +167,11 @@ export class AutoFeedBack extends AutoElementBase<AutoFeedbackProps> {
         if (!this.actions || this.actions.length === 0) return html``;
 
         return html`<div class="feedback-actions">
-            <auto-flex gap="0.5em" justifyContent="center">
+            <kylin-flex gap="0.5em" justifyContent="center">
                 ${repeat(
                     this.actions,
                     (action) => html`
-                        <auto-button
+                        <kylin-button
                             label="${action.label || ""}"
                             type="${action.type || "default"}"
                             variant="${action.variant || "outline"}"
@@ -179,11 +179,11 @@ export class AutoFeedBack extends AutoElementBase<AutoFeedbackProps> {
                             ?disabled="${action.disabled}"
                             ?loading="${action.loading}"
                             icon="${action.icon || ""}"
-                            @auto:click="${action.onClick}"
-                        ></auto-button>
+                            @kylin:click="${action.onClick}"
+                        ></kylin-button>
                     `
                 )}
-            </auto-flex>
+            </kylin-flex>
         </div>`;
     }
 
@@ -197,6 +197,6 @@ export class AutoFeedBack extends AutoElementBase<AutoFeedbackProps> {
 
 declare global {
     interface HTMLElementTagNameMap {
-        "auto-feedback": AutoFeedBack;
+        "kylin-feedback": KylinFeedBack;
     }
 }

@@ -525,7 +525,7 @@ var shadowVars = {
     'x-large': getShadowVars('x-large'),
 }
 
-// src/themepro.ts
+// src/kylinbits.ts
 var Themepro = class {
     constructor(scope, options) {
         this.dark = false
@@ -653,7 +653,7 @@ var Themepro = class {
                 .join(';\n')};
             }`
         injectStylesheet(style, {
-            id: `themepro-theme`,
+            id: `kylinbits-theme`,
         })
     }
     /**
@@ -690,7 +690,7 @@ ${toVarStyles(vars)}}
 }
 `,
             {
-                id: 'themepro-keycolors',
+                id: 'kylinbits-keycolors',
             },
         )
     }
@@ -713,7 +713,7 @@ ${spacingStyles}
 ${shadowStyles}
 ${lightStyles}`,
             {
-                id: 'themepro-vars',
+                id: 'kylinbits-vars',
             },
         )
     }

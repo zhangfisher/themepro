@@ -20,7 +20,7 @@ export const PlacementDemo: Story = {
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 top
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="顶部弹出"
                                 type="primary"
                                 .popupOptions=${{
@@ -38,14 +38,14 @@ export const PlacementDemo: Story = {
                                 >
                                     第二选项
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div style="text-align: center;">
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 bottom
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="底部弹出"
                                 type="success"
                                 .popupOptions=${{
@@ -63,14 +63,14 @@ export const PlacementDemo: Story = {
                                 >
                                     第二选项
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div style="text-align: center;">
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 left
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="左侧弹出"
                                 type="warning"
                                 .popupOptions=${{
@@ -88,14 +88,14 @@ export const PlacementDemo: Story = {
                                 >
                                     第二选项
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div style="text-align: center;">
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 right
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="右侧弹出"
                                 type="info"
                                 .popupOptions=${{
@@ -113,7 +113,7 @@ export const PlacementDemo: Story = {
                                 >
                                     第二选项
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
                     </div>
 
@@ -125,7 +125,7 @@ export const PlacementDemo: Story = {
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 top-start
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="左上角"
                                 type="primary"
                                 .popupOptions=${{
@@ -138,14 +138,14 @@ export const PlacementDemo: Story = {
                                 >
                                     📍 左上角对齐
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div style="text-align: center;">
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 top-end
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="右上角"
                                 type="success"
                                 .popupOptions=${{
@@ -158,14 +158,14 @@ export const PlacementDemo: Story = {
                                 >
                                     🎯 右上角对齐
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div style="text-align: center;">
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 bottom-start
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="左下角"
                                 type="warning"
                                 .popupOptions=${{
@@ -178,14 +178,14 @@ export const PlacementDemo: Story = {
                                 >
                                     ⬇️ 左下角对齐
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div style="text-align: center;">
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 bottom-end
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="右下角"
                                 type="info"
                                 .popupOptions=${{
@@ -198,14 +198,14 @@ export const PlacementDemo: Story = {
                                 >
                                     ➡️ 右下角对齐
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div style="text-align: center;">
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 left-start
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="左上角"
                                 type="danger"
                                 .popupOptions=${{
@@ -218,14 +218,14 @@ export const PlacementDemo: Story = {
                                 >
                                     ⬅️ 左上角对齐
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div style="text-align: center;">
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 left-end
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="左下角"
                                 type="primary"
                                 .popupOptions=${{
@@ -238,14 +238,14 @@ export const PlacementDemo: Story = {
                                 >
                                     ⬅️ 左下角对齐
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div style="text-align: center;">
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 right-start
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="右上角"
                                 type="success"
                                 .popupOptions=${{
@@ -258,14 +258,14 @@ export const PlacementDemo: Story = {
                                 >
                                     ➡️ 右上角对齐
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div style="text-align: center;">
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 right-end
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="右下角"
                                 type="warning"
                                 .popupOptions=${{
@@ -278,7 +278,7 @@ export const PlacementDemo: Story = {
                                 >
                                     ➡️ 右下角对齐
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
                     </div>
 
@@ -288,7 +288,7 @@ export const PlacementDemo: Story = {
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 快速弹跳
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="快速弹跳"
                                 type="primary"
                                 .popupOptions=${{
@@ -303,14 +303,14 @@ export const PlacementDemo: Story = {
                                 >
                                     ⚡ 快速弹出
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div>
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 缓动效果
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="缓动弹出"
                                 type="success"
                                 .popupOptions=${{
@@ -325,14 +325,14 @@ export const PlacementDemo: Story = {
                                 >
                                     🌊 缓慢弹出
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div>
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 弹性动画
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="弹性弹出"
                                 type="warning"
                                 .popupOptions=${{
@@ -347,14 +347,14 @@ export const PlacementDemo: Story = {
                                 >
                                     🎈 弹性效果
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div>
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 回弹动画
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="回弹弹出"
                                 type="info"
                                 .popupOptions=${{
@@ -369,7 +369,7 @@ export const PlacementDemo: Story = {
                                 >
                                     🔄 回弹效果
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
                     </div>
 
@@ -381,7 +381,7 @@ export const PlacementDemo: Story = {
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 内容丰富的下拉菜单
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="复杂菜单"
                                 type="primary"
                                 .popupOptions=${{
@@ -416,14 +416,14 @@ export const PlacementDemo: Story = {
                                 >
                                     🔒 退出登录
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div style="text-align: center;">
                             <p style="margin-bottom: 10px; font-weight: 500;">
                                 侧边导航式菜单
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="侧边菜单"
                                 type="success"
                                 .popupOptions=${{
@@ -460,7 +460,7 @@ export const PlacementDemo: Story = {
                                 >
                                     ⚙️ 系统管理
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
                     </div>
                 </div>

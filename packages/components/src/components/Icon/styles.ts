@@ -5,13 +5,13 @@ export const styles = css`
         position: relative;
         display: inline-flex;
     }
-    .auto-icon {
+    .kylin-icon {
         background-color: currentColor;
         mask-size: cover;
         -webkit-mask-size: cover;
         vertical-align: text-bottom;
         position: relative;
-        font-size: var(--auto-icon-size);
+        font-size: var(--kylin-icon-size);
         width: 1em;
         height: 1em;
         transition: transform 0.3s ease-in-out;
@@ -29,7 +29,7 @@ export const styles = css`
             border-radius: var(--auto-border-radius);
         }
     }
-    :host([inherit]) .auto-icon {
+    :host([inherit]) .kylin-icon {
         font-size: inherit;
     }
 `;

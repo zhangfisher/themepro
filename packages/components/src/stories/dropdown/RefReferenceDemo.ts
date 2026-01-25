@@ -93,7 +93,7 @@ export const RefReferenceDemo: Story = {
                         </div>
 
                         <div class="control-buttons">
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="🔧 工具"
                                 type="primary"
                                 size="small"
@@ -133,9 +133,9 @@ export const RefReferenceDemo: Story = {
                                         🗑️ 删除
                                     </div>
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
 
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="⚙️ 设置"
                                 type="default"
                                 size="small"
@@ -167,7 +167,7 @@ export const RefReferenceDemo: Story = {
                                         🔒 隐私设置
                                     </div>
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <p
@@ -198,7 +198,7 @@ export const RefReferenceDemo: Story = {
                         </div>
 
                         <div style="text-align: center;">
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="🎯 更多操作"
                                 type="info"
                                 .popupOptions=${{
@@ -240,7 +240,7 @@ export const RefReferenceDemo: Story = {
                                         </div>
                                     </div>
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
                     </div>
 
@@ -294,7 +294,7 @@ export const RefReferenceDemo: Story = {
                             <div
                                 style="display: flex; gap: 12px; justify-content: flex-end;"
                             >
-                                <auto-dropdown
+                                <kylin-dropdown
                                     label="❓ 显示帮助"
                                     type="warning"
                                     .popupOptions=${{
@@ -337,7 +337,7 @@ export const RefReferenceDemo: Story = {
                                             </div>
                                         </div>
                                     </div>
-                                </auto-dropdown>
+                                </kylin-dropdown>
 
                                 <button
                                     style="padding: 8px 16px; background: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer;"
@@ -366,7 +366,7 @@ export const RefReferenceDemo: Story = {
                         </div>
 
                         <div class="control-buttons" style="margin-top: 20px;">
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="📈 查看统计"
                                 type="success"
                                 size="small"
@@ -395,9 +395,9 @@ export const RefReferenceDemo: Story = {
                                         </p>
                                     </div>
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
 
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="🔧 系统设置"
                                 type="default"
                                 size="small"
@@ -434,9 +434,9 @@ export const RefReferenceDemo: Story = {
                                         </p>
                                     </div>
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
 
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="🚀 性能监控"
                                 type="primary"
                                 size="small"
@@ -476,7 +476,7 @@ export const RefReferenceDemo: Story = {
                                         </p>
                                     </div>
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
                     </div>
 
@@ -499,7 +499,7 @@ export const RefReferenceDemo: Story = {
                         </div>
 
                         <div style="text-align: center; margin-top: 20px;">
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="🎯 相对于参考容器"
                                 type="primary"
                                 .popupOptions=${{
@@ -519,7 +519,7 @@ export const RefReferenceDemo: Story = {
                                         <code>.reference-box</code> 定位
                                     </p>
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
                     </div>
                 </div>

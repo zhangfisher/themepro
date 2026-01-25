@@ -8,7 +8,7 @@ declare global {
     var ThemePro: ThemeManager
 }
 
-@customElement('themepro-controller')
+@customElement('kylinbits-controller')
 // biome-ignore lint/correctness/noUnusedVariables: <lint/correctness/noUnusedVariables>
 class ThemeproController extends LitElement {
     static styles = css`

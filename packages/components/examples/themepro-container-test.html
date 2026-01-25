@@ -1,68 +1,128 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ThemePro Container 测试</title>
-    <script type="module" src="../dist/index.js"></script>
-</head>
-<body>
-    <div style="padding: 20px; font-family: Arial, sans-serif;">
-        <h1>ThemePro Container 测试</h1>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>ThemePro Container 测试</title>
+        <script type="module" src="../dist/index.js"></script>
+    </head>
+    <body>
+        <div style="padding: 20px; font-family: Arial, sans-serif">
+            <h1>ThemePro Container 测试</h1>
 
-        <h2>多个 Dropdown 组件测试</h2>
-        <p>验证所有组件都使用同一个 .themepro-container</p>
+            <h2>多个 Dropdown 组件测试</h2>
+            <p>验证所有组件都使用同一个 .kylinbits-container</p>
 
-        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0;">
-            <auto-dropdown label="Dropdown 1" type="primary">
-                <div class="dropdown" style="padding: 8px 0; min-width: 160px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-                    <div style="padding: 8px 16px; cursor: pointer;">选项 1-1</div>
-                    <div style="padding: 8px 16px; cursor: pointer;">选项 1-2</div>
-                </div>
-            </auto-dropdown>
+            <div
+                style="
+                    display: flex;
+                    gap: 20px;
+                    flex-wrap: wrap;
+                    margin: 20px 0;
+                "
+            >
+                <auto-dropdown label="Dropdown 1" type="primary">
+                    <div
+                        class="dropdown"
+                        style="
+                            padding: 8px 0;
+                            min-width: 160px;
+                            background: white;
+                            border: 1px solid #d9d9d9;
+                            border-radius: 6px;
+                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                        "
+                    >
+                        <div style="padding: 8px 16px; cursor: pointer">
+                            选项 1-1
+                        </div>
+                        <div style="padding: 8px 16px; cursor: pointer">
+                            选项 1-2
+                        </div>
+                    </div>
+                </auto-dropdown>
 
-            <auto-dropdown label="Dropdown 2" type="info">
-                <div class="dropdown" style="padding: 8px 0; min-width: 160px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-                    <div style="padding: 8px 16px; cursor: pointer;">选项 2-1</div>
-                    <div style="padding: 8px 16px; cursor: pointer;">选项 2-2</div>
-                </div>
-            </auto-dropdown>
+                <auto-dropdown label="Dropdown 2" type="info">
+                    <div
+                        class="dropdown"
+                        style="
+                            padding: 8px 0;
+                            min-width: 160px;
+                            background: white;
+                            border: 1px solid #d9d9d9;
+                            border-radius: 6px;
+                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                        "
+                    >
+                        <div style="padding: 8px 16px; cursor: pointer">
+                            选项 2-1
+                        </div>
+                        <div style="padding: 8px 16px; cursor: pointer">
+                            选项 2-2
+                        </div>
+                    </div>
+                </auto-dropdown>
 
-            <auto-dropdown label="Dropdown 3" type="warning">
-                <div class="dropdown" style="padding: 8px 0; min-width: 160px; background: white; border: 1px solid #d9d9d9; border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
-                    <div style="padding: 8px 16px; cursor: pointer;">选项 3-1</div>
-                    <div style="padding: 8px 16px; cursor: pointer;">选项 3-2</div>
-                </div>
-            </auto-dropdown>
-        </div>
+                <auto-dropdown label="Dropdown 3" type="warning">
+                    <div
+                        class="dropdown"
+                        style="
+                            padding: 8px 0;
+                            min-width: 160px;
+                            background: white;
+                            border: 1px solid #d9d9d9;
+                            border-radius: 6px;
+                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                        "
+                    >
+                        <div style="padding: 8px 16px; cursor: pointer">
+                            选项 3-1
+                        </div>
+                        <div style="padding: 8px 16px; cursor: pointer">
+                            选项 3-2
+                        </div>
+                    </div>
+                </auto-dropdown>
+            </div>
 
-        <script>
-            // 监听组件初始化事件来验证容器创建
-            document.addEventListener('DOMContentLoaded', () => {
-                const dropdowns = document.querySelectorAll('auto-dropdown');
+            <script>
+                // 监听组件初始化事件来验证容器创建
+                document.addEventListener("DOMContentLoaded", () => {
+                    const dropdowns =
+                        document.querySelectorAll("auto-dropdown");
 
-                // 点击第一个dropdown来触发初始化
-                setTimeout(() => {
-                    const themeproContainer = document.querySelector('.themepro-container');
-                    if (themeproContainer) {
-                        console.log('✅ .themepro-container 已创建');
-                        console.log('📦 container children count:', themeproContainer.children.length);
+                    // 点击第一个dropdown来触发初始化
+                    setTimeout(() => {
+                        const themeproContainer = document.querySelector(
+                            ".kylinbits-container"
+                        );
+                        if (themeproContainer) {
+                            console.log("✅ .kylinbits-container 已创建");
+                            console.log(
+                                "📦 container children count:",
+                                themeproContainer.children.length
+                            );
 
-                        // 检查是否只有一个全局容器
-                        const allContainers = document.querySelectorAll('.themepro-container');
-                        console.log('🔢 .themepro-container 数量:', allContainers.length);
+                            // 检查是否只有一个全局容器
+                            const allContainers = document.querySelectorAll(
+                                ".kylinbits-container"
+                            );
+                            console.log(
+                                "🔢 .kylinbits-container 数量:",
+                                allContainers.length
+                            );
 
-                        if (allContainers.length === 1) {
-                            console.log('✅ 全局容器唯一性验证通过');
+                            if (allContainers.length === 1) {
+                                console.log("✅ 全局容器唯一性验证通过");
+                            } else {
+                                console.log("❌ 全局容器重复创建");
+                            }
                         } else {
-                            console.log('❌ 全局容器重复创建');
+                            console.log("❌ .kylinbits-container 未创建");
                         }
-                    } else {
-                        console.log('❌ .themepro-container 未创建');
-                    }
-                }, 1000);
-            });
-        </script>
-    </div>
-</body>
+                    }, 1000);
+                });
+            </script>
+        </div>
+    </body>
 </html>

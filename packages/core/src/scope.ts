@@ -220,7 +220,7 @@ export class ThemeScope {
     protected _injectThemeColorStyles() {
         if (this.options.themeColor === 'light') return
         const css = this._generateThemeColorStyles()
-        const styleId: string = `themepro-${this.id}-colors`
+        const styleId: string = `kylinbits-${this.id}-colors`
         injectStylesheet(css, {
             id: styleId,
         })
@@ -235,7 +235,7 @@ export class ThemeScope {
     }
     protected _injectLightDarkModeStyles() {
         const css = this._generateLightDarkModeStyles()
-        const styleId: string = `themepro-${this.id}-mode`
+        const styleId: string = `kylinbits-${this.id}-mode`
         injectStylesheet(css, {
             id: styleId,
         })
@@ -269,7 +269,7 @@ export class ThemeScope {
      * @private
      */
     protected _injectSemanticColorStyles() {
-        const styleId = `themepro-${this.id}-semantics`
+        const styleId = `kylinbits-${this.id}-semantics`
         const css = this._generateSemanticColorStyles()
         if (css) {
             injectStylesheet(css, {
@@ -338,7 +338,7 @@ export class ThemeScope {
      * @private
      */
     private _injectBaseStyles() {
-        const styleId = `themepro-${this.id}-vars`
+        const styleId = `kylinbits-${this.id}-vars`
         const css = this._generateBaseStyles()
         injectStylesheet(css, { id: styleId })
         this._addStyleheetId(styleId)
@@ -393,10 +393,10 @@ export class ThemeScope {
     }
     isConnected() {
         const styleIds: string[] = [
-            `themepro-${this.id}-vars`,
-            `themepro-${this.id}-semantics`,
-            `themepro-${this.id}-colors`,
-            `themepro-${this.id}-mode`,
+            `kylinbits-${this.id}-vars`,
+            `kylinbits-${this.id}-semantics`,
+            `kylinbits-${this.id}-colors`,
+            `kylinbits-${this.id}-mode`,
         ]
         return styleIds.some((id) => this.docRoot.ownerDocument.getElementById(id) !== null)
     }

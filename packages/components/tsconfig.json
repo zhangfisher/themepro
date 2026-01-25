@@ -40,7 +40,7 @@
         "packages/components/src/icon",
         "packages/components/src/button",
         "packages/core/src/webcomponent",
-        "packages/core/src/themepro.ts",
+        "packages/core/src/kylinbits.ts",
         "packages/core/src/presets.ts",
         "packages/core/src/observer.ts",
         "packages/core/src/index.ts",

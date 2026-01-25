@@ -17,7 +17,7 @@ export const ArrowDemo: Story = {
                     <div
                         style="display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap;"
                     >
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="底部箭头"
                             type="primary"
                             .popupOptions=${{
@@ -31,9 +31,9 @@ export const ArrowDemo: Story = {
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 箭头自动定位
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
 
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="顶部箭头"
                             type="success"
                             .popupOptions=${{
@@ -47,9 +47,9 @@ export const ArrowDemo: Story = {
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 智能定位系统
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
 
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="右侧箭头"
                             type="warning"
                             .popupOptions=${{
@@ -63,9 +63,9 @@ export const ArrowDemo: Story = {
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 横向指示
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
 
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="左侧箭头"
                             type="info"
                             .popupOptions=${{
@@ -79,7 +79,7 @@ export const ArrowDemo: Story = {
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 侧向指示
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
                     </div>
 
                     <h4>对比演示：有箭头 vs 无箭头</h4>
@@ -92,7 +92,7 @@ export const ArrowDemo: Story = {
                             >
                                 无箭头 (默认)
                             </p>
-                            <auto-dropdown label="无箭头菜单" type="default">
+                            <kylin-dropdown label="无箭头菜单" type="default">
                                 <div
                                     style="padding: 8px 12px; cursor: pointer;"
                                 >
@@ -103,7 +103,7 @@ export const ArrowDemo: Story = {
                                 >
                                     普通选项 2
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
 
                         <div>
@@ -112,7 +112,7 @@ export const ArrowDemo: Story = {
                             >
                                 有箭头
                             </p>
-                            <auto-dropdown
+                            <kylin-dropdown
                                 label="有箭头菜单"
                                 type="default"
                                 .popupOptions=${{ arrow: true }}
@@ -127,7 +127,7 @@ export const ArrowDemo: Story = {
                                 >
                                     指示选项 2
                                 </div>
-                            </auto-dropdown>
+                            </kylin-dropdown>
                         </div>
                     </div>
 
@@ -140,7 +140,7 @@ export const ArrowDemo: Story = {
                     <div
                         style="display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap;"
                     >
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="蓝色箭头"
                             type="primary"
                             .popupOptions=${{ arrow: true }}
@@ -148,9 +148,9 @@ export const ArrowDemo: Story = {
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 蓝色主题
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
 
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="绿色箭头"
                             type="success"
                             .popupOptions=${{ arrow: true }}
@@ -158,9 +158,9 @@ export const ArrowDemo: Story = {
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 绿色主题
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
 
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="橙色箭头"
                             type="warning"
                             .popupOptions=${{ arrow: true }}
@@ -168,9 +168,9 @@ export const ArrowDemo: Story = {
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 橙色主题
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
 
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="红色箭头"
                             type="danger"
                             .popupOptions=${{ arrow: true }}
@@ -178,14 +178,14 @@ export const ArrowDemo: Story = {
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 红色主题
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
                     </div>
 
                     <h4>配合其他功能使用</h4>
                     <div
                         style="display: flex; gap: 20px; flex-direction: column; max-width: 400px;"
                     >
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="箭头 + fit"
                             type="primary"
                             .popupOptions=${{
@@ -202,9 +202,9 @@ export const ArrowDemo: Story = {
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 智能箭头定位
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
 
-                        <auto-dropdown
+                        <kylin-dropdown
                             label="箭头 + 自定义动画"
                             type="success"
                             .popupOptions=${{
@@ -219,7 +219,7 @@ export const ArrowDemo: Story = {
                             <div style="padding: 8px 12px; cursor: pointer;">
                                 箭头参与动画
                             </div>
-                        </auto-dropdown>
+                        </kylin-dropdown>
                     </div>
                 </div>
             </div>

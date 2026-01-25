@@ -16,7 +16,7 @@ export const HotshopPopup: Story = {
                 </div>
 
                 <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                    <auto-dropdown
+                    <kylin-dropdown
                         .tags=${[
                             {
                                 icon: "settings",
@@ -48,9 +48,9 @@ export const HotshopPopup: Story = {
                         }}
                         ><strong>根热点信息</strong><br />
                         同一个元素中包括多个hotspot元素
-                    </auto-dropdown>
+                    </kylin-dropdown>
 
-                    <auto-dropdown
+                    <kylin-dropdown
                         .tags=${[
                             {
                                 icon: "settings",
@@ -97,9 +97,9 @@ export const HotshopPopup: Story = {
                         <div slot="info">
                             <strong>信息</strong><br />显示更多的信息
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
 
-                    <auto-dropdown
+                    <kylin-dropdown
                         .tags=${["folder", "tag", "settings"]}
                         labelGrow
                         style="width: 300px;"
@@ -114,10 +114,10 @@ export const HotshopPopup: Story = {
                             arrow: true,
                         }}
                         ><strong>复制功能</strong
-                        ><br />复制选中的内容到剪贴板</auto-dropdown
+                        ><br />复制选中的内容到剪贴板</kylin-dropdown
                     >
 
-                    <auto-dropdown
+                    <kylin-dropdown
                         .tags=${["star", "tag", "settings"]}
                         labelGrow
                         style="width: 300px;"
@@ -143,7 +143,7 @@ export const HotshopPopup: Story = {
                             <strong>信息</strong><br />显示更多的信息
                         </div>
                         <strong>删除操作</strong
-                        ><br />此操作不可撤销，请谨慎操作</auto-dropdown
+                        ><br />此操作不可撤销，请谨慎操作</kylin-dropdown
                     >
                 </div>
 
@@ -162,7 +162,7 @@ export const HotshopPopup: Story = {
                                 style="background: #f1f3f4; padding: 2px 6px; border-radius: 3px;"
                                 >hotspots: ".tag"</code
                             >
-                            - 指定auto-dropdown组件内的tag元素作为触发器
+                            - 指定kylin-dropdown组件内的tag元素作为触发器
                         </div>
                         <div>
                             <strong style="color: #52c41a;">data-tips:</strong>

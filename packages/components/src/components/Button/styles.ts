@@ -69,7 +69,7 @@ export const styles = css`
         aspect-ratio: 1;
         flex-direction: column !important;
         gap: 0;
-        --auto-icon-size: 2em;
+        --kylin-icon-size: 2em;
     }
     :host([shape="pill"]) {
         border-radius: 9999px !important;

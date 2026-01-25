@@ -1,8 +1,8 @@
-import { css } from "lit";
+import { css } from 'lit'
 
 export const styles = css`
     /* ThemePro 全局容器样式 */
-    .themepro-container {
+    .kylinbits-container {
         pointer-events: none;
         z-index: 9999;
         position: fixed;
@@ -11,4 +11,4 @@ export const styles = css`
         width: 100%;
         height: 100%;
     }
-`;
+`

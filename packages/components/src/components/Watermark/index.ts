@@ -1,16 +1,16 @@
 /**
- * AutoWatermark 组件
+ * KylinWatermark 组件
  * 自动充满父组件并显示水印文本
  *
  * 使用示例：
- * <auto-watermark text="水印文字" opacity="0.1" color="#000000"></auto-watermark>
+ * <kylin-watermark text="水印文字" opacity="0.1" color="#000000"></kylin-watermark>
  */
 import { LitElement, css, html } from "lit";
 import { property } from "lit/decorators.js";
 import { customElement } from "lit/decorators/custom-element.js";
 
-@customElement("auto-watermark")
-export class AutoWatermark extends LitElement {
+@customElement("kylin-watermark")
+export class KylinWatermark extends LitElement {
     static styles = css`
         :host {
             position: absolute;
@@ -148,6 +148,6 @@ export class AutoWatermark extends LitElement {
 
 declare global {
     interface HTMLElementTagNameMap {
-        "auto-watermark": AutoWatermark;
+        "kylin-watermark": KylinWatermark;
     }
 }

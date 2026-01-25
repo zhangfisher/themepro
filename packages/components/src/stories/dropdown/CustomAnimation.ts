@@ -10,7 +10,7 @@ export const CustomAnimation: Story = {
                 <div
                     style="display: flex; gap: 20px; margin-top: 20px; flex-wrap: wrap;"
                 >
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="弹性动画"
                         .popupOptions=${{
                             animationDuration: 500,
@@ -29,9 +29,9 @@ export const CustomAnimation: Story = {
                                 ✨ 弹性选项 2
                             </div>
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
 
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="回弹动画"
                         .popupOptions=${{
                             animationDuration: 400,
@@ -50,9 +50,9 @@ export const CustomAnimation: Story = {
                                 🎯 回弹选项 2
                             </div>
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
 
-                    <auto-dropdown
+                    <kylin-dropdown
                         label="缓慢动画"
                         .popupOptions=${{
                             animationDuration: 800,
@@ -71,7 +71,7 @@ export const CustomAnimation: Story = {
                                 🐌 缓慢选项 2
                             </div>
                         </div>
-                    </auto-dropdown>
+                    </kylin-dropdown>
                 </div>
             </div>
         `;
