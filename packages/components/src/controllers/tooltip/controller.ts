@@ -135,15 +135,48 @@ export class TooltipController implements ReactiveController {
         const prefix = this.options.dataPrefix || 'tooltip'
         const dataset = el.dataset as any
 
-        // 检查 dataset
-        const isTooltip = !!(
-            dataset[prefix] ||
-            dataset[`${prefix}Slot`] ||
-            dataset[`${prefix}Query`] ||
-            dataset[`${prefix}Link`]
-        )
+        // 检查 dataset - 只检查主要的 data-* 属性
+        const isTooltip = !!dataset[prefix]
 
         return isTooltip
+    }
+
+    /**
+     * 检查元素是否在 host 元素的 DOM 树中（包括嵌套的 Shadow DOM）
+     */
+    private _isElementInHost(el: HTMLElement): boolean {
+        if (el === this.hostElement) return true
+
+        // 检查元素是否在 host 的 light DOM 中
+        if (this.hostElement.contains(el)) return true
+
+        // 检查元素是否在 host 的 Shadow DOM 中
+        // @ts-expect-error
+        if (this.host?.renderRoot?.contains(el)) return true
+
+        // 检查元素是否在 host 的任何子元素的 Shadow DOM 中
+        // 这是处理嵌套 Shadow DOM 的关键
+        let current: any = el
+        while (current && current !== this.hostElement) {
+            // 获取元素的根节点（可能是 ShadowRoot 或 Document）
+            const root = current.getRootNode()
+
+            // 如果根节点是 ShadowRoot，说明元素在 Shadow DOM 中
+            if (root instanceof ShadowRoot) {
+                // 检查这个 ShadowRoot 的 host 是否在当前 host 的范围内
+                const shadowHost = root.host
+                if (this.hostElement.contains(shadowHost)) {
+                    return true
+                }
+                // 继续向上检查
+                current = shadowHost
+            } else {
+                // 如果根节点不是 ShadowRoot（比如是 Document），说明已经到达顶层
+                break
+            }
+        }
+
+        return false
     }
 
     private _getTooltipElement(e: MouseEvent) {
@@ -159,12 +192,8 @@ export class TooltipController implements ReactiveController {
         for (let i = 0; i < composedPath.length; i++) {
             const el = composedPath[i]
             if (this._isTooltipElement(el)) {
-                // 确保元素在host范围内，或者在当前controller管理的tooltip容器内
-                const isInHost =
-                    el === this.hostElement ||
-                    this.hostElement.contains(el) ||
-                    // @ts-expect-error
-                    this.host?.renderRoot?.contains(el)
+                // 确保元素在host范围内（包括嵌套的 Shadow DOM）
+                const isInHost = this._isElementInHost(el)
 
                 // 检查是否在当前controller管理的某个tooltip中（支持嵌套tooltip）
                 const isInManagedTooltip = this.tooltips.some((tooltip) => {
@@ -239,7 +268,7 @@ export class TooltipController implements ReactiveController {
                             this.tooltips.get(tooltipEl)?.show()
                         } else {
                             // 检查新 tooltip 元素是否是嵌套在某个已显示的 tooltip 容器内
-                            const isNestedTooltip = this.tooltips.some(t => {
+                            const isNestedTooltip = this.tooltips.some((t) => {
                                 const container = t.container
                                 // 检查新 tooltip 元素（触发元素）是否在该 tooltip 的容器内
                                 return container?.contains(tooltipEl) ?? false
@@ -266,7 +295,7 @@ export class TooltipController implements ReactiveController {
             } else {
                 // 鼠标离开了所有 tooltip 元素
                 // 但需要检查鼠标是否在某个已显示的 tooltip 容器内
-                const isInTooltipContainer = this.tooltips.some(t => {
+                const isInTooltipContainer = this.tooltips.some((t) => {
                     if (!t.isVisible) return false
                     const container = t.container
                     // 检查鼠标事件目标是否在某个可见的 tooltip 容器内
@@ -274,7 +303,7 @@ export class TooltipController implements ReactiveController {
                 })
 
                 // 只有当鼠标不在任何 tooltip 容器内，且没有可见 tooltip 时才通知 registry
-                if (!isInTooltipContainer && !this.tooltips.some(t => t.isVisible)) {
+                if (!isInTooltipContainer && !this.tooltips.some((t) => t.isVisible)) {
                     this._registry.notifyHidden(this)
                 }
             }

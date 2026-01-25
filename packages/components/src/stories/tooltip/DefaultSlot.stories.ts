@@ -33,16 +33,8 @@ export const 默认Slot基本用法: Story = {
                 </button>
 
                 <button
-                    data-tooltip-slot=""
-                    data-tooltip-placement="bottom"
-                    style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
-                >
-                    空名称 Slot
-                </button>
-
-                <button
                     data-tooltip="slot://default"
-                    data-tooltip-placement="right"
+                    data-tooltip-placement="bottom"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
                     Default 关键字
@@ -61,7 +53,7 @@ export const 默认Slot基本用法: Story = {
     parameters: {
         docs: {
             description: {
-                story: "使用 `data-tooltip='slot://'` 或 `data-tooltip-slot=''` 来引用默认 slot 内容。默认 slot 是指没有 slot 属性的子元素。",
+                story: "使用 `data-tooltip='slot://'` 来引用默认 slot 内容。默认 slot 是指没有 slot 属性的子元素。",
             },
         },
     },
@@ -297,7 +289,7 @@ export const 多个默认Slot示例: Story = {
             <tooltip-demo>
                 <div style="display: flex; gap: 12px; align-items: center;">
                     <button
-                        data-tooltip-slot=""
+                        data-tooltip="slot://"
                         data-tooltip-placement="top"
                         style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                     >

@@ -46,6 +46,7 @@ export type TooltipContent = string | HTMLElement | undefined | null | Promise<s
  * ```
  */
 export interface TooltipControllerOptions {
+    content?: string
     /**
      * ## 提示框位置
      *

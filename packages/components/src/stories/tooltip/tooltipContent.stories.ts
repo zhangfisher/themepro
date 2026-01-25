@@ -274,7 +274,7 @@ export const Slot内容来源: Story = {
                 </button>
 
                 <button
-                    data-tooltip-slot="user-info"
+                    data-tooltip="slot://user-info"
                     data-tooltip-placement="bottom"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
@@ -345,7 +345,7 @@ export const Slot内容来源: Story = {
     parameters: {
         docs: {
             description: {
-                story: '使用 `data-tooltip="slot://<slotname>"` 或 `data-tooltip-slot` 属性从 host 元素的指定 slot 中获取提示内容。',
+                story: '使用 `data-tooltip="slot://<slotname>"` 属性从 host 元素的指定 slot 中获取提示内容。',
             },
         },
     },
@@ -409,7 +409,7 @@ export const 全局查询内容来源: Story = {
             </button>
 
             <button
-                data-tooltip-query="#status-indicator"
+                data-tooltip="query://#status-indicator"
                 data-tooltip-placement="bottom"
                 style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
             >
@@ -428,7 +428,7 @@ export const 全局查询内容来源: Story = {
     parameters: {
         docs: {
             description: {
-                story: '使用 `data-tooltip="query://<selector>"` 或 `data-tooltip-query` 属性从全局文档中查询元素作为提示内容。',
+                story: '使用 `data-tooltip="query://<selector>"` 属性从全局文档中查询元素作为提示内容。',
             },
         },
     },
@@ -462,7 +462,7 @@ export const 局部选择器内容来源: Story = {
 
             <div style="position: relative;">
                 <button
-                    data-tooltip-query=".complex-tooltip"
+                    data-tooltip="query://.complex-tooltip"
                     data-tooltip-placement="bottom"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
@@ -511,7 +511,7 @@ export const 局部选择器内容来源: Story = {
     parameters: {
         docs: {
             description: {
-                story: '使用 `data-tooltip="query://<selector>"` 或 `data-tooltip-query` 属性从当前元素内部查询元素作为提示内容。',
+                story: '使用 `data-tooltip="query://<selector>"` 属性从当前元素内部查询元素作为提示内容。',
             },
         },
     },
@@ -564,7 +564,7 @@ export const 内容来源综合示例: Story = {
                 <!-- 局部选择器 -->
                 <div style="position: relative;">
                     <button
-                        data-tooltip-query=".local-content"
+                        data-tooltip="query://.local-content"
                         data-tooltip-placement="left"
                         style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                     >
@@ -596,7 +596,7 @@ export const 内容来源综合示例: Story = {
     parameters: {
         docs: {
             description: {
-                story: "综合展示所有四种内容来源方式的对比：HTML字符串、slot引用、全局查询和局部选择器。",
+                story: "综合展示所有三种内容来源方式的对比：HTML字符串、slot引用、全局查询和局部选择器。",
             },
         },
     },

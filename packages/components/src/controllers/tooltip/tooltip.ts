@@ -22,6 +22,7 @@ import { getURLQueryParams } from '@/utils/getURLParams'
 import { isNumber } from 'flex-tools/typecheck/isNumber'
 import '../../components/Loading'
 import { HTMLLoader } from '@/utils/HTMLLoader'
+import { parseRelaxedJson } from '../../utils/parseRelaxedJson'
 
 export class Tooltip {
     options: Required<TooltipControllerOptions>
@@ -39,6 +40,7 @@ export class Tooltip {
         mousemove: (e: MouseEvent) => void
         click: (e: Event) => void
     }
+    private _content?: string
     el: WeakRef<HTMLElement>
     constructor(
         el: HTMLElement,
@@ -153,20 +155,50 @@ export class Tooltip {
     /**
      * 解析元素上的工具提示选项属性
      *
-     * 1. 从指定的属性名（默认为"tooltipOptions"）中解析JSON格式的选项
-     * 2. 从data-tooltip-*属性中解析单个选项值
-     * 3. 根据选项值的类型自动转换属性值（数字、布尔值、对象或字符串）
+     * 1. 从 data-tooltip 属性中解析 JSON 格式的选项对象（如果是以 { 开头、} 结尾的字符串）
+     * 2. 从指定的属性名（默认为"tooltipOptions"）中解析JSON格式的选项
+     * 3. 从data-tooltip-*属性中解析单个选项值
+     * 4. 根据选项值的类型自动转换属性值（数字、布尔值、对象或字符串）
+     *
+     * 优先级：data-tooltip JSON对象 > tooltipOptions > data-tooltip-*
      *
      * @private 这是一个内部方法
      */
     private _parseAttrOptions() {
         if (this.ref instanceof HTMLElement) {
-            const optionAttr = `${this.options.dataPrefix}Options`
+            const prefix = this.options.dataPrefix
+
+            // 1. 尝试从 data-tooltip 解析 JSON 对象
+            const tooltipAttr = this._getDataAttr('')
+            let tooltipJsonOptions: any
+            if (tooltipAttr) {
+                const trimmed = tooltipAttr.trim()
+                // 性能优化：先检查是否以 { 开头、} 结尾
+                if (trimmed.startsWith('{') && trimmed.endsWith('}')) {
+                    try {
+                        tooltipJsonOptions = parseRelaxedJson<any>(trimmed)
+                        // 如果是有效的 JSON 对象，提取 content 字段
+                        if (tooltipJsonOptions && typeof tooltipJsonOptions === 'object') {
+                            if (tooltipJsonOptions.content !== undefined) {
+                                this._content = tooltipJsonOptions.content
+                                delete tooltipJsonOptions.content // 从选项中移除 content，避免污染 options
+                            }
+                        }
+                    } catch {
+                        // JSON 解析失败，忽略错误，tooltipAttr 可能是普通内容字符串
+                    }
+                }
+            }
+
+            // 2. 从 tooltipOptions 属性解析选项
+            const optionAttr = `${prefix}Options`
             const attrOptions = parseObjectFromAttr(this.ref, optionAttr)
 
-            // 使用 dataPrefix 从 dataset 中解析选项
-            const prefix = this.options.dataPrefix
-            Object.assign(this.options, attrOptions, getDatasetFromElement(this.ref, Object.keys(this.options), prefix))
+            // 3. 从 data-tooltip-* 属性解析单个选项值
+            const datasetOptions = getDatasetFromElement(this.ref, Object.keys(this.options), prefix)
+
+            // 合并选项，优先级：tooltipJsonOptions > attrOptions > datasetOptions
+            Object.assign(this.options, datasetOptions, attrOptions, tooltipJsonOptions)
         }
     }
     /**
@@ -226,23 +258,12 @@ export class Tooltip {
      * - data-tooltip="http://192.168.1.11?fields=a,b,c"
      * - data-tooltip="https://192.168.1.11"
      * - data-tooltip="query://<全局文档选择器>"
-     * - data-tooltip-link=""
-     * - data-tooltip-query="<全局文档选择器>"
      * - 或者使用自定义前缀,如 dataPrefix="popup":
      *   - data-popup="html字符串"
-     *   - data-popup-slot="slotname"
-     *   - data-popup-query="selector"
-     *   - data-popup-link="url"
      *
      */
     private _getTooltipContent(): string | HTMLElement | undefined | null {
-        const slot = this._getDataAttr('slot') ? `slot://${this._getDataAttr('slot')}` : undefined
-
-        const query = this._getDataAttr('query') ? `query://${this._getDataAttr('query')}` : undefined
-
-        const link = this._getDataAttr('link') ? `link://${this._getDataAttr('link')}` : undefined
-
-        const content = link || slot || query || this._getDataAttr('')
+        const content = this._content || this._getDataAttr('')
 
         if (!content && !isFunction(this.options.getContent)) return
 

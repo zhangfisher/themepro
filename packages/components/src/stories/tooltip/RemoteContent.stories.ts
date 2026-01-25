@@ -88,12 +88,12 @@ export const Link协议内容: Story = {
                 </button>
 
                 <button
-                    data-tooltip-link="link://api/tooltip/user"
+                    data-tooltip="link://api/tooltip/user"
                     data-tooltip-placement="bottom"
                     data-tooltip-predict-size="[400,250]"
                     style="padding: 12px 20px; border: 1px solid #ccc; border-radius: 6px; background: white; cursor: pointer;"
                 >
-                    使用 data-tooltip-link 属性
+                    Link协议加载用户信息
                 </button>
 
                 <button
@@ -110,7 +110,7 @@ export const Link协议内容: Story = {
     parameters: {
         docs: {
             description: {
-                story: "使用 `link://` 协议或 `data-tooltip-link` 属性通过 MSW 模拟 API 加载内容。这两种方式是等效的，都通过 fetch API 获取 MSW 提供的模拟 HTML 内容。",
+                story: "使用 `data-tooltip='link://...'` 通过 MSW 模拟 API 加载内容。",
             },
         },
     },
@@ -356,15 +356,7 @@ export const 远程内容综合演示: Story = {
                     >
                         <li>
                             <code>data-tooltip="link://..."</code>
-                            - HTTP 模拟内容
-                        </li>
-                        <li>
-                            <code>data-tooltip="link://..."</code>
-                            - Link 协议模拟内容
-                        </li>
-                        <li>
-                            <code>data-tooltip-link="link://..."</code>
-                            - Link 属性模拟内容
+                            - 远程内容加载
                         </li>
                     </ul>
                     <p
